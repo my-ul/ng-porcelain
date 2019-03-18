@@ -1,0 +1,25 @@
+{
+  "name": "@my-ul/porcelain",
+  "version": "1.0.1",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@fortawesome/angular-fontawesome": "^0.3.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.14",
+    "@fortawesome/free-solid-svg-icons": "^5.7.1",
+    "moment": "^2.24.0"
+  },
+  "main": "bundles/porcelain.umd.js",
+  "module": "fesm5/porcelain.js",
+  "es2015": "fesm2015/porcelain.js",
+  "esm5": "esm5/porcelain.js",
+  "esm2015": "esm2015/porcelain.js",
+  "fesm5": "fesm5/porcelain.js",
+  "fesm2015": "fesm2015/porcelain.js",
+  "typings": "porcelain.d.ts",
+  "metadata": "porcelain.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/reset-css/sass/reset';
+
+body {
+	font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
+		Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	font-size: 75%;
+}
