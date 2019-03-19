@@ -2,7 +2,7 @@
 
 For speed and simplicity, a simple key-value dictionary can be provided as the `refiner` value.
 
-`DateRefiner` does not require an `options` property in its `RefinerDefinition`.
+`DateRefiner` does not require an `options` property in its `SimpleRefiner`.
 
 ## src/my-component/my.component.ts
 
@@ -18,7 +18,7 @@ class MyComponent {
 		console.log('notification from DateRefiner', arguments);
 	}
 	ngOnInit() {
-		this.refiner = new RefinerDefinition({
+		this.refiner = new SimpleRefiner({
 			title: 'Modified',
 			slug: 'modified'
 			type: 'date'
@@ -31,6 +31,6 @@ class MyComponent {
 
 ```html
 <div class="my-refiners">
-	<app-date-refiner refiner="refiner"></app-date-refiner>
+	<porcelain-simple-refiner refiner="refiner"></porcelain-simple-refiner>
 </div>
 ```
