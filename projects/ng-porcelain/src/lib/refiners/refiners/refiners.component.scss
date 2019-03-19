@@ -1,0 +1,7 @@
+@import '../../shared/styles/porcelain';
+
+.refiners {
+	> .refiner + .refiner {
+		border-top: 1px solid #ccc;
+	}
+}
