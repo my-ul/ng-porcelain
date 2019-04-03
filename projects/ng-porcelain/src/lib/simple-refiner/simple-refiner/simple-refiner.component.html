@@ -26,14 +26,14 @@
 					*ngIf="canSelectNone()"
 					class="refiner__select-none"
 				>
-					Select None
+					{{ selectNoneLabel }}
 				</button>
 				<button
 					(click)="selectAll()"
 					*ngIf="canSelectAll()"
 					class="refiner__select-all"
 				>
-					Select All
+					{{ selectAllLabel }}
 				</button>
 			</div>
 			<!-- /.refiner__selection-toggles -->
@@ -78,11 +78,11 @@
 			<div class="refiner__section refiner__show-hide" *ngIf="canExpand()">
 				<button (click)="toggleExpanded()" class="refiner__expand-toggle">
 					<span *ngIf="isExpanded"
-						>Hide {{ countTail() | number }} Options
+						>{{ showLessLabel | interpolate: countTail() }}
 						<fa-icon [icon]="contractIcon"></fa-icon>
 					</span>
 					<span *ngIf="!isExpanded"
-						>Show {{ countTail() | number }} More
+						>{{ showMoreLabel | interpolate: countTail() }}
 						<fa-icon [icon]="expandIcon"></fa-icon
 					></span>
 				</button>

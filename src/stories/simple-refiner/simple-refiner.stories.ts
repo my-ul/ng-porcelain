@@ -178,6 +178,31 @@ storiesOf('Option Refiner Component', module)
 		{
 			notes: { markdown: require('./options-definitions.md') }
 		}
+	)
+	.add(
+		'Custom Labels',
+		() => ({
+			component: SimpleRefinerComponent,
+			moduleMetadata: {
+				imports: SIMPLE_REFINER_IMPORTS
+			},
+			props: {
+				showMoreLabel: 'Mostrar %u más',
+				showLessLabel: 'Muestra menos %u',
+				selectAllLabel: 'Seleccionar todo',
+				selectNoneLabel: 'Seleccione Ninguno',
+				refiner: new SimpleRefiner({
+					slug: 'states',
+					title: 'Estados de los EE.UU.',
+					options: usStatesFull
+				}),
+				onRefinerChange: action('Refiner (Custom Labels)')
+			}
+		}),
+		{
+			keywords: ['i18n'],
+			notes: { markdown: require('./custom-labels.md') }
+		}
 	);
 
 storiesOf('Option Refiner Component/Badges', module)

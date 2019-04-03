@@ -42,3 +42,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Node modules for library
+projects/ng-porcelain/node_modules/

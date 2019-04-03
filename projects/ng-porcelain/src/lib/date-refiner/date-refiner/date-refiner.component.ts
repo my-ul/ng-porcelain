@@ -14,6 +14,9 @@ import {
 	DateOption,
 	DateRefiner
 } from '../../shared/types';
+import { IMyDateModel, IMyDate } from 'mydatepicker';
+
+import { i18nDateOptions } from '../../shared/utilities/i18nDateOptions';
 
 export interface DateRefinerValue {
 	from: Date;
@@ -26,69 +29,7 @@ export interface IDateRefinerProps {
 	onRefinerChange: EventEmitter<any>;
 }
 
-const momentFloor = (
-	arg1?: moment.DurationInputArg1,
-	arg2?: moment.DurationInputArg2
-) => {
-	return moment
-		.call(null)
-		.set('hours', 0)
-		.set('minutes', 0)
-		.set('seconds', 0);
-};
-
-const momentFloorSubtract = (
-	arg1?: moment.DurationInputArg1,
-	arg2?: moment.DurationInputArg2
-) => momentFloor().subtract(arg1, arg2);
-
-const momentFloorAdd = (
-	arg1?: moment.DurationInputArg1,
-	arg2?: moment.DurationInputArg2
-) => momentFloor().add(arg1, arg2);
-
-export const defaultDateOptions: DateOptions = {
-	// yields no range by default (unrestricted)
-	'-1': new DateOption({
-		slug: '-1',
-		getTo: () => null,
-		getFrom: () => null,
-		label: 'View All'
-	}),
-
-	// select item where getFrom() <= date < getTo()
-	'1': new DateOption({
-		label: 'Today',
-		slug: '1',
-		getTo: () => momentFloorAdd(1, 'day').toDate(),
-		getFrom: () => momentFloor().toDate()
-	}),
-	'7': new DateOption({
-		label: 'Last 7 Days',
-		slug: '7',
-		getTo: () => momentFloorAdd(1, 'day').toDate(),
-		getFrom: () => momentFloorSubtract(7, 'days').toDate()
-	}),
-	'30': new DateOption({
-		label: 'Last 30 Days',
-		slug: '30',
-		getTo: () => momentFloorAdd(1, 'day').toDate(),
-		getFrom: () => momentFloorSubtract(30, 'days').toDate()
-	}),
-	'90': new DateOption({
-		label: 'Last 90 Days',
-		slug: '90',
-		getTo: () => momentFloorAdd(1, 'day').toDate(),
-		getFrom: () => momentFloorSubtract(90, 'days').toDate()
-	}),
-	custom: new DateOption({
-		isSelected: true,
-		label: 'Date Range...',
-		slug: 'custom',
-		getTo: (toString?: string) => moment.call(null, toString).toDate(),
-		getFrom: (fromString?: string) => moment.call(null, fromString).toDate()
-	})
-};
+export const defaultDateOptions: DateOptions = i18nDateOptions();
 
 // const animationOptionsInOut = generateSlideInOut('optionsInOut'),
 // 	animationRangeInOut = generateSlideInOut('rangeInOut');
@@ -102,6 +43,34 @@ export class DateRefinerComponent implements OnInit {
 	// Inputs
 	@Input() isOpen: boolean = true;
 	@Input() refiner: DateRefiner;
+
+	@Input() datePickerOptions = {
+		dateFormat: 'yyyy-mm-dd',
+		dayLabels: {
+			su: 'Sun',
+			mo: 'Mon',
+			tu: 'Tue',
+			we: 'Wed',
+			th: 'Thu',
+			fr: 'Fri',
+			sa: 'Sat'
+		},
+		monthLabels: {
+			1: 'Jan',
+			2: 'Feb',
+			3: 'Mar',
+			4: 'Apr',
+			5: 'May',
+			6: 'Jun',
+			7: 'Jul',
+			8: 'Aug',
+			9: 'Sep',
+			10: 'Oct',
+			11: 'Nov',
+			12: 'Dec'
+		},
+		todayBtnTxt: 'Today'
+	};
 
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
@@ -117,14 +86,29 @@ export class DateRefinerComponent implements OnInit {
 
 	// State
 	currentOptionSlug: string;
-	startString: string;
-	endString: string;
+
+	fromModel: IMyDate = null;
+	toModel: IMyDate = null;
 
 	constructor() {}
 
 	// Events
 	onChange() {
+		console.group('onChange(event, field)');
+
 		this.onRefinerChange.emit([this.refiner.slug, this.getValue()]);
+
+		console.groupEnd();
+	}
+
+	onFromChange($event?: IMyDateModel) {
+		this.fromModel = $event.date;
+		this.onChange();
+	}
+
+	onToChange($event?: IMyDateModel) {
+		this.toModel = $event.date;
+		this.onChange();
 	}
 
 	// States
@@ -137,16 +121,50 @@ export class DateRefinerComponent implements OnInit {
 
 	// Getters
 	getValue(): DateRefinerValue {
+		console.group('getValue(selectedOption)');
+
 		const selectedOption = this.options[this.currentOptionSlug];
+
+		const selectedFrom =
+			this.currentOptionSlug === 'custom'
+				? this.fromModel
+					? selectedOption.getFrom(
+							moment()
+								//.utc()
+								.set('y', this.fromModel.year)
+								.set('m', this.fromModel.month - 1)
+								.set('d', this.fromModel.day)
+								.set('h', 0)
+								.set('m', 0)
+								.set('s', 0)
+								.set('ms', 0)
+								.toDate()
+					  )
+					: null
+				: selectedOption.getFrom(null);
+
+		const selectedTo =
+			this.currentOptionSlug === 'custom'
+				? this.toModel
+					? selectedOption.getTo(
+							moment()
+								//.utc()
+								.set('y', this.toModel.year)
+								.set('m', this.toModel.month - 1)
+								.set('d', this.toModel.day)
+								.set('h', 23)
+								.set('m', 59)
+								.set('s', 59) // set to this morning
+								.set('ms', 999)
+								.toDate()
+					  )
+					: null
+				: selectedOption.getTo(null);
+
+		console.groupEnd();
 		return {
-			from:
-				selectedOption instanceof DateOption
-					? selectedOption.getFrom(this.startString)
-					: selectedOption,
-			to:
-				selectedOption instanceof DateOption
-					? selectedOption.getTo(this.endString)
-					: selectedOption
+			from: selectedFrom,
+			to: selectedTo
 		};
 	}
 

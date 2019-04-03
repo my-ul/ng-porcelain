@@ -6,14 +6,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { defaultOptionShowCount } from './defaultOptionShowCount';
-import { SimpleRefiner, SimpleOption } from '../../shared/types';
+import { defaultShowLessLabel } from '../../shared/labels/defaultShowLessLabel';
+import { defaultShowMoreLabel } from '../../shared/labels/defaultShowMoreLabel';
 
-// Porcelain
+import { SimpleRefiner, SimpleOption } from '../../shared/types';
+import { defaultSelectAllLabel } from '../../shared/labels/defaultSelectAllLabel';
+import { defaultSelectNoneLabel } from '../../shared/labels/defaultSelectNoneLabel';
 
 @Component({
 	selector: 'porcelain-simple-refiner',
 	templateUrl: './simple-refiner.component.html',
-	styleUrls: ['./simple-refiner.component.scss']
+	styleUrls: ['./simple-refiner.component.scss'],
+	animations: []
 })
 export class SimpleRefinerComponent implements OnInit {
 	// Inputs
@@ -21,6 +25,11 @@ export class SimpleRefinerComponent implements OnInit {
 	@Input('showCount') _showCount: number;
 	@Input('isOpen') _isOpen: boolean;
 	@Input('isExpanded') _isExpanded: boolean;
+
+	@Input('showLessLabel') showLessLabel = defaultShowLessLabel;
+	@Input('showMoreLabel') showMoreLabel = defaultShowMoreLabel;
+	@Input('selectAllLabel') selectAllLabel = defaultSelectAllLabel;
+	@Input('selectNoneLabel') selectNoneLabel = defaultSelectNoneLabel;
 
 	// Getters
 	get showCount() {
@@ -99,6 +108,8 @@ export class SimpleRefinerComponent implements OnInit {
 		}
 
 		this._isExpanded = !!isExpanded;
+
+		// Handle Show More/Show Less labels
 
 		// Sets up the dictionary used for value state
 		this.selectNone();

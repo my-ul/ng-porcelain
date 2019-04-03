@@ -58,26 +58,28 @@
 					<!-- [@rangeInOut] -->
 					<div *ngIf="currentOptionSlug === 'custom'">
 						<div class="range">
-							<label class="from"
-								>From
-								<input
-									class="datepicker"
-									type="date"
-									[(ngModel)]="startString"
-									placeholder="Start Date"
-									(change)="onChange()"
-								/>
-							</label>
-							<label class="to">
-								To
-								<input
-									class="datepicker"
-									type="date"
-									[(ngModel)]="endString"
-									placeholder="End Date"
-									(change)="onChange()"
-								/>
-							</label>
+							<div class="range__from">
+								<label for="fromDatePicker">From </label>
+								<!-- [(ngModel)]="fromModel" -->
+								<my-date-picker
+									#fromDatePicker
+									name="fromDatePicker"
+									[options]="datePickerOptions"
+									(dateChanged)="onFromChange($event)"
+								></my-date-picker>
+							</div>
+							<div class="range__to">
+								<label for="toDatePicker">
+									To
+								</label>
+								<!-- [(ngModel)]="toModel" -->
+								<my-date-picker
+									#toDatePicker
+									name="toDatePicker"
+									[options]="datePickerOptions"
+									(dateChanged)="onToChange($event)"
+								></my-date-picker>
+							</div>
 						</div>
 					</div>
 				</ng-container>
