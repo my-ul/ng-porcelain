@@ -141,7 +141,9 @@ export class DateRefinerComponent implements OnInit {
 								.toDate()
 					  )
 					: null
-				: selectedOption.getFrom(null);
+				: selectedOption
+				? selectedOption.getFrom(null)
+				: null;
 
 		const selectedTo =
 			this.currentOptionSlug === 'custom'
@@ -159,7 +161,9 @@ export class DateRefinerComponent implements OnInit {
 								.toDate()
 					  )
 					: null
-				: selectedOption.getTo(null);
+				: selectedOption
+				? selectedOption.getTo(null)
+				: null;
 
 		console.groupEnd();
 		return {
