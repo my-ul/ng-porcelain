@@ -11,4 +11,4 @@ export {
 export { TruncateModule } from './lib/truncate/truncate.module';
 export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 
-export * from './lib/shared/types';
+export * from './lib/shared';

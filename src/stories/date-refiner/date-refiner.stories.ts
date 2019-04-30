@@ -6,7 +6,8 @@ import { withNotes } from '@storybook/addon-notes';
 import { storiesOf } from '@storybook/angular';
 
 // Utilities
-import * as moment from 'moment';
+import * as _moment from 'moment';
+const moment = _moment;
 
 import {
 	IDateRefinerProps,
@@ -167,13 +168,15 @@ storiesOf('Date Refiner Component', module)
 							badge: 9999,
 							label: 'Today',
 							getFrom: () =>
-								moment()
+								moment
+									.call(null)
 									.set('seconds', 0)
 									.set('minutes', 0)
 									.set('hour', 0)
 									.toDate(),
 							getTo: () =>
-								moment()
+								moment
+									.call(null)
 									.set('seconds', 0)
 									.set('minutes', 0)
 									.set('hour', 0)
@@ -186,14 +189,16 @@ storiesOf('Date Refiner Component', module)
 							slug: 'pastSevenDays',
 							label: 'Past 7 days',
 							getFrom: () =>
-								moment()
+								moment
+									.call(null)
 									.set('seconds', 0)
 									.set('minutes', 0)
 									.set('hour', 0)
 									.subtract(7, 'days')
 									.toDate(),
 							getTo: () =>
-								moment()
+								moment
+									.call(null)
 									.set('seconds', 0)
 									.set('minutes', 0)
 									.set('hour', 0)

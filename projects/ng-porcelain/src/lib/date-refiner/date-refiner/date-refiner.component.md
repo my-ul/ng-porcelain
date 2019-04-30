@@ -22,14 +22,14 @@ const todayAndYesterday: DateOptions = [
 	'today': new DateOption({
 		slug: 'today',
 		label: __('Today'),
-		getTo: (toString: string) => moment()
+		getTo: (toString: string) => moment.call(null)
 			.set('hours', 0)
 			.set('minutes', 0)
 			.set('seconds', 0)
 			.add(1, 'day')
 			.subtract(1, 'ms') // 23:59:59.999
 			.toDate(),
-		getFrom: (fromString: string) => moment()
+		getFrom: (fromString: string) => moment.call(null)
 			.set('hours', 0)
 			.set('minutes', 0)
 			.set('seconds', 0)
@@ -38,13 +38,13 @@ const todayAndYesterday: DateOptions = [
 	'yesterday': new DateOption({
 		slug: 'yesterday',
 		label: __('Yesterday'),
-		getTo: (toString: string) => moment()
+		getTo: (toString: string) => moment.call(null)
 			.set('hours', 0)
 			.set('minutes', 0)
 			.set('seconds', 0)
 			.subtract(1, 'ms')
 			.toDate();
-		getFrom: (fromString: string) => moment()
+		getFrom: (fromString: string) => moment.call(null)
 			.set('hours', 0)
 			.set('minutes', 0)
 			.set('seconds', 0)

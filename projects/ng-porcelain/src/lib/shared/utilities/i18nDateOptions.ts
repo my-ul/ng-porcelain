@@ -1,20 +1,21 @@
 import { DateOptions, DateOption } from '../types';
-import * as moment from 'moment';
+
+import * as _moment from 'moment';
+const moment = _moment;
 
 const momentFloor = (
-	arg1?: moment.DurationInputArg1,
-	arg2?: moment.DurationInputArg2
+	arg1?: _moment.DurationInputArg1,
+	arg2?: _moment.DurationInputArg2
 ) => {
-	return moment
-		.call(null)
+	return moment()
 		.set('hours', 0)
 		.set('minutes', 0)
 		.set('seconds', 0);
 };
 
 const momentFloorSubtract = (
-	arg1?: moment.DurationInputArg1,
-	arg2?: moment.DurationInputArg2
+	arg1?: _moment.DurationInputArg1,
+	arg2?: _moment.DurationInputArg2
 ) => momentFloor().subtract(arg1, arg2);
 
 export const i18nDateOptions = (
@@ -35,25 +36,26 @@ export const i18nDateOptions = (
 	'1': new DateOption({
 		label: todayLabel,
 		slug: '1',
-		getFrom: () => momentFloor().toDate(),
+		getFrom: () =>
+			moment()
+				.startOf('day')
+				.toDate(),
 		getTo: () =>
-			moment(new Date())
-				.set('h', 23)
-				.set('m', 59)
-				.set('s', 59)
-				.set('ms', 999)
+			moment()
+				.endOf('day')
 				.toDate()
 	}),
 	'7': new DateOption({
 		label: lastSevenDaysLabel,
 		slug: '7',
-		getFrom: () => momentFloorSubtract(6, 'days').toDate(),
+		getFrom: () =>
+			moment()
+				.startOf('day')
+				.subtract(6, 'days')
+				.toDate(),
 		getTo: () =>
-			moment(new Date())
-				.set('h', 23)
-				.set('m', 59)
-				.set('s', 59)
-				.set('ms', 999)
+			moment()
+				.endOf('day')
 				.toDate()
 	}),
 	'30': new DateOption({
@@ -61,11 +63,8 @@ export const i18nDateOptions = (
 		slug: '30',
 		getFrom: () => momentFloorSubtract(29, 'days').toDate(),
 		getTo: () =>
-			moment(new Date())
-				.set('h', 23)
-				.set('m', 59)
-				.set('s', 59)
-				.set('ms', 999)
+			moment()
+				.endOf('day')
 				.toDate()
 	}),
 	'90': new DateOption({
@@ -73,11 +72,8 @@ export const i18nDateOptions = (
 		slug: '90',
 		getFrom: () => momentFloorSubtract(89, 'days').toDate(),
 		getTo: () =>
-			moment(new Date())
-				.set('h', 23)
-				.set('m', 59)
-				.set('s', 59)
-				.set('ms', 999)
+			moment()
+				.endOf('day')
 				.toDate()
 	}),
 	custom: new DateOption({
@@ -85,7 +81,17 @@ export const i18nDateOptions = (
 		label: customLabel,
 		slug: 'custom',
 		getFrom: (fromValue?: string | Date) =>
-			moment.call(null, fromValue).toDate(),
-		getTo: (toValue?: string | Date) => moment.call(null, toValue).toDate()
+			moment(fromValue)
+				.startOf('day')
+				.toDate(),
+		getTo: (toValue?: string | Date) =>
+			moment(toValue)
+				.endOf('day')
+				.toDate()
 	})
 });
+
+function logAndReturn<T>(message: any, val: T): T {
+	console.log(message, val);
+	return val;
+}
