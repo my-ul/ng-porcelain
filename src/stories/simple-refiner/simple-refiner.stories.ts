@@ -1,33 +1,17 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 // Storybook
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
 import { storiesOf } from '@storybook/angular';
-<<<<<<< HEAD
 
 // Utilities
 import * as _ from 'underscore';
 import * as lipsum from 'fast-lorem-ipsum';
 
 // Porcelain
-import { SimpleOption, SimpleRefiner } from '../../../projects/ng-porcelain/src/lib/shared/types';
+import { SimpleOption, SimpleRefiner } from '../../../projects/ng-porcelain/src/lib/shared';
 import { SIMPLE_REFINER_IMPORTS } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner.module';
 import { SimpleRefinerComponent } from 'projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.component';
-=======
-// Utilities
-import * as lipsum from 'lorem-ipsum';
-import * as _ from 'underscore';
-
-// Porcelain
-import { SimpleOption, SimpleRefiner } from 'projects/porcelain';
-import { SimpleRefinerComponent } from 'projects/porcelain/src/lib/simple-refiner/simple-refiner.component';
-import { SIMPLE_REFINER_IMPORTS } from 'projects/porcelain/src/lib/simple-refiner/simple-refiner.module';
-
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 
 const usStatesHash = {
 	AL: 'Alabama',
@@ -144,11 +128,6 @@ let usStatesFull = {
 
 storiesOf('Option Refiner Component', module)
 	.addDecorator(withNotes)
-<<<<<<< HEAD
-=======
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 	.addParameters({
 		info: {
 			inline: true
@@ -223,12 +202,6 @@ storiesOf('Option Refiner Component', module)
 
 storiesOf('Option Refiner Component/Badges', module)
 	.addDecorator(withNotes)
-<<<<<<< HEAD
-
-=======
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 	.add(
 		'Options with long `label` values and numeric badges',
 		() => ({
@@ -244,50 +217,22 @@ storiesOf('Option Refiner Component/Badges', module)
 					title: 'Options with Badges',
 					options: {
 						option1: new SimpleOption({
-<<<<<<< HEAD
 							label: `Option 1. ${lipsum('50w')}`,
-=======
-							label: `Option 1. ${lipsum({
-								count: 50,
-								units: 'words'
-							})}`,
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 							slug: 'option1',
 							badge: 1234
 						}),
 						option2: new SimpleOption({
-<<<<<<< HEAD
 							label: `Option 2. ${lipsum('50w')}`,
-=======
-							label: `Option 2. ${lipsum({
-								count: 50,
-								units: 'words'
-							})}`,
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 							slug: 'option2',
 							badge: 2341
 						}),
 						option3: new SimpleOption({
-<<<<<<< HEAD
 							label: `Option 3. ${lipsum('50w')}`,
-=======
-							label: `Option 3. ${lipsum({
-								count: 50,
-								units: 'words'
-							})}`,
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 							slug: 'option3',
 							badge: 3412
 						}),
 						option4: new SimpleOption({
-<<<<<<< HEAD
 							label: `Option 4. ${lipsum('50w')}`,
-=======
-							label: `Option 4. ${lipsum({
-								count: 50,
-								units: 'words'
-							})}`,
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 							slug: 'option4',
 							badge: 4123
 						})
@@ -398,12 +343,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 			onRefinerChange: action('Refiner changed'),
 			refiner: new SimpleRefiner({
 				slug: 'visitedStates',
-<<<<<<< HEAD
 				title: "States I've Visited (default selections by refiner definition)",
-=======
-				title:
-					"States I've Visited (default selections by refiner definition)",
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 				selected: ['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],
 				options: usStatesFull
 			})
@@ -418,12 +358,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 			onRefinerChange: action('Refiner changed'),
 			refiner: new SimpleRefiner({
 				slug: 'visitedStates',
-<<<<<<< HEAD
 				title: "States I've Visited (default selections by option.isSelected properties)",
-=======
-				title:
-					"States I've Visited (default selections by option.isSelected properties)",
->>>>>>> ddbabfcb31801ac1799a45e472ffe7caad97b343
 				options: _.mapObject(usStatesFull, state => {
 					state.isSelected = _.contains(
 						['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],
