@@ -1,0 +1,34 @@
+@import './reset.scss';
+
+.media {
+	display: flex;
+
+	min-width: 0;
+	max-width: 100%;
+
+	&__left,
+	&__right {
+		flex: 0;
+	}
+	&__left {
+		margin-right: 0.75em;
+	}
+	&__body {
+		flex: 1;
+	}
+	&__right {
+		margin-left: 0.75em;
+	}
+
+	&--align-items-center {
+		align-items: center;
+	}
+
+	&--clickable {
+		cursor: pointer;
+	}
+
+	&--align-center {
+		align-self: center;
+	}
+}

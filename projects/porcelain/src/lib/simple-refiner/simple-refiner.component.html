@@ -1,0 +1,74 @@
+<div class="refiner refiner--simple" [class.refiner--open]="isOpen" [class.refiner--closed]="!isOpen">
+	<div class="refiner__section refiner__header" (click)="toggleOpen()">
+		<div class="media media--clickable">
+			<div class="media__body">
+				<h3 class="refiner__title">{{ refiner.title }}</h3>
+			</div>
+			<div class="refiner__toggle | media__right media--align-center">
+				<fa-icon [icon]="faChevronDown"></fa-icon>
+				<span class="sr-only">Expand {{ refiner.title }} refiner</span>
+			</div>
+		</div>
+	</div>
+	<!-- ./refiner__section -->
+
+	<!-- [@blockInitialAnimation -->
+	<div class="refiner__section refiner__toggleable">
+		<!-- [@optionsInOut -->
+		<div *ngIf="isOpen" class="refiner__section refiner__body">
+			<div class="refiner__section refiner__selection-toggles">
+				<button (click)="selectNone()" *ngIf="canSelectNone()" class="refiner__select-none">
+					Select None
+				</button>
+				<button (click)="selectAll()" *ngIf="canSelectAll()" class="refiner__select-all">
+					Select All
+				</button>
+			</div>
+			<!-- /.refiner__selection-toggles -->
+
+			<div class="refiner__section refiner__options">
+				<ul class="options">
+					<li class="option" *ngFor="let optionKey of getExpandedOptionKeys()">
+						<label class="media media--align-items-center">
+							<div class="media__left">
+								<input
+									type="checkbox"
+									name="refiner-{{ refiner.slug }}"
+									value="{{ optionKey }}"
+									[(ngModel)]="value[optionKey]"
+									(change)="onSelectionChange()"
+								/>
+							</div>
+							<div class="media__body">
+								<app-truncate
+									[value]="getOptionLabel(refiner.options[optionKey])"
+								></app-truncate>
+							</div>
+							<div class="media__right" *ngIf="optionHasBadge(refiner.options[optionKey])">
+								<div class="badge">
+									{{ getOptionBadge(refiner.options[optionKey]) }}
+								</div>
+							</div>
+						</label>
+					</li>
+				</ul>
+			</div>
+			<!-- ./refiner__options-->
+
+			<div class="refiner__section refiner__show-hide" *ngIf="canExpand()">
+				<button (click)="toggleExpanded()" class="refiner__expand-toggle">
+					<span *ngIf="isExpanded"
+						>Hide {{ countTail() | number }} Options
+						<fa-icon [icon]="contractIcon"></fa-icon>
+					</span>
+					<span *ngIf="!isExpanded"
+						>Show {{ countTail() | number }} More <fa-icon [icon]="expandIcon"></fa-icon
+					></span>
+				</button>
+			</div>
+			<!-- /.refiner__show-hide -->
+		</div>
+		<!-- /.refiner__body -->
+	</div>
+	<!-- /ng-container -->
+</div>

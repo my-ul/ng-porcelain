@@ -1,0 +1,82 @@
+<div class="refiner refiner--date" [class.refiner--open]="isOpen" [class.refiner--closed]="!isOpen">
+	<div class="refiner__section refiner__header" (click)="toggleOpen()">
+		<div class="media media--clickable">
+			<div class="media__body  media--align-center">
+				<h3 class="refiner__title">{{ refiner.title }}</h3>
+			</div>
+			<div class="refiner__toggle | media__right media--align-center">
+				<fa-icon [icon]="faChevronDown"></fa-icon>
+				<span class="sr-only">Expand {{ refiner.title }} refiner</span>
+			</div>
+		</div>
+	</div>
+	<!-- /.refiner__header -->
+
+	<!-- [@blockInitialAnimation] -->
+	<div class="refiner__section refiner__toggleable">
+		<!-- [@optionsInOut] -->
+		<div *ngIf="isOpen" class="refiner__section  refiner__body">
+			<div class="refiner__section refiner__options">
+				<ul class="options">
+					<li *ngFor="let optionSlug of objectKeys(options)" class="option">
+						<label class="media media--align-items-center">
+							<div class="media__left">
+								<input
+									type="radio"
+									[(ngModel)]="currentOptionSlug"
+									value="{{ optionSlug }}"
+									(change)="onChange()"
+								/>
+							</div>
+							<div class="media__body">
+								<app-truncate
+									[value]="getOptionLabel(options[optionSlug])"
+								></app-truncate>
+							</div>
+							<div
+								class="media__right media--align-center"
+								*ngIf="optionHasBadge(options[optionSlug])"
+							>
+								{{ getOptionBadge(options[optionSlug]) }}
+							</div>
+						</label>
+					</li>
+				</ul>
+			</div>
+			<!-- /.refiner__options -->
+
+			<div class="refiner__section refiner__custom-range">
+				<!-- @blockInitialAnimation -->
+				<ng-container>
+					<!-- [@rangeInOut] -->
+					<div *ngIf="currentOptionSlug === 'custom'">
+						<div class="range">
+							<label class="from"
+								>From
+								<input
+									class="datepicker"
+									type="date"
+									[(ngModel)]="startString"
+									placeholder="Start Date"
+									(change)="onChange()"
+								/>
+							</label>
+							<label class="to">
+								To
+								<input
+									class="datepicker"
+									type="date"
+									[(ngModel)]="endString"
+									placeholder="End Date"
+									(change)="onChange()"
+								/>
+							</label>
+						</div>
+					</div>
+				</ng-container>
+			</div>
+			<!-- /.refiner__custom-range -->
+		</div>
+		<!-- /.refiner__body -->
+	</div>
+</div>

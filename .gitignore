@@ -45,3 +45,5 @@ Thumbs.db
 
 # Node modules for library
 projects/ng-porcelain/node_modules/
+
+dist/

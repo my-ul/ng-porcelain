@@ -11,7 +11,6 @@ For speed and simplicity, a simple key-value dictionary can be provided as the `
 	imports: [DateRefinerComponent]
 })
 class MyComponent {
-
 	refiner: RefinerDefinition;
 
 	myCallbackFunction() {

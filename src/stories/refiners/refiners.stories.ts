@@ -4,11 +4,7 @@ import { withNotes } from '@storybook/addon-notes';
 import { storiesOf } from '@storybook/angular';
 import { RefinersComponent } from '../../../projects/ng-porcelain/src/lib/refiners/refiners/refiners.component';
 import { REFINERS_IMPORTS } from '../../../projects/ng-porcelain/src/lib/refiners/refiners.module';
-import {
-	SimpleRefiner,
-	SimpleOption,
-	DateRefiner
-} from 'projects/ng-porcelain/src/lib/shared/types';
+import { SimpleRefiner, SimpleOption, DateRefiner } from 'projects/ng-porcelain/src/lib/shared';
 
 // Porcelain Imports
 

@@ -9,11 +9,12 @@
 		"lint": "ng lint",
 		"e2e": "ng e2e",
 		"storybook": "start-storybook",
+		"format-staged": "pretty-quick --staged",
 		"update-barrels": "barrelsby --directory projects/ng-porcelain/src/lib/shared -D -q"
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm run update-barrels && pretty-quick --staged"
+			"pre-commit": "npm run update-barrels && npm run format-staged"
 		}
 	},
 	"private": true,
