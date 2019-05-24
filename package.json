@@ -8,7 +8,13 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"storybook": "start-storybook"
+		"storybook": "start-storybook",
+		"update-barrels": "barrelsby --directory projects/ng-porcelain/src/lib/shared -D -q"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run update-barrels && pretty-quick --staged"
+		}
 	},
 	"private": true,
 	"dependencies": {
@@ -32,21 +38,24 @@
 		"mydatepicker": "^2.6.6"
 	},
 	"devDependencies": {
-		"@types/date-fns": "^2.6.0",
 		"@angular-devkit/build-angular": "~0.12.0",
 		"@angular-devkit/build-ng-packagr": "~0.12.0",
-		"@angular/cli": "~7.2.1",
+		"@angular/cli": "^6.2.9",
 		"@angular/compiler-cli": "~7.2.0",
 		"@angular/language-service": "~7.2.0",
 		"@babel/core": "^7.3.4",
 		"@storybook/addon-actions": "^5.0.3",
 		"@storybook/addon-knobs": "^5.0.3",
 		"@storybook/addon-notes": "^5.0.3",
+		"@storybook/addon-storysource": "^5.0.11",
 		"@storybook/angular": "^5.0.3",
+		"@types/date-fns": "^2.6.0",
 		"@types/jasmine": "~2.8.8",
 		"@types/jasminewd2": "~2.0.3",
 		"@types/node": "^8.9.5",
+		"@w11k/angular-sticky-things": "^1.1.2",
 		"babel-loader": "^8.0.5",
+		"barrelsby": "^2.1.1",
 		"codelyzer": "~4.5.0",
 		"fast-lorem-ipsum": "^1.2.0",
 		"husky": "^1.3.1",
@@ -57,22 +66,24 @@
 		"karma-coverage-istanbul-reporter": "~2.0.1",
 		"karma-jasmine": "~1.1.2",
 		"karma-jasmine-html-reporter": "^0.2.2",
+		"lodash-es": "^4.17.11",
 		"lorem-ipsum": "^2.0.0",
 		"ng-packagr": "^4.2.0",
 		"prettier": "^1.16.4",
 		"pretty-quick": "^1.10.0",
 		"protractor": "~5.4.0",
+		"ts-loader": "^6.0.0",
 		"ts-node": "~7.0.0",
 		"tsickle": ">=0.34.0",
 		"tslib": "^1.9.0",
 		"tslint": "~5.11.0",
-		"typescript": "~3.2.2",
+		"typescript": "~2.9.2",
 		"underscore": "^1.9.1"
 	},
 	"prettier": {
 		"useTabs": true,
 		"singleQuote": true,
-		"printWidth": 85
+		"printWidth": 105
 	},
 	"husky": {
 		"hooks": {

@@ -1,8 +1,4 @@
-<div
-	class="refiner refiner--date"
-	[class.refiner--open]="isOpen"
-	[class.refiner--closed]="!isOpen"
->
+<div class="refiner refiner--date" [class.refiner--open]="isOpen" [class.refiner--closed]="!isOpen">
 	<div class="refiner__section refiner__header" (click)="toggleOpen()">
 		<div class="media media--clickable">
 			<div class="media__body  media--align-center">
@@ -22,10 +18,7 @@
 		<div *ngIf="isOpen" class="refiner__section  refiner__body">
 			<div class="refiner__section refiner__options">
 				<ul class="options">
-					<li
-						*ngFor="let optionSlug of objectKeys(options)"
-						class="option"
-					>
+					<li *ngFor="let optionSlug of objectKeys(options)" class="option">
 						<label class="media media--align-items-center">
 							<div class="media__left">
 								<input
@@ -59,24 +52,26 @@
 					<div *ngIf="currentOptionSlug === 'custom'">
 						<div class="range">
 							<div class="range__from">
-								<label for="fromDatePicker">From </label>
+								<label for="fromDatePicker">{{ fromLabel }}</label>
 								<!-- [(ngModel)]="fromModel" -->
 								<my-date-picker
 									#fromDatePicker
 									name="fromDatePicker"
 									[options]="datePickerOptions"
+									[(ngModel)]="fromModel"
 									(dateChanged)="onFromChange($event)"
 								></my-date-picker>
 							</div>
 							<div class="range__to">
 								<label for="toDatePicker">
-									To
+									{{ toLabel }}
 								</label>
 								<!-- [(ngModel)]="toModel" -->
 								<my-date-picker
 									#toDatePicker
 									name="toDatePicker"
 									[options]="datePickerOptions"
+									[(ngModel)]="toModel"
 									(dateChanged)="onToChange($event)"
 								></my-date-picker>
 							</div>

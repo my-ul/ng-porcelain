@@ -21,8 +21,6 @@ import { IDateOption } from './IDateOption';
  * 		};
  * 	}
  * ```
- *
- * And then in
  */
 export class DateOption extends SimpleOption implements IDateOption {
 	/**

@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-	faCaretDown,
-	faChevronDown,
-	faChevronUp
-} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 import { defaultOptionShowCount } from './defaultOptionShowCount';
 import { defaultShowLessLabel } from '../../shared/labels/defaultShowLessLabel';
@@ -65,9 +61,14 @@ export class SimpleRefinerComponent implements OnInit {
 	expandIcon = faChevronDown;
 
 	// State
-	value: object | SimpleOption;
+	values: { [optionSlug: string]: boolean } = {};
+	private ignoreNext: boolean = false;
 
-	constructor() {}
+	constructor() {
+		console.group('SimpleRefinerComponent > constructor()');
+
+		console.groupEnd();
+	}
 
 	ngOnInit() {
 		// Pick the `isOpen` value;
@@ -109,38 +110,36 @@ export class SimpleRefinerComponent implements OnInit {
 
 		this._isExpanded = !!isExpanded;
 
-		// Handle Show More/Show Less labels
+		// Selected options can be modified with the refiner.valueSubject Observable
+		// newValue is an array of option slugs to set as true
+		this.refiner.valueSubject.subscribe(selectedOptionSlugs => {
+			console.group(
+				'SimpleRefinerComponent.ngOnInit > this.refiner.valueSubject.subscribe(selectedOptionSlugs)'
+			);
+			console.log({ selectedOptionSlugs });
 
-		// Sets up the dictionary used for value state
-		this.selectNone();
+			if (this.ignoreNext) {
+				this.ignoreNext = false;
+			} else {
+				// blank the values first
+				this.values = Object.keys(this.refiner.options).reduce((result, optionSlug) => {
+					result[optionSlug] = false;
+					return result;
+				}, {});
 
-		// Options can be selected on load through Option.isSelected boolean
-		if (this.refiner.options) {
-			for (const optionSlug in this.refiner.options) {
-				if (this.refiner.options.hasOwnProperty(optionSlug)) {
-					const option = this.refiner.options[optionSlug];
-
-					if (
-						option instanceof SimpleOption ||
-						option.hasOwnProperty('isSelected')
-					) {
-						if (option.slug !== optionSlug) {
-							console.error(option);
-						}
-
-						// !! ensures a boolean value
-						this.value[optionSlug] = !!option.isSelected;
-					}
-				}
+				// then, set any true values
+				selectedOptionSlugs.forEach(optionSlug => {
+					this.values[optionSlug] = true;
+				});
 			}
-		}
 
-		// Options should be selected on load through the refiner.selected array of selected optionSlugs
-		if (this.refiner.selected) {
-			for (const optionSlug of this.refiner.selected) {
-				this.value[optionSlug] = true;
-			}
-		}
+			console.groupEnd();
+		});
+
+		// Enables the callback API <porcelain-simple-refiner (onRefinerChange)="..."></porcelain-simple-refiner>
+		this.refiner.valueSubject.subscribe(newValue =>
+			this.onRefinerChange.emit([this.refiner.slug, newValue])
+		);
 	}
 
 	toggleExpanded(): void {
@@ -192,13 +191,12 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	getValue(): string[] {
-		return Object.keys(this.value).filter(key => this.value[key]);
+		// return the keys where the value is true
+		return Object.keys(this.values).filter(key => this.values[key]);
 	}
 
 	canSelectNone(): boolean {
-		return Object.keys(this.value).every(
-			paramName => this.value[paramName] === true
-		);
+		return Object.keys(this.values).every(paramName => this.values[paramName] === true);
 	}
 
 	selectNone() {
@@ -206,24 +204,33 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	canSelectAll(): boolean {
-		return !this.canSelectNone();
+		return Object.keys(this.values).some(paramName => this.values[paramName] === false);
 	}
 
 	selectAll() {
 		return this.setAll(true);
 	}
 
-	setAll(value: any) {
-		if (this.refiner.type === 'simple') {
-			this.value = {};
-			Object.keys(this.refiner.options).forEach(
-				optionKey => (this.value[optionKey] = value)
-			);
+	/**
+	 * Sets all options to newValue; Used to enable select all/select none capability.
+	 */
+	setAll(newValue: boolean) {
+		// only needed for TypeScript
+		if (this.refiner instanceof SimpleRefiner) {
+			const checked = newValue
+				? Object.keys(this.refiner.options) // all selected
+				: []; // none selected
+
+			this.ignoreNext = false;
+			this.refiner.valueSubject.next(checked);
 		}
-		this.onSelectionChange();
 	}
 
+	/**
+	 * Called in Angular template to initiate the propagation of the new values.
+	 */
 	onSelectionChange() {
-		this.onRefinerChange.emit([this.refiner.slug, this.getValue()]);
+		this.ignoreNext = true;
+		this.refiner.valueSubject.next(this.getValue());
 	}
 }

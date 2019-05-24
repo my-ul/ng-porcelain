@@ -1,22 +1,15 @@
-import { DateOptions, DateOption } from '../types';
+import { DateOption } from '../types/Options/DateOption';
+import { DateOptions } from '../types/Options/DateOptions';
 
 import * as _moment from 'moment';
 const moment = _moment;
 
-const momentFloor = (
-	arg1?: _moment.DurationInputArg1,
-	arg2?: _moment.DurationInputArg2
-) => {
-	return moment()
-		.set('hours', 0)
-		.set('minutes', 0)
-		.set('seconds', 0);
+const momentFloor = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) => {
+	return moment().startOf('day');
 };
 
-const momentFloorSubtract = (
-	arg1?: _moment.DurationInputArg1,
-	arg2?: _moment.DurationInputArg2
-) => momentFloor().subtract(arg1, arg2);
+const momentFloorSubtract = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) =>
+	momentFloor().subtract(arg1, arg2);
 
 export const i18nDateOptions = (
 	viewAllLabel: string = 'View All',
@@ -38,6 +31,7 @@ export const i18nDateOptions = (
 		slug: '1',
 		getFrom: () =>
 			moment()
+				.utc()
 				.startOf('day')
 				.toDate(),
 		getTo: () =>
@@ -50,11 +44,13 @@ export const i18nDateOptions = (
 		slug: '7',
 		getFrom: () =>
 			moment()
+				.utc()
 				.startOf('day')
 				.subtract(6, 'days')
 				.toDate(),
 		getTo: () =>
 			moment()
+				.utc()
 				.endOf('day')
 				.toDate()
 	}),
@@ -64,6 +60,7 @@ export const i18nDateOptions = (
 		getFrom: () => momentFloorSubtract(29, 'days').toDate(),
 		getTo: () =>
 			moment()
+				.utc()
 				.endOf('day')
 				.toDate()
 	}),
@@ -73,6 +70,7 @@ export const i18nDateOptions = (
 		getFrom: () => momentFloorSubtract(89, 'days').toDate(),
 		getTo: () =>
 			moment()
+				.utc()
 				.endOf('day')
 				.toDate()
 	}),
@@ -82,16 +80,13 @@ export const i18nDateOptions = (
 		slug: 'custom',
 		getFrom: (fromValue?: string | Date) =>
 			moment(fromValue)
+				.utc()
 				.startOf('day')
 				.toDate(),
 		getTo: (toValue?: string | Date) =>
 			moment(toValue)
+				.utc()
 				.endOf('day')
 				.toDate()
 	})
 });
-
-function logAndReturn<T>(message: any, val: T): T {
-	console.log(message, val);
-	return val;
-}

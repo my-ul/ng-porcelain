@@ -1,0 +1,29 @@
+<div #applicator class="applicator">
+	<div stickyThing [spacer]="headerSpacer" [boundary]="applicator" class="applicator__section">
+		<div class="applicator__header">
+			<button
+				class="applicator__action applicator__action--primary"
+				[class.applicator__action--disabled]="!canApply()"
+				[disabled]="!canApply()"
+				(click)="apply()"
+			>
+				{{ applyLabel }}
+			</button>
+			<button
+				class="applicator__action applicator__action--secondary"
+				[class.applicator__action--disabled]="!canReset()"
+				[disabled]="!canReset()"
+				(click)="reset()"
+			>
+				{{ resetLabel }}
+			</button>
+		</div>
+	</div>
+	<div #headerSpacer></div>
+	<div class="applicator__section">
+		<porcelain-refiners *ngIf="refiners" [refiners]="refiners"></porcelain-refiners>
+		<div *ngIf="!refiners">
+			<p>{{ loadingLabel }}</p>
+		</div>
+	</div>
+</div>

@@ -9,10 +9,7 @@ import * as _ from 'underscore';
 import * as lipsum from 'fast-lorem-ipsum';
 
 // Porcelain
-import {
-	SimpleOption,
-	SimpleRefiner
-} from '../../../projects/ng-porcelain/src/lib/shared/types';
+import { SimpleOption, SimpleRefiner } from '../../../projects/ng-porcelain/src/lib/shared/types';
 import { SIMPLE_REFINER_IMPORTS } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner.module';
 import { SimpleRefinerComponent } from 'projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.component';
 
@@ -131,8 +128,6 @@ let usStatesFull = {
 
 storiesOf('Option Refiner Component', module)
 	.addDecorator(withNotes)
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
 	.addParameters({
 		info: {
 			inline: true
@@ -207,8 +202,7 @@ storiesOf('Option Refiner Component', module)
 
 storiesOf('Option Refiner Component/Badges', module)
 	.addDecorator(withNotes)
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
+
 	.add(
 		'Options with long `label` values and numeric badges',
 		() => ({
@@ -350,8 +344,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 			onRefinerChange: action('Refiner changed'),
 			refiner: new SimpleRefiner({
 				slug: 'visitedStates',
-				title:
-					"States I've Visited (default selections by refiner definition)",
+				title: "States I've Visited (default selections by refiner definition)",
 				selected: ['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],
 				options: usStatesFull
 			})
@@ -366,8 +359,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 			onRefinerChange: action('Refiner changed'),
 			refiner: new SimpleRefiner({
 				slug: 'visitedStates',
-				title:
-					"States I've Visited (default selections by option.isSelected properties)",
+				title: "States I've Visited (default selections by option.isSelected properties)",
 				options: _.mapObject(usStatesFull, state => {
 					state.isSelected = _.contains(
 						['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],

@@ -1,28 +1,22 @@
 // Angular
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
 // Font Awesome 5
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-
 // Utilities
 import * as _moment from 'moment';
-const moment = _moment;
-
+import { IMyDate } from 'mydatepicker';
 // Porcelain
 import {
-	IDateRefiner,
-	DateOptions,
 	DateOption,
-	DateRefiner
+	DateOptions,
+	DateRefiner,
+	DateRefinerValue,
+	IDateRefiner
 } from '../../shared/types';
-import { IMyDateModel, IMyDate } from 'mydatepicker';
-
 import { i18nDateOptions } from '../../shared/utilities/i18nDateOptions';
 
-export interface DateRefinerValue {
-	from: Date;
-	to: Date;
-}
+// Issue with moment requires this workaround for now
+const moment = _moment;
 
 export interface IDateRefinerProps {
 	isOpen?: boolean;
@@ -30,10 +24,20 @@ export interface IDateRefinerProps {
 	onRefinerChange: EventEmitter<any>;
 }
 
+export interface IDateRefinerState {
+	optionSlug: string;
+	from: string | Date | _moment.Moment;
+	to: string | Date | _moment.Moment;
+}
+
 export const defaultDateOptions: DateOptions = i18nDateOptions();
 
 // const animationOptionsInOut = generateSlideInOut('optionsInOut'),
 // 	animationRangeInOut = generateSlideInOut('rangeInOut');
+
+export interface ISimplifiedMyDateModel {
+	date: IMyDate;
+}
 
 @Component({
 	selector: 'porcelain-date-refiner',
@@ -73,6 +77,9 @@ export class DateRefinerComponent implements OnInit {
 		todayBtnTxt: 'Today'
 	};
 
+	@Input() fromLabel: string = 'From';
+	@Input() toLabel: string = 'To';
+
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
 
@@ -87,82 +94,142 @@ export class DateRefinerComponent implements OnInit {
 
 	// State
 	currentOptionSlug: string;
+	private ignoreNext: boolean = false;
 
-	fromModel: IMyDate = null;
-	toModel: IMyDate = null;
+	fromModel: ISimplifiedMyDateModel = null;
+	toModel: ISimplifiedMyDateModel = null;
 
-	constructor() {}
-
-	// Events
-	onChange() {
-		console.group('onChange(event, field)');
-
-		this.onRefinerChange.emit([this.refiner.slug, this.getValue()]);
+	constructor() {
+		console.group('DateRefinerComponent > constructor()');
 
 		console.groupEnd();
 	}
 
-	onFromChange($event?: IMyDateModel) {
-		this.fromModel = $event.date;
+	parseDateState(date: string | Date | _moment.Moment): ISimplifiedMyDateModel {
+		const parsed: _moment.Moment =
+			typeof date === 'string' ? moment(date, 'YYYY-MM-DD').utc() : moment(date).utc();
+
+		if (parsed.isValid) {
+			return {
+				date: {
+					day: parsed.get('date'),
+					month: parsed.get('month') + 1, // Zero-indexed
+					year: parsed.get('year')
+				}
+			};
+		} else {
+			return null;
+		}
+	}
+
+	ngOnInit() {
+		console.group('DateRefinerComponent.ngOnInit()');
+
+		this.options = this.refiner.options ? this.refiner.options : defaultDateOptions;
+
+		for (let optionSlug in this.options) {
+			if (this.options.hasOwnProperty(optionSlug)) {
+				let option = this.options[optionSlug];
+				if (option instanceof DateOption) {
+					if (option.isSelected === true) {
+						this.currentOptionSlug = optionSlug;
+					}
+				}
+			}
+		}
+
+		// Connect new Subscription-based state updates to callback system for users using version < 1.3
+		this.refiner.valueSubject.subscribe(value => {
+			console.log('emitting', value);
+			this.onRefinerChange.emit([this.refiner.slug, value]);
+		});
+
+		// Subscribe to updates to the value, which can be pushed by anyone with a reference to `this.refiner`.
+		this.refiner.valueSubject.subscribe(value => {
+			if (this.ignoreNext) {
+				this.ignoreNext = false;
+			} else {
+				this.currentOptionSlug = value.optionSlug;
+				if (this.currentOptionSlug === 'custom') {
+					this.fromModel = this.parseDateState(value.from);
+					this.toModel = this.parseDateState(value.to);
+				}
+			}
+		});
+
+		console.groupEnd();
+	}
+
+	onFromChange($event) {
+		this.fromModel = $event;
 		this.onChange();
 	}
 
-	onToChange($event?: IMyDateModel) {
-		this.toModel = $event.date;
+	onToChange($event) {
+		this.toModel = $event;
 		this.onChange();
+	}
+
+	// Events
+	onChange() {
+		console.group('onChange()');
+
+		this.ignoreNext = true;
+		this.refiner.valueSubject.next(this.getValue());
+
+		console.groupEnd();
 	}
 
 	// States
 	optionHasBadge(dateOptionOrDate: DateOption | Date): boolean {
-		return (
-			dateOptionOrDate instanceof DateOption &&
-			typeof dateOptionOrDate.badge !== 'undefined'
-		);
+		return dateOptionOrDate instanceof DateOption && typeof dateOptionOrDate.badge !== 'undefined';
 	}
 
 	// Getters
 	getValue(): DateRefinerValue {
 		console.group('getValue()');
 
-		const selectedOption = this.options[this.currentOptionSlug];
+		const currentOption = this.refiner.options[this.currentOptionSlug];
 
-		const selectedFrom =
-			this.currentOptionSlug === 'custom'
-				? this.fromModel
-					? selectedOption.getFrom(
-							moment()
-								.year(this.fromModel.year)
-								.month(this.fromModel.month - 1)
-								.date(this.fromModel.day)
-								.startOf('day')
-								.toDate()
-					  )
-					: null
-				: selectedOption
-				? selectedOption.getFrom(null)
-				: null;
+		if (this.currentOptionSlug === 'custom') {
+		}
 
-		const selectedTo =
-			this.currentOptionSlug === 'custom'
-				? this.toModel // is custom... is a to value set?
-					? selectedOption.getTo(
-							// to value is set
-							moment()
-								.year(this.toModel.year)
-								.month(this.toModel.month - 1)
-								.date(this.toModel.day)
-								.endOf('day')
-								.toDate()
-					  )
-					: null // to value is not set
-				: selectedOption // is not 'custom'
-				? selectedOption.getTo(null) // generate the to value
-				: null; // return null (range is unbounded)
+		const currentFromDate =
+			this.currentOptionSlug === 'custom' && this.fromModel
+				? moment()
+						.utc()
+						.year(this.fromModel.date.year)
+						.month(this.fromModel.date.month) // zero-indexed, so Jan is 0; Dec is 11
+						.date(this.fromModel.date.day)
+						.startOf('day')
+						.toDate()
+				: moment()
+						.utc()
+						.startOf('day')
+						.toDate();
+		const from = currentOption.getFrom(currentFromDate);
+
+		const currentToDate =
+			this.currentOptionSlug === 'custom' && this.toModel
+				? moment()
+						.utc()
+						.year(this.toModel.date.year)
+						.month(this.toModel.date.month)
+						.date(this.toModel.date.day)
+						.endOf('day')
+						.toDate()
+				: moment()
+						.utc()
+						.endOf('day')
+						.toDate();
+		const to = currentOption.getTo(currentToDate);
 
 		console.groupEnd();
+
 		return {
-			from: selectedFrom,
-			to: selectedTo
+			from,
+			optionSlug: this.currentOptionSlug,
+			to
 		};
 	}
 
@@ -191,22 +258,5 @@ export class DateRefinerComponent implements OnInit {
 	// Mutators
 	toggleOpen() {
 		this.isOpen = !this.isOpen;
-	}
-
-	ngOnInit() {
-		this.options = this.refiner.options
-			? this.refiner.options
-			: defaultDateOptions;
-
-		for (let optionSlug in this.options) {
-			let option = this.options[optionSlug];
-			if (option instanceof DateOption) {
-				if (option.isSelected === true) {
-					this.currentOptionSlug = optionSlug;
-				}
-			}
-		}
-
-		this.onChange();
 	}
 }

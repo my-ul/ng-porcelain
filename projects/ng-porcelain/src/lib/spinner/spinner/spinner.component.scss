@@ -1,0 +1,42 @@
+* {
+	box-sizing: border-box;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.spinner {
+	$size: 1em;
+	$borderFactor: 10;
+
+	display: inline-block;
+	border: ($size * 0.06) solid #d0d0d0;
+	border-left-color: #000;
+	border-top-color: #000;
+	border-radius: 50%;
+	margin-bottom: -($size/$borderFactor);
+	margin-top: -($size/$borderFactor);
+	width: $size;
+	height: $size;
+
+	animation: spin 600ms linear infinite;
+
+	.sr-only {
+		border: 0;
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(50%);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		word-wrap: normal !important;
+	}
+}

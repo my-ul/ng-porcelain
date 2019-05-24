@@ -3,6 +3,7 @@ import { SimpleOption } from '../Options/SimpleOption';
 import { RefinerType } from './RefinerType';
 import { IBaseRefiner } from './IBaseRefiner';
 import { RefinerValue } from '../Values';
+import { Subject, BehaviorSubject } from 'rxjs';
 export abstract class BaseRefiner implements IBaseRefiner {
 	/**
 	 * Refiner type discriminator.  Allows refiners to be JSON serialized
@@ -29,21 +30,22 @@ export abstract class BaseRefiner implements IBaseRefiner {
 	/**
 	 * Provide a value if the refiner should initialize with a value.
 	 *
+	 * @deprecated
 	 */
-	value: RefinerValue;
+	value?: RefinerValue;
+
 	/**
 	 * Number of options to show in the refiner in the un-expanded state. Default is 5
 	 *
 	 */
 	showCount?: number;
+
+	valueSubject: Subject<any>;
+
 	constructor(refinerDefinition: IBaseRefiner) {
 		this.title = refinerDefinition.title ? refinerDefinition.title : '';
 		this.slug = refinerDefinition.slug ? refinerDefinition.slug : '';
 		this.options = refinerDefinition.options ? refinerDefinition.options : {};
-		this.isOpen =
-			typeof refinerDefinition.isOpen === 'boolean'
-				? refinerDefinition.isOpen
-				: true;
-		this.value = refinerDefinition.value ? refinerDefinition.value : null;
+		this.isOpen = typeof refinerDefinition.isOpen === 'boolean' ? refinerDefinition.isOpen : true;
 	}
 }

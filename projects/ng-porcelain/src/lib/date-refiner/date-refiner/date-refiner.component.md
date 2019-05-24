@@ -62,7 +62,7 @@ class MyComponent implements OnInit {
 	});
 
 	handleRefinerChange([refinerSlug, refinerValue]) {
-		console.log({refinerSlug, refinerValue});
+		// console.log({refinerSlug, refinerValue});
 	}
 }
 ```

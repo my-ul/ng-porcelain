@@ -1,8 +1,4 @@
-<div
-	class="refiner refiner--simple"
-	[class.refiner--open]="isOpen"
-	[class.refiner--closed]="!isOpen"
->
+<div class="refiner refiner--simple" [class.refiner--open]="isOpen" [class.refiner--closed]="!isOpen">
 	<div class="refiner__section refiner__header" (click)="toggleOpen()">
 		<div class="media media--clickable">
 			<div class="media__body">
@@ -21,18 +17,10 @@
 		<!-- [@optionsInOut -->
 		<div *ngIf="isOpen" class="refiner__section refiner__body">
 			<div class="refiner__section refiner__selection-toggles">
-				<button
-					(click)="selectNone()"
-					*ngIf="canSelectNone()"
-					class="refiner__select-none"
-				>
+				<button (click)="selectNone()" *ngIf="canSelectNone()" class="refiner__select-none">
 					{{ selectNoneLabel }}
 				</button>
-				<button
-					(click)="selectAll()"
-					*ngIf="canSelectAll()"
-					class="refiner__select-all"
-				>
+				<button (click)="selectAll()" *ngIf="canSelectAll()" class="refiner__select-all">
 					{{ selectAllLabel }}
 				</button>
 			</div>
@@ -40,31 +28,23 @@
 
 			<div class="refiner__section refiner__options">
 				<ul class="options">
-					<li
-						class="option"
-						*ngFor="let optionKey of getExpandedOptionKeys()"
-					>
+					<li class="option" *ngFor="let optionKey of getExpandedOptionKeys()">
 						<label class="media media--align-items-center">
 							<div class="media__left">
 								<input
 									type="checkbox"
 									name="refiner-{{ refiner.slug }}"
 									value="{{ optionKey }}"
-									[(ngModel)]="value[optionKey]"
+									[(ngModel)]="values[optionKey]"
 									(change)="onSelectionChange()"
 								/>
 							</div>
 							<div class="media__body">
 								<porcelain-truncate
-									[value]="
-										getOptionLabel(refiner.options[optionKey])
-									"
+									[value]="getOptionLabel(refiner.options[optionKey])"
 								></porcelain-truncate>
 							</div>
-							<div
-								class="media__right"
-								*ngIf="optionHasBadge(refiner.options[optionKey])"
-							>
+							<div class="media__right" *ngIf="optionHasBadge(refiner.options[optionKey])">
 								<div class="badge">
 									{{ getOptionBadge(refiner.options[optionKey]) }}
 								</div>

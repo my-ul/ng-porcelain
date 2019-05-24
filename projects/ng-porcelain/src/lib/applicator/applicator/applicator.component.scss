@@ -1,0 +1,98 @@
+::ng-deep {
+	.sb-show-main {
+		margin: 0;
+		padding: 0 0 2000px 0;
+		font-family: 'Open Sans', sans-serif;
+		font-size: 88%;
+	}
+}
+
+.applicator {
+	$currentComponent: &;
+	$primary-action: #3b92de;
+	$secondary-action: #fff;
+	$spacing: 0.5em;
+
+	.applicator__action {
+		font-family: 'Open Sans';
+
+		text-transform: uppercase;
+
+		flex: 1 0 auto;
+
+		border-radius: 0.2em;
+		border: solid 1px #d0d0d0;
+
+		padding: $spacing $spacing * 2;
+
+		transition: all ease-in-out 200ms;
+
+		cursor: pointer;
+
+		&.applicator__action--disabled {
+			cursor: not-allowed;
+		}
+
+		&.applicator__action--primary {
+			background-color: $primary-action;
+			border-color: $primary-action;
+			font-weight: bold;
+			color: #fff;
+			&:hover {
+				// border-color: darken($primary-action, 20%);
+				// background-color: lighten($primary-action, 10%);
+			}
+
+			&.applicator__action--disabled {
+				background-color: lighten($primary-action, 30%);
+				border-color: lighten($primary-action, 30%);
+			}
+		}
+		&.applicator__action--secondary {
+			background-color: $secondary-action;
+			border-color: darken($secondary-action, 15%);
+			font-weight: 600;
+			color: #000;
+			&:hover {
+				//border-color: darken($secondary-action, 30%);
+			}
+
+			&.applicator__action--disabled {
+				color: darken($secondary-action, 30%);
+				&:hover {
+					border-color: darken($secondary-action, 15%);
+				}
+			}
+		}
+	}
+	.applicator__action + .applicator__action {
+		margin-left: $spacing;
+	}
+	.applicator__header {
+		padding: $spacing;
+		display: flex;
+		flex-direction: row;
+		justify-items: stretch;
+		background: #fff;
+		z-index: 2000;
+
+		border-bottom: solid 1px #d0d0d0;
+	}
+	.applicator__section {
+		z-index: 1000;
+		transition: box-shadow ease-in-out 200ms;
+
+		&.applicator__section--padded {
+			padding: 1.5em;
+		}
+
+		&.is-sticky {
+			background: #fff;
+			box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+			z-index: 2000;
+		}
+	}
+	.applicator__section + .applicator__section {
+		border-top: 1px solid #d0d0d0;
+	}
+}

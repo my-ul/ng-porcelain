@@ -56,6 +56,8 @@ storiesOf('Date Refiner Component', module)
 		() => ({
 			component: DateRefinerComponent,
 			props: {
+				toLabel: 'Al',
+				fromLabel: 'Del',
 				datePickerOptions: {
 					dateFormat: 'yyyy-mm-dd',
 					dayLabels: {
