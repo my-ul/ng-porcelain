@@ -1,5 +1,4 @@
-import { IMyDayLabels } from 'mydatepicker';
-import { defaultDateOptions } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component';
+// Storybook
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
@@ -7,15 +6,21 @@ import { storiesOf } from '@storybook/angular';
 
 // Utilities
 import * as _moment from 'moment';
-const moment = _moment;
 
+// Porcelain
+import { DATE_REFINER_IMPORTS } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner.module';
 import {
-	IDateRefinerProps,
-	DateRefinerComponent
-} from 'projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component';
-import { DATE_REFINER_IMPORTS } from 'projects/ng-porcelain/src/lib/date-refiner/date-refiner.module';
-import { DateRefiner, DateOption } from 'projects/ng-porcelain/src/lib/shared/types';
-import { i18nDateOptions } from 'projects/ng-porcelain/src/lib/shared/utilities';
+	DateOption,
+	DateRefiner,
+	i18nDateOptions
+} from './../../../projects/ng-porcelain/src/lib/shared';
+import {
+	DateRefinerComponent,
+	defaultDateOptions,
+	IDateRefinerProps
+} from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component';
+
+const moment = _moment;
 
 // Porcelain
 

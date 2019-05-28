@@ -1,7 +1,5 @@
-import { ISimpleOptions } from '../Options';
-import { RefinerValue } from '../Values';
 import { RefinerType } from './RefinerType';
-import { Subject } from 'rxjs';
+import { ISimpleOptions } from '../Options/ISimpleOptions';
 
 export interface IBaseRefiner {
 	type?: RefinerType;

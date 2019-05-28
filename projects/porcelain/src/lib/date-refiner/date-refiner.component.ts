@@ -1,19 +1,15 @@
 // Angular
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
 // Font Awesome 5
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-
 // Utilities
-import moment from 'moment';
+import * as _moment from 'moment';
+const moment = _moment; // module/namespace workaround, do not remove
 
 // Porcelain
-import { IDateRefiner, DateRefiner } from '../refiners/IRefiner';
-import { DateOptions } from '../refiners/IOptions';
 import { DateOption } from '../refiners/IOption';
-import { blockInitialAnimation } from '../shared/animations/blockInitialAnimation.trigger';
-import { generateSlideInOut } from '../shared/animations/slideInOut.trigger';
-
+import { DateOptions } from '../refiners/IOptions';
+import { DateRefiner, IDateRefiner } from '../refiners/IRefiner';
 export interface DateRefinerValue {
 	from: Date;
 	to: Date;
@@ -25,16 +21,16 @@ export interface IDateRefinerProps {
 	onRefinerChange: EventEmitter<any>;
 }
 
-const momentFloor = (arg1?: moment.DurationInputArg1, arg2?: moment.DurationInputArg2) =>
+const momentFloor = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) =>
 	moment()
 		.set('hours', 0)
 		.set('minutes', 0)
 		.set('seconds', 0);
 
-const momentFloorSubtract = (arg1?: moment.DurationInputArg1, arg2?: moment.DurationInputArg2) =>
+const momentFloorSubtract = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) =>
 	momentFloor().subtract(arg1, arg2);
 
-const momentFloorAdd = (arg1?: moment.DurationInputArg1, arg2?: moment.DurationInputArg2) =>
+const momentFloorAdd = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) =>
 	momentFloor().add(arg1, arg2);
 
 export const defaultDateOptions: DateOptions = {
@@ -80,8 +76,8 @@ export const defaultDateOptions: DateOptions = {
 	})
 };
 
-const animationOptionsInOut = generateSlideInOut('optionsInOut'),
-	animationRangeInOut = generateSlideInOut('rangeInOut');
+// const animationOptionsInOut = generateSlideInOut('optionsInOut'),
+// 	animationRangeInOut = generateSlideInOut('rangeInOut');
 
 @Component({
 	selector: 'porcelain-date-refiner',

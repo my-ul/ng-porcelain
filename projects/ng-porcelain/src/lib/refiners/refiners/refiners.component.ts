@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { BaseRefiner, RefinerType } from '../../shared/types';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BaseRefiner } from '../../shared';
 
 @Component({
 	selector: 'porcelain-refiners',

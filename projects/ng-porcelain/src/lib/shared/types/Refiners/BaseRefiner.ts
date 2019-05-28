@@ -1,9 +1,12 @@
-import { SimpleOptions } from '../Options/';
-import { SimpleOption } from '../Options/SimpleOption';
-import { RefinerType } from './RefinerType';
-import { IBaseRefiner } from './IBaseRefiner';
-import { RefinerValue } from '../Values';
+// Imports
 import { Subject, BehaviorSubject } from 'rxjs';
+
+// Library
+import { IBaseRefiner } from './IBaseRefiner';
+import { RefinerType } from './RefinerType';
+import { SimpleOption } from '../Options/SimpleOption';
+import { SimpleOptions } from '../Options/SimpleOptions';
+import { RefinerValue } from '../Values/RefinerValue';
 export abstract class BaseRefiner implements IBaseRefiner {
 	/**
 	 * Refiner type discriminator.  Allows refiners to be JSON serialized

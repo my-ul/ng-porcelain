@@ -1,6 +1,7 @@
-import { IDateOptions } from '../Options/';
 import { IBaseRefiner } from './IBaseRefiner';
-import { IDateRefinerValue } from '../Values';
+import { IDateOptions } from '../Options/IDateOptions';
+import { IDateRefinerValue } from '../Values/IDateRefinerValue';
+
 export interface IDateRefiner extends IBaseRefiner {
 	options?: IDateOptions;
 	value?: IDateRefinerValue;

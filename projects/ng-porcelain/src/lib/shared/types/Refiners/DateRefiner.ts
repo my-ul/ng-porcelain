@@ -1,12 +1,15 @@
-import { Subject, BehaviorSubject } from 'rxjs';
-import { DateOptions } from '../Options/';
-import { DateRefinerValue } from '../Values/DateRefinerValue';
-import { IDateRefinerState } from './../../../date-refiner/date-refiner/date-refiner.component';
+// rxjs
+import { BehaviorSubject } from 'rxjs';
+
+// Library
 import { BaseRefiner } from './BaseRefiner';
+import { DateOptions } from '../Options/DateOptions';
+import { DateRefinerValue } from '../Values/DateRefinerValue';
+import { i18nDateOptions } from '../../utilities/i18nDateOptions';
+import { IDateOption } from '../Options/IDateOption';
 import { IDateRefiner } from './IDateRefiner';
+import { IDateRefinerState } from './../../../date-refiner/date-refiner/date-refiner.component';
 import { RefinerType } from './RefinerType';
-import { first } from 'rxjs/operators';
-import { i18nDateOptions } from '../../utilities';
 
 export class DateRefiner extends BaseRefiner implements IDateRefiner {
 	options?: DateOptions;
@@ -20,7 +23,7 @@ export class DateRefiner extends BaseRefiner implements IDateRefiner {
 			this.options = dateRefiner.options || i18nDateOptions();
 		}
 
-		const firstOption = Object.values(this.options)[0];
+		const firstOption = Object.values(this.options)[0] as IDateOption;
 
 		this.valueSubject = new BehaviorSubject<IDateRefinerState>(
 			dateRefiner.value

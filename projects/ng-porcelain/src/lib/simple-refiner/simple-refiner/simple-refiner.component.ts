@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faCaretDown, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-
-import { defaultOptionShowCount } from './defaultOptionShowCount';
-import { defaultShowLessLabel } from '../../shared/labels/defaultShowLessLabel';
-import { defaultShowMoreLabel } from '../../shared/labels/defaultShowMoreLabel';
-
-import { SimpleRefiner, SimpleOption } from '../../shared/types';
-import { defaultSelectAllLabel } from '../../shared/labels/defaultSelectAllLabel';
-import { defaultSelectNoneLabel } from '../../shared/labels/defaultSelectNoneLabel';
+import {
+	defaultSelectAllLabel,
+	defaultSelectNoneLabel,
+	defaultShowLessLabel,
+	defaultShowMoreLabel,
+	SimpleOption,
+	SimpleRefiner
+} from '../../shared';
+import { defaultOptionShowCount } from './../../../../../porcelain/src/lib/simple-refiner/defaultOptionShowCount';
 
 @Component({
 	selector: 'porcelain-simple-refiner',

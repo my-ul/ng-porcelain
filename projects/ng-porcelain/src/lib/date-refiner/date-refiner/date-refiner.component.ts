@@ -5,15 +5,16 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 // Utilities
 import * as _moment from 'moment';
 import { IMyDate } from 'mydatepicker';
+
 // Porcelain
 import {
 	DateOption,
 	DateOptions,
 	DateRefiner,
 	DateRefinerValue,
+	i18nDateOptions,
 	IDateRefiner
-} from '../../shared/types';
-import { i18nDateOptions } from '../../shared/utilities/i18nDateOptions';
+} from '../../shared';
 
 // Issue with moment requires this workaround for now
 const moment = _moment;
