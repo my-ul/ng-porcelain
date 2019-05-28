@@ -13,6 +13,6 @@ export interface IBaseRefinerDefinition {
 }
 
 /**
- * @deprecated Please use more-descriptive interface, IBaseRefinerDefinition. Will be removed at 2.0.0
+ * @deprecated Use `IBaseRefinerDefinition` instead of `IBaseRefiner`. Will be removed at 2.0.0
  */
 export interface IBaseRefiner extends IBaseRefinerDefinition {}
