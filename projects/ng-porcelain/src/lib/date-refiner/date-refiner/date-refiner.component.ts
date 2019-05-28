@@ -1,4 +1,4 @@
-import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
+import { DateRefinerDefinition } from './../../shared';
 // Angular
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // Font Awesome 5

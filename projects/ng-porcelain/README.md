@@ -166,7 +166,7 @@ Shows a spinner, suitable for loading, or activity indication.
 
 The Simple Refiner component provides an interface for the user to pick many options to begin refining a search.
 
-The behavior of the Simple Refiner is best defined by the `SimpleRefiner` class in `lib/shared/types/Refiners`.
+The behavior of the Simple Refiner is best defined by the `SimpleRefinerDefinition` class in `lib/shared`.
 
 #### Basic Usage
 
@@ -206,7 +206,7 @@ class MyComponent {
 
 The Date Refiner component provides an interface for the user to specify an applicable date range for refining a search.
 
-The behavior of the Simple Refiner is defined by the `DateRefiner` class in `lib/shared/types/Refiners`.
+The behavior of the Simple Refiner is defined by the `DateRefinerDefinition` class in `lib/shared`.
 
 #### Basic Usage
 

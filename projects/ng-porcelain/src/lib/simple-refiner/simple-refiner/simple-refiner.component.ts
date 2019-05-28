@@ -5,10 +5,10 @@ import {
 	defaultSelectNoneLabel,
 	defaultShowLessLabel,
 	defaultShowMoreLabel,
+	defaultOptionShowCount,
 	SimpleOption,
 	SimpleRefinerDefinition
 } from '../../shared';
-import { defaultOptionShowCount } from './../../../../../porcelain/src/lib/simple-refiner/defaultOptionShowCount';
 
 @Component({
 	selector: 'porcelain-simple-refiner',

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { BaseRefinerDefinition } from '../../shared/types/Refiners/BaseRefinerDefinition';
+import { BaseRefinerDefinition } from '../../shared';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 

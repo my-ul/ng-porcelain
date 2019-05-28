@@ -9,9 +9,9 @@ import * as _ from 'underscore';
 import * as lipsum from 'fast-lorem-ipsum';
 
 // Porcelain
-import { SimpleOption, SimpleRefinerDefinition } from '../../../projects/ng-porcelain/src/lib/shared';
 import { SIMPLE_REFINER_IMPORTS } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner.module';
 import { SimpleRefinerComponent } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.component';
+import { SimpleRefinerDefinition, SimpleOption } from 'projects/ng-porcelain/src/lib/shared';
 
 const usStatesHash = {
 	AL: 'Alabama',

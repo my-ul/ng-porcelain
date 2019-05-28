@@ -11,7 +11,7 @@ import {
 	i18nDateOptions,
 	SimpleRefinerDefinition,
 	DateRefinerDefinition
-} from './../../../projects/ng-porcelain/src/lib/shared/';
+} from '../../../projects/ng-porcelain/src/lib/shared';
 import { APPLICATOR_IMPORTS } from './../../../projects/ng-porcelain/src/lib/applicator/applicator.module';
 import { ApplicatorComponent } from './../../../projects/ng-porcelain/src/lib/applicator/applicator/applicator.component';
 

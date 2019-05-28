@@ -8,9 +8,12 @@ import { storiesOf } from '@storybook/angular';
 import * as _moment from 'moment';
 
 // Porcelain
+import {
+	DateOption,
+	DateRefinerDefinition,
+	i18nDateOptions
+} from '../../.../../../projects/ng-porcelain/src/lib/shared';
 import { DATE_REFINER_IMPORTS } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner.module';
-import { DateRefinerDefinition } from './../../../projects/ng-porcelain/src/lib/shared';
-import { DateOption, i18nDateOptions } from './../../../projects/ng-porcelain/src/lib/shared';
 import {
 	DateRefinerComponent,
 	defaultDateOptions,
@@ -18,8 +21,6 @@ import {
 } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component';
 
 const moment = _moment;
-
-// Porcelain
 
 storiesOf('Date Refiner Component', module)
 	.addDecorator(withNotes)

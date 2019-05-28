@@ -3,10 +3,11 @@
  */
 
 export * from './animations/slideInOut.animation';
-export * from './labels/defaultSelectAllLabel';
-export * from './labels/defaultSelectNoneLabel';
-export * from './labels/defaultShowLessLabel';
-export * from './labels/defaultShowMoreLabel';
+export * from './defaults/labels/defaultSelectAllLabel';
+export * from './defaults/labels/defaultSelectNoneLabel';
+export * from './defaults/labels/defaultShowLessLabel';
+export * from './defaults/labels/defaultShowMoreLabel';
+export * from './defaults/properties/defaultOptionShowCount';
 export * from './types/IDictionary';
 export * from './types/Options/DateOption';
 export * from './types/Options/DateOptions';
