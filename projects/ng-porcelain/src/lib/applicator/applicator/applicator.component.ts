@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { BaseRefiner } from '../../shared/types/Refiners/BaseRefiner';
+import { BaseRefinerDefinition } from '../../shared/types/Refiners/BaseRefinerDefinition';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -25,7 +25,7 @@ import { BaseRefiner } from '../../shared/types/Refiners/BaseRefiner';
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
 	@Input()
-	refiners: BaseRefiner[] = [];
+	refiners: BaseRefinerDefinition[] = [];
 
 	@Input() applyLabel: string = 'Apply';
 	@Input() resetLabel: string = 'Reset';

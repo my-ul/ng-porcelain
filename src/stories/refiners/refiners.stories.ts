@@ -1,12 +1,16 @@
+// Storybook
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
 import { storiesOf } from '@storybook/angular';
-import { RefinersComponent } from '../../../projects/ng-porcelain/src/lib/refiners/refiners/refiners.component';
-import { REFINERS_IMPORTS } from '../../../projects/ng-porcelain/src/lib/refiners/refiners.module';
-import { SimpleRefiner, SimpleOption, DateRefiner } from 'projects/ng-porcelain/src/lib/shared';
-
 // Porcelain Imports
+import {
+	DateRefinerDefinition,
+	SimpleOption,
+	SimpleRefinerDefinition
+} from 'projects/ng-porcelain/src/lib/shared';
+import { REFINERS_IMPORTS } from '../../../projects/ng-porcelain/src/lib/refiners/refiners.module';
+import { RefinersComponent } from '../../../projects/ng-porcelain/src/lib/refiners/refiners/refiners.component';
 
 storiesOf('Refiners Component', module)
 	.addDecorator(withKnobs)
@@ -21,7 +25,7 @@ storiesOf('Refiners Component', module)
 			props: {
 				onRefinersChange: action('Refiners change'),
 				refiners: [
-					new SimpleRefiner({
+					new SimpleRefinerDefinition({
 						title: 'Common Allergies',
 						slug: 'allergies',
 						options: {
@@ -45,7 +49,7 @@ storiesOf('Refiners Component', module)
 						}
 					}),
 
-					new SimpleRefiner({
+					new SimpleRefinerDefinition({
 						title: 'Order Status',
 						slug: 'status',
 						options: {
@@ -55,13 +59,13 @@ storiesOf('Refiners Component', module)
 						}
 					}),
 
-					new DateRefiner({
+					new DateRefinerDefinition({
 						title: 'Created within...',
 						slug: 'createdOn',
 						options: null
 					}),
 
-					new SimpleRefiner({
+					new SimpleRefinerDefinition({
 						title: 'Favorite Sports',
 						slug: 'favoriteSports',
 						options: {

@@ -1,3 +1,4 @@
+import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 // Angular
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // Font Awesome 5
@@ -10,10 +11,9 @@ import { IMyDate } from 'mydatepicker';
 import {
 	DateOption,
 	DateOptions,
-	DateRefiner,
 	DateRefinerValue,
 	i18nDateOptions,
-	IDateRefiner
+	IDateRefinerDefinition
 } from '../../shared';
 
 // Issue with moment requires this workaround for now
@@ -21,7 +21,7 @@ const moment = _moment;
 
 export interface IDateRefinerProps {
 	isOpen?: boolean;
-	refiner: IDateRefiner;
+	refiner: IDateRefinerDefinition;
 	onRefinerChange: EventEmitter<any>;
 }
 
@@ -48,7 +48,7 @@ export interface ISimplifiedMyDateModel {
 export class DateRefinerComponent implements OnInit {
 	// Inputs
 	@Input() isOpen: boolean = true;
-	@Input() refiner: DateRefiner;
+	@Input() refiner: DateRefinerDefinition;
 
 	@Input() datePickerOptions = {
 		dateFormat: 'yyyy-mm-dd',

@@ -2,20 +2,24 @@
 import { BehaviorSubject } from 'rxjs';
 
 // Library
-import { BaseRefiner } from './BaseRefiner';
+import { BaseRefinerDefinition } from './BaseRefinerDefinition';
 import { DateOptions } from '../Options/DateOptions';
 import { DateRefinerValue } from '../Values/DateRefinerValue';
 import { i18nDateOptions } from '../../utilities/i18nDateOptions';
 import { IDateOption } from '../Options/IDateOption';
-import { IDateRefiner } from './IDateRefiner';
-import { IDateRefinerState } from './../../../date-refiner/date-refiner/date-refiner.component';
+import { IDateRefinerDefinition } from './IDateRefinerDefinition';
+import { IDateRefinerState } from '../../../date-refiner/date-refiner/date-refiner.component';
 import { RefinerType } from './RefinerType';
 
-export class DateRefiner extends BaseRefiner implements IDateRefiner {
+/**
+ * Defines DateRefinerComponent behavior.
+ * @since 1.4.0
+ */
+export class DateRefinerDefinition extends BaseRefinerDefinition implements IDateRefinerDefinition {
 	options?: DateOptions;
 	value?: DateRefinerValue;
 	valueSubject: BehaviorSubject<IDateRefinerState>;
-	constructor(dateRefiner: IDateRefiner) {
+	constructor(dateRefiner: IDateRefinerDefinition) {
 		super(dateRefiner);
 		this.type = RefinerType.date;
 
@@ -40,3 +44,8 @@ export class DateRefiner extends BaseRefiner implements IDateRefiner {
 		);
 	}
 }
+
+/**
+ * @deprecated Use `DateRefinerDefinition` instead of `DateRefiner`
+ */
+export class DateRefiner extends DateRefinerDefinition {}

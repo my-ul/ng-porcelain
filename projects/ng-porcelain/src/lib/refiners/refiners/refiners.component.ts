@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BaseRefiner } from '../../shared';
+import { BaseRefinerDefinition } from '../../shared';
 
 @Component({
 	selector: 'porcelain-refiners',
@@ -8,7 +8,7 @@ import { BaseRefiner } from '../../shared';
 })
 export class RefinersComponent implements OnInit {
 	// Inputs
-	@Input() refiners: BaseRefiner[];
+	@Input() refiners: BaseRefinerDefinition[];
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
@@ -33,11 +33,11 @@ export class RefinersComponent implements OnInit {
 		this.onRefinersChange.emit(this.values);
 	}
 
-	isSimpleRefiner(refiner: BaseRefiner): boolean {
+	isSimpleRefiner(refiner: BaseRefinerDefinition): boolean {
 		return refiner.type === 'simple';
 	}
 
-	isDateRefiner(refiner: BaseRefiner): boolean {
+	isDateRefiner(refiner: BaseRefinerDefinition): boolean {
 		return refiner.type === 'date';
 	}
 }

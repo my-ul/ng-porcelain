@@ -9,11 +9,8 @@ import * as _moment from 'moment';
 
 // Porcelain
 import { DATE_REFINER_IMPORTS } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner.module';
-import {
-	DateOption,
-	DateRefiner,
-	i18nDateOptions
-} from './../../../projects/ng-porcelain/src/lib/shared';
+import { DateRefinerDefinition } from './../../../projects/ng-porcelain/src/lib/shared';
+import { DateOption, i18nDateOptions } from './../../../projects/ng-porcelain/src/lib/shared';
 import {
 	DateRefinerComponent,
 	defaultDateOptions,
@@ -37,7 +34,7 @@ storiesOf('Date Refiner Component', module)
 		() => ({
 			component: DateRefinerComponent,
 			props: {
-				refiner: new DateRefiner({
+				refiner: new DateRefinerDefinition({
 					slug: 'myRefinerDefinition',
 					title: 'Simple Date Refiner',
 					options: defaultDateOptions
@@ -90,7 +87,7 @@ storiesOf('Date Refiner Component', module)
 					},
 					todayBtnTxt: 'Hoy'
 				},
-				refiner: new DateRefiner({
+				refiner: new DateRefinerDefinition({
 					slug: 'myRefinerDefinition',
 					title: 'Simple Date Refiner',
 					options: i18nDateOptions(
@@ -121,7 +118,7 @@ storiesOf('Date Refiner Component', module)
 		() => ({
 			component: DateRefinerComponent,
 			props: {
-				refiner: new DateRefiner({
+				refiner: new DateRefinerDefinition({
 					slug: 'myRefinerDefinition',
 					title: 'Simple Date Refiner',
 					options: defaultDateOptions
@@ -150,7 +147,7 @@ storiesOf('Date Refiner Component', module)
 			props: {
 				isOpen: false,
 				onRefinerChange: action('Date refiner value'),
-				refiner: new DateRefiner({
+				refiner: new DateRefinerDefinition({
 					slug: 'closedByDefault',
 					title: 'Closed Date Refiner'
 				})
@@ -167,7 +164,7 @@ storiesOf('Date Refiner Component', module)
 			},
 			props: {
 				onRefinerChange: action('Date Refiner value changed'),
-				refiner: new DateRefiner({
+				refiner: new DateRefinerDefinition({
 					slug: 'withBadges',
 					title: 'Date Refiner with Badges',
 					options: {

@@ -9,9 +9,9 @@ import * as _ from 'underscore';
 import * as lipsum from 'fast-lorem-ipsum';
 
 // Porcelain
-import { SimpleOption, SimpleRefiner } from '../../../projects/ng-porcelain/src/lib/shared';
+import { SimpleOption, SimpleRefinerDefinition } from '../../../projects/ng-porcelain/src/lib/shared';
 import { SIMPLE_REFINER_IMPORTS } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner.module';
-import { SimpleRefinerComponent } from 'projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.component';
+import { SimpleRefinerComponent } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.component';
 
 const usStatesHash = {
 	AL: 'Alabama',
@@ -141,7 +141,7 @@ storiesOf('Option Refiner Component', module)
 				imports: SIMPLE_REFINER_IMPORTS
 			},
 			props: {
-				refiner: new SimpleRefiner({
+				refiner: new SimpleRefinerDefinition({
 					slug: 'simple',
 					title: 'United States of America (simple definitions)',
 					options: usStatesHash
@@ -162,7 +162,7 @@ storiesOf('Option Refiner Component', module)
 				imports: SIMPLE_REFINER_IMPORTS
 			},
 			props: {
-				refiner: new SimpleRefiner({
+				refiner: new SimpleRefinerDefinition({
 					slug: 'simple',
 					title: 'United States of America (full definitions; see notes)',
 					options: usStatesFull
@@ -186,7 +186,7 @@ storiesOf('Option Refiner Component', module)
 				showLessLabel: 'Muestra menos %u',
 				selectAllLabel: 'Seleccionar todo',
 				selectNoneLabel: 'Seleccione Ninguno',
-				refiner: new SimpleRefiner({
+				refiner: new SimpleRefinerDefinition({
 					slug: 'states',
 					title: 'Estados de los EE.UU.',
 					options: usStatesFull
@@ -212,7 +212,7 @@ storiesOf('Option Refiner Component/Badges', module)
 			props: {
 				isOpen: true,
 				onRefinerChange: action('Refiner onRefinerChange fired'),
-				refiner: new SimpleRefiner({
+				refiner: new SimpleRefinerDefinition({
 					slug: 'optionsWithBadges',
 					title: 'Options with Badges',
 					options: {
@@ -254,7 +254,7 @@ storiesOf('Option Refiner Component/Badges', module)
 		props: {
 			isOpen: true,
 			onRefinerChange: action('Refiner onRefinerChange fired'),
-			refiner: new SimpleRefiner({
+			refiner: new SimpleRefinerDefinition({
 				slug: 'optionsWithBadges',
 				title: 'Options with Badges',
 				options: {
@@ -295,7 +295,7 @@ storiesOf('Option Refiner Component/showCount', module)
 				imports: SIMPLE_REFINER_IMPORTS
 			},
 			props: {
-				refiner: new SimpleRefiner({
+				refiner: new SimpleRefinerDefinition({
 					slug: 'customShowCount',
 					title: 'United States (showing 15 on load)',
 					options: usStatesHash
@@ -316,7 +316,7 @@ storiesOf('Option Refiner Component/showCount', module)
 				imports: SIMPLE_REFINER_IMPORTS
 			},
 			props: {
-				refiner: new SimpleRefiner({
+				refiner: new SimpleRefinerDefinition({
 					slug: 'customShowCount',
 					title: 'United States (showing 15 on load)',
 					options: usStatesHash,
@@ -341,7 +341,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 		},
 		props: {
 			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefiner({
+			refiner: new SimpleRefinerDefinition({
 				slug: 'visitedStates',
 				title: "States I've Visited (default selections by refiner definition)",
 				selected: ['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],
@@ -356,7 +356,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 		},
 		props: {
 			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefiner({
+			refiner: new SimpleRefinerDefinition({
 				slug: 'visitedStates',
 				title: "States I've Visited (default selections by option.isSelected properties)",
 				options: _.mapObject(usStatesFull, state => {
@@ -382,7 +382,7 @@ storiesOf('Option Refiner Component/isOpen', module)
 		props: {
 			isOpen: false,
 			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefiner({
+			refiner: new SimpleRefinerDefinition({
 				slug: 'closedByDefault',
 				title: 'Closed by component.isOpen property (click to open)',
 				options: usStatesFull
@@ -396,7 +396,7 @@ storiesOf('Option Refiner Component/isOpen', module)
 		},
 		props: {
 			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefiner({
+			refiner: new SimpleRefinerDefinition({
 				slug: 'closedByDefault',
 				title: 'Closed by refiner.isOpen property (click to open)',
 				options: usStatesFull,

@@ -2,12 +2,20 @@
 import { Subject, BehaviorSubject } from 'rxjs';
 
 // Library
-import { IBaseRefiner } from './IBaseRefiner';
+import { IBaseRefinerDefinition } from './IBaseRefinerDefinition';
 import { RefinerType } from './RefinerType';
 import { SimpleOption } from '../Options/SimpleOption';
 import { SimpleOptions } from '../Options/SimpleOptions';
 import { RefinerValue } from '../Values/RefinerValue';
-export abstract class BaseRefiner implements IBaseRefiner {
+
+/**
+ * Abstract refiner definition. Can be used for typing arrays of mixed refiner types.
+ *
+ * @since 1.4.0
+ * @example
+ * 		let refiners: BaseRefinerDefinition[] = [];
+ */
+export abstract class BaseRefinerDefinition implements IBaseRefinerDefinition {
 	/**
 	 * Refiner type discriminator.  Allows refiners to be JSON serialized
 	 */
@@ -45,10 +53,15 @@ export abstract class BaseRefiner implements IBaseRefiner {
 
 	valueSubject: Subject<any>;
 
-	constructor(refinerDefinition: IBaseRefiner) {
+	constructor(refinerDefinition: IBaseRefinerDefinition) {
 		this.title = refinerDefinition.title ? refinerDefinition.title : '';
 		this.slug = refinerDefinition.slug ? refinerDefinition.slug : '';
 		this.options = refinerDefinition.options ? refinerDefinition.options : {};
 		this.isOpen = typeof refinerDefinition.isOpen === 'boolean' ? refinerDefinition.isOpen : true;
 	}
 }
+
+/**
+ * @deprecated Use `BaseRefinerDefinition` instead of `BaseRefiner`
+ */
+export abstract class BaseRefiner extends BaseRefinerDefinition {}

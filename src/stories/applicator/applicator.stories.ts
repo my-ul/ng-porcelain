@@ -1,20 +1,22 @@
+// Storybook
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/angular';
 
+// Moment
 import * as _moment from 'moment';
 const moment = _moment;
 
-// Subjects of the stories.
+// Porcelain
 import {
-	DateRefiner,
 	i18nDateOptions,
-	SimpleRefiner
+	SimpleRefinerDefinition,
+	DateRefinerDefinition
 } from './../../../projects/ng-porcelain/src/lib/shared/';
 import { APPLICATOR_IMPORTS } from './../../../projects/ng-porcelain/src/lib/applicator/applicator.module';
 import { ApplicatorComponent } from './../../../projects/ng-porcelain/src/lib/applicator/applicator/applicator.component';
 
 storiesOf('Applicator Component', module).add('Default (no props)', () => {
-	const simpleRefiner = new SimpleRefiner({
+	const simpleRefiner = new SimpleRefinerDefinition({
 		slug: 'simpleRefiner',
 		title: 'Simple Refiner (all selected)',
 		selected: ['al', 'ak', 'az'],
@@ -25,7 +27,7 @@ storiesOf('Applicator Component', module).add('Default (no props)', () => {
 		}
 	});
 
-	const anotherSimpleRefiner = new SimpleRefiner({
+	const anotherSimpleRefiner = new SimpleRefinerDefinition({
 		slug: 'anotherSimpleRefiner',
 		title: 'Another Simple Refiner',
 		selected: ['al', 'az'],
@@ -35,7 +37,7 @@ storiesOf('Applicator Component', module).add('Default (no props)', () => {
 			az: 'Arizona'
 		}
 	});
-	const dateRefiner = new DateRefiner({
+	const dateRefiner = new DateRefinerDefinition({
 		slug: 'dateRefiner',
 		title: 'Date Refiner',
 		value: {

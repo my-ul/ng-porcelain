@@ -1,8 +1,13 @@
 import { RefinerType } from './RefinerType';
-import { BaseRefiner } from './BaseRefiner';
-import { ISimpleRefiner } from './ISimpleRefiner';
+import { BaseRefinerDefinition } from './BaseRefinerDefinition';
+import { ISimpleRefinerDefinition } from './ISimpleRefinerDefinition';
 import { Subject, BehaviorSubject } from 'rxjs';
-export class SimpleRefiner extends BaseRefiner implements ISimpleRefiner {
+
+/**
+ * Class used to define Simple Refiner component behavior.
+ * @since 1.4.0
+ */
+export class SimpleRefinerDefinition extends BaseRefinerDefinition implements ISimpleRefinerDefinition {
 	/**
 	 * Array of slugs to mark as selected on load.
 	 */
@@ -19,7 +24,7 @@ export class SimpleRefiner extends BaseRefiner implements ISimpleRefiner {
 	 */
 	valueSubject: BehaviorSubject<string[]>;
 
-	constructor(refinerDefinition: ISimpleRefiner) {
+	constructor(refinerDefinition: ISimpleRefinerDefinition) {
 		super(refinerDefinition);
 
 		console.group('SimpleRefiner > constructor(refinerDefinition)');
@@ -37,3 +42,8 @@ export class SimpleRefiner extends BaseRefiner implements ISimpleRefiner {
 		console.groupEnd();
 	}
 }
+
+/**
+ * @deprecated Use `SimpleRefinerDefinition` instead of `SimpleRefiner`
+ */
+export class SimpleRefiner extends SimpleRefinerDefinition {}

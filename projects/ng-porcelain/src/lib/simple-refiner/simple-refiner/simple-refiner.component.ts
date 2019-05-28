@@ -6,7 +6,7 @@ import {
 	defaultShowLessLabel,
 	defaultShowMoreLabel,
 	SimpleOption,
-	SimpleRefiner
+	SimpleRefinerDefinition
 } from '../../shared';
 import { defaultOptionShowCount } from './../../../../../porcelain/src/lib/simple-refiner/defaultOptionShowCount';
 
@@ -18,7 +18,7 @@ import { defaultOptionShowCount } from './../../../../../porcelain/src/lib/simpl
 })
 export class SimpleRefinerComponent implements OnInit {
 	// Inputs
-	@Input() refiner: SimpleRefiner;
+	@Input() refiner: SimpleRefinerDefinition;
 	@Input('showCount') _showCount: number;
 	@Input('isOpen') _isOpen: boolean;
 	@Input('isExpanded') _isExpanded: boolean;
@@ -217,7 +217,7 @@ export class SimpleRefinerComponent implements OnInit {
 	 */
 	setAll(newValue: boolean) {
 		// only needed for TypeScript
-		if (this.refiner instanceof SimpleRefiner) {
+		if (this.refiner instanceof SimpleRefinerDefinition) {
 			const checked = newValue
 				? Object.keys(this.refiner.options) // all selected
 				: []; // none selected

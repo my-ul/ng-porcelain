@@ -1,7 +1,7 @@
 import { RefinerType } from './RefinerType';
 import { ISimpleOptions } from '../Options/ISimpleOptions';
 
-export interface IBaseRefiner {
+export interface IBaseRefinerDefinition {
 	type?: RefinerType;
 	title?: string;
 	slug?: string;
@@ -11,3 +11,8 @@ export interface IBaseRefiner {
 	options?: ISimpleOptions<any, any>;
 	//value?: RefinerValue;
 }
+
+/**
+ * @deprecated Please use more-descriptive interface, IBaseRefinerDefinition. Will be removed at 2.0.0
+ */
+export interface IBaseRefiner extends IBaseRefinerDefinition {}
