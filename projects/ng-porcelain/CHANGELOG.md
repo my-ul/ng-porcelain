@@ -9,7 +9,7 @@ A library of durable, beautiful components for Angular 6+.
 ## 1.4.0
 
 -   Renames `*Refiner` classes to more-verbose `*RefinerDefinition`. Implements shims that will be removed at 2.0.0
--   Introduces `porcelain-search-column` to enable search/sort functionality.
+-   Introduces `porcelain-search-input` to enable search clear/submit functionality.
 
 ## 1.3.x
 

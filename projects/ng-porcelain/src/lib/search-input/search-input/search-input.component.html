@@ -1,0 +1,26 @@
+<div class="search-input">
+	<div class="search-input__search-wrap">
+		<input
+			#searchInput
+			type="text"
+			class="search-input__search-input"
+			[(ngModel)]="value"
+			[placeholder]="placeholderLabel"
+			(keyup.enter)="submit()"
+			(focus)="handleFocusIn($event)"
+			(blur)="handleBlur($event)"
+		/>
+		<div class="search-input__search-action-group">
+			<button
+				*ngIf="!isEmpty()"
+				class=" search-input__search-action search-input__clear"
+				(click)="clear()"
+			>
+				<fa-icon [icon]="clearIcon"></fa-icon>
+			</button>
+			<button class=" search-input__search-action  search-input__search" (click)="submit()">
+				<fa-icon [icon]="submitIcon"></fa-icon>
+			</button>
+		</div>
+	</div>
+</div>

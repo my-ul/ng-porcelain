@@ -14,7 +14,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm run update-barrels && npm run format-staged"
+			"pre-commit": "pretty-quick --staged"
 		}
 	},
 	"private": true,
@@ -45,11 +45,12 @@
 		"@angular/compiler-cli": "~7.2.0",
 		"@angular/language-service": "~7.2.0",
 		"@babel/core": "^7.3.4",
-		"@storybook/addon-actions": "^5.0.3",
-		"@storybook/addon-knobs": "^5.0.3",
-		"@storybook/addon-notes": "^5.0.3",
+		"@storybook/addon-actions": "^5.0.11",
+		"@storybook/addon-backgrounds": "^5.0.11",
+		"@storybook/addon-knobs": "^5.0.11",
+		"@storybook/addon-notes": "^5.0.11",
 		"@storybook/addon-storysource": "^5.0.11",
-		"@storybook/angular": "^5.0.3",
+		"@storybook/angular": "^5.0.11",
 		"@types/date-fns": "^2.6.0",
 		"@types/jasmine": "~2.8.8",
 		"@types/jasminewd2": "~2.0.3",
@@ -78,7 +79,7 @@
 		"tsickle": ">=0.34.0",
 		"tslib": "^1.9.0",
 		"tslint": "~5.11.0",
-		"typescript": "~2.9.2",
+		"typescript": "^3.1.6",
 		"underscore": "^1.9.1"
 	},
 	"prettier": {

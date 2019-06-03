@@ -342,10 +342,7 @@ class MyComponent {
 The Applicator component allows a user to defer updates on an expensive operation (such as querying a server for search results) by staging a series of changes and then clicking apply.
 
 ```html
-<porcelain-applicator
-	[refiners]="myRefinerArray"
-	(onApply)="myApplyHandler($event)"
-></porcelain-applicator>
+<porcelain-applicator [refiners]="refiners" (onApply)="myApplyHandler($event)"></porcelain-applicator>
 ```
 
 ```typescript
@@ -388,4 +385,69 @@ class MyComponent implements OnInit {
 		})
 	}
 }
+```
+
+### Search Input Component
+
+_Since 1.4.0_
+
+The Search Sort Component provides keyword search function as needed.
+
+Install Porcelain 1.4 and its dependencies
+
+`npm install --save @my-ul/ng-porcelain@^1.4.0`
+
+Import the `SearchInputModule`
+
+```typescript
+import { SearchInputModule } from '@my-ul/ng-porcelain';
+
+@NgModule({
+	declarations: [YourComponent],
+	imports: [CommonModule, SearchInputModule],
+	exports: []
+})
+class YourModule {}
+```
+
+Write a function to handle new values from the component...
+
+```typescript
+@Component()
+class YourComponent {
+	handleNewValue(newValue: string): void {
+		this.value = newValue;
+	}
+}
+```
+
+Place the component in your template, with reference to the handler...
+
+```html
+<porcelain-search-input (submitHandler)="handleNewValue($event)"></porcelain-search-input>
+```
+
+#### Input Properties
+
+##### Change Placeholder Text
+
+Change the Placeholder Text to change the displayed text. Useful for i18n/translation.
+
+```html
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[placeholderLabel]="'Volume'"
+></porcelain-search-input>
+```
+
+##### Customize icons
+
+Alternative Font Awesome icons can be used instead of the defaults for 'Clear' and 'Submit'. See [Font Awesome for Angular](https://github.com/FortAwesome/angular-fontawesome#using-the-icon-library) docs for more information.
+
+```html
+<porcelain-search-input
+	(submitHandler)="..."
+	[submitIcon]="mySubmitIcon"
+	[clearIcon]="myClearIcon"
+></porcelain-search-input>
 ```

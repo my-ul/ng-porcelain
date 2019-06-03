@@ -8,13 +8,13 @@
 
 	&__left,
 	&__right {
-		flex: 0;
+		flex: 0 0 auto;
 	}
 	&__left {
 		margin-right: 0.75em;
 	}
 	&__body {
-		flex: 1;
+		flex: 1 1 auto;
 	}
 	&__right {
 		margin-left: 0.75em;
