@@ -11,21 +11,14 @@ export class InterpolatePipe implements PipeTransform {
 		return Math.max(0, value);
 	}
 
-	transform(formatString: any, ...args: any): any {
+	transform(formatString: any, ...args: any[]): any {
 		let i = 0;
-		return formatString.replace(/(%s|%u)/g, function(
-			match,
-			capture1,
-			offset,
-			string
-		) {
+		return formatString.replace(/(%s|%u)/g, function(match, capture1, offset, string) {
 			switch (capture1) {
 				case '%s':
 					return args[i++];
 				case '%u':
-					return InterpolatePipe.toUnsignedInteger(
-						args[i++]
-					).toLocaleString();
+					return InterpolatePipe.toUnsignedInteger(args[i++]).toLocaleString();
 			}
 		});
 	}

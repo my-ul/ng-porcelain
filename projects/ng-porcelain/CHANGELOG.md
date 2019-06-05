@@ -6,6 +6,14 @@ A library of durable, beautiful components for Angular 6+.
 
 ## 1.4.x
 
+## 1.4.2
+
+-   Fixes type on interpolate pipe
+
+## 1.4.1
+
+-   Fixes off-by-one error with custom date-picker values.
+
 ## 1.4.0
 
 -   Renames `*Refiner` classes to more-verbose `*RefinerDefinition`. Implements shims that will be removed at 2.0.0
