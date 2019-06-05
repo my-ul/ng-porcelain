@@ -2,7 +2,7 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
-import { storiesOf } from '@storybook/angular';
+import { storiesOf, moduleMetadata } from '@storybook/angular';
 
 // Utilities
 import * as _moment from 'moment';
@@ -25,6 +25,11 @@ const moment = _moment;
 storiesOf('Date Refiner Component', module)
 	.addDecorator(withNotes)
 	.addDecorator(withKnobs)
+	.addDecorator(
+		moduleMetadata({
+			imports: DATE_REFINER_IMPORTS
+		})
+	)
 	.addParameters({
 		info: {
 			inline: true
@@ -41,10 +46,7 @@ storiesOf('Date Refiner Component', module)
 					options: defaultDateOptions
 				}),
 				onRefinerChange: action('Date Refiner (simple) changed')
-			} as IDateRefinerProps,
-			moduleMetadata: {
-				imports: DATE_REFINER_IMPORTS
-			}
+			} as IDateRefinerProps
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -54,6 +56,22 @@ storiesOf('Date Refiner Component', module)
 			}
 		}
 	)
+	.add('Predefined custom date range', () => ({
+		component: DateRefinerComponent,
+		props: {
+			refiner: new DateRefinerDefinition({
+				slug: 'myRefinerDefinition',
+				title: 'Simple Date Refiner',
+				options: defaultDateOptions,
+				value: {
+					optionSlug: 'custom',
+					from: moment.utc('2018-01-01', 'YYYY-MM-DD').toDate(),
+					to: moment.utc('2018-12-31', 'YYYY-MM-DD').toDate()
+				}
+			}),
+			onRefinerChange: action('Date Refiner (simple) changed')
+		} as IDateRefinerProps
+	}))
 	.add(
 		'Custom Translation',
 		() => ({
@@ -101,10 +119,7 @@ storiesOf('Date Refiner Component', module)
 					)
 				}),
 				onRefinerChange: action('Date Refiner (translated) changed')
-			} as IDateRefinerProps,
-			moduleMetadata: {
-				imports: DATE_REFINER_IMPORTS
-			}
+			} as IDateRefinerProps
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -125,10 +140,7 @@ storiesOf('Date Refiner Component', module)
 					options: defaultDateOptions
 				}),
 				onRefinerChange: action('Date Refiner (simple) changed')
-			} as IDateRefinerProps,
-			moduleMetadata: {
-				imports: DATE_REFINER_IMPORTS
-			}
+			} as IDateRefinerProps
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -142,9 +154,6 @@ storiesOf('Date Refiner Component', module)
 		'Closed by default',
 		() => ({
 			component: DateRefinerComponent,
-			moduleMetadata: {
-				imports: DATE_REFINER_IMPORTS
-			},
 			props: {
 				isOpen: false,
 				onRefinerChange: action('Date refiner value'),
@@ -160,9 +169,6 @@ storiesOf('Date Refiner Component', module)
 		'Full `DateRefiner` with Full `DateOption` definitions',
 		() => ({
 			component: DateRefinerComponent,
-			moduleMetadata: {
-				imports: DATE_REFINER_IMPORTS
-			},
 			props: {
 				onRefinerChange: action('Date Refiner value changed'),
 				refiner: new DateRefinerDefinition({

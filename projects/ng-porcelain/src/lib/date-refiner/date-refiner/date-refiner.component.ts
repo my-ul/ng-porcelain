@@ -108,13 +108,15 @@ export class DateRefinerComponent implements OnInit {
 
 	parseDateState(date: string | Date | _moment.Moment): ISimplifiedMyDateModel {
 		const parsed: _moment.Moment =
-			typeof date === 'string' ? moment(date, 'YYYY-MM-DD').utc() : moment(date).utc();
+			typeof date === 'string'
+				? moment.utc(date, 'YYYY-MM-DD') // needs to be parsed as UTC
+				: moment(date).utc(); // has time zone context, must convert to UTC
 
 		if (parsed.isValid) {
 			return {
 				date: {
 					day: parsed.get('date'),
-					month: parsed.get('month') + 1, // Zero-indexed
+					month: parsed.get('month') + 1, // Zero-indexed => One-indexed
 					year: parsed.get('year')
 				}
 			};
@@ -192,15 +194,12 @@ export class DateRefinerComponent implements OnInit {
 
 		const currentOption = this.refiner.options[this.currentOptionSlug];
 
-		if (this.currentOptionSlug === 'custom') {
-		}
-
 		const currentFromDate =
 			this.currentOptionSlug === 'custom' && this.fromModel
 				? moment()
 						.utc()
 						.year(this.fromModel.date.year)
-						.month(this.fromModel.date.month) // zero-indexed, so Jan is 0; Dec is 11
+						.month(this.fromModel.date.month - 1) // zero-indexed, so Jan is 0; Dec is 11
 						.date(this.fromModel.date.day)
 						.startOf('day')
 						.toDate()
@@ -215,7 +214,7 @@ export class DateRefinerComponent implements OnInit {
 				? moment()
 						.utc()
 						.year(this.toModel.date.year)
-						.month(this.toModel.date.month)
+						.month(this.toModel.date.month - 1)
 						.date(this.toModel.date.day)
 						.endOf('day')
 						.toDate()
