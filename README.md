@@ -9,8 +9,13 @@ This is a comprehensive guide to developing components for Porcelain.
 1.  Clone the Porcelain Repository
 
 ```bash
+# either clone with https
 git clone https://ultfs.visualstudio.com/DefaultCollection/myUL/_git/porcelain
+
+# or, clone with ssh
 git clone ULTFS@vs-ssh.visualstudio.com:v3/ULTFS/myUL/porcelain
+
+# cd once cloned
 cd porcelain
 ```
 
