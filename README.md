@@ -94,7 +94,7 @@ export class HelloWorldComponent implements OnInit {
 }
 ```
 
-Open `project/ng-porcelain/src/lib/hello-world/hello-world/hello-world.component.ts` and replace its contents with...
+Open `project/ng-porcelain/src/lib/hello-world/hello-world/hello-world.component.html` and replace its contents with...
 
 ```html
 <button (click)="click()">
