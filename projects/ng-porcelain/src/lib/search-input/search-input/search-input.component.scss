@@ -85,3 +85,14 @@
 		}
 	}
 }
+
+:host ::ng-deep {
+	.search-input__search-input {
+		width: 80% !important;
+		border: none !important;
+	}
+
+	.search-input__search-action {
+		height: 100%;
+	}
+}
