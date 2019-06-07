@@ -6,9 +6,6 @@
 
 ```bash
 npm install --save @my-ul/ng-porcelain \
-	@angular/forms@6.0.0 \
-	@angular/platform-browser@6.0.0 \
-	@angular/platform-browser-dynamic@6.0.0 \
 	@fortawesome/angular-fontawesome@0.3.0 \
 	@fortawesome/fontawesome-svg-core@1.2.15 \
 	@fortawesome/free-solid-svg-icons@5.7.2 \
@@ -27,6 +24,7 @@ import {
 	FooterModule,
 	InterpolateModule,
 	RefinersModule,
+	SearchInputModule
 	SimpleRefinerModule,
 	SpinnerModule,
 	TruncateModule
@@ -40,6 +38,7 @@ import {
 		FooterModule,
 		InterpolateModule,
 		RefinersModule,
+		SearchInputModule,
 		SimpleRefinerModule,
 		SpinnerModule,
 		TruncateModule
