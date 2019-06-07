@@ -1,3 +1,5 @@
+import { SimpleOptions } from './../types/Options/SimpleOptions';
+import { SimpleOption } from '../types/Options/SimpleOption';
 import { DateOption } from '../types/Options/DateOption';
 import { DateOptions } from '../types/Options/DateOptions';
 

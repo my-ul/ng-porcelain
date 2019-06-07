@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faCaretDown, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCaretDown,
+	faChevronDown,
+	faChevronUp,
+	IconDefinition
+} from '@fortawesome/free-solid-svg-icons';
 import {
 	defaultSelectAllLabel,
 	defaultSelectNoneLabel,
@@ -57,9 +62,9 @@ export class SimpleRefinerComponent implements OnInit {
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
-	faChevronDown = faCaretDown;
-	contractIcon = faChevronUp;
-	expandIcon = faChevronDown;
+	faChevronDown: IconDefinition = faCaretDown;
+	contractIcon: IconDefinition = faChevronUp;
+	expandIcon: IconDefinition = faChevronDown;
 
 	// State
 	values: { [optionSlug: string]: boolean } = {};

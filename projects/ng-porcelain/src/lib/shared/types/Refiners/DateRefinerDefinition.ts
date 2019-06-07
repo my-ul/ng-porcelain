@@ -27,7 +27,7 @@ export class DateRefinerDefinition extends BaseRefinerDefinition implements IDat
 			this.options = dateRefiner.options || i18nDateOptions();
 		}
 
-		const firstOption = Object.values(this.options)[0] as IDateOption;
+		const firstOption = Object.keys(this.options).map(key => this.options[key])[0] as IDateOption;
 
 		this.valueSubject = new BehaviorSubject<IDateRefinerState>(
 			dateRefiner.value

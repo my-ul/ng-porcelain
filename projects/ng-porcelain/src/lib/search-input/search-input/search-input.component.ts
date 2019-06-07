@@ -3,8 +3,6 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-type IconDefinition = any;
-
 @Component({
 	selector: 'porcelain-search-input',
 	templateUrl: './search-input.component.html',
@@ -16,8 +14,8 @@ export class SearchInputComponent implements OnInit {
 
 	// Inputs
 	@Input() placeholderLabel: string = 'Type to search...';
-	@Input() submitIcon: IconDefinition = faSearch;
-	@Input() clearIcon: IconDefinition = faTimesCircle;
+	@Input() submitIcon: any = faSearch;
+	@Input() clearIcon: any = faTimesCircle;
 
 	// Outputs
 	@Output() submitHandler: EventEmitter<string> = new EventEmitter();

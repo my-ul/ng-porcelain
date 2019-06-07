@@ -2,7 +2,7 @@ import { DateRefinerDefinition } from './../../shared';
 // Angular
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // Font Awesome 5
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
 import * as _moment from 'moment';
 import { IMyDate } from 'mydatepicker';
@@ -85,7 +85,7 @@ export class DateRefinerComponent implements OnInit {
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
-	faChevronDown = faCaretDown;
+	faChevronDown: IconDefinition = faCaretDown;
 
 	// Constants
 	options: DateOptions = defaultDateOptions;

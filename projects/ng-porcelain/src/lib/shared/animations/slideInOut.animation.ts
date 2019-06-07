@@ -6,7 +6,8 @@ import {
 	group,
 	animate,
 	query,
-	animation
+	animation,
+	AnimationTriggerMetadata
 } from '@angular/animations';
 
 const defaultTriggerName = 'slideInOut',
@@ -20,7 +21,7 @@ const defaultTriggerName = 'slideInOut',
 		overflow: 'hidden'
 	};
 
-export const generateSlideInOut = (
+export const generateSlideInOut: () => AnimationTriggerMetadata = (
 	triggerName = defaultTriggerName,
 	openStyle = defaultOpenStyle,
 	closedStyle = defaultClosedStyle,
