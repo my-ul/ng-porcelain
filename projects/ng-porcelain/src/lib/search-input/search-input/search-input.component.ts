@@ -16,6 +16,7 @@ export class SearchInputComponent implements OnInit {
 	@Input() placeholderLabel: string = 'Type to search...';
 	@Input() submitIcon: any = faSearch;
 	@Input() clearIcon: any = faTimesCircle;
+	@Input() borders: boolean = true;
 
 	// Outputs
 	@Output() submitHandler: EventEmitter<string> = new EventEmitter();

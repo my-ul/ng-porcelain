@@ -9,6 +9,7 @@
 			(keyup.enter)="submit()"
 			(focus)="handleFocusIn()"
 			(blur)="handleBlur()"
+			[class.search-input__search-input--no-borders]="!borders"
 		/>
 		<div class="search-input__search-action-group">
 			<button

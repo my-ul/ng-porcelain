@@ -81,4 +81,20 @@ storiesOf('Search Input Component', module)
 				clearIcon: faTimes
 			}
 		};
+	})
+	.add('No borders', () => {
+		/**
+		 * @example
+		 * <porcelain-search-input
+		 * 		[submitHandler]="..."
+		 * 		[borders]="false"
+		 *		></porcelain-search-input>
+		 */
+		return {
+			component: SearchInputComponent,
+			props: {
+				submitHandler: action('Search Input value change'),
+				borders: false
+			}
+		};
 	});
