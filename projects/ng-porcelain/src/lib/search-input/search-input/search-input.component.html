@@ -16,7 +16,7 @@
 				class=" search-input__search-action search-input__clear"
 				(click)="clear()"
 			>
-				<fa-icon [icon]="clearIcon"></fa-icon>
+				<fa-icon [icon]="clearIcon" [styles]="{ color: clearIconColor }"></fa-icon>
 			</button>
 			<button class=" search-input__search-action  search-input__search" (click)="submit()">
 				<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>
