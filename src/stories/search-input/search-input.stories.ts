@@ -1,4 +1,5 @@
 import { action } from '@storybook/addon-actions';
+import { withKnobs, text, boolean, color } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 
 // Icons for testing alternative presentations
@@ -14,6 +15,7 @@ import {
 import { SearchInputComponent } from '../../../projects/ng-porcelain/src/lib/search-input/search-input/search-input.component';
 
 storiesOf('Search Input Component', module)
+	.addDecorator(withKnobs)
 	.addDecorator(
 		// Create Synthetic Module
 		moduleMetadata({
@@ -46,7 +48,7 @@ storiesOf('Search Input Component', module)
 			component: SearchInputComponent,
 			props: {
 				submitHandler: action('Search Input value change'),
-				placeholderLabel: 'Volume'
+				placeholderLabel: text('Placeholder Label', 'Volume')
 			}
 		};
 	})
@@ -94,7 +96,51 @@ storiesOf('Search Input Component', module)
 			component: SearchInputComponent,
 			props: {
 				submitHandler: action('Search Input value change'),
-				borders: false
+				borders: boolean('Enable Border', false)
+			}
+		};
+	})
+	.add('Custom Submit Button color', () => {
+		/**
+		 * @example
+		 * <porcelain-search-input
+		 * 		[submitHandler]="..."
+		 * 		[submitIconColor]="'red'"
+		 *		></porcelain-search-input>
+		 */
+		return {
+			component: SearchInputComponent,
+			props: {
+				submitHandler: action('Search Input value change'),
+				submitIconColor: color('Color', '#ff0000')
+			}
+		};
+	})
+	.add('Custom Clear Button color', () => {
+		/**
+		 * @example
+		 * <porcelain-search-input
+		 * 		[submitHandler]="..."
+		 * 		[clearIconColor]="'red'"
+		 *		></porcelain-search-input>
+		 */
+		return {
+			component: SearchInputComponent,
+			props: {
+				submitHandler: action('Search Input value change'),
+				clearIconColor: color('Clear Icon Color', '#ff0000')
+			}
+		};
+	})
+	.add('Mix-and-Match', () => {
+		return {
+			component: SearchInputComponent,
+			props: {
+				submitHandler: action('Search Input value change'),
+				clearIconColor: color('Clear Icon Color', '#ff0000'),
+				submitIconColor: color('Submit Icon Color', '#00ff00'),
+				placeholderLabel: text('Placeholder Label', 'Volume'),
+				borders: boolean('Enable Border', true)
 			}
 		};
 	});

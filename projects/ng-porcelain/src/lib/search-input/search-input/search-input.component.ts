@@ -17,8 +17,8 @@ export class SearchInputComponent implements OnInit {
 	@Input() submitIcon: any = faSearch;
 	@Input() clearIcon: any = faTimesCircle;
 	@Input() borders: boolean = true;
-	@Input() submitIconColor: any = '#a4b2c0';
-	@Input() clearIconColor: any = '#a4b2c0';
+	@Input() submitIconColor: any = '#9dacba';
+	@Input() clearIconColor: any = '#9dacba';
 
 	// Outputs
 	@Output() submitHandler: EventEmitter<string> = new EventEmitter();
