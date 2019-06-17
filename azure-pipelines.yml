@@ -17,5 +17,5 @@ steps:
 
 - script: |
     npm install
-    ng build ngPorcelain
+    npx ng build ngPorcelain
   displayName: 'npm install and build'
