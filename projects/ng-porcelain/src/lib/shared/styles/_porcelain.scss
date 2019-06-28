@@ -12,6 +12,8 @@
 	}
 	&__left {
 		margin-right: 0.75em;
+		padding-left: 2px; // Fix for macOS controls.
+		margin-left: -2px;
 	}
 	&__body {
 		flex: 1 1 auto;
