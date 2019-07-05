@@ -19,26 +19,42 @@ export class SearchInputComponent implements OnInit {
 	@Input() borders: boolean = true;
 	@Input() submitIconColor: any = '#9dacba';
 	@Input() clearIconColor: any = '#9dacba';
+	@Input() userValue: string = '';
 
 	// Outputs
 	@Output() submitHandler: EventEmitter<string> = new EventEmitter();
 
 	// Booleans
 	isSearchFocused = false;
+	emptyValueEmit = false; //to handle empty value
+	emptyrefresh = true; //to prevent sending emtpy string as emit when previous emitted string was already ''
 
 	// Strings
 	value = '';
 
 	constructor() {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		/* assigning uservalues */
+		this.value = this.userValue;
+		/*to check if there is previous value*/
+		this.emptyValueEmit = this.userValue == '' ? false : true;
+		this.emptyrefresh = this.userValue == '' ? true : false;
+	}
 
 	/**
 	 * Clears the value of the search field and resets focus.
 	 */
 	clear(): void {
+		//alert(this.emptyrefresh+"  value");
 		this.value = '';
-		this.submitHandler.emit(this.value);
+		if (this.emptyrefresh == true) {
+			//alert("only box has to be cleared")
+		} else {
+			this.submitHandler.emit(this.value);
+			this.emptyrefresh = true; //empty refresh check
+		}
+
 		this.setFocus();
 	}
 
@@ -55,8 +71,15 @@ export class SearchInputComponent implements OnInit {
 	submit(): void {
 		if (!this.isEmpty()) {
 			this.submitHandler.emit(this.value);
+			this.emptyValueEmit = true; //to enable empty value sending for submit
+			this.emptyrefresh = false; //to disable emptyrefresh
 		} else {
+			if (this.emptyValueEmit == true) {
+				this.emptyValueEmit = false;
+				this.submitHandler.emit(this.value); //empty value is emitted by submit
+			}
 			this.setFocus();
+			this.emptyrefresh = true; //to enable empty refresh after emptyvalue is emitted by submit
 		}
 	}
 
