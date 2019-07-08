@@ -1,4 +1,4 @@
-import { APPLICATOR_DIRECTIVES } from './../../../projects/ng-porcelain/src/lib/applicator/applicator.module';
+import { APPLICATOR_DIRECTIVES } from '../applicator.module';
 // Storybook
 import { action } from '@storybook/addon-actions';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
@@ -8,13 +8,9 @@ import * as _moment from 'moment';
 const moment = _moment;
 
 // Porcelain
-import {
-	i18nDateOptions,
-	SimpleRefinerDefinition,
-	DateRefinerDefinition
-} from '../../../projects/ng-porcelain/src/lib/shared';
-import { APPLICATOR_IMPORTS } from './../../../projects/ng-porcelain/src/lib/applicator/applicator.module';
-import { ApplicatorComponent } from './../../../projects/ng-porcelain/src/lib/applicator/applicator/applicator.component';
+import { i18nDateOptions, SimpleRefinerDefinition, DateRefinerDefinition } from '../../shared';
+import { APPLICATOR_IMPORTS } from '../applicator.module';
+import { ApplicatorComponent } from './applicator.component';
 
 storiesOf('Applicator Component', module)
 	.addDecorator(
