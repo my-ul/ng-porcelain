@@ -133,6 +133,22 @@ class MyComponent implements OnInit {
 ></porcelain-refiners>
 ```
 
+##### Default values for Applicator
+
+Provide a hash/dictionary of default values for each refiner (by slug) to determine the Reset behavior. Initial load uses value from refiner.valueSubject.
+
+```html
+<porcelain-applicator [defaultValues]="myDefaultValues"></porcelain-applicator>
+```
+
+```typescript
+class MyComponent {
+	myDefaultValues = {
+		statesVisited: ['wy']
+	};
+}
+```
+
 #### Utilities
 
 ##### Truncate

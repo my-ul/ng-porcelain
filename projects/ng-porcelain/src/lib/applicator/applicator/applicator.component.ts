@@ -1,8 +1,12 @@
+import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
+import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerValue';
+import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BaseRefinerDefinition } from '../../shared';
+import { SimpleRefinerDefinition, IDictionary } from '../../shared';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -17,6 +21,8 @@ import { BaseRefinerDefinition } from '../../shared';
 		}
 	}
 */
+
+type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefinerValue>;
 
 @Component({
 	selector: 'porcelain-applicator',
@@ -33,32 +39,38 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 
 	@Output() onApply: EventEmitter<any> = new EventEmitter();
 
-	public stagedValues: any = {};
-	public initialValues: any = {};
-	public appliedValues: any = {};
+	@Input() public defaultValues: RefinerValueDictionary = {};
+	private stagedValues: RefinerValueDictionary = {};
+	private appliedValues: RefinerValueDictionary = {};
 
 	private subscriptions: Subscription[] = [];
 
 	constructor() {
-		console.group('ApplicatorComponent > constructor()');
+		console.group('new ApplicatorComponent()', { arguments });
 
 		console.groupEnd();
 	}
 
 	ngOnInit() {
-		console.group('ngOnInit()');
+		console.group('ApplicatorComponent.ngOnInit()', {
+			props: {
+				refiners: this.refiners,
+				applyLabel: this.applyLabel,
+				resetLabel: this.resetLabel,
+				loadingLabel: this.loadingLabel,
+				defaultValues: this.defaultValues
+			}
+		});
+
+		// generate defaultValues dictionary composite from implicit + explicit values
+		this.refiners.forEach(refiner => {
+			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
+		});
 
 		// take first values and send up
 		this.subscriptions = this.refiners.reduce((allSubscriptions, refiner) => {
 			return [
 				...allSubscriptions,
-				// Capture the initial value for the reset procedure
-				refiner.valueSubject
-					.pipe(take(1))
-					.subscribe(
-						initialRefinerValues => (this.initialValues[refiner.slug] = initialRefinerValues)
-					),
-
 				// Get notified when value changes
 				refiner.valueSubject.subscribe(newRefinerValues =>
 					this.handleRefinerValues(refiner.slug, newRefinerValues)
@@ -69,8 +81,9 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		// Must execute after the rest of the subscriptions callbacks.
 		combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
 			allRefinersInitialized => {
-				console.group('combineLatest.subscribe(allRefinersInitialized)');
-				console.log({ allRefinersInitialized });
+				console.group('combineLatest.subscribe(allRefinersInitialized)', {
+					allRefinersInitialized
+				});
 
 				this.apply();
 
@@ -87,8 +100,10 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	handleRefinerValues(refinerSlug, refinerValue): void {
-		console.group('ApplicatorComponent > handleRefinerValues(refinerSlug, refinerValue)');
-		console.log({ refinerSlug, refinerValue });
+		console.group('handleRefinerValues(refinerSlug, refinerValue)', {
+			refinerSlug,
+			refinerValue
+		});
 
 		this.stagedValues[refinerSlug] = refinerValue;
 
@@ -100,7 +115,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	canReset(): boolean {
-		return !isEqual(this.stagedValues, this.initialValues);
+		return !isEqual(this.stagedValues, this.defaultValues);
 	}
 
 	apply(): void {
@@ -116,10 +131,9 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.group('reset()');
 
 		this.refiners.forEach(refiner => {
-			console.group('ApplicatorComponent > reset() > this.refiners.forEach(refiner)');
-			console.log({ refiner });
+			console.group('this.refiners.forEach(refiner)', { refiner });
 
-			refiner.valueSubject.next(this.initialValues[refiner.slug]);
+			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
 
 			console.groupEnd();
 		});
@@ -127,5 +141,31 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		this.apply();
 
 		console.groupEnd();
+	}
+
+	getDefaultValueForRefiner(
+		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
+	): OptionRefinerValue | DateRefinerValue {
+		console.log('getDefaultValueForRefiner(refiner)', { refiner });
+		// If a default value exists for the slug, return it immediately
+		if (this.defaultValues && this.defaultValues[refiner.slug]) {
+			return this.defaultValues[refiner.slug];
+		}
+
+		// Otherwise, return an empty array for Simple Refiner and "All" for Date Refiner
+		if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
+			return [] as OptionRefinerValue;
+		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
+			return {
+				from: null,
+				to: null,
+				optionSlug: '-1'
+			} as DateRefinerValue;
+		}
+
+		// Only reached with invalid refiner definitions.
+		throw new Error(
+			'Unable to get determine Refiner type from Refiner Definition. Ensure Refiner Definition contains `type` field.'
+		);
 	}
 }
