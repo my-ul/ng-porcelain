@@ -140,7 +140,8 @@ storiesOf('Search Input Component', module)
 				clearIconColor: color('Clear Icon Color', '#ff0000'),
 				submitIconColor: color('Submit Icon Color', '#00ff00'),
 				placeholderLabel: text('Placeholder Label', 'Volume'),
-				borders: boolean('Enable Border', true)
+				borders: boolean('Enable Border', true),
+				userValue: text('userValue Label', 'Entered')
 			}
 		};
 	});
