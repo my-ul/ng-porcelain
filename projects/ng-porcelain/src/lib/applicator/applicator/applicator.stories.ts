@@ -84,4 +84,13 @@ storiesOf('Applicator Component', module)
 				}
 			}
 		};
+	})
+	.add('Throws errors with invalid refiners (see console)', () => {
+		return {
+			component: ApplicatorComponent,
+			props: {
+				onApply: action('Applicators update'),
+				refiners: [{}, new Date(), new RegExp('invalid refiner')]
+			}
+		};
 	});

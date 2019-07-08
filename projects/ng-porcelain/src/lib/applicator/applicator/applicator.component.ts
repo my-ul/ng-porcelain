@@ -58,7 +58,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 				applyLabel: this.applyLabel,
 				resetLabel: this.resetLabel,
 				loadingLabel: this.loadingLabel,
-				defaultValues: this.defaultValues;
+				defaultValues: this.defaultValues
 			}
 		});
 
@@ -81,7 +81,9 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		// Must execute after the rest of the subscriptions callbacks.
 		combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
 			allRefinersInitialized => {
-				console.group('combineLatest.subscribe(allRefinersInitialized)', {allRefinersInitialized});
+				console.group('combineLatest.subscribe(allRefinersInitialized)', {
+					allRefinersInitialized
+				});
 
 				this.apply();
 
@@ -144,6 +146,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
 	): OptionRefinerValue | DateRefinerValue {
+		console.log('getDefaultValueForRefiner(refiner)', { refiner });
 		// If a default value exists for the slug, return it immediately
 		if (this.defaultValues && this.defaultValues[refiner.slug]) {
 			return this.defaultValues[refiner.slug];
@@ -160,6 +163,9 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 			} as DateRefinerValue;
 		}
 
-		throw new Error('Unable to get determine Refiner type from Refiner Definition. Ensure Refiner Definition contains `type` field.');
+		// Only reached with invalid refiner definitions.
+		throw new Error(
+			'Unable to get determine Refiner type from Refiner Definition. Ensure Refiner Definition contains `type` field.'
+		);
 	}
 }
