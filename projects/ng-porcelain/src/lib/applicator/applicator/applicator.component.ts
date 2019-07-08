@@ -22,7 +22,7 @@ import { SimpleRefinerDefinition, IDictionary } from '../../shared';
 	}
 */
 
-type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefinerValue>;
+export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefinerValue>;
 
 @Component({
 	selector: 'porcelain-applicator',
