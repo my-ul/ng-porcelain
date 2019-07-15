@@ -11,7 +11,7 @@ steps:
     echo -n "Host github.com" >> ~/.ssh/config
     echo -n "	HostName github.com" >> ~/.ssh/config
     echo -n "	IdentityFile ~/.ssh/id_rsa"
-    echo -n " User git"
+    echo -n "	User git" >> ~/.ssh/config
     chmod 400 ~/.ssh/id_rsa
   displayName: 'Install git config'
 - script: |
