@@ -9,5 +9,7 @@ steps:
     sshKeySecureFile: 'id_rsa'
 - script: git remote add github ssh://git@github.com/my-ul/ng-porcelain
   displayName: 'Add GitHub Remote'
+- script: ssh-add -l
+  displayName: 'Show installed SSH keys'
 - script: git push github --all
   displayName: 'Push AzDO to GitHub'
