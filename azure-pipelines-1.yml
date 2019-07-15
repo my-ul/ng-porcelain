@@ -10,6 +10,7 @@ steps:
 - script: |
     echo $(Build.Repository.LocalPath)
     cd $(Build.Repository.LocalPath)
+    git fetch
     git remote add github ssh://git@github.com:my-ul/ng-porcelain.git
   displayName: 'Add GitHub Remote'
 - script: ssh-add -l
