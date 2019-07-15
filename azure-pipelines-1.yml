@@ -17,5 +17,6 @@ steps:
 - script: |
     echo $(Build.Repository.LocalPath)
     cd $(Build.Repository.LocalPath)
+    git branch
     git push -u github master
   displayName: 'Push AzDO to GitHub'
