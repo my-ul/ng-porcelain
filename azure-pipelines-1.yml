@@ -10,9 +10,9 @@ steps:
 - script: |
     echo -n "Host github.com" >> ~/.ssh/config
     echo -n "	HostName github.com" >> ~/.ssh/config
-    echo -n "	IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+    echo -n "	IdentityFile /home/vsts/work/_temp/id_rsa" >> ~/.ssh/config
     echo -n "	User git" >> ~/.ssh/config
-    chmod 400 ~/.ssh/id_rsa
+    chmod 400 /home/vsts/work/_temp/id_rsa
   displayName: 'Install git config'
 - script: |
     ls ~/.ssh
