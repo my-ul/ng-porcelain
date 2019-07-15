@@ -10,7 +10,7 @@ steps:
 - script: |
     git checkout master
     git fetch
-    git remote add github ssh://git@github.com:my-ul/ng-porcelain.git
+    git remote add github git@github.com:my-ul/ng-porcelain.git
   displayName: 'Add GitHub Remote'
 - script: ssh-add -l
   displayName: 'Show installed SSH keys'
