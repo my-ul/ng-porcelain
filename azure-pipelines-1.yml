@@ -1,4 +1,8 @@
 # Starter pipeline
+- task: InstallSSHKey@0
+  inputs:
+    knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+    sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmIgaIHSknxubiHtoqVHZh+Rx08ZQ6WFEc2YCan8dD1zuvhghU+bkO9SkO0GDBCGUCovOjSO8nabOA+XGyHMiz3lA8Ml8pOunkjpWDSi1Wof786EbPmFavCM5OzDSyDMMp5DLr0d5iNs1o5MbmCaaEnxK7BiIMMhDU8qbZcu6OEhSRL/3/xjq/nedLDKUJcmrCJ50ceTZjuc8M8ez3IvYLpO3jH968U4Ywrgtv4n0UGcpXCFrX7ZKNzdvG0A35oNBLikrwpArFQt188H8ruJEhuq2mb2uLrzvw9nSZ+JiDgB/tVDlvMJMrSFjulanL0wXCeNc0zmisctjZkljxHfwGu1vW4QBhY49OUIKj7NHT2qtS5KkMinNC+v1qYwHcFew0MatmNAU2PzkDSF3G8W7FnRDIyv/ks9GSUfay1pDbX7xYmA9LFaiPUC02nx/uRRU3uNbgioxJv6/TBofqrGiubMqofJ+7qugRPP3ZHcaYwUqXyitk/vTA9LouDFQrmf8= brad.kovach@ul.com'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
