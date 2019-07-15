@@ -8,8 +8,7 @@ steps:
     sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXGbHgYFDXAB91cPDEkpKB+m6+H6Zh1w3dkNpWEos2naNWJMAoAvRA8fNyxLNIOFBI9xWFyfLQOG5V/XHIIJDN4Up+YqEhwGKbGBY5BxqMa+Tf9NCbjfIFW7gM4lj7MMYdmQu+6zldEPn+ibLJJI2NtfKyHZsFWaV8PEK863qVgMd7Cs9U0z2XbTw6v+irWA7RaQJ6w1+kqfQRmNrycUmG8XotbzvRD0JiM2SpM5uIVe0gDCl6vKpXsqUe4RjwZkR7c6klrJLJyALylILECQdn4FVRW9JE1t7ddaH9uJzRPeD38nuSdNa/s7BBkxNt8pAWX4sVPD4v4Xry68XWoix2M7/coc2+0RyySeNBy++olCf5ga6Ys008D33vCK03GyQbklU48ZmDWQDXy/ku6PfMcPrIxqgT6vz2GJ+hKx+6hfh06WlQEoLqw/TjoYug+qdn6VD0SrG8HWMG4+xe19i2VB0roQSo6IzoAqGwMGyvFh05feqWYZXlXgNfVakc93k= git@github.com'
     sshKeySecureFile: 'id_rsa'
 - script: |
-    echo $(Build.Repository.LocalPath)
-    cd $(Build.Repository.LocalPath)
+    git checkout master
     git fetch
     git remote add github ssh://git@github.com:my-ul/ng-porcelain.git
   displayName: 'Add GitHub Remote'
