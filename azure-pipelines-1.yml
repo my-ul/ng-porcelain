@@ -20,6 +20,6 @@ steps:
 - script: |
     echo $(Build.Repository.LocalPath)
     cd $(Build.Repository.LocalPath)
-    git branch
+    for br in `git branch -r | grep -v master `; do git checkout --track $br ; done
     git push github --all
   displayName: 'Push AzDO to GitHub'
