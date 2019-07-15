@@ -14,8 +14,9 @@ pool:
 
 steps:
 - script: |
+    ls ~/.ssh/
     git fetch origin
-    git remote add github https://github.com/my-ul/ng-porcelain.git
+    git remote add github git@github.com:my-ul/ng-porcelain.git
     git push github --all
 
   displayName: 'Add GitHub remote and push'
