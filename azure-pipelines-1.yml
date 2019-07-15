@@ -5,15 +5,8 @@ steps:
 - task: InstallSSHKey@0
   inputs:
     knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
-    sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmIgaIHSknxubiHtoqVHZh+Rx08ZQ6WFEc2YCan8dD1zuvhghU+bkO9SkO0GDBCGUCovOjSO8nabOA+XGyHMiz3lA8Ml8pOunkjpWDSi1Wof786EbPmFavCM5OzDSyDMMp5DLr0d5iNs1o5MbmCaaEnxK7BiIMMhDU8qbZcu6OEhSRL/3/xjq/nedLDKUJcmrCJ50ceTZjuc8M8ez3IvYLpO3jH968U4Ywrgtv4n0UGcpXCFrX7ZKNzdvG0A35oNBLikrwpArFQt188H8ruJEhuq2mb2uLrzvw9nSZ+JiDgB/tVDlvMJMrSFjulanL0wXCeNc0zmisctjZkljxHfwGu1vW4QBhY49OUIKj7NHT2qtS5KkMinNC+v1qYwHcFew0MatmNAU2PzkDSF3G8W7FnRDIyv/ks9GSUfay1pDbX7xYmA9LFaiPUC02nx/uRRU3uNbgioxJv6/TBofqrGiubMqofJ+7qugRPP3ZHcaYwUqXyitk/vTA9LouDFQrmf8= 42781@NBK0816PC0EJM5X'
+    sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXGbHgYFDXAB91cPDEkpKB+m6+H6Zh1w3dkNpWEos2naNWJMAoAvRA8fNyxLNIOFBI9xWFyfLQOG5V/XHIIJDN4Up+YqEhwGKbGBY5BxqMa+Tf9NCbjfIFW7gM4lj7MMYdmQu+6zldEPn+ibLJJI2NtfKyHZsFWaV8PEK863qVgMd7Cs9U0z2XbTw6v+irWA7RaQJ6w1+kqfQRmNrycUmG8XotbzvRD0JiM2SpM5uIVe0gDCl6vKpXsqUe4RjwZkR7c6klrJLJyALylILECQdn4FVRW9JE1t7ddaH9uJzRPeD38nuSdNa/s7BBkxNt8pAWX4sVPD4v4Xry68XWoix2M7/coc2+0RyySeNBy++olCf5ga6Ys008D33vCK03GyQbklU48ZmDWQDXy/ku6PfMcPrIxqgT6vz2GJ+hKx+6hfh06WlQEoLqw/TjoYug+qdn6VD0SrG8HWMG4+xe19i2VB0roQSo6IzoAqGwMGyvFh05feqWYZXlXgNfVakc93k= git@github.com'
     sshKeySecureFile: 'id_rsa'
-- script: |
-    echo -n "Host github.com" >> ~/.ssh/config
-    echo -n "	HostName github.com" >> ~/.ssh/config
-    echo -n "	IdentityFile /home/vsts/work/_temp/id_rsa" >> ~/.ssh/config
-    echo -n "	User git" >> ~/.ssh/config
-    chmod 400 /home/vsts/work/_temp/id_rsa
-  displayName: 'Install git config'
 - script: |
     ls ~/.ssh
     git fetch origin
