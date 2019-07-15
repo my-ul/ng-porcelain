@@ -7,9 +7,15 @@ steps:
     knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
     sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXGbHgYFDXAB91cPDEkpKB+m6+H6Zh1w3dkNpWEos2naNWJMAoAvRA8fNyxLNIOFBI9xWFyfLQOG5V/XHIIJDN4Up+YqEhwGKbGBY5BxqMa+Tf9NCbjfIFW7gM4lj7MMYdmQu+6zldEPn+ibLJJI2NtfKyHZsFWaV8PEK863qVgMd7Cs9U0z2XbTw6v+irWA7RaQJ6w1+kqfQRmNrycUmG8XotbzvRD0JiM2SpM5uIVe0gDCl6vKpXsqUe4RjwZkR7c6klrJLJyALylILECQdn4FVRW9JE1t7ddaH9uJzRPeD38nuSdNa/s7BBkxNt8pAWX4sVPD4v4Xry68XWoix2M7/coc2+0RyySeNBy++olCf5ga6Ys008D33vCK03GyQbklU48ZmDWQDXy/ku6PfMcPrIxqgT6vz2GJ+hKx+6hfh06WlQEoLqw/TjoYug+qdn6VD0SrG8HWMG4+xe19i2VB0roQSo6IzoAqGwMGyvFh05feqWYZXlXgNfVakc93k= git@github.com'
     sshKeySecureFile: 'id_rsa'
-- script: git remote add github ssh://git@github.com:my-ul/ng-porcelain.git
+- script: |
+    echo $(Build.Repository.LocalPath)
+    cd $(Build.Repository.LocalPath)
+    git remote add github ssh://git@github.com:my-ul/ng-porcelain.git
   displayName: 'Add GitHub Remote'
 - script: ssh-add -l
   displayName: 'Show installed SSH keys'
-- script: git push -u github master
+- script: |
+    echo $(Build.Repository.LocalPath)
+    cd $(Build.Repository.LocalPath)
+    git push -u github master
   displayName: 'Push AzDO to GitHub'
