@@ -11,5 +11,5 @@ steps:
   displayName: 'Add GitHub Remote'
 - script: ssh-add -l
   displayName: 'Show installed SSH keys'
-- script: git push github --all
+- script: git push -u github master
   displayName: 'Push AzDO to GitHub'
