@@ -12,10 +12,11 @@ steps:
     echo -n "	HostName github.com" >> ~/.ssh/config
     echo -n "	IdentityFile ~/.ssh/id_rsa"
     echo -n " User git"
+    chmod 400 ~/.ssh/id_rsa
   displayName: 'Install git config'
 - script: |
     ls ~/.ssh
     git fetch origin
-    git remote add github git@github.com:my-ul/ng-porcelain.git
+    git remote add github ssh://git@github.com/my-ul/ng-porcelain
     git push github --all
   displayName: 'Add GitHub remote and push'
