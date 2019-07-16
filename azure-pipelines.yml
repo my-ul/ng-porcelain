@@ -29,7 +29,9 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.Repository.LocalPath)/dist/ng-porcelain'
-    artifact: 'ng-porcelain@$(json.version)'
+    artifact: 'ng-porcelain'
+
+
 
 # - task: ArchiveFiles@2
 #   inputs:
