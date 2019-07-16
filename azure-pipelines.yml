@@ -18,12 +18,12 @@ steps:
     npx ng build ngPorcelain
   displayName: 'npm install and build'
 
-- script: echo $(Pipeline.Workspace) && pwd
+- script: echo $(Build.Repository.LocalPath) && pwd
   displayName: Print Workspace and pwd
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)/dist/ng-porcelain'
+    targetPath: '$(Build.Repository.LocalPath)/dist/ng-porcelain'
     artifact: 'ng-porcelain'
 
 # - task: ArchiveFiles@2
