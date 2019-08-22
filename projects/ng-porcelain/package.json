@@ -1,6 +1,6 @@
 {
 	"name": "@my-ul/ng-porcelain",
-	"version": "1.6.0",
+	"version": "1.7.0-beta.1",
 	"private": false,
 	"peerDependencies": {
 		"@angular/common": "^6.0.0",
@@ -14,6 +14,7 @@
 		"@w11k/angular-sticky-things": "^1.1.2",
 		"moment": "^2.24.0",
 		"mydatepicker": "^2.6.6",
-		"lodash-es": "~4.17.11"
+		"lodash-es": "~4.17.11",
+		"uuid": "^3.3.2"
 	}
 }

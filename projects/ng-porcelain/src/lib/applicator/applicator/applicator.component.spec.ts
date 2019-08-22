@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApplicatorComponent } from './applicator.component';
+import { APPLICATOR_IMPORTS, APPLICATOR_DIRECTIVES } from '../applicator.module';
 
 describe('ApplicatorComponent', () => {
 	let component: ApplicatorComponent;
@@ -8,7 +9,8 @@ describe('ApplicatorComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [ApplicatorComponent]
+			declarations: APPLICATOR_DIRECTIVES,
+			imports: APPLICATOR_IMPORTS
 		}).compileComponents();
 	}));
 

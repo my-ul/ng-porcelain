@@ -12,7 +12,8 @@ npm install --save @my-ul/ng-porcelain \
 	@w11k/angular-sticky-things@1.1.2 \
 	moment@2.24.0 \
 	mydatepicker@2.6.6 \
-	lodash-es@~4.17.11
+	lodash-es@~4.17.11 \
+	uuid@latest
 ```
 
 ### Import any modules you intend to use
