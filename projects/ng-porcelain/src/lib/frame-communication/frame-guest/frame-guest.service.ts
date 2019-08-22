@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, observable, fromEvent } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import * as guid from 'uuid/v4';
+import * as _guid from 'uuid/v4';
+const guid = _guid;
 import { WindowService } from '../window/window.service';
 
 export type MessageType =
