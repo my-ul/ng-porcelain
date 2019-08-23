@@ -143,7 +143,6 @@ export class DateRefinerComponent implements OnInit {
 
 		// Connect new Subscription-based state updates to callback system for users using version < 1.3
 		this.refiner.valueSubject.subscribe(value => {
-			console.log('emitting', value);
 			this.onRefinerChange.emit([this.refiner.slug, value]);
 		});
 

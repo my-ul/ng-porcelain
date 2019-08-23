@@ -80,7 +80,6 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	public getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
 	): OptionRefinerValue | DateRefinerValue {
-		console.log('getDefaultValueForRefiner(refiner)', { refiner });
 		// If a default value exists for the slug, return it immediately
 		if (this.defaultValues && this.defaultValues[refiner.slug]) {
 			return this.defaultValues[refiner.slug];
@@ -148,7 +147,6 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 
 		// Must execute after the rest of the subscriptions callbacks.
 		if (this.applyOnInit) {
-			console.log('adding applyOnInit behavior');
 			combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
 				allRefinersInitialized => {
 					console.group('combineLatest.subscribe(allRefinersInitialized)', {
