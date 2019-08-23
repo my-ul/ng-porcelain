@@ -8,9 +8,7 @@ import { IDictionary } from '../../shared';
 	providedIn: 'root'
 })
 export class FrameHostService {
-	private window: Window;
-
-	private subjects: IDictionary<Subject<any>>;
+	// #region Properties (3)
 
 	private listener = (event: MessageEvent) => {
 		const msg = event.data as IPing<any>;
@@ -26,14 +24,12 @@ export class FrameHostService {
 			}
 		}
 	};
+	private subjects: IDictionary<Subject<any>>;
+	private window: Window;
 
-	public setWindow(newWindow: Window) {
-		if (this.window) this.window.removeEventListener('message', this.listener);
+	// #endregion Properties (3)
 
-		this.window = newWindow;
-
-		this.window.addEventListener('message', this.listener);
-	}
+	// #region Constructors (1)
 
 	constructor(private windowService: WindowService) {
 		this.subjects = {
@@ -48,11 +44,15 @@ export class FrameHostService {
 		this.setWindow(this.windowService.nativeWindow);
 	}
 
+	// #endregion Constructors (1)
+
+	// #region Public Methods (2)
+
 	/**
 	 * Allow an external event to get an observable that emits when the event happens.
 	 * @param messageType
 	 */
-	getMessageSubject(messageType: MessageType): Observable<any> {
+	public getMessageSubject(messageType: MessageType): Observable<any> {
 		if (messageType in this.subjects) {
 			return this.subjects[messageType].asObservable();
 		} else {
@@ -60,12 +60,36 @@ export class FrameHostService {
 		}
 	}
 
-	private send(response: any, initialEvent: MessageEvent) {
-		if (initialEvent.source) {
-			(initialEvent.source as Window).postMessage(response, initialEvent.origin);
-		}
+	/**
+	 * Set the window to a different window object. Useful for unit testing.
+	 * @param newWindow
+	 */
+	public setWindow(newWindow: Window) {
+		if (this.window) this.removeEvent(this.window, 'message', this.listener);
+
+		this.window = newWindow;
+
+		this.addEvent(this.window, 'message', this.listener);
 	}
 
+	// #endregion Public Methods (2)
+
+	// #region Private Methods (4)
+
+	private addEvent(obj, type, fn) {
+		if (obj.attachEvent) {
+			obj['e' + type + fn] = fn;
+			obj[type + fn] = function() {
+				obj['e' + type + fn](window.event);
+			};
+			obj.attachEvent('on' + type, obj[type + fn]);
+		} else obj.addEventListener(type, fn, false);
+	}
+
+	/**
+	 * Triggers the subject responsible for propagating state.
+	 * @param event A MessageEvent containing the message.
+	 */
 	private handleRegisteredMessage(event: MessageEvent) {
 		return this.subjects[event.data.type].next({
 			message: event.data as IPing<any>,
@@ -74,4 +98,19 @@ export class FrameHostService {
 			}
 		});
 	}
+
+	private removeEvent(obj, type, fn) {
+		if (obj.detachEvent) {
+			obj.detachEvent('on' + type, obj[type + fn]);
+			obj[type + fn] = null;
+		} else obj.removeEventListener(type, fn, false);
+	}
+
+	private send(response: any, initialEvent: MessageEvent) {
+		if (initialEvent.source) {
+			(initialEvent.source as Window).postMessage(response, initialEvent.origin);
+		}
+	}
+
+	// #endregion Private Methods (4)
 }

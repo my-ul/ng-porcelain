@@ -48,7 +48,6 @@ export interface IPongResponse extends IPong<IPongMessage> {
 	// #region Properties (2)
 
 	message?: {};
-
 	type: 'Pong';
 
 	// #endregion Properties (2)
@@ -130,13 +129,9 @@ export class FrameGuestService {
 		}
 	}
 
-	setParent(newParent: Window) {
-		this.parent = newParent;
-	}
-
 	// #endregion Constructors (1)
 
-	// #region Public Methods (6)
+	// #region Public Methods (7)
 
 	public DismissUpload(): Observable<ISuccessResponse> {
 		return this.send<null>({
@@ -175,7 +170,11 @@ export class FrameGuestService {
 		}) as Observable<ISetChildLoadedResponse>;
 	}
 
-	// #endregion Public Methods (6)
+	public setParent(newParent: Window) {
+		this.parent = newParent;
+	}
+
+	// #endregion Public Methods (7)
 
 	// #region Private Methods (1)
 
