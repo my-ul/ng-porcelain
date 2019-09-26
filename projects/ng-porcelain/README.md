@@ -371,8 +371,10 @@ class MyComponent implements OnInit {
 	];
 
 	// Using Callback API
-	myApplyHandler(indexedValues) {
-		console.log(indexedValues);
+	myApplyHandler(indexedValues,initialLoad) {
+        //initialLoad sets to true when refiner emits event on ngOninit
+		   and it sets to false when user clicks on apply/reset button
+		console.log(indexedValues,initialLoad);
 	}
 
 	// Using Subscription API
