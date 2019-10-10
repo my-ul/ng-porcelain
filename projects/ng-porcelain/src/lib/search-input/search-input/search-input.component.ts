@@ -51,7 +51,6 @@ export class SearchInputComponent implements OnInit {
 		if (this.emptyrefresh == true) {
 			//alert("only box has to be cleared")
 		} else {
-			this.submitHandler.emit(this.value);
 			this.emptyrefresh = true; //empty refresh check
 		}
 
