@@ -141,7 +141,8 @@ storiesOf('Search Input Component', module)
 				submitIconColor: color('Submit Icon Color', '#00ff00'),
 				placeholderLabel: text('Placeholder Label', 'Volume'),
 				borders: boolean('Enable Border', true),
-				userValue: text('userValue Label', 'Entered')
+				userValue: text('userValue Label', 'Entered'),
+				emptyHandler: action('empty value is emitter by emptyHandler')
 			}
 		};
 	});

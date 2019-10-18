@@ -34,3 +34,7 @@ A library of durable, beautiful components for Angular 6+.
 -   Introduces `porcelain-applicator` component to handle Apply/Reset functionality, with sticky scroll behavior.
 -   Introduces `porcelain-footer` component to show UL copyright and legal notices.
 -   Introduces `porcelain-spinner` component to show an appropriately-sized, consistent loading spinner.
+
+### 1.7.0-beta.5
+
+-   Empty handler additon and `porcelain-applicator` modification.

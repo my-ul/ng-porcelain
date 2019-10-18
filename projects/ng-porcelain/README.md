@@ -458,6 +458,43 @@ Change the Placeholder Text to change the displayed text. Useful for i18n/transl
 ></porcelain-search-input>
 ```
 
+##### Default value in Search Box
+
+Just use uservalue to assign value to it in the HTML
+
+```html
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[userValue]="searchTerm"
+></porcelain-search-input>
+```
+
+##### Search Box Border Toggle
+
+For Search box border Toggle set borders for
+
+1.)true for enabling border
+2.)false for disabling border
+
+```html
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[borders]="false"
+></porcelain-search-input>
+```
+
+##### Search Box Cancel button action
+
+```html
+For getting just empty value when search cancel is clicked, use emptyhandler
+
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[borders]="false"
+	[emptyHandler]="clearSearchClick($event)"
+></porcelain-search-input>
+```
+
 ##### Customize icons
 
 Alternative Font Awesome icons can be used instead of the defaults for 'Clear' and 'Submit'. See [Font Awesome for Angular](https://github.com/FortAwesome/angular-fontawesome#using-the-icon-library) docs for more information.

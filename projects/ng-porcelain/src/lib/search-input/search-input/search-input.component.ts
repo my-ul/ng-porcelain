@@ -23,6 +23,7 @@ export class SearchInputComponent implements OnInit {
 
 	// Outputs
 	@Output() submitHandler: EventEmitter<string> = new EventEmitter();
+	@Output() emptyHandler: EventEmitter<string> = new EventEmitter();
 
 	// Booleans
 	isSearchFocused = false;
@@ -54,6 +55,9 @@ export class SearchInputComponent implements OnInit {
 			this.emptyrefresh = true; //empty refresh check
 		}
 
+		//empty value to be emitted to emptyHandler
+		this.empty();
+
 		this.setFocus();
 	}
 
@@ -80,6 +84,12 @@ export class SearchInputComponent implements OnInit {
 			this.setFocus();
 			this.emptyrefresh = true; //to enable empty refresh after emptyvalue is emitted by submit
 		}
+	}
+	/**
+	 * Empty value emit once search cancel button is clicked
+	 */
+	empty(): void {
+		this.emptyHandler.emit('');
 	}
 
 	/**
