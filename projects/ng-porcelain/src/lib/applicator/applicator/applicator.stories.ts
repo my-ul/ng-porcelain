@@ -93,4 +93,14 @@ storiesOf('Applicator Component', module)
 				refiners: [{}, new Date(), new RegExp('invalid refiner')]
 			}
 		};
+	})
+	.add('Set applyOnInit to false', () => {
+		return {
+			component: ApplicatorComponent,
+			props: {
+				onApply: action('Applicators update'),
+				refiners: [simpleRefiner, dateRefiner, anotherSimpleRefiner],
+				applyOnInit: false
+			}
+		};
 	});
