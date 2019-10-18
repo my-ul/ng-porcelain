@@ -35,6 +35,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	private appliedValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
 	private subscriptions: Subscription[] = [];
+	private initialLoad: boolean = true;
 
 	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Input() public defaultValues: RefinerValueDictionary = {};
@@ -128,7 +129,6 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 				defaultValues: this.defaultValues
 			}
 		});
-
 		// generate defaultValues dictionary composite from implicit + explicit values
 		this.refiners.forEach(refiner => {
 			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
@@ -153,7 +153,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 						allRefinersInitialized
 					});
 
-					this.apply();
+					this.onApplyValues();
 
 					console.groupEnd();
 				}
@@ -163,7 +163,33 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.groupEnd();
 	}
 
-	public reset(): void {
+
+	canApply(): boolean {
+		return !isEqual(this.stagedValues, this.appliedValues);
+	}
+
+	canReset(): boolean {
+		return !isEqual(this.stagedValues, this.defaultValues);
+	}
+
+	apply(): void {
+		console.group('apply()');
+
+		this.initialLoad = false;
+
+		this.onApplyValues();
+
+		console.groupEnd();
+	}
+
+	onApplyValues() {
+		console.group('onApplyValues()');
+		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
+		this.onApply.emit({ appliedValues: this.appliedValues, initialLoad: this.initialLoad });
+		console.groupEnd();
+	}
+
+	reset(): void {
 		console.group('reset()');
 
 		this.refiners.forEach(refiner => {
