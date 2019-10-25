@@ -22,7 +22,7 @@ import {
 
 const moment = _moment;
 
-storiesOf('Date Refiner Component', module)
+storiesOf('Refiners/Date Refiner Component', module)
 	.addDecorator(withNotes)
 	.addDecorator(withKnobs)
 	.addDecorator(

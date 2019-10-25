@@ -30,21 +30,18 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	styleUrls: ['./applicator.component.scss']
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
-	@Input()
-	refiners: BaseRefinerDefinition[] = [];
-
-	@Input() applyLabel: string = 'Apply';
-	@Input() resetLabel: string = 'Reset';
-	@Input() loadingLabel: string = 'Loading';
-
-	@Output() onApply: EventEmitter<any> = new EventEmitter();
-
-	@Input() public defaultValues: RefinerValueDictionary = {};
-	private stagedValues: RefinerValueDictionary = {};
 	private appliedValues: RefinerValueDictionary = {};
-
-	private subscriptions: Subscription[] = [];
 	private initialLoad: boolean = true;
+	private stagedValues: RefinerValueDictionary = {};
+	private subscriptions: Subscription[] = [];
+
+	@Input() public applyLabel: string = 'Apply';
+	@Input() public applyOnInit: boolean = true;
+	@Input() public defaultValues: RefinerValueDictionary = {};
+	@Input() public loadingLabel: string = 'Loading';
+	@Input() public refiners: (BaseRefinerDefinition)[] = [];
+	@Input() public resetLabel: string = 'Reset';
+	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
 	constructor() {
 		console.group('new ApplicatorComponent()', { arguments });
@@ -52,7 +49,78 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.groupEnd();
 	}
 
-	ngOnInit() {
+	public apply() {
+		console.group('apply()');
+
+		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
+		this.onApply.emit({
+			appliedValues: this.appliedValues,
+			initialLoad: this.initialLoad
+		});
+
+		console.groupEnd();
+	}
+
+	public beforeApply(): void {
+		console.group('beforeApply()');
+
+		this.initialLoad = false;
+
+		this.apply();
+
+		console.groupEnd();
+	}
+
+	public canApply(): boolean {
+		return !isEqual(this.stagedValues, this.appliedValues);
+	}
+
+	public canReset(): boolean {
+		return !isEqual(this.stagedValues, this.defaultValues);
+	}
+
+	public getDefaultValueForRefiner(
+		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
+	): OptionRefinerValue | DateRefinerValue {
+		// If a default value exists for the slug, return it immediately
+		if (this.defaultValues && this.defaultValues[refiner.slug]) {
+			return this.defaultValues[refiner.slug];
+		}
+
+		// Otherwise, return an empty array for Simple Refiner and "All" for Date Refiner
+		if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
+			return [] as OptionRefinerValue;
+		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
+			return {
+				from: null,
+				to: null,
+				optionSlug: '-1'
+			} as DateRefinerValue;
+		}
+
+		// Only reached with invalid refiner definitions.
+		throw new Error(
+			'Unable to get determine Refiner type from Refiner Definition. Ensure Refiner Definition contains `type` field.'
+		);
+	}
+
+	public handleRefinerValues(refinerSlug, refinerValue): void {
+		console.group('handleRefinerValues(refinerSlug, refinerValue)', {
+			refinerSlug,
+			refinerValue
+		});
+
+		this.stagedValues[refinerSlug] = refinerValue;
+
+		console.groupEnd();
+	}
+
+	public ngOnDestroy() {
+		// prevents memory leaks by properly unsubscribing when this component unmounts.
+		this.subscriptions.forEach(subscription => subscription.unsubscribe());
+	}
+
+	public ngOnInit() {
 		console.group('ApplicatorComponent.ngOnInit()', {
 			props: {
 				refiners: this.refiners,
@@ -79,63 +147,24 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		}, []);
 
 		// Must execute after the rest of the subscriptions callbacks.
-		combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
-			allRefinersInitialized => {
-				console.group('combineLatest.subscribe(allRefinersInitialized)', {
-					allRefinersInitialized
-				});
+		if (this.applyOnInit) {
+			combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
+				allRefinersInitialized => {
+					console.group('combineLatest.subscribe(allRefinersInitialized)', {
+						allRefinersInitialized
+					});
 
-				this.onApplyValues();
+					this.apply();
 
-				console.groupEnd();
-			}
-		);
-
-		console.groupEnd();
-	}
-
-	ngOnDestroy() {
-		// prevents memory leaks by properly unsubscribing when this component unmounts.
-		this.subscriptions.forEach(subscription => subscription.unsubscribe());
-	}
-
-	handleRefinerValues(refinerSlug, refinerValue): void {
-		console.group('handleRefinerValues(refinerSlug, refinerValue)', {
-			refinerSlug,
-			refinerValue
-		});
-
-		this.stagedValues[refinerSlug] = refinerValue;
+					console.groupEnd();
+				}
+			);
+		}
 
 		console.groupEnd();
 	}
 
-	canApply(): boolean {
-		return !isEqual(this.stagedValues, this.appliedValues);
-	}
-
-	canReset(): boolean {
-		return !isEqual(this.stagedValues, this.defaultValues);
-	}
-
-	apply(): void {
-		console.group('apply()');
-
-		this.initialLoad = false;
-
-		this.onApplyValues();
-
-		console.groupEnd();
-	}
-
-	onApplyValues() {
-		console.group('onApplyValues()');
-		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
-		this.onApply.emit({ appliedValues: this.appliedValues, initialLoad: this.initialLoad });
-		console.groupEnd();
-	}
-
-	reset(): void {
+	public reset(): void {
 		console.group('reset()');
 
 		this.refiners.forEach(refiner => {
@@ -146,34 +175,8 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 			console.groupEnd();
 		});
 
-		this.apply();
+		this.beforeApply();
 
 		console.groupEnd();
-	}
-
-	getDefaultValueForRefiner(
-		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
-	): OptionRefinerValue | DateRefinerValue {
-		console.log('getDefaultValueForRefiner(refiner)', { refiner });
-		// If a default value exists for the slug, return it immediately
-		if (this.defaultValues && this.defaultValues[refiner.slug]) {
-			return this.defaultValues[refiner.slug];
-		}
-
-		// Otherwise, return an empty array for Simple Refiner and "All" for Date Refiner
-		if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
-			return [] as OptionRefinerValue;
-		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
-			return {
-				from: null,
-				to: null,
-				optionSlug: '-1'
-			} as DateRefinerValue;
-		}
-
-		// Only reached with invalid refiner definitions.
-		throw new Error(
-			'Unable to get determine Refiner type from Refiner Definition. Ensure Refiner Definition contains `type` field.'
-		);
 	}
 }

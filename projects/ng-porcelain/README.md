@@ -12,7 +12,8 @@ npm install --save @my-ul/ng-porcelain \
 	@w11k/angular-sticky-things@1.1.2 \
 	moment@2.24.0 \
 	mydatepicker@2.6.6 \
-	lodash-es@~4.17.11
+	lodash-es@~4.17.11 \
+	uuid@latest
 ```
 
 ### Import any modules you intend to use
@@ -454,6 +455,43 @@ Change the Placeholder Text to change the displayed text. Useful for i18n/transl
 <porcelain-search-input
 	[submitHandler]="handleNewValue($event)"
 	[placeholderLabel]="'Volume'"
+></porcelain-search-input>
+```
+
+##### Default value in Search Box
+
+Just use uservalue to assign value to it in the HTML
+
+```html
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[userValue]="searchTerm"
+></porcelain-search-input>
+```
+
+##### Search Box Border Toggle
+
+For Search box border Toggle set borders for
+
+1.)true for enabling border
+2.)false for disabling border
+
+```html
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[borders]="false"
+></porcelain-search-input>
+```
+
+##### Search Box Cancel button action
+
+```html
+For getting just empty value when search cancel is clicked, use emptyhandler
+
+<porcelain-search-input
+	[submitHandler]="handleNewValue($event)"
+	[borders]="false"
+	[emptyHandler]="clearSearchClick($event)"
 ></porcelain-search-input>
 ```
 

@@ -51,7 +51,7 @@ const dateRefiner = new DateRefinerDefinition({
 	options: i18nDateOptions()
 });
 
-storiesOf('Applicator Component', module)
+storiesOf('Refiners/Applicator Component', module)
 	.addDecorator(
 		moduleMetadata({
 			declarations: APPLICATOR_DIRECTIVES,
@@ -91,6 +91,16 @@ storiesOf('Applicator Component', module)
 			props: {
 				onApply: action('Applicators update'),
 				refiners: [{}, new Date(), new RegExp('invalid refiner')]
+			}
+		};
+	})
+	.add('Set applyOnInit to false', () => {
+		return {
+			component: ApplicatorComponent,
+			props: {
+				onApply: action('Applicators update'),
+				refiners: [simpleRefiner, dateRefiner, anotherSimpleRefiner],
+				applyOnInit: false
 			}
 		};
 	});

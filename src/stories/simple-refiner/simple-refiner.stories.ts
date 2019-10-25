@@ -126,7 +126,7 @@ let usStatesFull = {
 	WY: new SimpleOption({ badge: 573720, label: 'Wyoming', slug: 'WY' })
 };
 
-storiesOf('Option Refiner Component', module)
+storiesOf('Refiners/Simple Refiner', module)
 	.addDecorator(withNotes)
 	.addParameters({
 		info: {
@@ -200,7 +200,7 @@ storiesOf('Option Refiner Component', module)
 		}
 	);
 
-storiesOf('Option Refiner Component/Badges', module)
+storiesOf('Refiners/Simple Refiner Badges', module)
 	.addDecorator(withNotes)
 	.add(
 		'Options with long `label` values and numeric badges',
@@ -283,7 +283,7 @@ storiesOf('Option Refiner Component/Badges', module)
 		}
 	}));
 
-storiesOf('Option Refiner Component/showCount', module)
+storiesOf('Refiners/Simple Refiner Defaults', module)
 	.addDecorator(withNotes)
 	.addDecorator(withKnobs)
 	.addDecorator(withNotes)
@@ -328,13 +328,8 @@ storiesOf('Option Refiner Component/showCount', module)
 		{
 			notes: { markdown: require('./custom-show-count.md') }
 		}
-	);
-
-storiesOf('Option Refiner Component/selected and isSelected', module)
-	.addDecorator(withNotes)
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
-	.add('Pre-select with `Refiner.selected`', () => ({
+	)
+	.add('Set value with `Refiner.selected`', () => ({
 		component: SimpleRefinerComponent,
 		moduleMetadata: {
 			imports: SIMPLE_REFINER_IMPORTS
@@ -349,7 +344,7 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 			})
 		}
 	}))
-	.add('Pre-select with `option.isSelected`', () => ({
+	.add('Set value with `option.isSelected`', () => ({
 		component: SimpleRefinerComponent,
 		moduleMetadata: {
 			imports: SIMPLE_REFINER_IMPORTS
@@ -368,13 +363,8 @@ storiesOf('Option Refiner Component/selected and isSelected', module)
 				})
 			})
 		}
-	}));
-
-storiesOf('Option Refiner Component/isOpen', module)
-	.addDecorator(withNotes)
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
-	.add('Close with `component.isOpen` property', () => ({
+	}))
+	.add('Collapsed with `component.isOpen` property', () => ({
 		component: SimpleRefinerComponent,
 		moduleMetadata: {
 			imports: SIMPLE_REFINER_IMPORTS
@@ -389,7 +379,7 @@ storiesOf('Option Refiner Component/isOpen', module)
 			})
 		}
 	}))
-	.add('Close with `OptionRefiner.isOpen` property', () => ({
+	.add('Collapsed with `OptionRefiner.isOpen` property', () => ({
 		component: SimpleRefinerComponent,
 		moduleMetadata: {
 			imports: SIMPLE_REFINER_IMPORTS

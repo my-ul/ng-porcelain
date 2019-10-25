@@ -1,27 +1,37 @@
-<div class="search-input">
-	<div class="search-input__search-wrap">
-		<input
-			#searchInput
-			type="text"
-			class="search-input__search-input"
-			[(ngModel)]="value"
-			[placeholder]="placeholderLabel"
-			(keyup.enter)="submit()"
-			(focus)="handleFocusIn()"
-			(blur)="handleBlur()"
-			[class.search-input__search-input--no-borders]="!borders"
-		/>
-		<div class="search-input__search-action-group">
-			<button
-				*ngIf="!isEmpty()"
-				class=" search-input__search-action search-input__clear"
-				(click)="clear()"
-			>
-				<fa-icon [icon]="clearIcon" [styles]="{ color: clearIconColor }"></fa-icon>
-			</button>
-			<button class=" search-input__search-action  search-input__search" (click)="submit()">
-				<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>
-			</button>
-		</div>
-	</div>
+<div
+	class="search-input"
+	[class.search-input--no-borders]="!borders"
+	[class.search-input--has-focus]="isSearchFocused"
+>
+	<input
+		#searchInput
+		type="text"
+		title="{{ placeholderLabel }}"
+		class="search-input__query"
+		[(ngModel)]="value"
+		[placeholder]="placeholderLabel"
+		(keyup.enter)="submit()"
+		(keyup.esc)="clear()"
+		(focus)="handleFocusIn()"
+		(blur)="handleBlur()"
+	/>
+	<button
+		class="search-input__search-action search-input__search-action--clear"
+		title="Clear the search query."
+		*ngIf="!isEmpty()"
+		(click)="clear()"
+	>
+		<fa-icon [icon]="clearIcon" [styles]="{ color: clearIconColor }"></fa-icon>
+		<span class="sr-only">Clear the search query.</span>
+	</button>
+	<button
+		class=" search-input__search-action  search-input__search"
+		[class.search-input__search-action--not-active]="!canSubmit()"
+		[class.search-input__search-action--is-active]="canSubmit()"
+		(click)="submit()"
+		title="Execute the search with the current search query."
+	>
+		<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>
+		<span class="sr-only">Submit the search using the current query.</span>
+	</button>
 </div>

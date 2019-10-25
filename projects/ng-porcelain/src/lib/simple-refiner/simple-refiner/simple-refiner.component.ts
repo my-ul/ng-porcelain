@@ -122,7 +122,6 @@ export class SimpleRefinerComponent implements OnInit {
 			console.group(
 				'SimpleRefinerComponent.ngOnInit > this.refiner.valueSubject.subscribe(selectedOptionSlugs)'
 			);
-			console.log({ selectedOptionSlugs });
 
 			if (this.ignoreNext) {
 				this.ignoreNext = false;
