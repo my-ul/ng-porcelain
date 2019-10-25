@@ -14,6 +14,9 @@ import {
 // Component
 import { SearchInputComponent } from '../../../projects/ng-porcelain/src/lib/search-input/search-input/search-input.component';
 
+const onQueryChange = 'Search Input Query submitted';
+const onQueryClear = 'Search Input Query cleared';
+
 storiesOf('Search Input Component', module)
 	.addDecorator(withKnobs)
 	.addDecorator(
@@ -27,13 +30,14 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="action('Search Input value change')"
+		 * 		[submitHandler]="action(onQueryChange)"
 		 * 		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change')
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear)
 			}
 		};
 	})
@@ -41,13 +45,14 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="action('Search Input value change')"
+		 * 		[submitHandler]="action(onQueryChange)"
 		 * 		[placeholderLabel]="'Volume'"></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				placeholderLabel: text('Placeholder Label', 'Volume')
 			}
 		};
@@ -63,7 +68,8 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				submitIcon: faArrowAltCircleRight
 			}
 		};
@@ -79,7 +85,8 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				clearIcon: faTimes
 			}
 		};
@@ -95,7 +102,8 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				borders: boolean('Enable Border', false)
 			}
 		};
@@ -111,7 +119,8 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				submitIconColor: color('Color', '#ff0000')
 			}
 		};
@@ -127,8 +136,19 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				clearIconColor: color('Clear Icon Color', '#ff0000')
+			}
+		};
+	})
+	.add('Default value can be overridden', () => {
+		return {
+			component: SearchInputComponent,
+			props: {
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
+				userValue: text('Value', 'Entered')
 			}
 		};
 	})
@@ -136,13 +156,13 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action('Search Input value change'),
+				submitHandler: action(onQueryChange),
 				clearIconColor: color('Clear Icon Color', '#ff0000'),
 				submitIconColor: color('Submit Icon Color', '#00ff00'),
 				placeholderLabel: text('Placeholder Label', 'Volume'),
 				borders: boolean('Enable Border', true),
 				userValue: text('userValue Label', 'Entered'),
-				emptyHandler: action('empty value is emitter by emptyHandler')
+				emptyHandler: action(onQueryClear)
 			}
 		};
 	});

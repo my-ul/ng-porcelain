@@ -12,7 +12,7 @@ import {
 import { REFINERS_IMPORTS } from '../../../projects/ng-porcelain/src/lib/refiners/refiners.module';
 import { RefinersComponent } from '../../../projects/ng-porcelain/src/lib/refiners/refiners/refiners.component';
 
-storiesOf('Refiners Component', module)
+storiesOf('Refiners/Multi-Refiner Component', module)
 	.addDecorator(withKnobs)
 	.addDecorator(withNotes)
 	.add(

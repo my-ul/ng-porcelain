@@ -30,26 +30,18 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	styleUrls: ['./applicator.component.scss']
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
-	// #region Properties (9)
-
 	private appliedValues: RefinerValueDictionary = {};
+	private initialLoad: boolean = true;
 	private stagedValues: RefinerValueDictionary = {};
 	private subscriptions: Subscription[] = [];
-	private initialLoad: boolean = true;
-
-	@Input() public refiners: (BaseRefinerDefinition)[] = [];
-	@Input() public defaultValues: RefinerValueDictionary = {};
-	@Input() public applyOnInit: boolean = true;
 
 	@Input() public applyLabel: string = 'Apply';
+	@Input() public applyOnInit: boolean = true;
+	@Input() public defaultValues: RefinerValueDictionary = {};
 	@Input() public loadingLabel: string = 'Loading';
+	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Input() public resetLabel: string = 'Reset';
-
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
-
-	// #endregion Properties (9)
-
-	// #region Constructors (1)
 
 	constructor() {
 		console.group('new ApplicatorComponent()', { arguments });
@@ -57,15 +49,24 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.groupEnd();
 	}
 
-	// #endregion Constructors (1)
-
-	// #region Public Methods (8)
-
-	public apply(): void {
+	public apply() {
 		console.group('apply()');
 
 		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
-		this.onApply.emit(this.appliedValues);
+		this.onApply.emit({
+			appliedValues: this.appliedValues,
+			initialLoad: this.initialLoad
+		});
+
+		console.groupEnd();
+	}
+
+	public beforeApply(): void {
+		console.group('beforeApply()');
+
+		this.initialLoad = false;
+
+		this.apply();
 
 		console.groupEnd();
 	}
@@ -153,7 +154,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 						allRefinersInitialized
 					});
 
-					this.onApplyValues();
+					this.apply();
 
 					console.groupEnd();
 				}
@@ -163,33 +164,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.groupEnd();
 	}
 
-
-	canApply(): boolean {
-		return !isEqual(this.stagedValues, this.appliedValues);
-	}
-
-	canReset(): boolean {
-		return !isEqual(this.stagedValues, this.defaultValues);
-	}
-
-	apply(): void {
-		console.group('apply()');
-
-		this.initialLoad = false;
-
-		this.onApplyValues();
-
-		console.groupEnd();
-	}
-
-	onApplyValues() {
-		console.group('onApplyValues()');
-		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
-		this.onApply.emit({ appliedValues: this.appliedValues, initialLoad: this.initialLoad });
-		console.groupEnd();
-	}
-
-	reset(): void {
+	public reset(): void {
 		console.group('reset()');
 
 		this.refiners.forEach(refiner => {
@@ -200,10 +175,8 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 			console.groupEnd();
 		});
 
-		this.apply();
+		this.beforeApply();
 
 		console.groupEnd();
 	}
-
-	// #endregion Public Methods (8)
 }
