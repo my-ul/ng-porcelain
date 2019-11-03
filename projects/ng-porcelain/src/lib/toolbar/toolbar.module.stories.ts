@@ -29,7 +29,7 @@ storiesOf('Toolbars', module)
 			<porcelain-toolbar>
 				<porcelain-toolbar-cell [flex]="'0 0 20%'">
 					<porcelain-toolbar-button
-						(click)="prevHandler()"
+						(onClick)="prevHandler()"
 						[icon]="prevIcon"
 						[isBlock]="true"
 					>
@@ -42,7 +42,7 @@ storiesOf('Toolbars', module)
 				</porcelain-toolbar-cell>
 
 				<porcelain-toolbar-cell [flex]="'0 0 20%'">
-					<porcelain-toolbar-button (click)="nextHandler()" [icon]="nextIcon" [isBlock]="true">Next</porcelain-toolbar-button>
+					<porcelain-toolbar-button (onClick)="nextHandler()" [icon]="nextIcon" [isBlock]="true">Next</porcelain-toolbar-button>
 				</porcelain-toolbar-cell>
 			</porcelain-toolbar>`,
 			props: {
@@ -87,7 +87,7 @@ storiesOf('Toolbars', module)
 	.add('Buttons / Icon with Screen-Reader-Only Text', () => {
 		return {
 			template: `
-			<porcelain-toolbar-button [icon]="icon" [isLabelSrOnly]="true" (click)="onClick()">Text</porcelain-toolbar-button>
+			<porcelain-toolbar-button [icon]="icon" [isLabelSrOnly]="true" (onClick)="onClick()">Text</porcelain-toolbar-button>
 			`,
 			props: {
 				icon: faShare,
@@ -176,13 +176,13 @@ storiesOf('Toolbars', module)
 
 					<porcelain-toolbar [alignRight]="true">
 						<porcelain-toolbar-cell [flex]="'0 0 auto'">
-							<porcelain-toolbar-button [icon]="copyLinkIcon" (click)="copy()">
+							<porcelain-toolbar-button [icon]="copyLinkIcon" (onClick)="copy()">
 								Copy Link
 							</porcelain-toolbar-button>
 						</porcelain-toolbar-cell>
 
 						<porcelain-toolbar-cell [flex]="'0 0 auto'">
-							<porcelain-toolbar-button [icon]="saveSearchIcon" (click)="save()">
+							<porcelain-toolbar-button [icon]="saveSearchIcon" (onClick)="save()">
 								Save Search
 							</porcelain-toolbar-button>
 						</porcelain-toolbar-cell>
@@ -235,13 +235,13 @@ storiesOf('Toolbars', module)
 						</porcelain-toolbar-cell>
 
 						<porcelain-toolbar-cell>
-							<porcelain-toolbar-button [icon]="caretLeft" (click)="prevClicked()" [isLabelSrOnly]="true">
+							<porcelain-toolbar-button [icon]="caretLeft" (onClick)="prevClicked()" [isLabelSrOnly]="true">
 								Previous Page
 							</porcelain-toolbar-button>
 						</porcelain-toolbar-cell>
 
 						<porcelain-toolbar-cell>
-							<porcelain-toolbar-button [icon]="caretRight" (click)="nextClicked()" [isLabelSrOnly]="true">
+							<porcelain-toolbar-button [icon]="caretRight" (onClick)="nextClicked()" [isLabelSrOnly]="true">
 								Next Page
 							</porcelain-toolbar-button>
 						</porcelain-toolbar-cell>
@@ -253,12 +253,7 @@ storiesOf('Toolbars', module)
 				caretRight: faCaretRight,
 				saveSearchIcon: faSave,
 				copyLinkIcon: faCopy,
-				prevClicked: function() {
-					this.currentPage = Math.max(0, this.currentPage - 1);
-				},
-				nextClicked: function() {
-					this.currentPage = Math.min(Object.keys(pages).length - 1, this.currentPage + 1);
-				},
+
 				save: action('Save Search Clicked'),
 				copy: action('Copy Link Clicked'),
 				searchSubmitted: action('Search Submitted'),
@@ -300,8 +295,15 @@ storiesOf('Toolbars', module)
 						fieldDirection: 'Z-A'
 					}
 				},
-				pageLabel: 'Page:',
+
 				currentPage: 0,
+				prevClicked: function() {
+					this.currentPage = Math.max(0, this.currentPage - 1);
+				},
+				nextClicked: function() {
+					this.currentPage = Math.min(Object.keys(pages).length - 1, this.currentPage + 1);
+				},
+				pageLabel: 'Page:',
 				pages
 			}
 		};

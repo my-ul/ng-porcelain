@@ -3,7 +3,9 @@ $menu-item-hover: #e4ebf5;
 
 %can-focus {
 	&:focus {
-		$transparent: #4a91e2bb;
-		outline: $transparent 2px solid;
+		// relative ensures that all edges of the outline are visible.
+		position: relative;
+		$base: #4a91e2;
+		outline: rgba($base, 0.7) 2px solid;
 	}
 }

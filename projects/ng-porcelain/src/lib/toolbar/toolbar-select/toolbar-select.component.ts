@@ -183,7 +183,7 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 			).addSubscription(
 				child.onHover.subscribe(isHover => {
 					if (isHover) {
-						this.highlightOptionByIndex(idx);
+						this.highlightOptionByIndex(idx, false);
 					}
 				})
 			);
@@ -214,12 +214,22 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	/**
 	 * Highlights an option by its position in the `option` array.
 	 * @param highlightIndex The index of the option to highlight on screen.
+	 * @param scrollToHighlightedOption Boolean, if the option should be scrolled to on highlight.
 	 */
-	highlightOptionByIndex(highlightIndex: number) {
-		this.log('highlightOptionByIndex(highlightIndex)', { highlightIndex });
+	highlightOptionByIndex(highlightIndex: number, scrollToHighlightedOption: boolean = true) {
+		this.log('highlightOptionByIndex(highlightIndex, scrollToHighlightedOption)', {
+			highlightIndex,
+			scrollToOption: scrollToHighlightedOption
+		});
+
 		this.options.toArray().forEach((child, idx, all) => {
 			child.isHighlighted = idx === highlightIndex;
-			if (child.isHighlighted) {
+
+			/*
+				Mouseover highlighting should not initiate a scroll-to-option,
+				as this seems glitchy and unfamiliar.
+			*/
+			if (child.isHighlighted && scrollToHighlightedOption) {
 				const childElement = child.elementRef.nativeElement,
 					parentElement = childElement.parentElement;
 
@@ -333,24 +343,41 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	 */
 	@HostListener('document:keydown', ['$event'])
 	onDocumentKeyDown(event: KeyboardEvent): void {
-		if (this.isOpen) {
-			if (event.key === 'ArrowDown') {
-				this.highlightedIndex = Math.min(this.options.length - 1, this.highlightedIndex + 1);
-			} else if (event.key === 'ArrowUp') {
-				this.highlightedIndex = Math.max(0, this.highlightedIndex - 1);
-			} else if (event.key === 'Enter' || event.key === 'Tab') {
-				this.options.toArray()[this.highlightedIndex].select();
-				this.close();
-			} else if (event.key === 'Escape') {
-				this.close();
-			}
+		if (this.hasFocus) {
+			if (this.isOpen) {
+				if (event.key === 'ArrowDown') {
+					this.highlightedIndex = Math.min(this.options.length - 1, this.highlightedIndex + 1);
+				} else if (event.key === 'ArrowUp') {
+					this.highlightedIndex = Math.max(0, this.highlightedIndex - 1);
+				} else if (event.key === 'Home') {
+					this.highlightedIndex = 0;
+				} else if (event.key === 'End') {
+					this.highlightedIndex = this.options.length - 1;
+				} else if (event.key === 'Enter' || event.key === 'Tab') {
+					this.options.toArray()[this.highlightedIndex].select();
+					this.close();
+				} else if (event.key === 'Escape') {
+					this.close();
+				}
 
-			if (this.highlightedIndex > -1) {
-				this.highlightOptionByIndex(this.highlightedIndex);
-			}
-		} else if (this.hasFocus) {
-			if (event.key === 'Enter' || event.key === 'ArrowDown') {
-				this.toggleOpen();
+				if (this.highlightedIndex > -1) {
+					this.highlightOptionByIndex(this.highlightedIndex);
+				}
+			} else {
+				// Not open, but it is focused
+				const openKeys = ['Enter', ' ', 'Spacebar'];
+				if (~openKeys.indexOf(event.key)) {
+					this.toggleOpen();
+				} else if (event.key === 'ArrowUp') {
+					const previousIndex = Math.max(0, this.getIndexByValue(this.value) - 1);
+					this.options.toArray()[previousIndex].select();
+				} else if (event.key === 'ArrowDown') {
+					const nextIndex = Math.min(
+						this.options.length - 1,
+						this.getIndexByValue(this.value) + 1
+					);
+					this.options.toArray()[nextIndex].select();
+				}
 			}
 		}
 	}

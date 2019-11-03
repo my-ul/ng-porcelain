@@ -1,27 +1,100 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener, Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
 
 @Component({
 	selector: 'porcelain-toolbar-button',
 	templateUrl: './toolbar-button.component.html',
-	styleUrls: ['./toolbar-button.component.scss'],
-	host: {
-		'[class.porcelain-toolbar-button]': 'true'
-	}
+	styleUrls: ['./toolbar-button.component.scss']
 })
-export class ToolbarButtonComponent implements OnInit {
+export class ToolbarButtonComponent {
+	/**
+	 * Initializes the button by adding the default porcelain classes.
+	 */
+	@HostBinding('class')
+	readonly componentClasses: string = 'porcelain-toolbar-button';
+
+	/**
+	 * Boolean to track whether the component has focus or not.
+	 */
+	private _hasFocus = false;
+
+	get hasFocus() {
+		return this._hasFocus;
+	}
+
+	set hasFocus(hasFocus: boolean) {
+		this._hasFocus = hasFocus;
+	}
+
+	/**
+	 * A Font Awesome 5 Icon to display on the icon.
+	 */
 	@Input() icon = null;
-	@Input() label: String = null;
+
+	/**
+	 * Allows the label to be hidden, except for screen readers.
+	 */
 	@Input() isLabelSrOnly: boolean = false;
 
+	/**
+	 * Event emitter for the click and enter/space keypresses
+	 */
+	@Output() onClick = new EventEmitter<void>();
+
+	/**
+	 * Allows the button to fill its container.
+	 */
 	@HostBinding('class.porcelain-toolbar-button--is-block')
 	@Input()
 	isBlock: boolean = false;
 
+	/**
+	 * Sets the tabindex for the button, allowing it to be focusable with tab/keyboard.
+	 */
 	@HostBinding('tabindex')
 	tabIndex = 0;
 
-	constructor() {}
+	/**
+	 * Sets hasFocus to true when the button gains focus.
+	 */
+	@HostListener('focus')
+	onFocus() {
+		this.hasFocus = true;
+	}
 
-	ngOnInit() {}
+	/**
+	 * Sets hasFocus to false when the button loses focus.
+	 */
+	@HostListener('blur')
+	onBlur() {
+		this.hasFocus = false;
+	}
+
+	/**
+	 * Listens to document key presses, and "clicks" the button when enter
+	 * or space are pressed.
+	 * @param event A keyboard event.
+	 */
+	@HostListener('document:keydown', ['$event'])
+	onDocumentKeyDown(event: KeyboardEvent) {
+		// Using the event.key api is recommended
+		// https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
+		const keys = [
+			'Enter',
+			' ', // Space
+			'Spacebar' // IE 11
+		];
+
+		if (this.hasFocus && ~keys.indexOf(event.key)) {
+			this.onClick.emit();
+		}
+	}
+
+	/**
+	 * Emits a click when the button is clicked.
+	 */
+	@HostListener('click')
+	onHostClick() {
+		this.onClick.emit();
+	}
 }
