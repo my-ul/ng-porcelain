@@ -1,0 +1,9 @@
+<span class="porcelain-toolbar-button__icon" *ngIf="icon">
+	<fa-icon [icon]="icon" [styles]="{ color: clearIconColor }"></fa-icon>
+</span>
+<span
+	class="porcelain-toolbar-button__label"
+	[class.porcelain-toolbar-button__label--sr-only]="isLabelSrOnly"
+>
+	<ng-content></ng-content>
+</span>

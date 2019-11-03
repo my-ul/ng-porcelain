@@ -1,0 +1,12 @@
+<label class="porcelain-toolbar-select__toggle" (click)="toggleOpen()">
+	<span class="porcelain-toolbar-select__toggle-label">{{ label }}</span>
+	<span class="porcelain-toolbar-select__toggle-current">
+		<ng-content select="porcelain-toolbar-selected-template"></ng-content>
+	</span>
+	<span class="porcelain-toolbar-select__toggle-caret">
+		<fa-icon [icon]="faAngleDown"></fa-icon>
+	</span>
+</label>
+<div class="porcelain-toolbar-select__options">
+	<ng-content select="porcelain-toolbar-option"></ng-content>
+</div>

@@ -29,4 +29,6 @@ export { FrameCommunicationModule } from './lib/frame-communication/frame-commun
 export { FrameHostService } from './lib/frame-communication/frame-host/frame-host.service';
 export { FrameGuestService } from './lib/frame-communication/frame-guest/frame-guest.service';
 
+export * from './lib/toolbar';
+
 export * from './lib/shared';
