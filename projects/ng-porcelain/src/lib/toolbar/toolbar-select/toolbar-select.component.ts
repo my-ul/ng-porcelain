@@ -303,7 +303,7 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	/**
 	 * Called when the component gets focus.  Used to make keyboard navigation make sense.
 	 */
-	@HostListener('focus', ['$event'])
+	@HostListener('focus')
 	onFocusIn(): void {
 		this.hasFocus = true;
 	}
@@ -311,7 +311,7 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	/**
 	 * Called when the component loses focus.
 	 */
-	@HostListener('blur', ['$event'])
+	@HostListener('blur')
 	onFocusOut(): void {
 		this.hasFocus = false;
 	}
