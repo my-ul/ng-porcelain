@@ -16,8 +16,8 @@
 		}
 	}
 	.porcelain-toolbar-select__toggle-label {
-		font-weight: bold;
 		cursor: pointer;
+		font-weight: bold;
 	}
 	.porcelain-toolbar-select__toggle-label,
 	.porcelain-toolbar-select__toggle-caret {
@@ -26,10 +26,10 @@
 	.porcelain-toolbar-select__toggle-current {
 		flex: 1 1 5em;
 		min-width: 3em;
-		text-align: right;
-		white-space: nowrap;
 		overflow: hidden;
+		text-align: right;
 		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	&.porcelain-toolbar-select--full-width {
@@ -43,19 +43,19 @@
 	}
 
 	.porcelain-toolbar-select__options {
-		position: absolute;
-		text-align: center;
 		display: none;
+		position: absolute;
 		top: 100%;
-		right: -1px;
+		right: 0;
+		z-index: 1;
+		margin: 0;
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		background-color: #fff;
+		padding: 0;
 		max-height: 50vh;
 		overflow-y: scroll;
-		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 		list-style: none;
-		margin: 0;
-		padding: 0;
-		background-color: #fff;
-		z-index: 1;
+		text-align: center;
 	}
 
 	&.porcelain-toolbar-select--is-open {

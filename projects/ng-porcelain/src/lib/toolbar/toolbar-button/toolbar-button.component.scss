@@ -3,16 +3,16 @@
 :host {
 	@extend %can-focus;
 
-	font-family: 'Open Sans', sans-serif;
-	font-size: 14px;
-	margin: 0;
-	padding: 0 1.5em;
-	background: #fff;
-	border: none;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	margin: 0;
+	border: none;
+	background: #fff;
 	cursor: pointer;
+	padding: 0 1.5em;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
 
 	&:hover {
 		background: $menu-item-hover;
@@ -37,15 +37,15 @@
 	}
 
 	.porcelain-toolbar-button__label--sr-only {
+		position: absolute;
+		margin: -1px;
 		border: 0;
+		padding: 0;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		word-wrap: normal !important;
 		clip: rect(1px, 1px, 1px, 1px);
 		clip-path: inset(50%);
-		height: 1px;
-		margin: -1px;
-		overflow: hidden;
-		padding: 0;
-		position: absolute;
-		width: 1px;
-		word-wrap: normal !important;
 	}
 }
