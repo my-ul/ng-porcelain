@@ -1,5 +1,6 @@
 // Storybook
 import { action } from '@storybook/addon-actions';
+import { withKnobs, text, boolean, color } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 
 // Third Party
@@ -17,6 +18,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { TOOLBAR_DIRECTIVES, TOOLBAR_IMPORTS } from '.';
 
 storiesOf('Toolbars', module)
+	.addDecorator(withKnobs)
 	.addDecorator(
 		moduleMetadata({
 			declarations: TOOLBAR_DIRECTIVES,
@@ -198,10 +200,10 @@ storiesOf('Toolbars', module)
 
 						<porcelain-toolbar-cell [flex]="'1 1 auto'">
 							<porcelain-toolbar-select 
-								[label]="sortLabel"  
+								[label]="sortLabel()"  
 								[(value)]="sortValue" 
 								[fullWidth]="true"
-								[disabled]="true">
+								[disabled]="!isSortEnabled">
 								<porcelain-toolbar-selected-template *ngIf="sortValue">
 									{{sorts[sortValue].fieldLabel}} : {{sorts[sortValue].fieldDirection}}
 								</porcelain-toolbar-selected-template>
@@ -273,7 +275,13 @@ storiesOf('Toolbars', module)
 				getValues(obj) {
 					return Object.values(obj);
 				},
-				sortLabel: 'Sort (disabled):',
+				isSortEnabled: boolean('Enable Sort', true),
+				sortLabel: function() {
+					if (this.isSortEnabled) {
+						return 'Sort:';
+					}
+					return 'Sort (disabled):';
+				},
 				sortValue: 'dateAsc',
 				sorts: {
 					dateAsc: {
