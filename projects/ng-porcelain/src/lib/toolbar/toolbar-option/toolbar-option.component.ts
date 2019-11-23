@@ -21,7 +21,7 @@ export class ToolbarOptionComponent implements OnInit {
 	isHighlighted: boolean = false;
 
 	constructor(public elementRef: ElementRef) {
-		console.log('new ToolbarOptionComponent()', this);
+		console.log('new ToolbarOptionComponent()', { component: this });
 	}
 
 	ngOnInit() {}

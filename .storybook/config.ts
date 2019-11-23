@@ -9,6 +9,7 @@ function loadStories() {
 	require('../src/stories/spinner/spinner.stories');
 	require('../src/stories/search-input/search-input.stories');
 	require('../projects/ng-porcelain/src/lib/toolbar/toolbar.module.stories');
+	require('../projects/ng-porcelain/src/lib/toolbar/toolbar-button/toolbar-button.component.stories');
 }
 
 addParameters({

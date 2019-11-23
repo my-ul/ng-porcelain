@@ -1,3 +1,5 @@
+@import '../../toolbar/toolbar.module.scss';
+
 $ul-steel-dark: #9dacba;
 
 * {
@@ -26,7 +28,6 @@ $ul-steel-dark: #9dacba;
 	background: #fff;
 	border: solid 1px lighten($ul-steel-dark, 10%);
 	border-radius: 0.25em;
-
 	transition: border-color 100ms ease-in-out;
 
 	&.search-input--no-borders {
@@ -34,6 +35,10 @@ $ul-steel-dark: #9dacba;
 		border-radius: 0;
 		.search-input__query {
 			border-radius: 0;
+		}
+		&.search-input--has-focus,
+		&:focus {
+			@extend %--can-focus;
 		}
 	}
 
@@ -63,6 +68,14 @@ $ul-steel-dark: #9dacba;
 
 		&--not-active {
 			opacity: 0.7;
+		}
+
+		&:focus {
+			@extend %--can-focus;
+		}
+
+		&::-moz-focus-inner {
+			border: 0;
 		}
 	}
 

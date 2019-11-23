@@ -20,11 +20,34 @@ import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 // Porcelain
 import { ToolbarOptionComponent } from '../toolbar-option/toolbar-option.component';
+import { trigger, style, state, transition, animate } from '@angular/animations';
 
 @Component({
 	selector: 'porcelain-toolbar-select',
 	templateUrl: './toolbar-select.component.html',
-	styleUrls: ['./toolbar-select.component.scss']
+	styleUrls: ['./toolbar-select.component.scss'],
+	animations: [
+		trigger('slideInOut', [
+			state(
+				'open',
+				style({
+					opacity: 1,
+					transform: 'none',
+					display: 'block'
+				})
+			),
+			state(
+				'closed',
+				style({
+					opacity: 0,
+					transform: 'translateY(-10px)',
+					display: 'none'
+				})
+			),
+			transition('open=>closed', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+			transition('closed=>open', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+		])
+	]
 })
 export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	/**
@@ -78,6 +101,13 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 		this.log('set hasFocus(hasFocus)', { hasFocus });
 		this._hasFocus = hasFocus;
 	}
+
+	/**
+	 * Allows the control to be disabled.
+	 */
+	@Input()
+	@HostBinding('class.porcelain-toolbar-select--disabled')
+	disabled: boolean = false;
 
 	/**
 	 * The index of the currently-highlighted option
@@ -276,10 +306,12 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	 */
 	toggleOpen() {
 		this.log('toggleOpen()');
-		if (this.isOpen) {
-			this.close();
-		} else {
-			this.open().highlightOptionByIndex(this.selectedIndex > -1 ? this.selectedIndex : 0);
+		if (!this.disabled) {
+			if (this.isOpen) {
+				this.close();
+			} else {
+				this.open().highlightOptionByIndex(this.selectedIndex > -1 ? this.selectedIndex : 0);
+			}
 		}
 	}
 
@@ -343,7 +375,7 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	 */
 	@HostListener('document:keydown', ['$event'])
 	onDocumentKeyDown(event: KeyboardEvent): void {
-		if (this.hasFocus) {
+		if (this.hasFocus && !this.disabled) {
 			if (this.isOpen) {
 				if (event.key === 'ArrowDown') {
 					this.highlightedIndex = Math.min(this.options.length - 1, this.highlightedIndex + 1);

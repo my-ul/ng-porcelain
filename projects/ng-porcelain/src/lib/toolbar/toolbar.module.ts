@@ -15,8 +15,14 @@ import { ToolbarOptionComponent } from './toolbar-option/toolbar-option.componen
 import { ToolbarCellComponent } from './toolbar-cell/toolbar-cell.component';
 import { ToolbarSelectedTemplateComponent } from './toolbar-selected-template/toolbar-selected-template.component';
 import { ToolbarsComponent } from './toolbars/toolbars.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-export const TOOLBAR_IMPORTS = [CommonModule, FontAwesomeModule, SearchInputModule];
+export const TOOLBAR_IMPORTS = [
+	CommonModule,
+	FontAwesomeModule,
+	SearchInputModule,
+	BrowserAnimationsModule
+];
 export const TOOLBAR_DIRECTIVES = [
 	ToolbarsComponent,
 	ToolbarComponent,

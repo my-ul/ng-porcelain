@@ -2,10 +2,14 @@ $border-props: solid 1px #ddd;
 $menu-item-hover: #e4ebf5;
 $ulActionBlue: #4a91e2;
 
+%--can-focus {
+	position: relative;
+	outline: rgba($ulActionBlue, 0.7) 2px solid;
+}
+
 %can-focus {
+	&--has-focus,
 	&:focus {
-		// relative ensures that all edges of the outline are visible.
-		position: relative;
-		outline: rgba($ulActionBlue, 0.7) 2px solid;
+		@extend %--can-focus;
 	}
 }

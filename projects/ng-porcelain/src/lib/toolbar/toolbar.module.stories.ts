@@ -197,7 +197,11 @@ storiesOf('Toolbars', module)
 						</porcelain-toolbar-cell>
 
 						<porcelain-toolbar-cell [flex]="'1 1 auto'">
-							<porcelain-toolbar-select [label]="sortLabel"  [(value)]="sortValue" [fullWidth]="true">
+							<porcelain-toolbar-select 
+								[label]="sortLabel"  
+								[(value)]="sortValue" 
+								[fullWidth]="true"
+								[disabled]="true">
 								<porcelain-toolbar-selected-template *ngIf="sortValue">
 									{{sorts[sortValue].fieldLabel}} : {{sorts[sortValue].fieldDirection}}
 								</porcelain-toolbar-selected-template>
@@ -235,13 +239,21 @@ storiesOf('Toolbars', module)
 						</porcelain-toolbar-cell>
 
 						<porcelain-toolbar-cell>
-							<porcelain-toolbar-button [icon]="caretLeft" (onClick)="prevClicked()" [isLabelSrOnly]="true">
+							<porcelain-toolbar-button 
+								[icon]="caretLeft" 
+								(onClick)="prevClicked()" 
+								[isLabelSrOnly]="true"
+								[disabled]=" currentPage === 0 ">
 								Previous Page
 							</porcelain-toolbar-button>
 						</porcelain-toolbar-cell>
 
 						<porcelain-toolbar-cell>
-							<porcelain-toolbar-button [icon]="caretRight" (onClick)="nextClicked()" [isLabelSrOnly]="true">
+							<porcelain-toolbar-button 
+								[icon]="caretRight" 
+								(onClick)="nextClicked()" 
+								[isLabelSrOnly]="true"
+								[disabled]=" currentPage === 99 ">
 								Next Page
 							</porcelain-toolbar-button>
 						</porcelain-toolbar-cell>
@@ -261,7 +273,7 @@ storiesOf('Toolbars', module)
 				getValues(obj) {
 					return Object.values(obj);
 				},
-				sortLabel: 'Sort:',
+				sortLabel: 'Sort (disabled):',
 				sortValue: 'dateAsc',
 				sorts: {
 					dateAsc: {
@@ -305,6 +317,61 @@ storiesOf('Toolbars', module)
 				},
 				pageLabel: 'Page:',
 				pages
+			}
+		};
+	})
+	.add('Split-Bind Select', () => {
+		const pages = Array.from(Array(100).keys())
+			.map(pageIdx => {
+				return {
+					value: pageIdx,
+					pageLabel: (pageIdx + 1).toLocaleString()
+				};
+			})
+			.reduce((obj, pag) => {
+				obj[pag.value] = pag;
+				return obj;
+			}, {});
+
+		const pageValueChanged = action('Page Value Changed');
+		return {
+			template: `
+				<porcelain-toolbar>
+					<porcelain-toolbar-cell>
+						<porcelain-toolbar-select 
+							[value]="currentPage" 
+							(valueChange)="onValueChange($event)" 
+							[label]="pageLabel">
+
+							<porcelain-toolbar-selected-template *ngIf="currentPage != null">
+								{{pages[currentPage].pageLabel}}
+							</porcelain-toolbar-selected-template>
+
+							<porcelain-toolbar-selected-template *ngIf="currentPage == null">
+								&mdash;
+							</porcelain-toolbar-selected-template>
+
+							<porcelain-toolbar-option [value]="option.value" *ngFor="let option of getValues(pages)">
+									{{option.pageLabel}}
+							</porcelain-toolbar-option>
+
+						</porcelain-toolbar-select>
+					</porcelain-toolbar-cell>
+				</porcelain-toolbar>
+			`,
+			props: {
+				currentPage: 0,
+				pageLabel: 'Page:',
+				onValueChange: function(currentPage) {
+					if (this.currentPage !== currentPage) {
+						this.currentPage = currentPage;
+						console.log('page value changed', { currentPage });
+					}
+				},
+				pages,
+				getValues(obj) {
+					return Object.values(obj);
+				}
 			}
 		};
 	});

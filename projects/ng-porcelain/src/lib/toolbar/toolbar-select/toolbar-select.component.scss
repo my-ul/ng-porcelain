@@ -32,6 +32,14 @@
 		white-space: nowrap;
 	}
 
+	&.porcelain-toolbar-select--disabled {
+		color: #999;
+		&,
+		.porcelain-toolbar-select__toggle {
+			cursor: not-allowed;
+		}
+	}
+
 	&.porcelain-toolbar-select--full-width {
 		.porcelain-toolbar-select__toggle-current {
 			text-align: left;
@@ -43,7 +51,7 @@
 	}
 
 	.porcelain-toolbar-select__options {
-		display: none;
+		display: block;
 		position: absolute;
 		top: 100%;
 		right: 0;
@@ -56,11 +64,5 @@
 		overflow-y: scroll;
 		list-style: none;
 		text-align: center;
-	}
-
-	&.porcelain-toolbar-select--is-open {
-		.porcelain-toolbar-select__options {
-			display: block;
-		}
 	}
 }

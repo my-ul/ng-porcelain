@@ -1,9 +1,23 @@
-<span class="porcelain-toolbar-button__icon" *ngIf="icon">
-	<fa-icon [icon]="icon"></fa-icon>
-</span>
+<ng-container
+	*ngTemplateOutlet="icon && iconPosition === 'before' ? iconTemplate : nothing"
+></ng-container>
+
 <span
+	#label
 	class="porcelain-toolbar-button__label"
 	[class.porcelain-toolbar-button__label--sr-only]="isLabelSrOnly"
 >
 	<ng-content></ng-content>
 </span>
+
+<ng-container
+	*ngTemplateOutlet="icon && iconPosition === 'after' ? iconTemplate : nothing"
+></ng-container>
+
+<ng-template #iconTemplate>
+	<span class="porcelain-toolbar-button__icon">
+		<fa-icon [icon]="icon"></fa-icon>
+	</span>
+</ng-template>
+
+<ng-template #nothing></ng-template>

@@ -15,7 +15,7 @@ export class ToolbarComponent implements OnInit {
 	alignRight: boolean = false;
 
 	constructor() {
-		console.group('new ToolbarComponent()', {});
+		console.group('new ToolbarComponent()', { component: this });
 
 		console.groupEnd();
 	}
