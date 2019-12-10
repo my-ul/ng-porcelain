@@ -143,7 +143,6 @@ export class DateRefinerComponent implements OnInit {
 
 		// Connect new Subscription-based state updates to callback system for users using version < 1.3
 		this.refiner.valueSubject.subscribe(value => {
-			console.log('emitting', value);
 			this.onRefinerChange.emit([this.refiner.slug, value]);
 		});
 
@@ -165,20 +164,23 @@ export class DateRefinerComponent implements OnInit {
 
 	onFromChange($event) {
 		this.fromModel = $event;
-		this.onChange();
+		this.onChange(this.currentOptionSlug);
 	}
 
 	onToChange($event) {
 		this.toModel = $event;
-		this.onChange();
+		this.onChange(this.currentOptionSlug);
 	}
 
 	// Events
-	onChange() {
-		console.group('onChange()');
+	onChange(newOptionSlug: string) {
+		console.group('onChange(newOptionSlug)', { newOptionSlug });
 
-		this.ignoreNext = true;
-		this.refiner.valueSubject.next(this.getValue());
+		if (this.currentOptionSlug !== newOptionSlug) {
+			this.currentOptionSlug = newOptionSlug;
+			this.ignoreNext = true;
+			this.refiner.valueSubject.next(this.getValue());
+		}
 
 		console.groupEnd();
 	}
