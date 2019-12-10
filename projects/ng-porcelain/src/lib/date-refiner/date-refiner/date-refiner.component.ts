@@ -164,20 +164,23 @@ export class DateRefinerComponent implements OnInit {
 
 	onFromChange($event) {
 		this.fromModel = $event;
-		this.onChange();
+		this.onChange(this.currentOptionSlug);
 	}
 
 	onToChange($event) {
 		this.toModel = $event;
-		this.onChange();
+		this.onChange(this.currentOptionSlug);
 	}
 
 	// Events
-	onChange() {
-		console.group('onChange()');
+	onChange(newOptionSlug: string) {
+		console.group('onChange(newOptionSlug)', { newOptionSlug });
 
-		this.ignoreNext = true;
-		this.refiner.valueSubject.next(this.getValue());
+		if (this.currentOptionSlug !== newOptionSlug) {
+			this.currentOptionSlug = newOptionSlug;
+			this.ignoreNext = true;
+			this.refiner.valueSubject.next(this.getValue());
+		}
 
 		console.groupEnd();
 	}
