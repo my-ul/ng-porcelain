@@ -23,9 +23,9 @@
 							<div class="media__left">
 								<input
 									type="radio"
-									[(ngModel)]="currentOptionSlug"
-									value="{{ optionSlug }}"
-									(change)="onChange()"
+									[checked]="currentOptionSlug === optionSlug"
+									[value]="optionSlug"
+									(change)="onChange(optionSlug)"
 								/>
 							</div>
 							<div class="media__body">
