@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	ViewChild,
+	ViewEncapsulation
+} from '@angular/core';
 
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -9,105 +18,104 @@ import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 	styleUrls: ['./search-input.component.scss']
 })
 export class SearchInputComponent implements OnInit {
-	// Elements
-	@ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
+	@Input() public borders: boolean = true;
+	@Input() public clearIcon: any = faTimesCircle;
+	@Input() public clearIconColor: any = '#9dacba';
+	@Input() public placeholderLabel: string = 'Type to search...';
+	@Input() public submitIcon: any = faSearch;
+	@Input() public submitIconColor: any = '#9dacba';
+	@Input() public userValue: string = '';
+	@Output() public emptyHandler: EventEmitter<string> = new EventEmitter();
+	@Output() public submitHandler: EventEmitter<string> = new EventEmitter();
+	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
 
-	// Inputs
-	@Input() placeholderLabel: string = 'Type to search...';
-	@Input() submitIcon: any = faSearch;
-	@Input() clearIcon: any = faTimesCircle;
-	@Input() borders: boolean = true;
-	@Input() submitIconColor: any = '#9dacba';
-	@Input() clearIconColor: any = '#9dacba';
-	@Input() userValue: string = '';
-
-	// Outputs
-	@Output() submitHandler: EventEmitter<string> = new EventEmitter();
-
-	// Booleans
-	isSearchFocused = false;
-	emptyValueEmit = false; //to handle empty value
-	emptyrefresh = true; //to prevent sending emtpy string as emit when previous emitted string was already ''
-
-	// Strings
-	value = '';
+	public allowEmptySubmit = false;
+	public isSearchFocused = false;
+	public value = '';
 
 	constructor() {}
 
-	ngOnInit(): void {
-		/* assigning uservalues */
-		this.value = this.userValue;
-		/*to check if there is previous value*/
-		this.emptyValueEmit = this.userValue == '' ? false : true;
-		this.emptyrefresh = this.userValue == '' ? true : false;
+	/**
+	 * Tests if the control is in a condition that allows a submit.
+	 */
+	public canSubmit(): boolean {
+		return (this.isEmpty() && this.allowEmptySubmit) || !this.isEmpty();
 	}
 
 	/**
 	 * Clears the value of the search field and resets focus.
 	 */
-	clear(): void {
-		//alert(this.emptyrefresh+"  value");
+	public clear(): void {
 		this.value = '';
-		if (this.emptyrefresh == true) {
-			//alert("only box has to be cleared")
-		} else {
-			this.submitHandler.emit(this.value);
-			this.emptyrefresh = true; //empty refresh check
-		}
+		this.allowEmptySubmit = true;
+
+		//empty value to be emitted to emptyHandler
+		this.empty();
 
 		this.setFocus();
 	}
 
 	/**
-	 * Sets focus on the search input.
+	 * Empty value emit once search cancel button is clicked
 	 */
-	setFocus(): void {
-		this.searchInput.nativeElement.focus();
-	}
-
-	/**
-	 * Submits the current value of the search input to outside listener.
-	 */
-	submit(): void {
-		if (!this.isEmpty()) {
-			this.submitHandler.emit(this.value);
-			this.emptyValueEmit = true; //to enable empty value sending for submit
-			this.emptyrefresh = false; //to disable emptyrefresh
-		} else {
-			if (this.emptyValueEmit == true) {
-				this.emptyValueEmit = false;
-				this.submitHandler.emit(this.value); //empty value is emitted by submit
-			}
-			this.setFocus();
-			this.emptyrefresh = true; //to enable empty refresh after emptyvalue is emitted by submit
-		}
-	}
-
-	/**
-	 * Tests the search box for a value.
-	 */
-	isEmpty(): boolean {
-		return this.value === '';
-	}
-
-	/**
-	 * Returns the value of isSearchFocused.
-	 */
-	searchHasFocus(): boolean {
-		return this.isSearchFocused;
+	public empty(): void {
+		this.emptyHandler.emit('');
 	}
 
 	/**
 	 * Sets the isSearchFocused value to false.
 	 */
-	handleBlur(): void {
+	public handleBlur(): void {
 		this.isSearchFocused = false;
 	}
 
 	/**
 	 * Sets the isSearchFocused value to true.
 	 */
-	handleFocusIn(): void {
+	public handleFocusIn(): void {
 		this.isSearchFocused = true;
+	}
+
+	/**
+	 * Tests the search box for a value.
+	 */
+	public isEmpty(): boolean {
+		return this.value === '';
+	}
+
+	/**
+	 *
+	 */
+	public ngOnInit(): void {
+		/* assigning uservalues */
+		this.value = this.userValue;
+		/*to check if there is previous value*/
+		this.allowEmptySubmit = this.userValue == '' ? false : true;
+	}
+
+	/**
+	 * Returns the value of isSearchFocused.
+	 */
+	public searchHasFocus(): boolean {
+		return this.isSearchFocused;
+	}
+
+	/**
+	 * Sets focus on the search input.
+	 */
+	public setFocus(): void {
+		this.searchInput.nativeElement.focus();
+	}
+
+	/**
+	 * Submits the current value of the search input to outside listener.
+	 */
+	public submit(): void {
+		if (this.canSubmit()) {
+			this.submitHandler.emit(this.value);
+		}
+
+		this.allowEmptySubmit = false;
+		this.setFocus();
 	}
 }

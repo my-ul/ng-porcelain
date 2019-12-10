@@ -30,20 +30,18 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	styleUrls: ['./applicator.component.scss']
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
-	@Input()
-	refiners: BaseRefinerDefinition[] = [];
-
-	@Input() applyLabel: string = 'Apply';
-	@Input() resetLabel: string = 'Reset';
-	@Input() loadingLabel: string = 'Loading';
-
-	@Output() onApply: EventEmitter<any> = new EventEmitter();
-
-	@Input() public defaultValues: RefinerValueDictionary = {};
-	private stagedValues: RefinerValueDictionary = {};
 	private appliedValues: RefinerValueDictionary = {};
-
+	private initialLoad: boolean = true;
+	private stagedValues: RefinerValueDictionary = {};
 	private subscriptions: Subscription[] = [];
+
+	@Input() public applyLabel: string = 'Apply';
+	@Input() public applyOnInit: boolean = true;
+	@Input() public defaultValues: RefinerValueDictionary = {};
+	@Input() public loadingLabel: string = 'Loading';
+	@Input() public refiners: (BaseRefinerDefinition)[] = [];
+	@Input() public resetLabel: string = 'Reset';
+	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
 	constructor() {
 		console.group('new ApplicatorComponent()', { arguments });
@@ -51,102 +49,39 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.groupEnd();
 	}
 
-	ngOnInit() {
-		console.group('ApplicatorComponent.ngOnInit()', {
-			props: {
-				refiners: this.refiners,
-				applyLabel: this.applyLabel,
-				resetLabel: this.resetLabel,
-				loadingLabel: this.loadingLabel,
-				defaultValues: this.defaultValues
-			}
-		});
-
-		// generate defaultValues dictionary composite from implicit + explicit values
-		this.refiners.forEach(refiner => {
-			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
-		});
-
-		// take first values and send up
-		this.subscriptions = this.refiners.reduce((allSubscriptions, refiner) => {
-			return [
-				...allSubscriptions,
-				// Get notified when value changes
-				refiner.valueSubject.subscribe(newRefinerValues =>
-					this.handleRefinerValues(refiner.slug, newRefinerValues)
-				)
-			];
-		}, []);
-
-		// Must execute after the rest of the subscriptions callbacks.
-		combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
-			allRefinersInitialized => {
-				console.group('combineLatest.subscribe(allRefinersInitialized)', {
-					allRefinersInitialized
-				});
-
-				this.apply();
-
-				console.groupEnd();
-			}
-		);
-
-		console.groupEnd();
-	}
-
-	ngOnDestroy() {
-		// prevents memory leaks by properly unsubscribing when this component unmounts.
-		this.subscriptions.forEach(subscription => subscription.unsubscribe());
-	}
-
-	handleRefinerValues(refinerSlug, refinerValue): void {
-		console.group('handleRefinerValues(refinerSlug, refinerValue)', {
-			refinerSlug,
-			refinerValue
-		});
-
-		this.stagedValues[refinerSlug] = refinerValue;
-
-		console.groupEnd();
-	}
-
-	canApply(): boolean {
-		return !isEqual(this.stagedValues, this.appliedValues);
-	}
-
-	canReset(): boolean {
-		return !isEqual(this.stagedValues, this.defaultValues);
-	}
-
-	apply(): void {
+	public apply() {
 		console.group('apply()');
 
 		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
-		this.onApply.emit(this.appliedValues);
+		this.onApply.emit({
+			appliedValues: this.appliedValues,
+			initialLoad: this.initialLoad
+		});
 
 		console.groupEnd();
 	}
 
-	reset(): void {
-		console.group('reset()');
+	public beforeApply(): void {
+		console.group('beforeApply()');
 
-		this.refiners.forEach(refiner => {
-			console.group('this.refiners.forEach(refiner)', { refiner });
-
-			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
-
-			console.groupEnd();
-		});
+		this.initialLoad = false;
 
 		this.apply();
 
 		console.groupEnd();
 	}
 
-	getDefaultValueForRefiner(
+	public canApply(): boolean {
+		return !isEqual(this.stagedValues, this.appliedValues);
+	}
+
+	public canReset(): boolean {
+		return !isEqual(this.stagedValues, this.defaultValues);
+	}
+
+	public getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
 	): OptionRefinerValue | DateRefinerValue {
-		console.log('getDefaultValueForRefiner(refiner)', { refiner });
 		// If a default value exists for the slug, return it immediately
 		if (this.defaultValues && this.defaultValues[refiner.slug]) {
 			return this.defaultValues[refiner.slug];
@@ -167,5 +102,81 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		throw new Error(
 			'Unable to get determine Refiner type from Refiner Definition. Ensure Refiner Definition contains `type` field.'
 		);
+	}
+
+	public handleRefinerValues(refinerSlug, refinerValue): void {
+		console.group('handleRefinerValues(refinerSlug, refinerValue)', {
+			refinerSlug,
+			refinerValue
+		});
+
+		this.stagedValues[refinerSlug] = refinerValue;
+
+		console.groupEnd();
+	}
+
+	public ngOnDestroy() {
+		// prevents memory leaks by properly unsubscribing when this component unmounts.
+		this.subscriptions.forEach(subscription => subscription.unsubscribe());
+	}
+
+	public ngOnInit() {
+		console.group('ApplicatorComponent.ngOnInit()', {
+			props: {
+				refiners: this.refiners,
+				applyLabel: this.applyLabel,
+				resetLabel: this.resetLabel,
+				loadingLabel: this.loadingLabel,
+				defaultValues: this.defaultValues
+			}
+		});
+		// generate defaultValues dictionary composite from implicit + explicit values
+		this.refiners.forEach(refiner => {
+			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
+		});
+
+		// take first values and send up
+		this.subscriptions = this.refiners.reduce((allSubscriptions, refiner) => {
+			return [
+				...allSubscriptions,
+				// Get notified when value changes
+				refiner.valueSubject.subscribe(newRefinerValues =>
+					this.handleRefinerValues(refiner.slug, newRefinerValues)
+				)
+			];
+		}, []);
+
+		// Must execute after the rest of the subscriptions callbacks.
+		if (this.applyOnInit) {
+			combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
+				allRefinersInitialized => {
+					console.group('combineLatest.subscribe(allRefinersInitialized)', {
+						allRefinersInitialized
+					});
+
+					this.apply();
+
+					console.groupEnd();
+				}
+			);
+		}
+
+		console.groupEnd();
+	}
+
+	public reset(): void {
+		console.group('reset()');
+
+		this.refiners.forEach(refiner => {
+			console.group('this.refiners.forEach(refiner)', { refiner });
+
+			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
+
+			console.groupEnd();
+		});
+
+		this.beforeApply();
+
+		console.groupEnd();
 	}
 }

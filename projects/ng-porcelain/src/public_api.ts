@@ -25,4 +25,8 @@ export { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 export { TruncateModule } from './lib/truncate/truncate.module';
 export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 
+export { FrameCommunicationModule } from './lib/frame-communication/frame-communication.module';
+export { FrameHostService } from './lib/frame-communication/frame-host/frame-host.service';
+export { FrameGuestService } from './lib/frame-communication/frame-guest/frame-guest.service';
+
 export * from './lib/shared';

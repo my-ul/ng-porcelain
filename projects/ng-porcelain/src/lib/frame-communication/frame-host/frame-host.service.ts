@@ -1,0 +1,116 @@
+import { Injectable } from '@angular/core';
+import { WindowService } from '../window/window.service';
+import { IPing, ISuccessResponse, MessageType, IPongResponse } from '../frame-guest/frame-guest.service';
+import { of, Observable, Subject } from 'rxjs';
+import { IDictionary } from '../../shared';
+
+@Injectable({
+	providedIn: 'root'
+})
+export class FrameHostService {
+	// #region Properties (3)
+
+	private listener = (event: MessageEvent) => {
+		const msg = event.data as IPing<any>;
+		if (msg.type) {
+			switch (msg.type) {
+				case 'DismissUpload':
+				case 'LaunchContactUs':
+				case 'LaunchUpload':
+				case 'Ping':
+				case 'RequestDocumentHeight':
+				case 'SetChildLoaded':
+					return this.handleRegisteredMessage(event);
+			}
+		}
+	};
+	private subjects: IDictionary<Subject<any>>;
+	private window: Window;
+
+	// #endregion Properties (3)
+
+	// #region Constructors (1)
+
+	constructor(private windowService: WindowService) {
+		this.subjects = {
+			DismissUpload: new Subject(),
+			LaunchContactUs: new Subject(),
+			LaunchUpload: new Subject(),
+			Ping: new Subject(),
+			RequestDocumentHeight: new Subject(),
+			SetChildLoaded: new Subject()
+		};
+
+		this.setWindow(this.windowService.nativeWindow);
+	}
+
+	// #endregion Constructors (1)
+
+	// #region Public Methods (2)
+
+	/**
+	 * Allow an external event to get an observable that emits when the event happens.
+	 * @param messageType
+	 */
+	public getMessageSubject(messageType: MessageType): Observable<any> {
+		if (messageType in this.subjects) {
+			return this.subjects[messageType].asObservable();
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Set the window to a different window object. Useful for unit testing.
+	 * @param newWindow
+	 */
+	public setWindow(newWindow: Window) {
+		if (this.window) this.removeEvent(this.window, 'message', this.listener);
+
+		this.window = newWindow;
+
+		this.addEvent(this.window, 'message', this.listener);
+	}
+
+	// #endregion Public Methods (2)
+
+	// #region Private Methods (4)
+
+	private addEvent(obj, type, fn) {
+		if (obj.attachEvent) {
+			obj['e' + type + fn] = fn;
+			obj[type + fn] = function() {
+				obj['e' + type + fn](window.event);
+			};
+			obj.attachEvent('on' + type, obj[type + fn]);
+		} else obj.addEventListener(type, fn, false);
+	}
+
+	/**
+	 * Triggers the subject responsible for propagating state.
+	 * @param event A MessageEvent containing the message.
+	 */
+	private handleRegisteredMessage(event: MessageEvent) {
+		return this.subjects[event.data.type].next({
+			message: event.data as IPing<any>,
+			done: (response: any) => {
+				this.send(response, event);
+			}
+		});
+	}
+
+	private removeEvent(obj, type, fn) {
+		if (obj.detachEvent) {
+			obj.detachEvent('on' + type, obj[type + fn]);
+			obj[type + fn] = null;
+		} else obj.removeEventListener(type, fn, false);
+	}
+
+	private send(response: any, initialEvent: MessageEvent) {
+		if (initialEvent.source) {
+			(initialEvent.source as Window).postMessage(response, initialEvent.origin);
+		}
+	}
+
+	// #endregion Private Methods (4)
+}
