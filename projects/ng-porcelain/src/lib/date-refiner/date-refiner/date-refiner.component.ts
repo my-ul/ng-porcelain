@@ -181,6 +181,13 @@ export class DateRefinerComponent implements OnInit {
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(this.getValue());
 		}
+		//if inside custom date refiner i.e mydatepicker if value is changed
+		else if (this.currentOptionSlug === 'custom' && newOptionSlug === 'custom') {
+			this.currentOptionSlug = newOptionSlug;
+			this.ignoreNext = true;
+			this.refiner.valueSubject.next(this.getValue());
+		} else {
+		}
 
 		console.groupEnd();
 	}
