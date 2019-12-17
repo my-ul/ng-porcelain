@@ -41,6 +41,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	@Input() public loadingLabel: string = 'Loading';
 	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Input() public resetLabel: string = 'Reset';
+	@Input() public allowIncompleteEmit: boolean = true;
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
 	constructor() {
