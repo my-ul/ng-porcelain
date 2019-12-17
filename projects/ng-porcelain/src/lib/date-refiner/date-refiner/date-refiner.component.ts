@@ -81,6 +81,7 @@ export class DateRefinerComponent implements OnInit {
 
 	@Input() fromLabel: string = 'From';
 	@Input() toLabel: string = 'To';
+	@Input() invalidCustomRangeLabel: string = 'Please select a valid date range.';
 
 	/**
 	 * Defines emit behavior for invalid ranges.
@@ -176,6 +177,22 @@ export class DateRefinerComponent implements OnInit {
 		this.log('onToChange($event)', { $event });
 		this.toModel = $event;
 		this.onChange(this.currentOptionSlug);
+	}
+
+	isCustomRangeValid() {
+		const value = this.getValue();
+		if (value.optionSlug === 'custom') {
+			if (this.allowIncompleteEmit) {
+				return true;
+			} else {
+				return (
+					value.from instanceof Date &&
+					value.to instanceof Date &&
+					value.from.getTime() < value.to.getTime()
+				);
+			}
+		}
+		return true;
 	}
 
 	/**

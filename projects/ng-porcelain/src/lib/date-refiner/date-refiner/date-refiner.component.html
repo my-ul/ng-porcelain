@@ -62,6 +62,7 @@
 									(dateChanged)="onFromChange($event)"
 								></my-date-picker>
 							</div>
+
 							<div class="range__to">
 								<label for="toDatePicker">
 									{{ toLabel }}
@@ -74,6 +75,10 @@
 									[(ngModel)]="toModel"
 									(dateChanged)="onToChange($event)"
 								></my-date-picker>
+							</div>
+
+							<div class="range__error" *ngIf="!isCustomRangeValid()">
+								{{ invalidCustomRangeLabel }}
 							</div>
 						</div>
 					</div>
