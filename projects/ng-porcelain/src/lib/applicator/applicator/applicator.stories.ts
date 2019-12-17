@@ -62,6 +62,7 @@ storiesOf('Refiners/Applicator Component', module)
 		return {
 			component: ApplicatorComponent,
 			props: {
+				allowIncompleteEmit: false,
 				onApply: action('Applicators update'),
 				refiners: [dateRefiner, simpleRefiner, anotherSimpleRefiner]
 			}
