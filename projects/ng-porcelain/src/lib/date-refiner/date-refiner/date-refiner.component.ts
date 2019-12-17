@@ -15,6 +15,7 @@ import {
 	i18nDateOptions,
 	IDateRefinerDefinition
 } from '../../shared';
+import { of } from 'rxjs';
 
 // Issue with moment requires this workaround for now
 const moment = _moment;
@@ -80,6 +81,12 @@ export class DateRefinerComponent implements OnInit {
 
 	@Input() fromLabel: string = 'From';
 	@Input() toLabel: string = 'To';
+
+	/**
+	 * Defines emit behavior for invalid ranges.
+	 * Set to true to allow unbounded ranges (with a null to or from value)
+	 */
+	@Input() allowIncompleteEmit: boolean = true;
 
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
@@ -172,20 +179,57 @@ export class DateRefinerComponent implements OnInit {
 		this.onChange(this.currentOptionSlug);
 	}
 
+	/**
+	 * Calculate whether or not the range is considered "complete".
+	 */
+	isComplete(): boolean {
+		const value = this.getValue();
+
+		// -1 is a slug commonly associated with 'all' (as in no start or end)
+		if (value.optionSlug === '-1') {
+			return true;
+		}
+
+		if (
+			value.from instanceof Date &&
+			value.to instanceof Date &&
+			value.from.getUTCMilliseconds() < value.to.getUTCMilliseconds()
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
 	// Events
 	onChange(newOptionSlug: string) {
 		console.group('onChange(newOptionSlug)', { newOptionSlug });
 
-		if (
-			// the current option has changed to a predefined range
-			(this.currentOptionSlug !== newOptionSlug)
-			
-			// or the custom values have changed
-			|| (this.currentOptionSlug === 'custom' && newOptionSlug === 'custom')
-		) {
-			this.currentOptionSlug = newOptionSlug;
+		this.currentOptionSlug = newOptionSlug;
+
+		const isComplete = this.isComplete();
+		const value = this.getValue();
+		let shouldEmit = false;
+
+		// the current option has changed to a predefined range
+		if (this.currentOptionSlug !== newOptionSlug && newOptionSlug !== 'custom') {
+			shouldEmit = true;
+		}
+
+		// or we're emitting a complete custom range
+		if (newOptionSlug === 'custom' && isComplete) {
+			shouldEmit = true;
+		}
+
+		// or the range is incomplete/invalid, but this is allowed
+		if (newOptionSlug === 'custom' && this.allowIncompleteEmit && !isComplete) {
+			// notice the negation of isComplete
+			shouldEmit = true;
+		}
+
+		if (shouldEmit === true) {
 			this.ignoreNext = true;
-			this.refiner.valueSubject.next(this.getValue());
+			this.refiner.valueSubject.next(value);
 		}
 
 		console.groupEnd();
@@ -196,49 +240,71 @@ export class DateRefinerComponent implements OnInit {
 		return dateOptionOrDate instanceof DateOption && typeof dateOptionOrDate.badge !== 'undefined';
 	}
 
-	// Getters
+	/**
+	 * Computes and returns the current date range using UTC time as the working time zone.
+	 *
+	 * When the current option is 'custom', the dates for to and from are computed from toModel and fromModel, respectively.
+	 * If the values are not set, (toModel/fromModel are blank), the component will return null.
+	 * If the component's shouldEmitIncomplete input is TRUE, these values will be emitted to your application immediately.
+	 * Otherwise, the component will wait for a valid range before emitting any values.
+	 * 	set [shouldEmitIncomplete]="true" to get incomplete ranges (no start or no end)
+	 * 	set [shouldEmitIncomplete]="false" to ensure that your application only receives COMPLETE ranges.
+	 */
 	getValue(): DateRefinerValue {
 		console.group('getValue()');
 
 		const currentOption = this.refiner.options[this.currentOptionSlug];
 
-		const currentFromDate =
-			this.currentOptionSlug === 'custom' && this.fromModel
-				? moment()
-						.utc()
-						.year(this.fromModel.date.year)
-						.month(this.fromModel.date.month - 1) // zero-indexed, so Jan is 0; Dec is 11
-						.date(this.fromModel.date.day)
-						.startOf('day')
-						.toDate()
-				: moment()
-						.utc()
-						.startOf('day')
-						.toDate();
-		const from = currentOption.getFrom(currentFromDate);
+		if (this.currentOptionSlug === 'custom') {
+			const from = this.fromModel
+				? currentOption.getFrom(
+						moment()
+							.utc()
+							.year(this.fromModel.date.year)
+							.month(this.fromModel.date.month - 1) // zero-indexed, so Jan is 0; Dec is 11
+							.date(this.fromModel.date.day)
+							.startOf('day')
+							.toDate()
+				  )
+				: null;
 
-		const currentToDate =
-			this.currentOptionSlug === 'custom' && this.toModel
-				? moment()
-						.utc()
-						.year(this.toModel.date.year)
-						.month(this.toModel.date.month - 1)
-						.date(this.toModel.date.day)
-						.endOf('day')
-						.toDate()
-				: moment()
-						.utc()
-						.endOf('day')
-						.toDate();
-		const to = currentOption.getTo(currentToDate);
+			const to = this.toModel
+				? currentOption.getTo(
+						moment()
+							.utc()
+							.year(this.toModel.date.year)
+							.month(this.toModel.date.month - 1)
+							.date(this.toModel.date.day)
+							.endOf('day')
+							.toDate()
+				  )
+				: null;
+
+			console.log('returning a custom range');
+			return {
+				from,
+				to,
+				optionSlug: 'custom'
+			};
+		}
 
 		console.groupEnd();
 
-		return {
-			from,
-			optionSlug: this.currentOptionSlug,
-			to
-		};
+		if (this.currentOptionSlug === '-1') {
+			console.log('returning the "all" range');
+			return {
+				from: null,
+				to: null,
+				optionSlug: '-1'
+			};
+		} else {
+			console.log('returning a pre-defined range');
+			return {
+				from: currentOption.getFrom(null),
+				to: currentOption.getTo(null),
+				optionSlug: this.currentOptionSlug
+			};
+		}
 	}
 
 	getOptionLabel(option: DateOption): string {

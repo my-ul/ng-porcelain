@@ -9,6 +9,7 @@ import { BaseRefinerDefinition } from '../../shared';
 export class RefinersComponent implements OnInit {
 	// Inputs
 	@Input() refiners: BaseRefinerDefinition[];
+	@Input() allowIncompleteEmit: boolean = true;
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();

@@ -29,9 +29,10 @@ export class SearchInputComponent implements OnInit {
 	@Output() public submitHandler: EventEmitter<string> = new EventEmitter();
 	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
 
-	public allowEmptySubmit = false;
+	public emptyrefresh = false;
 	public isSearchFocused = false;
-	public value = '';
+	private lastValue = null;
+	public currentValue = '';
 
 	constructor() {}
 
@@ -39,15 +40,19 @@ export class SearchInputComponent implements OnInit {
 	 * Tests if the control is in a condition that allows a submit.
 	 */
 	public canSubmit(): boolean {
-		return (this.isEmpty() && this.allowEmptySubmit) || !this.isEmpty();
+		return (this.isEmpty() && this.emptyrefresh) || !this.isEmpty();
 	}
 
 	/**
 	 * Clears the value of the search field and resets focus.
 	 */
 	public clear(): void {
-		this.value = '';
-		this.allowEmptySubmit = true;
+		this.currentValue = '';
+
+		if (this.emptyrefresh == true) {
+		} else {
+			this.emptyrefresh = true;
+		}
 
 		//empty value to be emitted to emptyHandler
 		this.empty();
@@ -80,7 +85,7 @@ export class SearchInputComponent implements OnInit {
 	 * Tests the search box for a value.
 	 */
 	public isEmpty(): boolean {
-		return this.value === '';
+		return this.currentValue === '';
 	}
 
 	/**
@@ -88,9 +93,10 @@ export class SearchInputComponent implements OnInit {
 	 */
 	public ngOnInit(): void {
 		/* assigning uservalues */
-		this.value = this.userValue;
+		this.currentValue = this.userValue;
 		/*to check if there is previous value*/
-		this.allowEmptySubmit = this.userValue == '' ? false : true;
+		this.emptyrefresh = this.userValue == '' ? false : true;
+		this.emptyValueEmit = !this.emptyrefresh;
 	}
 
 	/**
@@ -107,15 +113,23 @@ export class SearchInputComponent implements OnInit {
 		this.searchInput.nativeElement.focus();
 	}
 
+	emptyValueEmit: boolean = false;
+
 	/**
 	 * Submits the current value of the search input to outside listener.
 	 */
 	public submit(): void {
-		if (this.canSubmit()) {
-			this.submitHandler.emit(this.value);
+		if (!this.isEmpty()) {
+			this.submitHandler.emit(this.currentValue);
+			this.emptyValueEmit = true; //to enable empty value sending for submit
+			this.emptyrefresh = false; //to disable emptyrefresh
+		} else {
+			if (this.emptyValueEmit == true) {
+				this.emptyValueEmit = false;
+				this.submitHandler.emit(this.currentValue); //empty value is emitted by submit
+			}
+			this.setFocus();
+			this.emptyrefresh = true; //to enable empty refresh after emptyvalue is emitted by submit
 		}
-
-		this.allowEmptySubmit = false;
-		this.setFocus();
 	}
 }

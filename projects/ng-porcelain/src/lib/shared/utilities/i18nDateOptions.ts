@@ -7,7 +7,9 @@ import * as _moment from 'moment';
 const moment = _moment;
 
 const momentFloor = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) => {
-	return moment().startOf('day');
+	return moment()
+		.utc()
+		.startOf('day');
 };
 
 const momentFloorSubtract = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) =>
@@ -38,6 +40,7 @@ export const i18nDateOptions = (
 				.toDate(),
 		getTo: () =>
 			moment()
+				.utc()
 				.endOf('day')
 				.toDate()
 	}),
