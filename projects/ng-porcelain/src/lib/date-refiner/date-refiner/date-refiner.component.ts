@@ -193,7 +193,7 @@ export class DateRefinerComponent implements OnInit {
 		if (
 			value.from instanceof Date &&
 			value.to instanceof Date &&
-			value.from.getUTCMilliseconds() < value.to.getUTCMilliseconds()
+			value.from.getTime() < value.to.getTime() // are unix epoch timestamps
 		) {
 			return true;
 		}
@@ -228,6 +228,11 @@ export class DateRefinerComponent implements OnInit {
 		}
 
 		if (shouldEmit === true) {
+			console.log('emitting', {
+				allowIncompleteEmit: this.allowIncompleteEmit,
+				isComplete,
+				value
+			});
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(value);
 		}
@@ -280,7 +285,6 @@ export class DateRefinerComponent implements OnInit {
 				  )
 				: null;
 
-			console.log('returning a custom range');
 			return {
 				from,
 				to,
@@ -291,14 +295,12 @@ export class DateRefinerComponent implements OnInit {
 		console.groupEnd();
 
 		if (this.currentOptionSlug === '-1') {
-			console.log('returning the "all" range');
 			return {
 				from: null,
 				to: null,
 				optionSlug: '-1'
 			};
 		} else {
-			console.log('returning a pre-defined range');
 			return {
 				from: currentOption.getFrom(null),
 				to: currentOption.getTo(null),
