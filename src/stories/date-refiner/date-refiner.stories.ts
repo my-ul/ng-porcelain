@@ -36,7 +36,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 		}
 	})
 	.add(
-		'Simple `DateRefiner` definition',
+		'Simple `DateRefiner` definition (emits complete ranges only)',
 		() => ({
 			component: DateRefinerComponent,
 			props: {
@@ -45,7 +45,30 @@ storiesOf('Refiners/Date Refiner Component', module)
 					title: 'Simple Date Refiner',
 					options: defaultDateOptions
 				}),
-				onRefinerChange: action('Date Refiner (simple) changed')
+				onRefinerChange: action('Date Refiner (simple) changed'),
+				allowIncompleteEmit: false
+			} as IDateRefinerProps
+		}),
+		{
+			notes: { markdown: require('./simpleRefinerDefinition.md') },
+			info: {
+				header: true,
+				inline: true
+			}
+		}
+	)
+	.add(
+		'Simple `DateRefiner` definition (can emit incomplete)',
+		() => ({
+			component: DateRefinerComponent,
+			props: {
+				refiner: new DateRefinerDefinition({
+					slug: 'myRefinerDefinition',
+					title: 'Simple Date Refiner',
+					options: defaultDateOptions
+				}),
+				onRefinerChange: action('Date Refiner (simple) changed'),
+				shouldEmitIncomplete: false
 			} as IDateRefinerProps
 		}),
 		{

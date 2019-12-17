@@ -21,7 +21,11 @@
 	</div>
 	<div #headerSpacer></div>
 	<div class="applicator__section">
-		<porcelain-refiners *ngIf="refiners" [refiners]="refiners"></porcelain-refiners>
+		<porcelain-refiners
+			*ngIf="refiners"
+			[refiners]="refiners"
+			[allowIncompleteEmit]="allowIncompleteEmit"
+		></porcelain-refiners>
 		<div *ngIf="!refiners">
 			<p>{{ loadingLabel }}</p>
 		</div>

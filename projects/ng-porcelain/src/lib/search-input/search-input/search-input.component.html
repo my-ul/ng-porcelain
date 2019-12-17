@@ -8,7 +8,7 @@
 		type="text"
 		title="{{ placeholderLabel }}"
 		class="search-input__query"
-		[(ngModel)]="value"
+		[(ngModel)]="currentValue"
 		[placeholder]="placeholderLabel"
 		(keyup.enter)="submit()"
 		(keyup.esc)="clear()"
