@@ -26,6 +26,7 @@ storiesOf('Refiners/Multi-Refiner Component', module)
 				},
 				props: {
 					onRefinersChange: action('Refiners change'),
+					allowIncompleteEmit: false,
 					refiners: [
 						new SimpleRefinerDefinition({
 							title: 'Common Allergies',
