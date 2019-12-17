@@ -1,6 +1,6 @@
 import { DateRefinerDefinition } from './../../shared';
 // Angular
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angular/core';
 // Font Awesome 5
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
@@ -81,6 +81,7 @@ export class DateRefinerComponent implements OnInit {
 
 	@Input() fromLabel: string = 'From';
 	@Input() toLabel: string = 'To';
+	@Input() invalidCustomRangeLabel: string = 'Please select a valid date range.';
 
 	/**
 	 * Defines emit behavior for invalid ranges.
@@ -108,12 +109,11 @@ export class DateRefinerComponent implements OnInit {
 	toModel: ISimplifiedMyDateModel = null;
 
 	constructor() {
-		console.group('DateRefinerComponent > constructor()');
-
-		console.groupEnd();
+		this.log('constructor()');
 	}
 
 	parseDateState(date: string | Date | _moment.Moment): ISimplifiedMyDateModel {
+		this.log('parseDateState(date)', { date });
 		const parsed: _moment.Moment =
 			typeof date === 'string'
 				? moment.utc(date, 'YYYY-MM-DD') // needs to be parsed as UTC
@@ -133,7 +133,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.group('DateRefinerComponent.ngOnInit()');
+		this.log('ngOnInit()');
 
 		this.options = this.refiner.options ? this.refiner.options : defaultDateOptions;
 
@@ -165,18 +165,34 @@ export class DateRefinerComponent implements OnInit {
 				}
 			}
 		});
-
-		console.groupEnd();
 	}
 
 	onFromChange($event) {
+		this.log('onFromChange($event)', { $event });
 		this.fromModel = $event;
 		this.onChange(this.currentOptionSlug);
 	}
 
 	onToChange($event) {
+		this.log('onToChange($event)', { $event });
 		this.toModel = $event;
 		this.onChange(this.currentOptionSlug);
+	}
+
+	isCustomRangeValid() {
+		const value = this.getValue();
+		if (value.optionSlug === 'custom') {
+			if (this.allowIncompleteEmit) {
+				return true;
+			} else {
+				return (
+					value.from instanceof Date &&
+					value.to instanceof Date &&
+					value.from.getTime() < value.to.getTime()
+				);
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -184,6 +200,7 @@ export class DateRefinerComponent implements OnInit {
 	 */
 	isComplete(): boolean {
 		const value = this.getValue();
+		this.log('isComplete()', { value });
 
 		// -1 is a slug commonly associated with 'all' (as in no start or end)
 		if (value.optionSlug === '-1') {
@@ -203,45 +220,52 @@ export class DateRefinerComponent implements OnInit {
 
 	// Events
 	onChange(newOptionSlug: string) {
-		console.group('onChange(newOptionSlug)', { newOptionSlug });
+		let shouldEmit = false;
 
+		// update currentOptionSlug here, as inComplete and getValue
+		// rely on the updated value.
 		this.currentOptionSlug = newOptionSlug;
 
 		const isComplete = this.isComplete();
 		const value = this.getValue();
-		let shouldEmit = false;
+
+		this.log('onChange(newOptionSlug)', 'before validation', {
+			allowIncompleteEmit: this.allowIncompleteEmit,
+			isComplete,
+			value,
+			newOptionSlug
+		});
 
 		// the current option has changed to a predefined range
-		if (this.currentOptionSlug !== newOptionSlug && newOptionSlug !== 'custom') {
+		if (this.currentOptionSlug !== 'custom' && isComplete) {
+			shouldEmit = true;
+		}
+
+		// custom refiner options may generate unbounded ranges, and need to emit
+		if (this.currentOptionSlug !== 'custom' && !isComplete && this.allowIncompleteEmit) {
 			shouldEmit = true;
 		}
 
 		// or we're emitting a complete custom range
-		if (newOptionSlug === 'custom' && isComplete) {
+		if (this.currentOptionSlug === 'custom' && isComplete) {
 			shouldEmit = true;
 		}
 
-		// or the range is incomplete/invalid, but this is allowed
-		if (newOptionSlug === 'custom' && this.allowIncompleteEmit && !isComplete) {
-			// notice the negation of isComplete
+		// or the range is incomplete/invalid, but allowed by flag
+		if (this.currentOptionSlug === 'custom' && !isComplete && this.allowIncompleteEmit) {
 			shouldEmit = true;
 		}
 
 		if (shouldEmit === true) {
-			console.log('emitting', {
-				allowIncompleteEmit: this.allowIncompleteEmit,
-				isComplete,
-				value
-			});
+			this.log('onChange()', 'emitting value', { value });
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(value);
 		}
-
-		console.groupEnd();
 	}
 
 	// States
 	optionHasBadge(dateOptionOrDate: DateOption | Date): boolean {
+		this.log('optionHasBadge(dateOptionOrDate)', { dateOptionOrDate });
 		return dateOptionOrDate instanceof DateOption && typeof dateOptionOrDate.badge !== 'undefined';
 	}
 
@@ -252,11 +276,11 @@ export class DateRefinerComponent implements OnInit {
 	 * If the values are not set, (toModel/fromModel are blank), the component will return null.
 	 * If the component's shouldEmitIncomplete input is TRUE, these values will be emitted to your application immediately.
 	 * Otherwise, the component will wait for a valid range before emitting any values.
-	 * 	set [shouldEmitIncomplete]="true" to get incomplete ranges (no start or no end)
+	 * 	set [shouldEmitIncomplete]="true" to get incomplete ranges (allowing omitted start and/or omitted end)
 	 * 	set [shouldEmitIncomplete]="false" to ensure that your application only receives COMPLETE ranges.
 	 */
 	getValue(): DateRefinerValue {
-		console.group('getValue()');
+		this.log('getValue()');
 
 		const currentOption = this.refiner.options[this.currentOptionSlug];
 
@@ -292,8 +316,6 @@ export class DateRefinerComponent implements OnInit {
 			};
 		}
 
-		console.groupEnd();
-
 		if (this.currentOptionSlug === '-1') {
 			return {
 				from: null,
@@ -310,6 +332,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	getOptionLabel(option: DateOption): string {
+		this.log('getOptionLabel(option)', { option });
 		if (option instanceof DateOption) {
 			if (option.label) {
 				return option.label;
@@ -318,6 +341,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	getOptionBadge(option: DateOption | Date): string {
+		this.log('getOptionBadge(option)', { option });
 		if (option instanceof DateOption) {
 			if (option.badge) {
 				if (typeof option.badge === 'number') {
@@ -333,6 +357,16 @@ export class DateRefinerComponent implements OnInit {
 
 	// Mutators
 	toggleOpen() {
+		this.log('toggleOpen()', { isOpen: this.isOpen });
 		this.isOpen = !this.isOpen;
+	}
+
+	/**
+	 * Logs information to the console while in development mode.
+	 */
+	private log(...args) {
+		if (isDevMode()) {
+			console.log.apply(null, ['DateRefinerComponent'].concat(args));
+		}
 	}
 }

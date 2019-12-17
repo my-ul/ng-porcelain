@@ -1,6 +1,9 @@
 @import '../../shared/styles/refiner.base.component.scss';
 
 .range {
+	.range__error {
+		color: red;
+	}
 	.from,
 	.to {
 		display: block;
