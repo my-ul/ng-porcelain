@@ -506,3 +506,51 @@ Alternative Font Awesome icons can be used instead of the defaults for 'Clear' a
 	[clearIcon]="myClearIcon"
 ></porcelain-search-input>
 ```
+
+### Translation Service
+
+Use the translation to reliably subscribe to a translation dictionary.
+
+```typescript
+class MyComponent {
+	// Define labels as defaults
+	applyLabel: string = 'Apply';
+	cancelLabel: string = 'Cancel';
+	resetLabel: string = 'Reset';
+
+	constructor(private translationService: TranslationService) {
+		translationService.getTranslations().subscribe(
+			// Optional static translate method makes installing translations simple
+			TranslationService.translate(this, {
+				label_Apply: 'applyLabel',
+				label_Cancel: 'cancelLabel',
+				label_Reset: 'resetLabel'
+			})
+		);
+	}
+}
+```
+
+### Google Analytics Service
+
+The Google Analytics service is a proper Angular service wrapping the async Google Analytics
+API. When Angular is in dev mode, events will be output to the console.
+
+Replace \_gaq() instances like this...
+
+```javascript
+_gaq.push(['_trackPageview']);
+```
+
+with
+
+```typescript
+@Component({
+	providers: [GoogleAnalyticsService]
+})
+export class MyComponent {
+	constructor(googleAnalytics: GoogleAnalyticsService) {
+		this.googleAnalytics.push(['_trackPageview']);
+	}
+}
+```

@@ -17,6 +17,8 @@ import {
 } from '../../shared';
 import { of } from 'rxjs';
 
+import { TranslationService } from '../../services/translation/translation.service';
+
 // Issue with moment requires this workaround for now
 const moment = _moment;
 
@@ -44,7 +46,8 @@ export interface ISimplifiedMyDateModel {
 @Component({
 	selector: 'porcelain-date-refiner',
 	templateUrl: './date-refiner.component.html',
-	styleUrls: ['./date-refiner.component.scss']
+	styleUrls: ['./date-refiner.component.scss'],
+	providers: [TranslationService]
 })
 export class DateRefinerComponent implements OnInit {
 	// Inputs
@@ -108,8 +111,20 @@ export class DateRefinerComponent implements OnInit {
 	fromModel: ISimplifiedMyDateModel = null;
 	toModel: ISimplifiedMyDateModel = null;
 
-	constructor() {
+	constructor(private translationService: TranslationService) {
 		this.log('constructor()');
+
+		/**
+		 * Applies translations using myUL Translation file format.
+		 **/
+
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate(this, {
+				label_From: 'fromLabel',
+				label_To: 'toLabel',
+				label_PleaseSelectAValidDateRange: 'invalidCustomRangeLabel'
+			})
+		);
 	}
 
 	parseDateState(date: string | Date | _moment.Moment): ISimplifiedMyDateModel {
