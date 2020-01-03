@@ -1,6 +1,6 @@
 import * as _moment from 'moment';
-import { DateOptions } from '../../../types/Options/DateOptions';
 import { DateOption } from '../../../types/Options/DateOption';
+import { IDictionary } from '../../../types/Containers/IDictonary/IDictionary';
 const moment = _moment;
 
 const momentFloor = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) => {
@@ -19,7 +19,7 @@ export const i18nDateOptions = (
 	lastThirtyDaysLabel: string = 'Last 30 days',
 	lastNinetyDaysLabel: string = 'Last 90 days',
 	customLabel: string = 'Date Range'
-): DateOptions => ({
+): IDictionary<DateOption> => ({
 	'-1': new DateOption({
 		slug: '-1',
 		getTo: () => null,

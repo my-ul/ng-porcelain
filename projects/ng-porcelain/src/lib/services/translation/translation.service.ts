@@ -10,6 +10,7 @@ export interface Translations {
 	[labelKey: string]: string;
 }
 
+// @dynamic
 @Injectable({
 	providedIn: 'root'
 })
@@ -43,13 +44,13 @@ export class TranslationService {
 	 * 			TranslationService.translate(this, { 'label_Apply': 'applyLabel' })
 	 * 		)
 	 */
-	public static translate<
-		TargetType extends { [key: string]: any },
-		TargetLabel extends keyof TargetType = keyof TargetType
-	>(targetObject: TargetType, translationMap: TranslationMap<TargetLabel>) {
+	public static translate<T extends { [key: string]: any }, K extends keyof T = keyof T>(
+		targetObject: T,
+		translationMap: TranslationMap<K>
+	) {
 		return function(newTranslations: Translations) {
 			for (let sourceKey in translationMap) {
-				let destKey = translationMap[sourceKey] as TargetLabel;
+				let destKey = translationMap[sourceKey] as K;
 				if (newTranslations[sourceKey]) {
 					let newLabel = newTranslations[sourceKey];
 					targetObject[destKey] = newLabel;
