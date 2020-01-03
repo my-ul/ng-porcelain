@@ -5,9 +5,10 @@ import { SprintfPipe } from './sprintf/sprintf.pipe';
 import { CeilPipe } from './ceil/ceil.pipe';
 import { FloorPipe } from './floor/floor.pipe';
 import { RoundPipe } from './round/round.pipe';
+import { ToLocaleStringPipe } from '.';
 
 export const PIPES_IMPORTS = [CommonModule];
-export const PIPES_DIRECTIVES = [SprintfPipe, CeilPipe, FloorPipe, RoundPipe];
+export const PIPES_DIRECTIVES = [CeilPipe, FloorPipe, RoundPipe, SprintfPipe, ToLocaleStringPipe];
 
 @NgModule({
 	declarations: PIPES_DIRECTIVES,
