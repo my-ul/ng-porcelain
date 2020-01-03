@@ -1,6 +1,8 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { Observable, forkJoin, combineLatest } from 'rxjs';
 import * as guid from 'uuid/v4';
+import { combineAll } from 'rxjs/operators';
+
 import {
 	FrameGuestService,
 	IDocumentHeightResponse,
@@ -9,8 +11,7 @@ import {
 	ISuccessResponse,
 	IPing
 } from './frame-guest.service';
-import { IDictionary } from '../../shared/types/IDictionary';
-import { combineAll } from 'rxjs/operators';
+import { IDictionary } from '../../shared/types';
 
 class FakeWindow {
 	listeners: IDictionary<Function[]> = {};

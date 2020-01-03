@@ -7,6 +7,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BaseRefinerDefinition } from '../../shared';
 import { SimpleRefinerDefinition, IDictionary } from '../../shared';
+import { TranslationService } from '../../services';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -27,25 +28,43 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 @Component({
 	selector: 'porcelain-applicator',
 	templateUrl: './applicator.component.html',
-	styleUrls: ['./applicator.component.scss']
+	styleUrls: ['./applicator.component.scss'],
+	providers: [TranslationService]
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
-	private appliedValues: RefinerValueDictionary = {};
 	private initialLoad: boolean = true;
-	private stagedValues: RefinerValueDictionary = {};
 	private subscriptions: Subscription[] = [];
 
+	//#region Labels
 	@Input() public applyLabel: string = 'Apply';
-	@Input() public applyOnInit: boolean = true;
-	@Input() public defaultValues: RefinerValueDictionary = {};
 	@Input() public loadingLabel: string = 'Loading';
-	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Input() public resetLabel: string = 'Reset';
+	//#endregion
+
+	//#region Behaviors
+	@Input() public applyOnInit: boolean = true;
 	@Input() public allowIncompleteEmit: boolean = true;
+	//#endregion
+
+	//#region State
+	@Input() public defaultValues: RefinerValueDictionary = {};
+	private stagedValues: RefinerValueDictionary = {};
+	private appliedValues: RefinerValueDictionary = {};
+	//#endregion
+
+	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
-	constructor() {
+	constructor(private translationService: TranslationService) {
 		console.group('new ApplicatorComponent()', { arguments });
+
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate<ApplicatorComponent>(this, {
+				label_Apply: 'applyLabel',
+				label_Loading: 'loadingLabel',
+				label_Reset: 'resetLabel'
+			})
+		);
 
 		console.groupEnd();
 	}

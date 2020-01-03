@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { TranslationService } from './translation.service';
+import { TranslationService, TranslationMap } from './translation.service';
 
 describe('TranslationService', () => {
 	beforeEach(() => {
@@ -66,11 +66,11 @@ describe('TranslationService', () => {
 					cancelLabel: 'Cancel',
 					resetLabel: 'Reset'
 				},
-				translationMap = {
+				translationMap: any = {
 					label_Apply: 'applyLabel',
 					label_Cancel: 'cancelLabel',
 					label_Reset: 'resetLabel',
-					doesNotExist: 'doesNotExist'
+					doesNotExist: 'resetLabel'
 				};
 
 			translationService.setTranslations({
@@ -81,7 +81,7 @@ describe('TranslationService', () => {
 
 			translationService
 				.getTranslations()
-				.subscribe(TranslationService.translate(target, translationMap));
+				.subscribe(TranslationService.translate<any>(target, translationMap));
 
 			setTimeout(() => {
 				expect(target.applyLabel).toEqual('APPLY');

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, BehaviorSubject } from 'rxjs';
+import { IDictionary } from '../../shared';
 
-export interface TranslationMap {
-	[sourceKey: string]: string;
+export interface TranslationMap<TargetType> {
+	[sourceKey: string]: TargetType;
 }
 
 export interface Translations {
@@ -42,12 +43,16 @@ export class TranslationService {
 	 * 			TranslationService.translate(this, { 'label_Apply': 'applyLabel' })
 	 * 		)
 	 */
-	public static translate(targetObject: any, translationMap: TranslationMap) {
+	public static translate<
+		TargetType extends { [key: string]: any },
+		TargetLabel extends keyof TargetType = keyof TargetType
+	>(targetObject: TargetType, translationMap: TranslationMap<TargetLabel>) {
 		return function(newTranslations: Translations) {
 			for (let sourceKey in translationMap) {
-				let destKey = translationMap[sourceKey];
+				let destKey = translationMap[sourceKey] as TargetLabel;
 				if (newTranslations[sourceKey]) {
-					targetObject[destKey] = newTranslations[sourceKey];
+					let newLabel = newTranslations[sourceKey];
+					targetObject[destKey] = newLabel;
 				} else {
 					console.warn(
 						`[TranslationService] Unable to find translation for '${sourceKey}' in translations.`

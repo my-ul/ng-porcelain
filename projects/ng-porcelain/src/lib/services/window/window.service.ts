@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IDictionary } from '../../shared/types/IDictionary';
+import { IDictionary } from '../../shared/types';
 import { HasEventTargetAddRemove } from 'rxjs/internal/observable/fromEvent';
 
 function _window(): Window {

@@ -3,30 +3,12 @@
  */
 
 export * from './animations/slideInOut.animation';
+
 export * from './defaults/labels/defaultSelectAllLabel';
 export * from './defaults/labels/defaultSelectNoneLabel';
 export * from './defaults/labels/defaultShowLessLabel';
 export * from './defaults/labels/defaultShowMoreLabel';
 export * from './defaults/properties/defaultOptionShowCount';
-export * from './types/IDictionary';
-export * from './types/Options/DateOption';
-export * from './types/Options/DateOptions';
-export * from './types/Options/IDateOption';
-export * from './types/Options/IDateOptions';
-export * from './types/Options/ISimpleOption';
-export * from './types/Options/ISimpleOptions';
-export * from './types/Options/SimpleOption';
-export * from './types/Options/SimpleOptions';
-export * from './types/Refiners/BaseRefinerDefinition';
-export * from './types/Refiners/DateRefinerDefinition';
-export * from './types/Refiners/IBaseRefinerDefinition';
-export * from './types/Refiners/IDateRefinerDefinition';
-export * from './types/Refiners/ISimpleRefinerDefinition';
-export * from './types/Refiners/RefinerType';
-export * from './types/Refiners/SimpleRefinerDefinition';
-export * from './types/Values/DateRefinerValue';
-export * from './types/Values/IDateRefinerValue';
-export * from './types/Values/OptionRefinerValue';
-export * from './types/Values/RefinerValue';
-export * from './utilities/i18nDateOptions';
-export * from './utilities/reducers';
+
+export * from './types';
+export * from './utilities';

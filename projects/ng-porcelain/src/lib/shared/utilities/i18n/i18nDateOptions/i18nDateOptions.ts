@@ -1,9 +1,6 @@
-import { SimpleOptions } from './../types/Options/SimpleOptions';
-import { SimpleOption } from '../types/Options/SimpleOption';
-import { DateOption } from '../types/Options/DateOption';
-import { DateOptions } from '../types/Options/DateOptions';
-
 import * as _moment from 'moment';
+import { DateOptions } from '../../../types/Options/DateOptions';
+import { DateOption } from '../../../types/Options/DateOption';
 const moment = _moment;
 
 const momentFloor = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) => {

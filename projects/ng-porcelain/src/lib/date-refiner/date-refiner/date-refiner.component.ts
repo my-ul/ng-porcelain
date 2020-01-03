@@ -119,7 +119,7 @@ export class DateRefinerComponent implements OnInit {
 		 **/
 
 		this.translationService.getTranslations().subscribe(
-			TranslationService.translate(this, {
+			TranslationService.translate<DateRefinerComponent>(this, {
 				label_From: 'fromLabel',
 				label_To: 'toLabel',
 				label_PleaseSelectAValidDateRange: 'invalidCustomRangeLabel'
