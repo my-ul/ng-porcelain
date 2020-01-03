@@ -29,7 +29,7 @@
 		[class.search-input__search-action--not-active]="!canSubmit()"
 		[class.search-input__search-action--is-active]="canSubmit()"
 		(click)="submit()"
-		title="Execute the search with the current search query."
+		title="Submit the search with the current search query."
 	>
 		<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>
 		<span class="sr-only">Submit the search using the current query.</span>

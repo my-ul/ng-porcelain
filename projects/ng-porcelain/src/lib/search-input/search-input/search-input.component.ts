@@ -11,30 +11,57 @@ import {
 
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { TranslationService } from '../../services';
 
 @Component({
 	selector: 'porcelain-search-input',
 	templateUrl: './search-input.component.html',
-	styleUrls: ['./search-input.component.scss']
+	styleUrls: ['./search-input.component.scss'],
+	providers: [TranslationService]
 })
 export class SearchInputComponent implements OnInit {
-	@Input() public borders: boolean = true;
-	@Input() public clearIcon: any = faTimesCircle;
-	@Input() public clearIconColor: any = '#9dacba';
-	@Input() public placeholderLabel: string = 'Type to search...';
-	@Input() public submitIcon: any = faSearch;
-	@Input() public submitIconColor: any = '#9dacba';
 	@Input() public userValue: string = '';
+	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
+
+	//#region Appearance
+
+	@Input() public borders: boolean = true;
+	@Input() public clearIconColor: any = '#9dacba';
+	@Input() public submitIconColor: any = '#9dacba';
+
+	//#endregion
+
+	//#region Handlers
+
 	@Output() public emptyHandler: EventEmitter<string> = new EventEmitter();
 	@Output() public submitHandler: EventEmitter<string> = new EventEmitter();
-	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
+
+	//#endregion
+
+	//#region Icons
+
+	@Input() public clearIcon: any = faTimesCircle;
+	@Input() public submitIcon: any = faSearch;
+
+	//#endregion
+
+	//#region Labels
+
+	@Input() public placeholderLabel: string = 'Type to search...';
+
+	//#endregion
 
 	public emptyrefresh = false;
 	public isSearchFocused = false;
-	private lastValue = null;
 	public currentValue = '';
 
-	constructor() {}
+	constructor(private translationService: TranslationService) {
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate(this, {
+				label_TypeToSearch: 'placeholderLabel'
+			})
+		);
+	}
 
 	/**
 	 * Tests if the control is in a condition that allows a submit.
@@ -49,10 +76,8 @@ export class SearchInputComponent implements OnInit {
 	public clear(): void {
 		this.currentValue = '';
 
-		if (this.emptyrefresh == true) {
-		} else {
-			this.emptyrefresh = true;
-		}
+		// allow ONE submission of an empty value
+		this.emptyrefresh = true;
 
 		//empty value to be emitted to emptyHandler
 		this.empty();
@@ -124,6 +149,7 @@ export class SearchInputComponent implements OnInit {
 			this.emptyValueEmit = true; //to enable empty value sending for submit
 			this.emptyrefresh = false; //to disable emptyrefresh
 		} else {
+			// is empty
 			if (this.emptyValueEmit == true) {
 				this.emptyValueEmit = false;
 				this.submitHandler.emit(this.currentValue); //empty value is emitted by submit

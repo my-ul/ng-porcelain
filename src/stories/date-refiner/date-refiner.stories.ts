@@ -19,6 +19,7 @@ import {
 	defaultDateOptions,
 	IDateRefinerProps
 } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component';
+import { TranslationService } from 'projects/ng-porcelain/src/lib/services/translation/translation.service';
 
 const moment = _moment;
 
@@ -27,7 +28,8 @@ storiesOf('Refiners/Date Refiner Component', module)
 	.addDecorator(withKnobs)
 	.addDecorator(
 		moduleMetadata({
-			imports: DATE_REFINER_IMPORTS
+			imports: DATE_REFINER_IMPORTS,
+			providers: [TranslationService]
 		})
 	)
 	.addParameters({
@@ -36,7 +38,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 		}
 	})
 	.add(
-		'Simple `DateRefiner` definition (emits complete ranges only)',
+		'Restrict to valid/complete date ranges',
 		() => ({
 			component: DateRefinerComponent,
 			props: {
@@ -57,8 +59,23 @@ storiesOf('Refiners/Date Refiner Component', module)
 			}
 		}
 	)
+	.add('i18n from TranslationService', () => {
+		console.log('module', module);
+
+		return {
+			component: DateRefinerComponent,
+			props: {
+				refiner: new DateRefinerDefinition({
+					slug: 'myRefinerDefinition',
+					title: 'Simple Date Refiner',
+					options: defaultDateOptions
+				}),
+				onRefinerChange: action('Date Refiner (simple) changed')
+			}
+		};
+	})
 	.add(
-		'Simple `DateRefiner` definition (can emit incomplete)',
+		'Allow invalid/incomplete ranges',
 		() => ({
 			component: DateRefinerComponent,
 			props: {
@@ -67,6 +84,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 					title: 'Simple Date Refiner',
 					options: defaultDateOptions
 				}),
+				invalidCustomRangeLabel: 'try again',
 				onRefinerChange: action('Date Refiner (simple) changed'),
 				shouldEmitIncomplete: false
 			} as IDateRefinerProps
@@ -93,7 +111,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 				}
 			}),
 			onRefinerChange: action('Date Refiner (simple) changed')
-		} as IDateRefinerProps
+		}
 	}))
 	.add(
 		'Custom Translation',

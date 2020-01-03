@@ -14,12 +14,14 @@ import {
 	SimpleOption,
 	SimpleRefinerDefinition
 } from '../../shared';
+import { TranslationService } from '../../services';
 
 @Component({
 	selector: 'porcelain-simple-refiner',
 	templateUrl: './simple-refiner.component.html',
 	styleUrls: ['./simple-refiner.component.scss'],
-	animations: []
+	animations: [],
+	providers: [TranslationService]
 })
 export class SimpleRefinerComponent implements OnInit {
 	// Inputs
@@ -28,10 +30,14 @@ export class SimpleRefinerComponent implements OnInit {
 	@Input('isOpen') _isOpen: boolean;
 	@Input('isExpanded') _isExpanded: boolean;
 
+	//#region Labels
+
 	@Input('showLessLabel') showLessLabel = defaultShowLessLabel;
 	@Input('showMoreLabel') showMoreLabel = defaultShowMoreLabel;
 	@Input('selectAllLabel') selectAllLabel = defaultSelectAllLabel;
 	@Input('selectNoneLabel') selectNoneLabel = defaultSelectNoneLabel;
+
+	//#endregion
 
 	// Getters
 	get showCount() {
@@ -61,17 +67,27 @@ export class SimpleRefinerComponent implements OnInit {
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
 
-	// Icons
+	//#region Icons
 	faChevronDown: IconDefinition = faCaretDown;
 	contractIcon: IconDefinition = faChevronUp;
 	expandIcon: IconDefinition = faChevronDown;
+	//#endregion
 
 	// State
 	values: { [optionSlug: string]: boolean } = {};
 	private ignoreNext: boolean = false;
 
-	constructor() {
+	constructor(private translationService: TranslationService) {
 		console.group('SimpleRefinerComponent > constructor()');
+
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate<SimpleRefinerComponent>(this, {
+				label_ShowMore: 'showMoreLabel',
+				label_ShowLess: 'showLessLabel',
+				label_SelectAll: 'selectAllLabel',
+				label_SelectNone: 'selectNoneLabel'
+			})
+		);
 
 		console.groupEnd();
 	}

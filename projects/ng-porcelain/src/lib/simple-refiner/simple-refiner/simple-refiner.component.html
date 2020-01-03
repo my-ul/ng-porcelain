@@ -58,11 +58,11 @@
 			<div class="refiner__section refiner__show-hide" *ngIf="canExpand()">
 				<button (click)="toggleExpanded()" class="refiner__expand-toggle">
 					<span *ngIf="isExpanded"
-						>{{ showLessLabel | interpolate: countTail() }}
+						>{{ showLessLabel | sprintf: countTail() }}
 						<fa-icon [icon]="contractIcon"></fa-icon>
 					</span>
 					<span *ngIf="!isExpanded"
-						>{{ showMoreLabel | interpolate: countTail() }}
+						>{{ showMoreLabel | sprintf: countTail() }}
 						<fa-icon [icon]="expandIcon"></fa-icon
 					></span>
 				</button>

@@ -506,3 +506,157 @@ Alternative Font Awesome icons can be used instead of the defaults for 'Clear' a
 	[clearIcon]="myClearIcon"
 ></porcelain-search-input>
 ```
+
+## Services
+
+Services can be used to provide application-wide functionalities like translation and analytics to your application.
+
+Inject Services using your component's providers array.
+
+### Translation Service
+
+Use the translation to reliably subscribe to a translation dictionary.
+
+```typescript
+import { TranslationService } from '@my-ul/ng-porcelain';
+
+@Component({
+	// ... //
+	providers: [TranslationService]
+})
+class MyComponent {
+	// Define labels as defaults
+	applyLabel: string = 'Apply';
+	cancelLabel: string = 'Cancel';
+	resetLabel: string = 'Reset';
+
+	constructor(private translationService: TranslationService) {
+		translationService.getTranslations().subscribe(
+			// Optional static translate method makes installing translations simple
+			TranslationService.translate(this, {
+				label_Apply: 'applyLabel',
+				label_Cancel: 'cancelLabel',
+				label_Reset: 'resetLabel'
+			})
+		);
+	}
+}
+```
+
+### Google Analytics Service
+
+The Google Analytics service is a proper Angular service wrapping the async Google Analytics
+API. When Angular is in dev mode, events will be output to the console.
+
+Replace references to window.\_gaq like this...
+
+```typescript
+declare _gaq;
+@Component({
+	// ...
+})
+export class MyComponent {
+	constructor() {
+		_gaq.push(['_trackPageview']);
+	}
+}
+```
+
+with
+
+```typescript
+import { GoogleAnalyticsService } from '@my-ul/ng-porcelain';
+
+@Component({
+	// ...
+	providers: [GoogleAnalyticsService]
+})
+export class MyComponent {
+	constructor(ga: GoogleAnalyticsService) {
+		this.ga.push(['_trackPageview']);
+	}
+}
+```
+
+## Pipes
+
+Pipes provide common operations to be used in templates. To use pipes, import the `PipesModule` into your `@NgModule`.
+
+```typescript
+import { PipesModule } from '@my-ul/ng-porcelain';
+
+@NgModule({
+	declarations: [
+		/* */
+	],
+	imports: [PipesModule],
+	exports: [
+		/* */
+	]
+})
+export class YourModuleNameHere {}
+```
+
+### `ceil` pipe
+
+Performs a mathematic `ceil` operation on a numeric value. Non-numeric values are passed through.
+
+```html
+{{ 1234.01 | ceil }}
+<!-- 1235 -->
+```
+
+### `floor` pipe
+
+Performs a mathematic `floor` operation on a numeric value. Non-numeric values are passed through.
+
+```html
+{{ 1234.99 | floor }}
+<!-- 1234 -->
+```
+
+### `round` pipe
+
+Performs a mathematic `round` operation on a numeric value. Non-numeric values are passed through.
+
+```html
+{{ 1234.01 | round }}
+<!-- 1234 -->
+{{ 1234.50 | round }}
+<!-- 1235 -->
+{{ 1234.99 | round }}
+<!-- 1235 -->
+```
+
+### `sprintf` pipe
+
+Formats a string using unix-style sprintf syntax.
+
+```typescript
+const currentLocale = getLocale(userLocale);
+const projectCount = 1234;
+const taskCount = 4321;
+```
+
+Here, the `translate` pipe would provide a translation for the string it was provided.
+
+```html
+{{ 'There are %1$u projects and %2$u tasks available.' | translate : currentLocale | sprintf :
+projectCount : taskCount }}
+<!--
+	en: There are 1234 projects and 4321 tasks available 
+	es: Hay 1234 y 4321 pryectos de tareas disponibles
+	fr: Il y a 1234 projets et 4321 tâches disponibles.
+-->
+```
+
+### `toLocaleString` pipe
+
+Formats a date or number for the current locale (or a specified locale).
+
+```html
+{{ 1234.56 | toLocaleString : 'en-US' }}
+<!-- 1,234.56 -->
+{{ new Date() || toLocaleString }}
+<!-- 1/2/2020, 12:00:00 AM -->
+```

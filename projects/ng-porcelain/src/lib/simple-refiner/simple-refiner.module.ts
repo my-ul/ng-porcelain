@@ -4,7 +4,7 @@ import { SimpleRefinerComponent } from './simple-refiner/simple-refiner.componen
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TruncateModule } from '../truncate/truncate.module';
 import { FormsModule } from '@angular/forms';
-import { InterpolateModule } from '../interpolate/interpolate.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 export const SIMPLE_REFINER_DIRECTIVES = [SimpleRefinerComponent];
 
@@ -13,7 +13,7 @@ export const SIMPLE_REFINER_IMPORTS = [
 	FormsModule,
 	FontAwesomeModule,
 	TruncateModule,
-	InterpolateModule
+	PipesModule
 ];
 
 @NgModule({
