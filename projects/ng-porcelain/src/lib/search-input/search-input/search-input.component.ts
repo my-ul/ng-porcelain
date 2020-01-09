@@ -121,7 +121,7 @@ export class SearchInputComponent implements OnInit {
 		this.currentValue = this.userValue;
 		/*to check if there is previous value*/
 		this.emptyrefresh = this.userValue == '' ? false : true;
-		this.emptyValueEmit = !this.emptyrefresh;
+		this.emptyValueEmit = this.emptyrefresh;
 	}
 
 	/**
