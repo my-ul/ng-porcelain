@@ -1,4 +1,3 @@
-import { DateRefinerDefinition } from './../../shared';
 // Angular
 import { Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angular/core';
 // Font Awesome 5
@@ -8,16 +7,17 @@ import * as _moment from 'moment';
 import { IMyDate } from 'mydatepicker';
 
 // Porcelain
-import {
-	DateOption,
-	DateOptions,
-	DateRefinerValue,
-	i18nDateOptions,
-	IDateRefinerDefinition
-} from '../../shared';
+
 import { of } from 'rxjs';
 
 import { TranslationService } from '../../services/translation/translation.service';
+import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
+
+import { DateOption } from '../../shared/types/Options/DateOption';
+import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
+import { DateRefinerValue } from '../../shared/types/Values/DateRefinerValue';
+import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
+import { IDateRefinerDefinition } from '../../shared/types/Refiners/IDateRefinerDefinition';
 
 // Issue with moment requires this workaround for now
 const moment = _moment;
@@ -34,7 +34,7 @@ export interface IDateRefinerState {
 	to: string | Date | _moment.Moment;
 }
 
-export const defaultDateOptions: DateOptions = i18nDateOptions();
+export const defaultDateOptions: IDictionary<DateOption> = i18nDateOptions();
 
 // const animationOptionsInOut = generateSlideInOut('optionsInOut'),
 // 	animationRangeInOut = generateSlideInOut('rangeInOut');
@@ -46,8 +46,7 @@ export interface ISimplifiedMyDateModel {
 @Component({
 	selector: 'porcelain-date-refiner',
 	templateUrl: './date-refiner.component.html',
-	styleUrls: ['./date-refiner.component.scss'],
-	providers: [TranslationService]
+	styleUrls: ['./date-refiner.component.scss']
 })
 export class DateRefinerComponent implements OnInit {
 	// Inputs
@@ -99,7 +98,7 @@ export class DateRefinerComponent implements OnInit {
 	faChevronDown: IconDefinition = faCaretDown;
 
 	// Constants
-	options: DateOptions = defaultDateOptions;
+	options: IDictionary<DateOption> = defaultDateOptions;
 
 	// Angular
 	objectKeys = Object.keys;

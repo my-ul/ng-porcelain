@@ -3,15 +3,13 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
 import { storiesOf } from '@storybook/angular';
+import { RefinersComponent } from './refiners.component';
+import { REFINERS_IMPORTS } from '../refiners.module';
+import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
+import { SimpleOption } from '../../shared/types/Options/SimpleOption';
+import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
+import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
 // Porcelain Imports
-import {
-	DateRefinerDefinition,
-	SimpleOption,
-	SimpleRefinerDefinition,
-	i18nDateOptions
-} from 'projects/ng-porcelain/src/lib/shared';
-import { REFINERS_IMPORTS } from '../../../projects/ng-porcelain/src/lib/refiners/refiners.module';
-import { RefinersComponent } from '../../../projects/ng-porcelain/src/lib/refiners/refiners/refiners.component';
 
 storiesOf('Refiners/Multi-Refiner Component', module)
 	.addDecorator(withKnobs)
@@ -93,8 +91,5 @@ storiesOf('Refiners/Multi-Refiner Component', module)
 				}
 			};
 		},
-		{
-			notes: { markdown: require('./mix-and-match.md') },
-			info: {}
-		}
+		{}
 	);

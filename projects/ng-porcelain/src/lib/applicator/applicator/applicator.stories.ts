@@ -8,7 +8,10 @@ import * as _moment from 'moment';
 const moment = _moment;
 
 // Porcelain
-import { i18nDateOptions, SimpleRefinerDefinition, DateRefinerDefinition } from '../../shared';
+import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
+import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
+import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
+
 import { APPLICATOR_IMPORTS } from '../applicator.module';
 import { ApplicatorComponent } from './applicator.component';
 

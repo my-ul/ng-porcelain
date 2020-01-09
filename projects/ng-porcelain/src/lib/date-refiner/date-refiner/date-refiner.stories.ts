@@ -8,18 +8,13 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import * as _moment from 'moment';
 
 // Porcelain
-import {
-	DateOption,
-	DateRefinerDefinition,
-	i18nDateOptions
-} from '../../.../../../projects/ng-porcelain/src/lib/shared';
-import { DATE_REFINER_IMPORTS } from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner.module';
-import {
-	DateRefinerComponent,
-	defaultDateOptions,
-	IDateRefinerProps
-} from './../../../projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component';
-import { TranslationService } from 'projects/ng-porcelain/src/lib/services/translation/translation.service';
+import { DateOption } from '../../shared/types/Options/DateOption';
+import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
+import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
+import { TranslationService } from '../../services/translation/translation.service';
+
+import { DATE_REFINER_IMPORTS } from '../date-refiner.module';
+import { DateRefinerComponent, defaultDateOptions, IDateRefinerProps } from './date-refiner.component';
 
 const moment = _moment;
 

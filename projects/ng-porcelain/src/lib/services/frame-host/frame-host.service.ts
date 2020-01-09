@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { WindowService } from '../window/window.service';
 import { IPing, ISuccessResponse, MessageType, IPongResponse } from '../frame-guest/frame-guest.service';
 import { of, Observable, Subject } from 'rxjs';
-import { IDictionary } from '../../shared';
+import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class FrameHostService {
-	// #region Properties (3)
-
 	private listener = (event: MessageEvent) => {
 		const msg = event.data as IPing<any>;
 		if (msg.type) {
@@ -27,10 +25,6 @@ export class FrameHostService {
 	private subjects: IDictionary<Subject<any>>;
 	private window: Window;
 
-	// #endregion Properties (3)
-
-	// #region Constructors (1)
-
 	constructor(private windowService: WindowService) {
 		this.subjects = {
 			DismissUpload: new Subject(),
@@ -43,10 +37,6 @@ export class FrameHostService {
 
 		this.setWindow(this.windowService.nativeWindow);
 	}
-
-	// #endregion Constructors (1)
-
-	// #region Public Methods (2)
 
 	/**
 	 * Allow an external event to get an observable that emits when the event happens.
@@ -71,10 +61,6 @@ export class FrameHostService {
 
 		this.addEvent(this.window, 'message', this.listener);
 	}
-
-	// #endregion Public Methods (2)
-
-	// #region Private Methods (4)
 
 	private addEvent(obj, type, fn) {
 		if (obj.attachEvent) {
@@ -111,6 +97,4 @@ export class FrameHostService {
 			(initialEvent.source as Window).postMessage(response, initialEvent.origin);
 		}
 	}
-
-	// #endregion Private Methods (4)
 }

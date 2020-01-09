@@ -6,13 +6,8 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { faArrowAltCircleRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // Module Imports for synthetic module
-import {
-	SEARCH_INPUT_IMPORTS,
-	SEARCH_INPUT_DIRECTIVES
-} from '../../../projects/ng-porcelain/src/lib/search-input/search-input.module';
-
-// Component
-import { SearchInputComponent } from '../../../projects/ng-porcelain/src/lib/search-input/search-input/search-input.component';
+import { SEARCH_INPUT_DIRECTIVES, SEARCH_INPUT_IMPORTS } from '../search-input.module';
+import { SearchInputComponent } from './search-input.component';
 
 const onQueryChange = 'Search Input Query submitted';
 const onQueryClear = 'Search Input Query cleared';

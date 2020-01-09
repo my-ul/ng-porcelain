@@ -16,8 +16,7 @@ import { TranslationService } from '../../services';
 @Component({
 	selector: 'porcelain-search-input',
 	templateUrl: './search-input.component.html',
-	styleUrls: ['./search-input.component.scss'],
-	providers: [TranslationService]
+	styleUrls: ['./search-input.component.scss']
 })
 export class SearchInputComponent implements OnInit {
 	@Input() public userValue: string = '';

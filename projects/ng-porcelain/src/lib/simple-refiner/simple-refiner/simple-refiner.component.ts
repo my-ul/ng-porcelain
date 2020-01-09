@@ -20,8 +20,7 @@ import { TranslationService } from '../../services';
 	selector: 'porcelain-simple-refiner',
 	templateUrl: './simple-refiner.component.html',
 	styleUrls: ['./simple-refiner.component.scss'],
-	animations: [],
-	providers: [TranslationService]
+	animations: []
 })
 export class SimpleRefinerComponent implements OnInit {
 	// Inputs
