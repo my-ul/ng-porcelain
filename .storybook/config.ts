@@ -1,13 +1,13 @@
 import { configure, addDecorator, addParameters } from '@storybook/angular';
 
 function loadStories() {
-	require('../src/stories/refiners/refiners.stories');
-	require('../src/stories/date-refiner/date-refiner.stories');
-	require('../src/stories/simple-refiner/simple-refiner.stories');
 	require('../projects/ng-porcelain/src/lib/applicator/applicator/applicator.stories');
-	require('../src/stories/footer/footer.stories');
-	require('../src/stories/spinner/spinner.stories');
-	require('../src/stories/search-input/search-input.stories');
+	require('../projects/ng-porcelain/src/lib/refiners/refiners/refiners.stories');
+	require('../projects/ng-porcelain/src/lib/date-refiner/date-refiner/date-refiner.component');
+	require('../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.stories');
+	require('../projects/ng-porcelain/src/lib/footer/footer/footer.stories');
+	require('../projects/ng-porcelain/src/lib/spinner/spinner/spinner.stories');
+	require('../projects/ng-porcelain/src/lib/search-input/search-input/search-input.stories');
 }
 
 addParameters({

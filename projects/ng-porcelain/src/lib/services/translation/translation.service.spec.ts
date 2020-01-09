@@ -4,9 +4,7 @@ import { TranslationService, TranslationMap } from './translation.service';
 
 describe('TranslationService', () => {
 	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [TranslationService]
-		});
+		TestBed.configureTestingModule({});
 	});
 
 	it('should be created', inject([TranslationService], (service: TranslationService) => {

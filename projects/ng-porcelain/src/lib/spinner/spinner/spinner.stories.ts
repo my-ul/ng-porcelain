@@ -1,7 +1,5 @@
-import { SPINNER_DIRECTIVES } from './../../../projects/ng-porcelain/src/lib/spinner/spinner.module';
 import { storiesOf } from '@storybook/angular';
-import { SpinnerComponent } from 'projects/ng-porcelain/src/lib/spinner/spinner/spinner.component';
-import { SPINNER_IMPORTS } from 'projects/ng-porcelain/src/lib/spinner/spinner.module';
+import { SPINNER_IMPORTS, SPINNER_DIRECTIVES } from '../spinner.module';
 
 storiesOf('Spinner Component', module).add('Default Presentation', () => ({
 	//component: SpinnerComponent,

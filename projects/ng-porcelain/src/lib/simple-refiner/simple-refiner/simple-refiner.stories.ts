@@ -9,9 +9,12 @@ import * as _ from 'underscore';
 import * as lipsum from 'fast-lorem-ipsum';
 
 // Porcelain
-import { SIMPLE_REFINER_IMPORTS } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner.module';
-import { SimpleRefinerComponent } from '../../../projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/simple-refiner.component';
-import { SimpleRefinerDefinition, SimpleOption } from 'projects/ng-porcelain/src/lib/shared';
+import { SimpleOption } from '../../shared/types/Options/SimpleOption';
+import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
+
+// Subject of tests
+import { SimpleRefinerComponent } from './simple-refiner.component';
+import { SIMPLE_REFINER_IMPORTS } from '../simple-refiner.module';
 
 const usStatesHash = {
 	AL: 'Alabama',
@@ -150,9 +153,7 @@ storiesOf('Refiners/Simple Refiner', module)
 				onRefinerChange: action('Refiner changed')
 			}
 		}),
-		{
-			notes: { markdown: require('./options-definitions.md') }
-		}
+		{}
 	)
 	.add(
 		'Full `Option` definitions',
@@ -170,9 +171,7 @@ storiesOf('Refiners/Simple Refiner', module)
 				onRefinerChange: action('Refiner changed')
 			}
 		}),
-		{
-			notes: { markdown: require('./options-definitions.md') }
-		}
+		{}
 	)
 	.add(
 		'Custom Labels',
@@ -194,10 +193,7 @@ storiesOf('Refiners/Simple Refiner', module)
 				onRefinerChange: action('Refiner (Custom Labels)')
 			}
 		}),
-		{
-			keywords: ['i18n'],
-			notes: { markdown: require('./custom-labels.md') }
-		}
+		{}
 	);
 
 storiesOf('Refiners/Simple Refiner Badges', module)
@@ -304,9 +300,7 @@ storiesOf('Refiners/Simple Refiner Defaults', module)
 				onRefinerChange: action('Option Refiner change')
 			}
 		}),
-		{
-			notes: { markdown: require('./custom-show-count.md') }
-		}
+		{}
 	)
 	.add(
 		'Set default shown options by `showCount` refiner property.',
@@ -325,9 +319,7 @@ storiesOf('Refiners/Simple Refiner Defaults', module)
 				onRefinerChange: action('Option Refiner change')
 			}
 		}),
-		{
-			notes: { markdown: require('./custom-show-count.md') }
-		}
+		{}
 	)
 	.add('Set value with `Refiner.selected`', () => ({
 		component: SimpleRefinerComponent,
