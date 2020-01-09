@@ -51,7 +51,6 @@ export class SearchInputComponent implements OnInit {
 
 	//#endregion
 
-	public emptyrefresh = false;
 	public isSearchFocused = false;
 	public currentValue = '';
 
@@ -67,7 +66,7 @@ export class SearchInputComponent implements OnInit {
 	 * Tests if the control is in a condition that allows a submit.
 	 */
 	public canSubmit(): boolean {
-		return (this.isEmpty() && this.emptyrefresh) || !this.isEmpty();
+		return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
 	}
 
 	/**
@@ -75,9 +74,6 @@ export class SearchInputComponent implements OnInit {
 	 */
 	public clear(): void {
 		this.currentValue = '';
-
-		// allow ONE submission of an empty value
-		this.emptyrefresh = true;
 
 		//empty value to be emitted to emptyHandler
 		this.empty();
@@ -120,8 +116,7 @@ export class SearchInputComponent implements OnInit {
 		/* assigning uservalues */
 		this.currentValue = this.userValue;
 		/*to check if there is previous value*/
-		this.emptyrefresh = this.userValue == '' ? false : true;
-		this.emptyValueEmit = !this.emptyrefresh;
+		this.canEmitEmpty = this.userValue == '' ? false : true;
 	}
 
 	/**
@@ -138,7 +133,7 @@ export class SearchInputComponent implements OnInit {
 		this.searchInput.nativeElement.focus();
 	}
 
-	emptyValueEmit: boolean = false;
+	canEmitEmpty: boolean = false;
 
 	/**
 	 * Submits the current value of the search input to outside listener.
@@ -146,16 +141,14 @@ export class SearchInputComponent implements OnInit {
 	public submit(): void {
 		if (!this.isEmpty()) {
 			this.submitHandler.emit(this.currentValue);
-			this.emptyValueEmit = true; //to enable empty value sending for submit
-			this.emptyrefresh = false; //to disable emptyrefresh
+			this.canEmitEmpty = true; //to enable empty value sending for submit
 		} else {
 			// is empty
-			if (this.emptyValueEmit == true) {
-				this.emptyValueEmit = false;
+			if (this.canEmitEmpty == true) {
+				this.canEmitEmpty = false;
 				this.submitHandler.emit(this.currentValue); //empty value is emitted by submit
 			}
 			this.setFocus();
-			this.emptyrefresh = true; //to enable empty refresh after emptyvalue is emitted by submit
 		}
 	}
 }
