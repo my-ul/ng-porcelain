@@ -1,13 +1,19 @@
-import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
-import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerValue';
-import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { BaseRefinerDefinition } from '../../shared';
-import { SimpleRefinerDefinition, IDictionary } from '../../shared';
-import { TranslationService } from '../../services';
+
+import { TranslationService } from '../../services/translation/translation.service';
+import { IDictionary } from './../../shared/types/Containers/IDictonary/IDictionary';
+
+import { BaseRefinerDefinition } from './../../shared/types/Refiners/BaseRefinerDefinition';
+
+import { SimpleRefinerDefinition } from './../../shared/types/Refiners/SimpleRefinerDefinition';
+import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerValue';
+
+import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
+import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -28,29 +34,22 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 @Component({
 	selector: 'porcelain-applicator',
 	templateUrl: './applicator.component.html',
-	styleUrls: ['./applicator.component.scss'],
-	providers: [TranslationService]
+	styleUrls: ['./applicator.component.scss']
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
 	private initialLoad: boolean = true;
 	private subscriptions: Subscription[] = [];
 
-	//#region Labels
 	@Input() public applyLabel: string = 'Apply';
 	@Input() public loadingLabel: string = 'Loading';
 	@Input() public resetLabel: string = 'Reset';
-	//#endregion
 
-	//#region Behaviors
-	@Input() public applyOnInit: boolean = true;
 	@Input() public allowIncompleteEmit: boolean = true;
-	//#endregion
+	@Input() public applyOnInit: boolean = true;
 
-	//#region State
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
 	private appliedValues: RefinerValueDictionary = {};
-	//#endregion
 
 	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();

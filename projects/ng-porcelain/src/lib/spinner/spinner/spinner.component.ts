@@ -4,8 +4,7 @@ import { TranslationService } from '../../services';
 @Component({
 	selector: 'porcelain-spinner',
 	templateUrl: './spinner.component.html',
-	styleUrls: ['./spinner.component.scss'],
-	providers: [TranslationService]
+	styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent implements OnInit {
 	@Input() loadingLabel: string = 'Loading…';

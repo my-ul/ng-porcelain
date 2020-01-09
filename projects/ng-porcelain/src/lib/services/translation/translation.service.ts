@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, BehaviorSubject } from 'rxjs';
-import { IDictionary } from '../../shared';
+import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
 
 export interface TranslationMap<TargetType> {
 	[sourceKey: string]: TargetType;
@@ -16,23 +16,9 @@ export interface Translations {
 })
 export class TranslationService {
 	private translationSubject = new ReplaySubject<Translations>(1);
+
 	constructor() {
 		console.log('new TranslationService()');
-	}
-
-	/**
-	 * Set the current translation dictionary.  Causes all subscriptions to update.
-	 */
-	public setTranslations(translations: Translations): this {
-		this.translationSubject.next(translations);
-		return this;
-	}
-
-	/**
-	 * Get the Translations observable.
-	 */
-	public getTranslations(): Observable<Translations> {
-		return this.translationSubject.asObservable();
 	}
 
 	/**
@@ -61,5 +47,20 @@ export class TranslationService {
 				}
 			}
 		};
+	}
+
+	/**
+	 * Get the Translations observable.
+	 */
+	public getTranslations(): Observable<Translations> {
+		return this.translationSubject.asObservable();
+	}
+
+	/**
+	 * Set the current translation dictionary.  Causes all subscriptions to update.
+	 */
+	public setTranslations(translations: Translations): this {
+		this.translationSubject.next(translations);
+		return this;
 	}
 }
