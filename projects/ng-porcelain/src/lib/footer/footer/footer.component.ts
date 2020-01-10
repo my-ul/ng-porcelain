@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TranslationService } from '../../services';
+import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
 	selector: 'porcelain-footer',
