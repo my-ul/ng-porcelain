@@ -11,7 +11,7 @@ import {
 	ISuccessResponse,
 	IPing
 } from './frame-guest.service';
-import { IDictionary } from '../../shared/types';
+import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
 
 class FakeWindow {
 	listeners: IDictionary<Function[]> = {};
