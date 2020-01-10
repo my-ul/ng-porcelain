@@ -24,6 +24,9 @@ $ul-steel-dark: #9dacba;
 	align-items: stretch;
 	background: #fff;
 	border: solid 1px lighten($ul-steel-dark, 10%);
+	font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	font-weight: 600;
 	border-radius: 0.25em;
 
 	transition: border-color 100ms ease-in-out;
