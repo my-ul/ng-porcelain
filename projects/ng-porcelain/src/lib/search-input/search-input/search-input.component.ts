@@ -11,7 +11,7 @@ import {
 
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { TranslationService } from '../../services';
+import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
 	selector: 'porcelain-search-input',
