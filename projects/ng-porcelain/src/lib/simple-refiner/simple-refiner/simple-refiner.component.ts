@@ -14,7 +14,7 @@ import {
 	SimpleOption,
 	SimpleRefinerDefinition
 } from '../../shared';
-import { TranslationService } from '../../services';
+import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
 	selector: 'porcelain-simple-refiner',
