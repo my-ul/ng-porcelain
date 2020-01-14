@@ -1,6 +1,6 @@
 {
 	"name": "@my-ul/ng-porcelain",
-	"version": "1.9.3",
+	"version": "1.9.4",
 	"private": false,
 	"peerDependencies": {
 		"@angular/common": "^6.0.0",
