@@ -1,0 +1,7 @@
+:host {
+	::ng-deep {
+		porcelain-list-item + porcelain-list-item {
+			margin-top: 10px;
+		}
+	}
+}
