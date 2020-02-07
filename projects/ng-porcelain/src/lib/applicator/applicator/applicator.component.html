@@ -3,16 +3,16 @@
 		<div class="applicator__header">
 			<button
 				class="applicator__action applicator__action--primary"
-				[class.applicator__action--disabled]="!canApply()"
-				[disabled]="!canApply()"
+				[class.applicator__action--disabled]="!canApply"
+				[disabled]="!canApply"
 				(click)="apply()"
 			>
 				{{ applyLabel }}
 			</button>
 			<button
 				class="applicator__action applicator__action--secondary"
-				[class.applicator__action--disabled]="!canReset()"
-				[disabled]="!canReset()"
+				[class.applicator__action--disabled]="!canReset"
+				[disabled]="!canReset"
 				(click)="reset()"
 			>
 				{{ resetLabel }}

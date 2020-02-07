@@ -7,7 +7,6 @@ $list-item-padding: 20px;
 	&.list-item__cell--pad-all {
 		padding: $list-item-padding;
 	}
-
 	&.list-item__cell--pad-top {
 		padding-top: $list-item-padding;
 	}
@@ -19,6 +18,14 @@ $list-item-padding: 20px;
 	}
 	&.list-item__cell--pad-left {
 		padding-left: $list-item-padding;
+	}
+
+	&.list-item__cell--align-top {
+		align-items: flex-start;
+	}
+
+	&.list-item__cell--align-bottom {
+		align-items: flex-end;
 	}
 
 	.list-item-cell__inner {
@@ -33,9 +40,6 @@ $list-item-padding: 20px;
 	}
 
 	::ng-deep {
-		h3 {
-			font-size: 1.33em;
-		}
 		.section + .section {
 			border-top: solid 1px #ddd;
 			margin-top: $list-item-padding;
@@ -43,6 +47,42 @@ $list-item-padding: 20px;
 		}
 		.text-muted {
 			color: #9ea6ba;
+		}
+	}
+}
+
+::ng-deep {
+	html,
+	body {
+		color: #303741;
+	}
+
+	a {
+		color: #337ab7;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	p,
+	h3,
+	h4,
+	h5 {
+		font-weight: 400;
+	}
+
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		color: #303741;
+		margin: 0;
+		padding: 0;
+		& + & {
+			margin: $list-item-padding 0 0 0;
 		}
 	}
 }

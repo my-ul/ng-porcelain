@@ -8,7 +8,8 @@
 		type="text"
 		title="{{ placeholderLabel }}"
 		class="search-input__query"
-		[(ngModel)]="currentValue"
+		[(ngModel)]="query"
+		[disabled]="disabled"
 		[placeholder]="placeholderLabel"
 		(keyup.enter)="submit()"
 		(keyup.esc)="clear()"
@@ -26,8 +27,8 @@
 	</button>
 	<button
 		class=" search-input__search-action  search-input__search"
-		[class.search-input__search-action--not-active]="!canSubmit()"
-		[class.search-input__search-action--is-active]="canSubmit()"
+		[class.search-input__search-action--not-active]="!canApply"
+		[class.search-input__search-action--is-active]="canApply"
 		(click)="submit()"
 		title="Submit the search with the current search query."
 	>

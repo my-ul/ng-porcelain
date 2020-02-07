@@ -2,13 +2,13 @@ import {
 	Component,
 	ElementRef,
 	EventEmitter,
+	forwardRef,
 	Input,
 	OnInit,
 	Output,
-	ViewChild,
-	ViewEncapsulation
+	ViewChild
 } from '@angular/core';
-
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { TranslationService } from '../../services';
@@ -16,42 +16,67 @@ import { TranslationService } from '../../services';
 @Component({
 	selector: 'porcelain-search-input',
 	templateUrl: './search-input.component.html',
-	styleUrls: ['./search-input.component.scss']
+	styleUrls: ['./search-input.component.scss'],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => SearchInputComponent),
+			multi: true
+		}
+	]
 })
-export class SearchInputComponent implements OnInit {
-	@Input() public userValue: string = '';
+export class SearchInputComponent implements OnInit, ControlValueAccessor {
+	private _query: string = '';
+
+	get query(): string {
+		return this._query;
+	}
+
+	set query(query: string) {
+		this._query = query;
+		this.onChange(this._query);
+	}
+
+	writeValue(query: string): void {
+		this.query = query; // will trigger onChange
+	}
+
+	onChange = (query: string) => {};
+
+	registerOnChange(fn: any): void {
+		this.onChange = fn;
+	}
+
+	onTouched = () => {};
+
+	registerOnTouched(fn: any): void {
+		this.onTouched = fn;
+	}
+
+	@Input()
+	disabled: boolean = false;
+
+	setDisabledState?(isDisabled: boolean): void {
+		this.disabled = isDisabled;
+	}
+
 	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
 
-	//#region Appearance
-
+	// Appearance
 	@Input() public borders: boolean = true;
-	@Input() public clearIconColor: any = '#9dacba';
-	@Input() public submitIconColor: any = '#9dacba';
-
-	//#endregion
-
-	//#region Handlers
-
-	@Output() public emptyHandler: EventEmitter<string> = new EventEmitter();
-	@Output() public submitHandler: EventEmitter<string> = new EventEmitter();
-
-	//#endregion
-
-	//#region Icons
 
 	@Input() public clearIcon: any = faTimesCircle;
+	@Input() public clearIconColor: any = '#9dacba';
+
 	@Input() public submitIcon: any = faSearch;
-
-	//#endregion
-
-	//#region Labels
+	@Input() public submitIconColor: any = '#9dacba';
 
 	@Input() public placeholderLabel: string = 'Type to search...';
+	@Input() public canApply: boolean = true;
 
-	//#endregion
+	@Output() public onApply: EventEmitter<string> = new EventEmitter<string>();
 
 	public isSearchFocused = false;
-	public currentValue = '';
 
 	constructor(private translationService: TranslationService) {
 		this.translationService.getTranslations().subscribe(
@@ -64,33 +89,23 @@ export class SearchInputComponent implements OnInit {
 	/**
 	 * Tests if the control is in a condition that allows a submit.
 	 */
-	public canSubmit(): boolean {
-		return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
-	}
+	// public canApply(): boolean {
+	// 	return !this.isEmpty();
+	// }
 
 	/**
 	 * Clears the value of the search field and resets focus.
 	 */
 	public clear(): void {
-		this.currentValue = '';
-
-		//empty value to be emitted to emptyHandler
-		this.empty();
-
+		this.query = '';
 		this.setFocus();
-	}
-
-	/**
-	 * Empty value emit once search cancel button is clicked
-	 */
-	public empty(): void {
-		this.emptyHandler.emit('');
 	}
 
 	/**
 	 * Sets the isSearchFocused value to false.
 	 */
 	public handleBlur(): void {
+		this.onTouched();
 		this.isSearchFocused = false;
 	}
 
@@ -105,18 +120,13 @@ export class SearchInputComponent implements OnInit {
 	 * Tests the search box for a value.
 	 */
 	public isEmpty(): boolean {
-		return this.currentValue === '';
+		return this.query === '';
 	}
 
 	/**
-	 *
+	 * Tasks to execute after angular has processed Input and Output values
 	 */
-	public ngOnInit(): void {
-		/* assigning uservalues */
-		this.currentValue = this.userValue;
-		/*to check if there is previous value*/
-		this.canEmitEmpty = this.userValue == '' ? false : true;
-	}
+	public ngOnInit(): void {}
 
 	/**
 	 * Returns the value of isSearchFocused.
@@ -132,22 +142,10 @@ export class SearchInputComponent implements OnInit {
 		this.searchInput.nativeElement.focus();
 	}
 
-	canEmitEmpty: boolean = false;
-
 	/**
 	 * Submits the current value of the search input to outside listener.
 	 */
 	public submit(): void {
-		if (!this.isEmpty()) {
-			this.submitHandler.emit(this.currentValue);
-			this.canEmitEmpty = true; //to enable empty value sending for submit
-		} else {
-			// is empty
-			if (this.canEmitEmpty == true) {
-				this.canEmitEmpty = false;
-				this.submitHandler.emit(this.currentValue); //empty value is emitted by submit
-			}
-			this.setFocus();
-		}
+		this.onApply.emit(this.query);
 	}
 }

@@ -48,8 +48,38 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	@Input() public applyOnInit: boolean = true;
 
 	@Input() public defaultValues: RefinerValueDictionary = {};
-	private stagedValues: RefinerValueDictionary = {};
-	private appliedValues: RefinerValueDictionary = {};
+
+	_stagedValues: RefinerValueDictionary = {};
+
+	@Output()
+	stagedValuesChange = new EventEmitter<RefinerValueDictionary>();
+
+	@Input()
+	get stagedValues(): RefinerValueDictionary {
+		return this._stagedValues;
+	}
+
+	set stagedValues(stagedValues) {
+		this._stagedValues = stagedValues;
+		this.stagedValuesChange.emit(this._stagedValues);
+	}
+
+	_appliedValues: RefinerValueDictionary = {};
+
+	@Output()
+	appliedValuesChange = new EventEmitter<RefinerValueDictionary>();
+
+	@Input()
+	get appliedValues(): RefinerValueDictionary {
+		return this._appliedValues;
+	}
+
+	set appliedValues(appliedValues) {
+		this._appliedValues = appliedValues;
+		this.appliedValuesChange.emit(this._appliedValues);
+	}
+
+	// private appliedValues: RefinerValueDictionary = {};
 
 	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
@@ -90,13 +120,16 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		console.groupEnd();
 	}
 
-	public canApply(): boolean {
-		return !isEqual(this.stagedValues, this.appliedValues);
-	}
+	@Input() canApply: boolean = true;
+	@Input() canReset: boolean = true;
 
-	public canReset(): boolean {
-		return !isEqual(this.stagedValues, this.defaultValues);
-	}
+	// public canApply(): boolean {
+	// 	return !isEqual(this.stagedValues, this.appliedValues);
+	// }
+
+	// public canReset(): boolean {
+	// 	return !isEqual(this.stagedValues, this.defaultValues);
+	// }
 
 	public getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
@@ -129,7 +162,11 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 			refinerValue
 		});
 
-		this.stagedValues[refinerSlug] = refinerValue;
+		this.stagedValues = Object.assign({}, this.stagedValues, {
+			[refinerSlug]: refinerValue
+		});
+
+		// this.stagedValues = Object.assign(this.stagedValues, fragment);
 
 		console.groupEnd();
 	}

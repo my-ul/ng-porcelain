@@ -1,0 +1,67 @@
+<div class="columns">
+	<div class="column basis-25">
+		<porcelain-applicator
+			[refiners]="refiners"
+			[(stagedValues)]="staged"
+			[(appliedValues)]="applied"
+			[canApply]="canApply()"
+			[canReset]="canReset()"
+			(onApply)="apply($event)"
+		></porcelain-applicator>
+	</div>
+	<div class="column basis-75">
+		<div class="rows">
+			<div class="row">
+				<porcelain-search-input
+					[borders]="false"
+					[(ngModel)]="staged.query"
+					[canApply]="canApply()"
+					(onApply)="apply($event)"
+				></porcelain-search-input>
+			</div>
+			<div class="row">
+				<div class="page">
+					<h2>Staging</h2>
+					<p>
+						Porcelain components are frequently used together to support complex
+						functionalities, like composing a search query before it is sent.
+					</p>
+					<p>
+						In this demo, you can use the refiners (left) and the search input (above) to
+						stage a search. Click 'Apply', to copy the Staged state to the Applied state.
+					</p>
+
+					<button (click)="apply(staged)">Apply</button>
+
+					<p>
+						Can Apply: <code>{{ canApply() | json }}</code>
+					</p>
+					<p>
+						Can Reset: <code>{{ canReset() | json }}</code>
+					</p>
+
+					<div class="columns">
+						<div class="column">
+							<div class="pad">
+								<h3>Initial</h3>
+								<pre>{{ initial | json }}</pre>
+							</div>
+						</div>
+						<div class="column ">
+							<div class="pad">
+								<h3>Staged</h3>
+								<pre>{{ staged | json }}</pre>
+							</div>
+						</div>
+						<div class="column ">
+							<div class="pad">
+								<h3>Applied</h3>
+								<pre>{{ applied | json }}</pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
