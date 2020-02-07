@@ -660,3 +660,220 @@ Formats a date or number for the current locale (or a specified locale).
 {{ new Date() || toLocaleString }}
 <!-- 1/2/2020, 12:00:00 AM -->
 ```
+
+## Lists Module
+
+**since 1.10.0**
+
+The lists module is used for building styled list items with aligned headers, and the ability to sort columns.
+
+### List Component System
+
+The List Component is the outer-most wrapper for the List Component System
+
+```html
+<porcelain-list>
+	<!-- children here -->
+</porcelain-list>
+```
+
+### List Header Component
+
+The List Header Component wraps a series of List Header Cells. The List Header Component can be made sticky using the @w11k/angular-sticky-things library.
+
+```html
+<porcelain-list>
+	<porcelain-list-header>
+		<!-- porcelain-list-header-cell instances here -->
+	</porcelain-list-header>
+</porcelain-list>
+```
+
+### List Header Cell Component
+
+The List Header Cell Component is used to define table headers for a List. This is considered a container.
+
+#### [width] input
+
+The `width` input is mandatory, and is a number between zero and one. For all list-header-cell components in a list-header, the total of the "width" inputs should be `1`.
+
+#### Example
+
+```html
+<porcelain-list>
+	<porcelain-list-header>
+		<porcelain-list-header-cell [width]="2 / 3">
+			<!-- Header here -->
+		</porcelain-list-header-cell>
+		<porcelain-list-header-cell [width]="1 / 3">
+			<!-- Header here -->
+		</porcelain-list-header-cell>
+	</porcelain-list-header>
+</porcelain-list>
+```
+
+### List Body Component
+
+The List Body Component wraps a series of List Items. It provides padding and provides spacing between List Item components.
+
+```html
+<porcelain-list>
+	<porcelain-list-header>
+		<!-- porcelain-list-header-cell instances here -->
+	</porcelain-list-header>
+
+	<porcelain-list-body>
+		<!-- porcelain-list-item instances here -->
+	</porcelain-list-body>
+</porcelain-list>
+```
+
+### List Item Component
+
+The List Item Component is used to markup the display of a series of items. Since it is designed to be a single atomic instance of an item, it is designed to be used with the `*ngFor` directive.
+
+The List Item component is responsible for drawing borders between List Item Cell components.
+
+#### `[success]` Input
+
+When set to `true`, certain elements within the list item will be set to UL Medium Green.
+
+#### `[error]` Input
+
+When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Medium Red.
+
+#### `[warning]` Input
+
+When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Medium Yellow.
+
+#### `[primary]` Input
+
+When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Action Blue.
+
+#### `[secondary]` Input
+
+When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Medium Teal.
+
+```html
+<porcelain-list>
+	<porcelain-list-header>
+		<!-- porcelain-list-header-cell instances here -->
+	</porcelain-list-header>
+
+	<porcelain-list-body>
+		<porcelain-list-item>
+			<!-- porcelain-list-item-cell instances here -->
+		</porcelain-list-item>
+	</porcelain-list-body>
+</porcelain-list>
+```
+
+### List Item Cell Component
+
+#### `[width]` Input
+
+A number between zero and one. All cells within a List Item component should have `[width]` inputs that add up to 1
+
+#### `[alignTop]` Input
+
+When true, the contents of the cell will align to the bottom of the row. Default `false`.
+
+#### `[alignBottom]` Input
+
+When `true`, the contents of the cell will align to the bottom of the row. Default `false`.
+
+#### `[padAll]` Input
+
+When `true`, the contents of the cell will be wrapped with ~20px of spacing. Default `false`.
+
+#### `[padTop]` Input
+
+When `true`, the contents of the cell will contain ~20px of padding at the top of the cell. Default `false`.
+
+#### `[padRight]` Input
+
+When `true`, the contents of the cell will contain ~20px of padding at the right of the cell. Default `false`.
+
+#### `[padBottom]` Input
+
+When `true`, the contents of the cell will contain ~20px of padding at the bottom of the cell. Default `false`.
+
+#### `[padLeft]` Input
+
+When `true`, the contents of the cell will contain ~20px of padding at the left of the cell. Default `false`.
+
+### Sort Header Component
+
+The Sort Header can be used to control sort variables within a list view.
+
+#### Dual-Binding/Banana Box Sort Direction
+
+This component supports banana-box notation for updating the value of `sortDirection`.
+
+```html
+<porcelain-sort-header [(sortDirection)]="mySortDirection"></porcelain-sort-header>
+```
+
+... is the same as ...
+
+```html
+<porcelain-sort-header
+	[sortDirection]="mySortDirection"
+	(sortDirectionChange)="mySortDirection=$event"
+></porcelain-sort-header>
+```
+
+#### Inputs
+
+##### `[label]` Input
+
+`string`. Controls the text shown in the placeholder text, as well as a `<label>` element that is visible to screen readers.
+
+##### `[sortKey]` Input
+
+Sets the key that this sort header is responsible for toggling. When equal to `activeSortKey` are equal, the component will be in the `active` state. Typically, this is a constant value, wrapped in single quotes.
+
+```html
+<porcelain-sort-header [sortKey]=" 'date' "></porcelain-sort-header>
+```
+
+##### `[activeSortKey]` Input
+
+Sets the key that the application currently has set to the sort key. When equal to `sortKey`, the component will be in the `active` state. Typically, this is a variable value, bound to a variable within the host component...
+
+```html
+<porcelain-sort-header [activeSortKey]=" currentSortColumn "></porcelain-sort-header>
+```
+
+##### `[sortDirection]` Input
+
+Getter/setter. When updated internally, the `(sortDirectionChange)` callback will be called.
+
+Value is either `asc` or `desc`.
+
+#### Outputs
+
+##### `(sortDirectionChange)` Output
+
+You can register a callback whenever the component changes the `sortDirection`. The emitted value of `$event` is a tuple, `[sortKey, sortDirection]`.
+
+```html
+<porcelain-sort-header
+	[sortDirection]="mySortDirection"
+	(sortDirectionChange)="mySortCallback($event)"
+></porcelain-sort-header>
+```
+
+You can process this with a callback like this...
+
+```ts
+export class MyComponent {
+	activeSortKey: string = '';
+	activeSortDirection: string = '';
+
+	mySortCallback([sortKey, sortDirection]: SortTuple) {
+		this.activeSortKey = sortKey;
+		this.activeSortDirection = sortDirection;
+	}
+}
+```
