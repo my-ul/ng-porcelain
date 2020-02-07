@@ -9,6 +9,14 @@ export class ListItemCellComponent implements OnInit {
 	@HostBinding('class')
 	classes = ['list-item__cell'].join(' ');
 
+	@HostBinding('class.list-item__cell--align-top')
+	@Input()
+	alignTop: boolean = false;
+
+	@HostBinding('class.list-item__cell--align-bottom')
+	@Input()
+	alignBottom: boolean = false;
+
 	@HostBinding('class.list-item__cell--pad-all')
 	@Input()
 	padAll: boolean = false;
