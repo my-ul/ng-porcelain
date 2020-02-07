@@ -1,5 +1,5 @@
 import { CeilPipe } from './ceil.pipe';
-import { isDevMode } from '@angular/core';
+import { isDevMode, enableProdMode } from '@angular/core';
 
 describe('CeilPipe', () => {
 	it('create an instance', () => {
@@ -35,6 +35,7 @@ describe('CeilPipe', () => {
 		};
 		const transformed = pipe.transform('non-numeric value');
 		expect(traceSpy).toHaveBeenCalled();
+		expect(transformed).toEqual('non-numeric value');
 		console.trace = oldTrace;
 	});
 });

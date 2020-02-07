@@ -1,0 +1,15 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	background: #e4ebf5;
+
+	.list__header {
+	}
+	.list__items {
+		padding: 20px;
+	}
+
+	> .list__header + .list__items {
+	}
+}

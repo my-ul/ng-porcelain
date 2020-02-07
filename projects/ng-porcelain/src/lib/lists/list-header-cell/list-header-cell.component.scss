@@ -1,0 +1,9 @@
+:host {
+	padding: 5px 20px;
+
+	::ng-deep {
+		porcelain-sort-header {
+			margin-left: -5px;
+		}
+	}
+}

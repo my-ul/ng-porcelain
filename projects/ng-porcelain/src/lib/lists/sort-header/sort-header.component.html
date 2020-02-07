@@ -1,0 +1,21 @@
+<label class="sort-header__box">
+	<span class="sort-header__label">
+		{{ label }}
+	</span>
+	<span class="sort-header__sort-direction" *ngIf="!active">
+		<span>
+			<fa-icon [icon]="faSort"></fa-icon>
+			<span class="sr-only">Not Sorted</span>
+		</span>
+	</span>
+	<span class="sort-header__sort-direction" *ngIf="active">
+		<span *ngIf="sortDirection === 'asc'">
+			<fa-icon [icon]="faSortUp"></fa-icon>
+			<span class="sr-only">Sorted Ascending</span>
+		</span>
+		<span *ngIf="sortDirection === 'desc'">
+			<fa-icon [icon]="faSortDown"></fa-icon>
+			<span class="sr-only">Sorted Descending</span>
+		</span>
+	</span>
+</label>
