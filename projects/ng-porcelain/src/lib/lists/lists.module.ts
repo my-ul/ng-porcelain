@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ListHeaderComponent } from './list-header/list-header.component';
 import { ListHeaderCellComponent } from './list-header-cell/list-header-cell.component';
 import { SortHeaderComponent } from './sort-header/sort-header.component';
-import { SearchHeaderComponent } from './search-header/search-header.component';
 import { ListComponent } from './list/list.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { ListItemCellComponent } from './list-item-cell/list-item-cell.component';
@@ -17,7 +16,6 @@ export const LISTS_DIRECTIVES = [
 	ListHeaderComponent,
 	ListHeaderCellComponent,
 	SortHeaderComponent,
-	SearchHeaderComponent,
 	ListComponent,
 	ListBodyComponent,
 	ListItemComponent,
