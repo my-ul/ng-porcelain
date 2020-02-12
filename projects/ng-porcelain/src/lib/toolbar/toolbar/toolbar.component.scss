@@ -1,0 +1,87 @@
+/*
+	.porcelain-toolbar
+	--
+	styles for a simple toolbar.
+*/
+
+@import '../toolbar.module.scss';
+
+// .porcelain-toolbar
+:host {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	background-color: #fff;
+	width: 100%;
+	line-height: 1;
+	font-size: 14px;
+
+	&.porcelain-toolbar--right {
+		justify-content: flex-end;
+	}
+}
+
+:host ::ng-deep {
+	.porcelain-toolbar__cell + .porcelain-toolbar__cell {
+		border-left: $border-props;
+	}
+
+	.search-input--has-focus {
+		@extend %can-focus;
+	}
+
+	.porcelain-toolbar__cell {
+		display: flex;
+		flex-direction: row;
+
+		&.porcelain-toolbar__cell--shrink {
+			flex: 0 0 auto;
+			white-space: nowrap;
+		}
+		&.porcelain-toolbar__cell--grow,
+		&.porcelain-toolbar__cell--grow-1 {
+			flex: 1 1 auto;
+		}
+		&.porcelain-toolbar__cell--grow-2 {
+			flex: 2 2 auto;
+		}
+		&.porcelain-toolbar__cell--grow-3 {
+			flex: 3 3 auto;
+		}
+		&.porcelain-toolbar__cell--grow-4 {
+			flex: 4 4 auto;
+		}
+		&.porcelain-toolbar__cell--grow-5 {
+			flex: 5 5 auto;
+		}
+
+		// fourths
+		&.porcelain-toolbar__cell--25 {
+			flex: 0 0 25%;
+		}
+		&.porcelain-toolbar__cell--50 {
+			flex: 0 0 50%;
+		}
+		&.porcelain-toolbar__cell--75 {
+			flex: 0 0 75%;
+		}
+
+		// fifths
+		&.porcelain-toolbar__cell--20 {
+			flex: 0 0 20%;
+		}
+		&.porcelain-toolbar__cell--40 {
+			flex: 0 0 40%;
+		}
+		&.porcelain-toolbar__cell--60 {
+			flex: 0 0 60%;
+		}
+		&.porcelain-toolbar__cell--80 {
+			flex: 0 0 80%;
+		}
+
+		&.porcelain-toolbar__cell--100 {
+			flex: 0 0 100%;
+		}
+	}
+}

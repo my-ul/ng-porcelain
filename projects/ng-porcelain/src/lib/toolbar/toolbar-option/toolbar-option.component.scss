@@ -1,0 +1,10 @@
+:host {
+	display: block;
+	cursor: pointer;
+	padding: 0.5em 1.5em;
+	line-height: 1.4em;
+
+	&.porcelain-toolbar-option--is-highlighted {
+		background-color: rgb(228, 235, 245);
+	}
+}

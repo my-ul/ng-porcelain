@@ -44,7 +44,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 				}),
 				onRefinerChange: action('Date Refiner (simple) changed'),
 				allowIncompleteEmit: false
-			} as IDateRefinerProps
+			}
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -82,7 +82,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 				invalidCustomRangeLabel: 'try again',
 				onRefinerChange: action('Date Refiner (simple) changed'),
 				shouldEmitIncomplete: false
-			} as IDateRefinerProps
+			}
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -155,7 +155,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 					)
 				}),
 				onRefinerChange: action('Date Refiner (translated) changed')
-			} as IDateRefinerProps
+			}
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -176,7 +176,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 					options: defaultDateOptions
 				}),
 				onRefinerChange: action('Date Refiner (simple) changed')
-			} as IDateRefinerProps
+			}
 		}),
 		{
 			notes: { markdown: require('./simpleRefinerDefinition.md') },
@@ -197,7 +197,7 @@ storiesOf('Refiners/Date Refiner Component', module)
 					slug: 'closedByDefault',
 					title: 'Closed Date Refiner'
 				})
-			} as IDateRefinerProps
+			}
 		}),
 		{}
 	)

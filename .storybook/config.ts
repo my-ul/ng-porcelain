@@ -8,6 +8,7 @@ function loadStories() {
 	require('../projects/ng-porcelain/src/lib/footer/footer/footer.stories');
 	require('../projects/ng-porcelain/src/lib/spinner/spinner/spinner.stories');
 	require('../projects/ng-porcelain/src/lib/search-input/search-input/search-input.stories');
+	require('../projects/ng-porcelain/src/lib/toolbar/toolbar.module.stories');
 }
 
 addParameters({

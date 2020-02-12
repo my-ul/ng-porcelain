@@ -1,0 +1,18 @@
+:host {
+	display: block;
+	padding: 1em;
+	width: 100%;
+
+	&.porcelain-toolbar-text--text-left {
+		text-align: left;
+	}
+	&.porcelain-toolbar-text--text-center {
+		text-align: center;
+	}
+	&.porcelain-toolbar-text--no-wrap {
+		white-space: nowrap;
+	}
+	&.porcelain-toolbar-text--text-right {
+		text-align: right;
+	}
+}

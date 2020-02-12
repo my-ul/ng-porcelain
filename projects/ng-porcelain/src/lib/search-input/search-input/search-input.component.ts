@@ -16,7 +16,12 @@ import { TranslationService } from '../../services/translation/translation.servi
 @Component({
 	selector: 'porcelain-search-input',
 	templateUrl: './search-input.component.html',
-	styleUrls: ['./search-input.component.scss']
+	styleUrls: ['./search-input.component.scss'],
+	host: {
+		'[class.search-input]': 'true',
+		'[class.search-input--no-borders]': '!borders',
+		'[class.search-input--has-focus]': 'isSearchFocused'
+	}
 })
 export class SearchInputComponent implements OnInit {
 	@Input() public userValue: string = '';

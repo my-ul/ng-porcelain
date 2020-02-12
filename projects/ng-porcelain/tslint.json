@@ -2,6 +2,9 @@
 	"extends": "../../tslint.json",
 	"rules": {
 		"directive-selector": [true, "attribute", "porcelain", "camelCase"],
-		"component-selector": [true, "element", "porcelain", "kebab-case"]
+		"component-selector": [true, "element", "porcelain", "kebab-case"],
+		"no-inferrable-types": [false],
+		"no-output-on-prefix": [false],
+		"no-bitwise": [false]
 	}
 }
