@@ -26,3 +26,4 @@ export * from './lib/shared';
 export * from './lib/pipes';
 export * from './lib/services';
 export * from './lib/lists';
+export * from './lib/toolbar';

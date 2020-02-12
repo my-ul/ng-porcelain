@@ -1,0 +1,59 @@
+@import '../toolbar.module.scss';
+
+:host {
+	@extend %can-focus;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	border: none;
+	background: #fff;
+	cursor: pointer;
+	padding: 0 1.5em;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+
+	&:hover {
+		background: $menu-item-hover;
+	}
+	&:active {
+		background-color: darken($menu-item-hover, 10%);
+	}
+
+	&.porcelain-toolbar-button--disabled {
+		color: #aaa;
+		cursor: not-allowed;
+		&:hover {
+			background: #fff;
+		}
+	}
+
+	&.porcelain-toolbar-button--is-block {
+		display: flex;
+		width: 100%;
+		text-align: center;
+	}
+
+	> .porcelain-toolbar-button__icon + .porcelain-toolbar-button__label,
+	> .porcelain-toolbar-button__label + .porcelain-toolbar-button__icon {
+		margin-left: 1em;
+	}
+
+	.porcelain-toolbar-button__label {
+		line-height: 3em;
+	}
+
+	.porcelain-toolbar-button__label--sr-only {
+		position: absolute;
+		margin: -1px;
+		border: 0;
+		padding: 0;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		word-wrap: normal !important;
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(50%);
+	}
+}

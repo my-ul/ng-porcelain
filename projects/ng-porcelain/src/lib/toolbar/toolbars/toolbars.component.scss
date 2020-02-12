@@ -1,0 +1,8 @@
+@import '../toolbar.module.scss';
+:host {
+	display: flex;
+	flex-direction: column;
+	::ng-deep porcelain-toolbar + porcelain-toolbar {
+		border-top: $border-props;
+	}
+}

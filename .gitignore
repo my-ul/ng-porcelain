@@ -47,3 +47,4 @@ Thumbs.db
 projects/ng-porcelain/node_modules/
 
 dist/
+.vscode/settings.json

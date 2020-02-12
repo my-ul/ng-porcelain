@@ -72,7 +72,7 @@ export class AppModule {}
 SimpleRefiner and DateRefiner offer two APIs that can be used to retrieve the latest values from
 
 ```typescript
-import { SimpleRefiner, DateRefiner } from '@my-ul/ng-porcelain';
+import { SimpleRefinerDefinition, DateRefinerDefinition } from '@my-ul/ng-porcelain';
 
 class MyComponent implements OnInit {
 
@@ -83,8 +83,8 @@ class MyComponent implements OnInit {
 
 	// -- Use SimpleRefiner and DateRefiner to create definitions
 	// -- Set to `null` here and define in ngOnInit if you need values from a server response to create these.
-	simpleRefinerDefinition = new SimpleRefiner(...);
-	dateRefinerDefinition = new DateRefiner(...);
+	simpleRefinerDefinition = new SimpleRefinerDefinition(...);
+	dateRefinerDefinition = new DateRefinerDefinition(...);
 
 	// Using Subscription API
 	ngOnInit() {
@@ -124,7 +124,6 @@ class MyComponent implements OnInit {
 ```html
 <porcelain-applicator
 	[refiners]="arrayOfRefiners"
-	cd
 	(onRefinersChange)="myRefinersHandler"
 ></porcelain-applicator>
 
@@ -507,77 +506,6 @@ Alternative Font Awesome icons can be used instead of the defaults for 'Clear' a
 ></porcelain-search-input>
 ```
 
-## Services
-
-Services can be used to provide application-wide functionalities like translation and analytics to your application.
-
-Inject Services using your component's providers array.
-
-### Translation Service
-
-Use the translation to reliably subscribe to a translation dictionary.
-
-```typescript
-import { TranslationService } from '@my-ul/ng-porcelain';
-
-@Component({
-	// ... //
-	providers: [TranslationService]
-})
-class MyComponent {
-	// Define labels as defaults
-	applyLabel: string = 'Apply';
-	cancelLabel: string = 'Cancel';
-	resetLabel: string = 'Reset';
-
-	constructor(private translationService: TranslationService) {
-		translationService.getTranslations().subscribe(
-			// Optional static translate method makes installing translations simple
-			TranslationService.translate(this, {
-				label_Apply: 'applyLabel',
-				label_Cancel: 'cancelLabel',
-				label_Reset: 'resetLabel'
-			})
-		);
-	}
-}
-```
-
-### Google Analytics Service
-
-The Google Analytics service is a proper Angular service wrapping the async Google Analytics
-API. When Angular is in dev mode, events will be output to the console.
-
-Replace references to window.\_gaq like this...
-
-```typescript
-declare _gaq;
-@Component({
-	// ...
-})
-export class MyComponent {
-	constructor() {
-		_gaq.push(['_trackPageview']);
-	}
-}
-```
-
-with
-
-```typescript
-import { GoogleAnalyticsService } from '@my-ul/ng-porcelain';
-
-@Component({
-	// ...
-	providers: [GoogleAnalyticsService]
-})
-export class MyComponent {
-	constructor(ga: GoogleAnalyticsService) {
-		this.ga.push(['_trackPageview']);
-	}
-}
-```
-
 ## Pipes
 
 Pipes provide common operations to be used in templates. To use pipes, import the `PipesModule` into your `@NgModule`.
@@ -874,6 +802,284 @@ export class MyComponent {
 	mySortCallback([sortKey, sortDirection]: SortTuple) {
 		this.activeSortKey = sortKey;
 		this.activeSortDirection = sortDirection;
+	}
+}
+```
+
+## Toolbar Module
+
+_Since 1.11.0_
+
+The toolbar module consists of several components that can be used to quickly compose toolbars within an Angular application.
+
+To use the Toolbar Module, import it into your module
+
+```typescript
+import { ToolbarModule } from '@my-ul/ng-porcelain';
+
+@NgModule({
+	imports: [ToolbarModule]
+})
+export class AppModule {}
+```
+
+### Toolbar Component
+
+The Toolbar component composes one row of cells to create a toolbar. To stack more than one Toolbar, wrap with the ToolbarsComponent (note the added 's').
+
+#### Permitted Children
+
+-   Toolbar Cell Component
+
+```html
+<porcelain-toolbar>
+	<porcelain-toolbar-cell>...</porcelain-toolbar-cell>
+</porcelain-toolbar>
+```
+
+### Toolbar Cell Component
+
+The Toolbar Cell component builds cells within a Toolbar. Adjacent cells are divided with a thin line.
+
+#### Props
+
+-   `[flex]` - a flex definition, specifying the grow/shrink/basis property for element sizing.
+
+#### Permitted Children
+
+-   any
+
+```html
+<porcelain-toolbar-cell [flex]="'0 0 auto'">
+	...
+</porcelain-toolbar-cell>
+```
+
+### Toolbar Text Component
+
+The Toolbar Text component allows the placement of arbitrary text within a toolbar cell.
+
+#### Props
+
+-   `[alignRight]` - true if you want the text aligned right
+-   `[alignCenter]` - true if you want the text centered
+-   `[noWrap]` - true if you don't want your text to break into lines
+
+```html
+<porcelain-toolbar-cell ...>
+	<porcelain-toolbar-text [alignRight]="true" [alignCenter]="true" [noWrap]="true">
+		{{totalResultCount.toLocaleString()}} Results
+	</porcelain-toolbar-text>
+</porcelain-toolbar-cell>
+```
+
+### Toolbar Button Component
+
+The Toolbar Button component is an accessible button that includes an optional icon.
+
+#### Props
+
+-   `[icon]` - a Font Awesome 5 icon definition
+-   `[isLabelSrOnly]` - true if you only want to provide the label for screen readers.
+-   `(onClick)` - a callback function to be called when the button is clicked or triggered with enter/space.
+
+#### Children
+
+Text will be used for the button label.
+
+```html
+<porcelain-toolbar-cell ...>
+	<porcelain-toolbar-button
+		[icon]="faSave"
+		[isLabelSrOnly]="false"
+		(onClick)="handleSaveClick($event)"
+	>
+		Save
+	</porcelain-toolbar-button>
+</porcelain-toolbar-cell>
+```
+
+### Toolbar Select
+
+The Toolbar Select component closely mimics an HTML `<select>` element. The Toolbar Select component provides a highly-customizable, yet accessible dropdown implementation. The component allows for a HTML-templated dropdown options, as well as in the currently-selected-item window.
+
+#### Props
+
+-   `[fullWidth]` - `true` to enable the full-width presentation, which is left-aligned, and spans the full width of the Toolbar Select Component.
+-   `[label]` - Label to be displayed to the left of the currently-selected item.
+-   `[(value)]` - two-way binding property for the current value.
+
+#### Two-Way/Banana-In-A-Box Binding vs. Split Binding
+
+The Banana-In-A-Box binding of value can be broken apart if you would like to register callbacks to handle updating your values. This syntax would use the following properties instead of `[(value)]="myValue"`.
+
+-   `[value]="myValue"` - a value set externally
+-   `(valueChange)="myValueChangeHandler($event)"` - bind the Angular `@Output()` to a callback in your own component to receive notifications of changes. The change handler is responsible for updating `myValue` in your controller.
+
+#### Children
+
+-   `<porcelain-toolbar-option>` - used to define options and the template used to represent the option in the dropdown list.
+-   `<porcelain-toolbar-selected-template>` - used to define the display of the currently-selected option when the component is closed. Use more than one to define null states based on `value`
+
+#### Example
+
+The following code could be used to create a people picker.
+
+##### TypeScript Component
+
+```typescript
+@Component({
+	// ...
+})
+export class MyComponent {
+	/**
+	 * The current person selected by the Component
+	 */
+	currentPerson = null;
+
+	/**
+	 * People, indexed by their username to make the selected-template easy to populate.
+	 * Sample data from https://fakepersongenerator.com/
+	 */
+	people = {
+		'cory.ramer': {
+			username: 'cory.ramer',
+			first: 'Cory',
+			last: 'Ramer',
+			email: 'cory.ramer@ul.com',
+			phone: '(309) 548-8281'
+		},
+		'eric.hawes': {
+			username: 'eric.hawes',
+			first: 'Eric',
+			last: 'Hawes',
+			email: 'eric.hawes@ul.com',
+			phone: '(708) 826-6749'
+		},
+		'james.dock': {
+			username: 'james.dock',
+			first: 'James',
+			last: 'Dock',
+			email: 'james.dock@ul.com',
+			phone: '(801) 638-3830'
+		}
+	};
+
+	/**
+	 * Turns an object into an array for looping
+	 */
+	public getValues(obj) {
+		return Object.keys(obj).map(key => obj[key]);
+		// or Object.values(obj) if you have the polyfill enabled
+	}
+}
+```
+
+##### HTML Template
+
+```html
+<porcleain-toolbar-cell ...>
+	<porcelain-toolbar-select
+		[fullWidth]="true"
+		[label]="'To:'"
+		[(value)]="currentPerson">
+
+		<!-- define a template for the currently selected item -->
+		<porcelain-toolbar-selected-template *ngIf="currentPerson">
+			{{recipients[currentPerson].email}}
+		</porcelain-toolbar-selected-template>
+
+		<!-- define a template for the current window for null/undefined selection -->
+		<porcelain-toolbar-selected-template *ngIf="!currentPerson">
+			---
+		</porcelain-toolbar-selected-template>
+
+		<!--
+			- define the people dictionary in the TypeScript Component, above.
+			- loop with *ngFor, if necessary. Rendering static options is also possible.
+			- bind to [value] to specify what value is returned
+			- use HTML for rich formatting control over the option
+		-->
+		<porcelain-toolbar-option
+			*ngFor="let person of getValues(people)"
+			[value]="person.username"
+		>
+			<strong>{{person.first}} {{person.last}}</strong><br>
+			{{person.email}} &bull; {{person.phone}}
+
+		</porcelain-toolbar-option>
+
+	</porcelain-toolbar-select>
+</porcelain-toolbar-cell>
+```
+
+## Services
+
+Services can be used to provide application-wide functionalities like translation and analytics to your application.
+
+Inject Services using your component's providers array.
+
+### Translation Service
+
+Use the translation to reliably subscribe to a translation dictionary.
+
+```typescript
+import { TranslationService } from '@my-ul/ng-porcelain';
+
+@Component({
+	// ... //
+	providers: [TranslationService]
+})
+class MyComponent {
+	// Define labels as defaults
+	applyLabel: string = 'Apply';
+	cancelLabel: string = 'Cancel';
+	resetLabel: string = 'Reset';
+
+	constructor(private translationService: TranslationService) {
+		translationService.getTranslations().subscribe(
+			// Optional static translate method makes installing translations simple
+			TranslationService.translate(this, {
+				label_Apply: 'applyLabel',
+				label_Cancel: 'cancelLabel',
+				label_Reset: 'resetLabel'
+			})
+		);
+	}
+}
+```
+
+### Google Analytics Service
+
+The Google Analytics service is a proper Angular service wrapping the async Google Analytics
+API. When Angular is in dev mode, events will be output to the console.
+
+Replace references to window.\_gaq like this...
+
+```typescript
+declare _gaq;
+@Component({
+	// ...
+})
+export class MyComponent {
+	constructor() {
+		_gaq.push(['_trackPageview']);
+	}
+}
+```
+
+with
+
+```typescript
+import { GoogleAnalyticsService } from '@my-ul/ng-porcelain';
+
+@Component({
+	// ...
+	providers: [GoogleAnalyticsService]
+})
+export class MyComponent {
+	constructor(ga: GoogleAnalyticsService) {
+		this.ga.push(['_trackPageview']);
 	}
 }
 ```
