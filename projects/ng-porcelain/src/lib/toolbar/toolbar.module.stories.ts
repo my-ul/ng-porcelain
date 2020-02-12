@@ -15,7 +15,7 @@ import {
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 
 // Porcelain
-import { TOOLBAR_DIRECTIVES, TOOLBAR_IMPORTS } from '.';
+import { TOOLBAR_DIRECTIVES, TOOLBAR_IMPORTS } from './toolbar.module';
 
 storiesOf('Toolbars', module)
 	.addDecorator(withKnobs)

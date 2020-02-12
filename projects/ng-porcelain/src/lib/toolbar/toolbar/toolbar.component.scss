@@ -14,6 +14,7 @@
 	background-color: #fff;
 	width: 100%;
 	line-height: 1;
+	font-size: 14px;
 
 	&.porcelain-toolbar--right {
 		justify-content: flex-end;
@@ -23,6 +24,10 @@
 :host ::ng-deep {
 	.porcelain-toolbar__cell + .porcelain-toolbar__cell {
 		border-left: $border-props;
+	}
+
+	.search-input--has-focus {
+		@extend %can-focus;
 	}
 
 	.porcelain-toolbar__cell {

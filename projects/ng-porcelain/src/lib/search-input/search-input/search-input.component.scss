@@ -21,16 +21,17 @@ $ul-steel-dark: #9dacba;
 
 :host {
 	width: 100%;
-	font-size: 14px;
 	display: flex;
 	flex-direction: row;
 	align-items: stretch;
 	background: #fff;
 	border: solid 1px lighten($ul-steel-dark, 10%);
+	font-size: 14px;
 	font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
 		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	font-weight: 600;
 	border-radius: 0.25em;
+
 	transition: border-color 100ms ease-in-out;
 
 	&.search-input--no-borders {
@@ -39,14 +40,14 @@ $ul-steel-dark: #9dacba;
 		.search-input__query {
 			border-radius: 0;
 		}
-		&.search-input--has-focus,
-		&:focus {
-			@extend %--can-focus;
-		}
 	}
 
 	&.search-input--has-focus {
 		border-color: $ul-steel-dark;
+	}
+
+	&.search-input--no-borders.search-input--has-focus {
+		@extend %--can-focus;
 	}
 
 	.search-input__query {
@@ -54,7 +55,6 @@ $ul-steel-dark: #9dacba;
 		border: none;
 		padding: 0.5em;
 		border-radius: 0.25em;
-		font-size: 1em;
 	}
 
 	.search-input__search-action {
@@ -62,7 +62,6 @@ $ul-steel-dark: #9dacba;
 		border: none;
 		background: none;
 		padding: 0 0.5em;
-		cursor: pointer;
 		color: $ul-steel-dark;
 
 		&--is-active {
@@ -72,18 +71,10 @@ $ul-steel-dark: #9dacba;
 		&--not-active {
 			opacity: 0.7;
 		}
-
-		&:focus {
-			@extend %--can-focus;
-		}
-
-		&::-moz-focus-inner {
-			border: 0;
-		}
 	}
 
 	.search-input__query + .search-input__search-action,
 	.search-input__search-action + .search-input__search-action {
-		margin-left: 0.5em;
+		//margin-left: 0.5em;
 	}
 }
