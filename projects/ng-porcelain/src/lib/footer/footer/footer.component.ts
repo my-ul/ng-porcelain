@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
 	selector: 'porcelain-footer',
@@ -12,9 +13,16 @@ export class FooterComponent implements OnInit {
 	@Input() aboutCookiesLabel: string = 'About Cookies';
 	@Input() accessYourDataLabel: string = 'Access Your Data';
 
-	constructor() {
+	constructor(private translationService: TranslationService) {
 		console.group('FooterComponent > constructor()');
-		// console.log({ arguments });
+
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate<FooterComponent>(this, {
+				label_OnlinePolicies: 'onlinePoliciesLabel',
+				label_AboutCookies: 'aboutCookiesLabel',
+				label_AccessYourData: 'accessYourDataLabel'
+			})
+		);
 
 		console.groupEnd();
 	}

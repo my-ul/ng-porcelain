@@ -7,9 +7,6 @@ export { DateRefinerComponent } from './lib/date-refiner/date-refiner/date-refin
 export { FooterModule } from './lib/footer/footer.module';
 export { FooterComponent } from './lib/footer/footer/footer.component';
 
-export { InterpolateModule } from './lib/interpolate/interpolate.module';
-export { InterpolatePipe } from './lib/interpolate/interpolate.pipe';
-
 export { RefinersModule } from './lib/refiners/refiners.module';
 export { RefinersComponent } from './lib/refiners/refiners/refiners.component';
 
@@ -25,10 +22,8 @@ export { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 export { TruncateModule } from './lib/truncate/truncate.module';
 export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 
-export { FrameCommunicationModule } from './lib/frame-communication/frame-communication.module';
-export { FrameHostService } from './lib/frame-communication/frame-host/frame-host.service';
-export { FrameGuestService } from './lib/frame-communication/frame-guest/frame-guest.service';
-
-export * from './lib/toolbar';
-
 export * from './lib/shared';
+export * from './lib/pipes';
+export * from './lib/services';
+export * from './lib/lists';
+export * from './lib/toolbar';

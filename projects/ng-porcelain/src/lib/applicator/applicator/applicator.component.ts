@@ -1,12 +1,19 @@
-import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
-import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerValue';
-import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { BaseRefinerDefinition } from '../../shared';
-import { SimpleRefinerDefinition, IDictionary } from '../../shared';
+
+import { TranslationService } from '../../services/translation/translation.service';
+import { IDictionary } from './../../shared/types/Containers/IDictonary/IDictionary';
+
+import { BaseRefinerDefinition } from './../../shared/types/Refiners/BaseRefinerDefinition';
+
+import { SimpleRefinerDefinition } from './../../shared/types/Refiners/SimpleRefinerDefinition';
+import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerValue';
+
+import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
+import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -30,21 +37,33 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	styleUrls: ['./applicator.component.scss']
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
-	private appliedValues: RefinerValueDictionary = {};
 	private initialLoad: boolean = true;
-	private stagedValues: RefinerValueDictionary = {};
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
-	@Input() public applyOnInit: boolean = true;
-	@Input() public defaultValues: RefinerValueDictionary = {};
 	@Input() public loadingLabel: string = 'Loading';
-	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Input() public resetLabel: string = 'Reset';
+
+	@Input() public allowIncompleteEmit: boolean = true;
+	@Input() public applyOnInit: boolean = true;
+
+	@Input() public defaultValues: RefinerValueDictionary = {};
+	private stagedValues: RefinerValueDictionary = {};
+	private appliedValues: RefinerValueDictionary = {};
+
+	@Input() public refiners: (BaseRefinerDefinition)[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
-	constructor() {
+	constructor(private translationService: TranslationService) {
 		console.group('new ApplicatorComponent()', { arguments });
+
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate<ApplicatorComponent>(this, {
+				label_Apply: 'applyLabel',
+				label_Loading: 'loadingLabel',
+				label_Reset: 'resetLabel'
+			})
+		);
 
 		console.groupEnd();
 	}
@@ -127,7 +146,8 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 				applyLabel: this.applyLabel,
 				resetLabel: this.resetLabel,
 				loadingLabel: this.loadingLabel,
-				defaultValues: this.defaultValues
+				defaultValues: this.defaultValues,
+				allowIncompleteEmit: this.allowIncompleteEmit
 			}
 		});
 		// generate defaultValues dictionary composite from implicit + explicit values
