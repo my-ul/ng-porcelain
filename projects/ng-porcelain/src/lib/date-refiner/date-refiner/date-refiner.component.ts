@@ -176,7 +176,12 @@ export class DateRefinerComponent implements OnInit {
 	onChange(newOptionSlug: string) {
 		console.group('onChange(newOptionSlug)', { newOptionSlug });
 
-		if (this.currentOptionSlug !== newOptionSlug) {
+		if (
+			// the current option has changed to a predefined range
+			this.currentOptionSlug !== newOptionSlug ||
+			// or the custom values have changed
+			(this.currentOptionSlug === 'custom' && newOptionSlug === 'custom')
+		) {
 			this.currentOptionSlug = newOptionSlug;
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(this.getValue());
