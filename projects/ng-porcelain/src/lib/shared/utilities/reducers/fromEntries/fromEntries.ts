@@ -1,4 +1,5 @@
-import { IDictionary, Entry } from '../../../types/Containers';
+import { IDictionary } from '../../../types/Containers/IDictonary/IDictionary';
+import { Entry } from '../../../types/Containers/Entry/Entry';
 
 /**
  * A reducer designed to turn an array of Entry tuples into a Dictionary.

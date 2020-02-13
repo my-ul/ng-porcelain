@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { BaseRefinerDefinition } from './BaseRefinerDefinition';
 import { DateOptions } from '../Options/DateOptions';
 import { DateRefinerValue } from '../Values/DateRefinerValue';
-import { i18nDateOptions } from '../../utilities/i18n';
+import { i18nDateOptions } from '../../utilities/i18n/i18nDateOptions/i18nDateOptions';
 import { IDateOption } from '../Options/IDateOption';
 import { IDateRefinerDefinition } from './IDateRefinerDefinition';
 import { IDateRefinerState } from '../../../date-refiner/date-refiner/date-refiner.component';

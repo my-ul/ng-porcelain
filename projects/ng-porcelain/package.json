@@ -1,6 +1,6 @@
 {
 	"name": "@my-ul/ng-porcelain",
-	"version": "1.11.0",
+	"version": "1.11.1-beta.0",
 	"private": false,
 	"peerDependencies": {
 		"@angular/cdk": "^6.0.2",

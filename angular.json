@@ -85,10 +85,7 @@
 				"lint": {
 					"builder": "@angular-devkit/build-angular:tslint",
 					"options": {
-						"tsConfig": [
-							"src/tsconfig.app.json",
-							"src/tsconfig.spec.json"
-						],
+						"tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
 						"exclude": ["**/node_modules/**"]
 					}
 				}
@@ -124,7 +121,7 @@
 			"root": "projects/ng-porcelain",
 			"sourceRoot": "projects/ng-porcelain/src",
 			"projectType": "library",
-			"prefix": "lib",
+			"prefix": "porcelain",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-ng-packagr:build",
