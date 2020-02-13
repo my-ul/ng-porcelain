@@ -5,16 +5,15 @@ import {
 	faChevronUp,
 	IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
-import {
-	defaultSelectAllLabel,
-	defaultSelectNoneLabel,
-	defaultShowLessLabel,
-	defaultShowMoreLabel,
-	defaultOptionShowCount,
-	SimpleOption,
-	SimpleRefinerDefinition
-} from '../../shared';
+
 import { TranslationService } from '../../services/translation/translation.service';
+import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
+import { defaultShowLessLabel } from '../../shared/defaults/labels/defaultShowLessLabel';
+import { defaultShowMoreLabel } from '../../shared/defaults/labels/defaultShowMoreLabel';
+import { defaultSelectAllLabel } from '../../shared/defaults/labels/defaultSelectAllLabel';
+import { defaultSelectNoneLabel } from '../../shared/defaults/labels/defaultSelectNoneLabel';
+import { defaultOptionShowCount } from '../../shared/defaults/properties/defaultOptionShowCount';
+import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 
 @Component({
 	selector: 'porcelain-simple-refiner',
