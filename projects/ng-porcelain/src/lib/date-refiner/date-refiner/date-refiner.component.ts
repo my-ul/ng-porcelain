@@ -96,6 +96,7 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
+	@Output() onDisabledChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
 	faChevronDown: IconDefinition = faCaretDown;
@@ -120,7 +121,6 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		/**
 		 * Applies translations using myUL Translation file format.
 		 **/
-
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<DateRefinerComponent>(this, {
 				label_From: 'fromLabel',
@@ -201,13 +201,15 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		const value = this.getValue();
 		if (value.optionSlug === 'custom') {
 			if (this.allowIncompleteEmit) {
+				this.onDisabledChange.emit(true);
 				return true;
 			} else {
-				return (
+				let disable: boolean =
 					value.from instanceof Date &&
 					value.to instanceof Date &&
-					value.from.getTime() < value.to.getTime()
-				);
+					value.from.getTime() < value.to.getTime();
+				this.onDisabledChange.emit(disable);
+				return disable;
 			}
 		}
 		return true;
@@ -246,6 +248,9 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 		const isComplete = this.isComplete();
 		const value = this.getValue();
+		if (this.currentOptionSlug !== 'custom') {
+			this.onDisabledChange.emit(true);
+		}
 
 		this.log('onChange(newOptionSlug)', 'before validation', {
 			allowIncompleteEmit: this.allowIncompleteEmit,

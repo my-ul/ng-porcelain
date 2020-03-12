@@ -24,6 +24,7 @@
 		<porcelain-refiners
 			*ngIf="refiners"
 			[refiners]="refiners"
+			(onDisabledChange)="handleDisabledChange($event)"
 			[allowIncompleteEmit]="allowIncompleteEmit"
 		></porcelain-refiners>
 		<div *ngIf="!refiners">

@@ -38,6 +38,7 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
 	private initialLoad: boolean = true;
+	private isApplyDisabled: boolean = false;
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
@@ -79,7 +80,13 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	public canApply(): boolean {
+		if (this.isApplyDisabled == false) {
+			return false;
+		}
 		return !isEqual(this.stagedValues, this.appliedValues);
+	}
+	handleDisabledChange(disable: boolean) {
+		this.isApplyDisabled = disable;
 	}
 
 	public canReset(): boolean {
