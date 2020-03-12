@@ -26,10 +26,6 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 
 	constructor(refinerDefinition: ISimpleRefinerDefinition) {
 		super(refinerDefinition);
-
-		console.group('SimpleRefiner > constructor(refinerDefinition)');
-		// console.log({ refinerDefinition });
-
 		this.type = RefinerType.simple;
 		this.showCount = refinerDefinition.showCount ? refinerDefinition.showCount : 5;
 		this.isExpanded =
@@ -39,7 +35,6 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 		if (refinerDefinition.selected) {
 			this.valueSubject.next(refinerDefinition.selected);
 		}
-		console.groupEnd();
 	}
 }
 

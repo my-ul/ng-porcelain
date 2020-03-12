@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { isDevMode } from '@angular/core';
+import { Loggable } from '../../Loggable';
 
 export type GoogleAnalyticsEvent = string | number;
 
@@ -18,12 +19,14 @@ function getGaq(): IGoogleAnalytics {
 @Injectable({
 	providedIn: 'root'
 })
-export class GoogleAnalyticsService {
+export class GoogleAnalyticsService extends Loggable {
+	name = 'GoogleAnalyticsService';
 	/**
 	 * Construct a new GoogleAnalyticsService
 	 */
 	constructor() {
-		this.log('new GoogleAnalyticsService()', { isDevMode: isDevMode() });
+		super();
+		this.log('new GoogleAnalyticsService()');
 	}
 
 	/**
@@ -37,14 +40,5 @@ export class GoogleAnalyticsService {
 		}
 
 		getGaq().push(...events);
-	}
-
-	/**
-	 * Logs information to the console while in development mode.
-	 */
-	private log(...args) {
-		if (isDevMode()) {
-			console.log.apply(null, ['[GoogleAnalyticsService]'].concat(args));
-		}
 	}
 }

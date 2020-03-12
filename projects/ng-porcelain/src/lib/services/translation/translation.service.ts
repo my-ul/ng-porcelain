@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, BehaviorSubject } from 'rxjs';
 import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
+import { Loggable } from '../../Loggable';
 
 export interface TranslationMap<TargetType> {
 	[sourceKey: string]: TargetType;
@@ -14,11 +15,14 @@ export interface Translations {
 @Injectable({
 	providedIn: 'root'
 })
-export class TranslationService {
+export class TranslationService extends Loggable {
+	name = 'TranslationService';
+
 	private translationSubject = new ReplaySubject<Translations>(1);
 
 	constructor() {
-		console.log('new TranslationService()');
+		super();
+		this.log('new TranslationService()');
 	}
 
 	/**

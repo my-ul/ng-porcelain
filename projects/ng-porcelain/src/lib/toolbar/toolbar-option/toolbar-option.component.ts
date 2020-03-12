@@ -2,13 +2,16 @@ import { Component, OnInit, ElementRef, HostBinding } from '@angular/core';
 import { Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { Loggable } from '../../Loggable';
 
 @Component({
 	selector: 'porcelain-toolbar-option',
 	templateUrl: './toolbar-option.component.html',
 	styleUrls: ['./toolbar-option.component.scss']
 })
-export class ToolbarOptionComponent implements OnInit {
+export class ToolbarOptionComponent extends Loggable implements OnInit {
+	readonly name = 'ToolbarOptionComponent';
+
 	@Input() value: any;
 
 	// tslint:disable-next-line: no-output-on-prefix
@@ -21,7 +24,8 @@ export class ToolbarOptionComponent implements OnInit {
 	isHighlighted: boolean = false;
 
 	constructor(public elementRef: ElementRef) {
-		console.log('new ToolbarOptionComponent()', { component: this });
+		super();
+		this.log('new ToolbarOptionComponent()', { component: this });
 	}
 
 	ngOnInit() {}

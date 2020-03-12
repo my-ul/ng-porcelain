@@ -373,7 +373,6 @@ storiesOf('Toolbars', module)
 				onValueChange: function(currentPage) {
 					if (this.currentPage !== currentPage) {
 						this.currentPage = currentPage;
-						console.log('page value changed', { currentPage });
 					}
 				},
 				pages,
