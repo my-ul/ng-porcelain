@@ -45,7 +45,9 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 	@Input()
 	sortKey: string = null;
 
-	@Input()
+	/**
+	 * Backing field for activeSortKey getter/setter
+	 */
 	private _activeSortKey: string;
 
 	@Input()
@@ -62,7 +64,6 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 	activeSortKeyChange: EventEmitter<string> = new EventEmitter();
 
 	/**
-	 * _activeSortDirection
 	 * Backing field for the current sort direction of the application.
 	 */
 	private _activeSortDirection: SortDirection;
