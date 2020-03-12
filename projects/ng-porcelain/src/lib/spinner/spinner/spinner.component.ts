@@ -10,15 +10,11 @@ export class SpinnerComponent implements OnInit {
 	@Input() loadingLabel: string = 'Loading…';
 
 	constructor(private translationService: TranslationService) {
-		console.group('SpinnerComponent > constructor()');
-
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate(this, {
 				label_Loading: 'loadingLabel'
 			})
 		);
-
-		console.groupEnd();
 	}
 
 	ngOnInit() {}

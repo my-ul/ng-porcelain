@@ -14,8 +14,6 @@ export class FooterComponent implements OnInit {
 	@Input() accessYourDataLabel: string = 'Access Your Data';
 
 	constructor(private translationService: TranslationService) {
-		console.group('FooterComponent > constructor()');
-
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<FooterComponent>(this, {
 				label_OnlinePolicies: 'onlinePoliciesLabel',
@@ -23,8 +21,6 @@ export class FooterComponent implements OnInit {
 				label_AccessYourData: 'accessYourDataLabel'
 			})
 		);
-
-		console.groupEnd();
 	}
 
 	ngOnInit() {}

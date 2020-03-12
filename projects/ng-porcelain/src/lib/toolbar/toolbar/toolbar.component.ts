@@ -14,11 +14,7 @@ export class ToolbarComponent implements OnInit {
 	@Input()
 	alignRight: boolean = false;
 
-	constructor() {
-		console.group('new ToolbarComponent()', { component: this });
-
-		console.groupEnd();
-	}
+	constructor() {}
 
 	ngOnInit() {}
 }

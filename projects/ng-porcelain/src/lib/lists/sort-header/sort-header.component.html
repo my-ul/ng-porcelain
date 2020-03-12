@@ -9,11 +9,11 @@
 		</span>
 	</span>
 	<span class="sort-header__sort-direction" *ngIf="active">
-		<span *ngIf="sortDirection === 'asc'">
+		<span *ngIf="activeSortDirection === 'asc'">
 			<fa-icon [icon]="faSortUp"></fa-icon>
 			<span class="sr-only">Sorted Ascending</span>
 		</span>
-		<span *ngIf="sortDirection === 'desc'">
+		<span *ngIf="activeSortDirection === 'desc'">
 			<fa-icon [icon]="faSortDown"></fa-icon>
 			<span class="sr-only">Sorted Descending</span>
 		</span>
