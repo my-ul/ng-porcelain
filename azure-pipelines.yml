@@ -22,11 +22,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo "Tagging $PORCELAIN_VERSION"
+      echo "Tagging Porcelain $PORCELAIN_VERSION"
       git tag $PORCELAIN_VERSION
-      git push --tags origin
+      git push --tags origin -c http.extraheader="Authorization: Bearer $ACCESS_TOKEN"
   env:
     PORCELAIN_VERSION: 'v$(json.version)'
+    ACCESS_TOKEN: $(System.AccessToken)
 
 - script: |
     npm install
