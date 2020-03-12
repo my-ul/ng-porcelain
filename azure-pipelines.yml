@@ -18,9 +18,10 @@ steps:
     jsonFile: '$(Build.Repository.LocalPath)/projects/ng-porcelain/package.json'
     shouldPrefixVariables: true
 
-- script: |
-    echo %PORCELAIN_VERSION%
-  displayName: 'Tagging Sources'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'echo $PORCELAIN_VERSION'
   env:
     PORCELAIN_VERSION: 'v$(json.version)'
 
