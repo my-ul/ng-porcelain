@@ -662,25 +662,13 @@ The List Item Component is used to markup the display of a series of items. Sinc
 
 The List Item component is responsible for drawing borders between List Item Cell components.
 
-#### `[success]` Input
-
-When set to `true`, certain elements within the list item will be set to UL Medium Green.
-
-#### `[error]` Input
-
-When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Medium Red.
-
-#### `[warning]` Input
-
-When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Medium Yellow.
-
-#### `[primary]` Input
-
-When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Action Blue.
-
-#### `[secondary]` Input
-
-When set to `true`, the `.text-accent` elements within the List Item will have their color set to UL Medium Teal.
+| Property      | Type    | Description                                                                                                                               |
+| ------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `[success]`   | boolean | When set to `true`, a 3 pixel left border and `.text-accent` elements within the list item will be set to UL Medium Green.                |
+| `[error]`     | boolean | When set to `true`, a 3 pixel left border and `.text-accent` elements within the List Item will have their color set to UL Medium Red.    |
+| `[warning]`   | boolean | When set to `true`, a 3 pixel left border and `.text-accent` elements within the List Item will have their color set to UL Medium Yellow. |
+| `[primary]`   | boolean | When set to `true`, a 3 pixel left border and `.text-accent` elements within the List Item will have their color set to UL Action Blue.   |
+| `[secondary]` | boolean | When set to `true`, a 3 pixel left border and `.text-accent` elements within the List Item will have their color set to UL Medium Teal.   |
 
 ```html
 <porcelain-list>
@@ -698,37 +686,18 @@ When set to `true`, the `.text-accent` elements within the List Item will have t
 
 ### List Item Cell Component
 
-#### `[width]` Input
+#### Properties
 
-A number between zero and one. All cells within a List Item component should have `[width]` inputs that add up to 1
-
-#### `[alignTop]` Input
-
-When true, the contents of the cell will align to the bottom of the row. Default `false`.
-
-#### `[alignBottom]` Input
-
-When `true`, the contents of the cell will align to the bottom of the row. Default `false`.
-
-#### `[padAll]` Input
-
-When `true`, the contents of the cell will be wrapped with ~20px of spacing. Default `false`.
-
-#### `[padTop]` Input
-
-When `true`, the contents of the cell will contain ~20px of padding at the top of the cell. Default `false`.
-
-#### `[padRight]` Input
-
-When `true`, the contents of the cell will contain ~20px of padding at the right of the cell. Default `false`.
-
-#### `[padBottom]` Input
-
-When `true`, the contents of the cell will contain ~20px of padding at the bottom of the cell. Default `false`.
-
-#### `[padLeft]` Input
-
-When `true`, the contents of the cell will contain ~20px of padding at the left of the cell. Default `false`.
+| Property        | Type      | Description                                                                                                          |
+| --------------- | --------- | -------------------------------------------------------------------------------------------------------------------- |
+| `[width]`       | `number`  | A number between zero and one. All cells within a List Item component should have [width] inputs that sum to 1.      |
+| `[alignTop]`    | `boolean` | When true, the contents of the cells will be at the top of the row of cells. Cells are middle aligned by default.    |
+| `[alignBottom]` | `boolean` | When true, the contents of the cells will be at the bottom of the row of cells. Cells are middle aligned by default. |
+| `[padAll]`      | `boolean` | When `true`, the contents of the cell will be wrapped with ~20px of spacing. Default `false`.                        |
+| `[padTop]`      | `boolean` | When `true`, the contents of the cell will contain ~20px of padding at the top of the cell. Default `false`.         |
+| `[padRight]`    | `boolean` | When `true`, the contents of the cell will contain ~20px of padding at the right of the cell. Default `false`.       |
+| `[padBottom]`   | `boolean` | When `true`, the contents of the cell will contain ~20px of padding at the bottom of the cell. Default `false`.      |
+| `[padLeft]`     | `boolean` | When `true`, the contents of the cell will contain ~20px of padding at the left of the cell. Default `false`.        |
 
 ### Sort Header Component
 
@@ -736,74 +705,116 @@ The Sort Header can be used to control sort variables within a list view.
 
 #### Dual-Binding/Banana Box Sort Direction
 
-This component supports banana-box notation for updating the value of `sortDirection`.
-
-```html
-<porcelain-sort-header [(sortDirection)]="mySortDirection"></porcelain-sort-header>
-```
-
-... is the same as ...
-
-```html
-<porcelain-sort-header
-	[sortDirection]="mySortDirection"
-	(sortDirectionChange)="mySortDirection=$event"
-></porcelain-sort-header>
-```
+This component supports banana-box/two-way binding notation for updating the values of `activeSortKey` and `activeSortDirection`.
 
 #### Inputs
 
-##### `[label]` Input
-
-`string`. Controls the text shown in the placeholder text, as well as a `<label>` element that is visible to screen readers.
-
-##### `[sortKey]` Input
-
-Sets the key that this sort header is responsible for toggling. When equal to `activeSortKey` are equal, the component will be in the `active` state. Typically, this is a constant value, wrapped in single quotes.
+| Property    | Type     | Description                                                                                                                                                                                                                                                                                                                                       |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[label]`   | `string` | User-visible label shown in the clickable portion of the sort header.                                                                                                                                                                                                                                                                             |
+| `[sortKey]` | `string` | Sets the key that this sort header is responsible for toggling. When equal to `activeSortKey` are equal, the component will be in the `active` state. Typically, this is a constant value, wrapped in single quotes, but it can be a variable, which is useful for loops. This value should NOT change often, if ever, after the component loads. |
 
 ```html
-<porcelain-sort-header [sortKey]=" 'date' "></porcelain-sort-header>
+<porcelain-sort-header [label]=" 'Date Modified' " [sortKey]=" 'date' "></porcelain-sort-header>
+```
+
+#### Outputs
+
+##### `(onSortChange)` Output
+
+The (onSortChange) output will emit the `sortKey` and the `sortDirection` in a tuple: `[sortKey, sortDirection]`. Use this to trigger any page load updates, as binding to the `activeSortKeyChange` and `activeSortColumnChange` may cause any bound actions to execute sporadically (twice in some cases, or not at all in others).
+
+```html
+<porcelain-sort-header
+	(onSortChange)=" updateList() "
+	[(activeSortKey)]=" currentSortKey "
+	[(activeSortDirection)]=" currentSortDirection "
+></porcelain-sort-header>
+```
+
+The following code pattern can be used to refresh a list after the sort fields are modified.
+
+```typescript
+@Component({
+	// ...
+})
+export class MyComponent {
+	public currentSortKey;
+	public currentSortDirection;
+
+	constructor(public listService: ListService) {
+		this.resetSort();
+	}
+
+	resetSort() {
+		this.currentSortKey = 'price';
+		this.currentSortDirection = 'asc';
+	}
+
+	updateList() {
+		this.listService
+			.getList({
+				sortKey: this.currentSortKey,
+				sortDirection: this.currentSortDirection
+			})
+			.subscribe(newListItems => {
+				this.items = newListItems;
+			});
+	}
+}
+```
+
+#### `activeSortKey` Two-Way Binding
+
+Binds the current active sort column from your component. Can be split into `@Input`/`@Output` bindings if you need a callback, although this is not recommended in favor of `(onSortChange)`, which fires a callback once per toggle.
+
+##### `[(activeSortKey)]` Two-Way Binding
+
+Set to the application's current sort column. When equal to `[sortKey]`, the component will be in the `active` state.
+
+```html
+<porcelain-sort-header [(activeSortKey)]=" currentSortColumn "></porcelain-sort-header>
 ```
 
 ##### `[activeSortKey]` Input
 
-Sets the key that the application currently has set to the sort key. When equal to `sortKey`, the component will be in the `active` state. Typically, this is a variable value, bound to a variable within the host component...
+Set this to your application's current sort column. If `[sortKey]` and `[activeSortKey]` are equal with a valid `[activeSortDirection]`, the header will appear active.
+
+Valid values are `null`, `'asc'` and `'desc'`.
+
+##### `(activeSortKeyChange)` Output
+
+Fires whenever the `[activeSortKey]` is set to `[sortKey]`. Value can be accessed with `$event`.
 
 ```html
-<porcelain-sort-header [activeSortKey]=" currentSortColumn "></porcelain-sort-header>
+<porcelain-sort-header (activeSortKeyChange)=" handleSortKeyChange($event) "></porcelain-sort-header>
 ```
 
-##### `[sortDirection]` Input
+#### `[(activeSortDirection)]` Two-Way Binding
 
-Getter/setter. When updated internally, the `(sortDirectionChange)` callback will be called.
+##### Banana-Box Binding
 
-Value is either `asc` or `desc`.
-
-#### Outputs
-
-##### `(sortDirectionChange)` Output
-
-You can register a callback whenever the component changes the `sortDirection`. The emitted value of `$event` is a tuple, `[sortKey, sortDirection]`.
+Use two-way binding to keep the sort-header and your application's sort column state in sync.
 
 ```html
-<porcelain-sort-header
-	[sortDirection]="mySortDirection"
-	(sortDirectionChange)="mySortCallback($event)"
-></porcelain-sort-header>
+<porcelain-sort-header [(activeSortDirection)]=" myCurrentSortDirection "></porcelain-sort-header>
 ```
 
-You can process this with a callback like this...
+##### `[activeSortDirection]` Input Binding
 
-```ts
-export class MyComponent {
-	activeSortKey: string = '';
-	activeSortDirection: string = '';
+Set the `activeSortDirection` from your application.
 
-	mySortCallback([sortKey, sortDirection]: SortTuple) {
-		this.activeSortKey = sortKey;
-		this.activeSortDirection = sortDirection;
-	}
-}
+```html
+<porcelain-sort-header [activeSortDirection]=" myCurrentSortDirection "></porcelain-sort-header>
+```
+
+##### `(activeSortDirectionChange)` Output Binding
+
+Bind a callback that will fire upon changes to `activeSortDirection`. `$event` will contain the new sort direction.
+
+```html
+<porcelain-sort-header (activeSortDirectionChange)=" handleSortDirectionChange($event)">
+</porcelain-sort-header>
 ```
 
 ## Toolbar Module

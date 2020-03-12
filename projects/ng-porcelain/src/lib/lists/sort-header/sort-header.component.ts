@@ -81,6 +81,9 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 	@Output()
 	activeSortDirectionChange: EventEmitter<string> = new EventEmitter();
 
+	@Output()
+	onSortChange: EventEmitter<SortTuple> = new EventEmitter();
+
 	constructor() {
 		super();
 	}
@@ -101,6 +104,7 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 			this.activeSortDirection = 'asc';
 			this.activeSortKey = this.sortKey;
 		}
+		this.onSortChange.emit([this.sortKey, this.activeSortDirection]);
 		this.log('toggleSort()', [this.sortKey, this.activeSortDirection]);
 	}
 }
