@@ -90,7 +90,7 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 
 	ngOnInit() {}
 
-	@HostListener('click', ['$event'])
+	@HostListener('click')
 	toggleSort() {
 		if (this.activeSortKey === this.sortKey) {
 			if (this.isNullOrUndefined(this.activeSortDirection)) {
