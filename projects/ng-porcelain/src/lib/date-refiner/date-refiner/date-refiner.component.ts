@@ -93,7 +93,7 @@ export class DateRefinerComponent implements OnInit {
 
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
-	@Output() DisableCheck: EventEmitter<any> = new EventEmitter();
+	@Output() onDisabledChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
 	faChevronDown: IconDefinition = faCaretDown;
@@ -117,7 +117,6 @@ export class DateRefinerComponent implements OnInit {
 		/**
 		 * Applies translations using myUL Translation file format.
 		 **/
-
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<DateRefinerComponent>(this, {
 				label_From: 'fromLabel',
@@ -198,14 +197,14 @@ export class DateRefinerComponent implements OnInit {
 		const value = this.getValue();
 		if (value.optionSlug === 'custom') {
 			if (this.allowIncompleteEmit) {
-				this.DisableCheck.emit(true);
+				this.onDisabledChange.emit(true);
 				return true;
 			} else {
 				let disable: boolean =
 					value.from instanceof Date &&
 					value.to instanceof Date &&
 					value.from.getTime() < value.to.getTime();
-				this.DisableCheck.emit(disable);
+				this.onDisabledChange.emit(disable);
 				return disable;
 			}
 		}
@@ -246,7 +245,7 @@ export class DateRefinerComponent implements OnInit {
 		const isComplete = this.isComplete();
 		const value = this.getValue();
 		if (this.currentOptionSlug !== 'custom') {
-			this.DisableCheck.emit(true);
+			this.onDisabledChange.emit(true);
 		}
 
 		this.log('onChange(newOptionSlug)', 'before validation', {

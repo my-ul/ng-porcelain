@@ -3,9 +3,8 @@
 		<ng-container *ngIf="isDateRefiner(refiner)">
 			<porcelain-date-refiner
 				(onRefinerChange)="handleRefinerChange($event)"
-				(DisableCheck)="disableCheck($event)"
+				(onDisabledChange)="handleDisabledChange($event)"
 				[refiner]="refiner"
-				[invalidCustomRangeLabel]="incorrectDateMessage"
 				[allowIncompleteEmit]="allowIncompleteEmit"
 			></porcelain-date-refiner>
 		</ng-container>

@@ -10,11 +10,10 @@ export class RefinersComponent implements OnInit {
 	// Inputs
 	@Input() refiners: BaseRefinerDefinition[];
 	@Input() allowIncompleteEmit: boolean = true;
-	@Input() incorrectDateMessage: string = '';
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
-	@Output() disableStatus: EventEmitter<any> = new EventEmitter();
+	@Output() onDisabledChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
 
@@ -30,8 +29,9 @@ export class RefinersComponent implements OnInit {
 
 		this.setValue(slug, selected);
 	}
-	disableCheck(disableState: boolean) {
-		this.disableStatus.emit(disableState);
+
+	handleDisabledChange(disableState: boolean) {
+		this.onDisabledChange.emit(disableState);
 	}
 
 	setValue(slug: string, value: any) {
