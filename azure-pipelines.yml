@@ -25,16 +25,11 @@ steps:
   inputs:
     jsonFile: '$(Build.Repository.LocalPath)/dist/ng-porcelain/package.json'
     shouldPrefixVariables: true
-    
-- task: tagBuildOrRelease@0
-  inputs:
-    type: 'Build'
-    tags: 'ng-porcelain-$(json.version)'
 
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.Repository.LocalPath)/dist/ng-porcelain'
-    artifact: 'ng-porcelain'
+    artifact: 'ng-porcelain--$(json.version)'
 
 
 
