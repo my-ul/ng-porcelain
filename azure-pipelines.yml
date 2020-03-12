@@ -21,7 +21,10 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'echo $PORCELAIN_VERSION'
+    script: |
+      echo "Tagging $PORCELAIN_VERSION"
+      git tag $PORCELAIN_VERSION
+      git push --tags origin
   env:
     PORCELAIN_VERSION: 'v$(json.version)'
 
