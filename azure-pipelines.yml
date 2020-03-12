@@ -13,6 +13,11 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: '6f9cdff3-a6b9-47e1-90a8-6590ba11e157@1'
+  inputs:
+    jsonFile: '$(Build.Repository.LocalPath)/dist/ng-porcelain/package.json'
+    shouldPrefixVariables: true
+    
 - script: |
     echo "Tagging Build: $env:version"
   displayName: 'Tagging Sources'
@@ -27,10 +32,7 @@ steps:
 - script: echo $(Build.Repository.LocalPath) && pwd
   displayName: Print Workspace and pwd
 
-- task: '6f9cdff3-a6b9-47e1-90a8-6590ba11e157@1'
-  inputs:
-    jsonFile: '$(Build.Repository.LocalPath)/dist/ng-porcelain/package.json'
-    shouldPrefixVariables: true
+
 
 - task: PublishPipelineArtifact@1
   inputs:
