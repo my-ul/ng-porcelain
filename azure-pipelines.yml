@@ -19,7 +19,7 @@ steps:
     shouldPrefixVariables: true
 
 - script: |
-    echo "Tagging Build: %PORCELAIN_VERSION%"
+    echo %PORCELAIN_VERSION%
   displayName: 'Tagging Sources'
   env:
     PORCELAIN_VERSION: 'v$(json.version)'
