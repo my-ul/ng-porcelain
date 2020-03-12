@@ -24,6 +24,8 @@
 		<porcelain-refiners
 			*ngIf="refiners"
 			[refiners]="refiners"
+			[incorrectDateMessage]="incorrectDateMessage"
+			(disableStatus)="disableButtonCheck($event)"
 			[allowIncompleteEmit]="allowIncompleteEmit"
 		></porcelain-refiners>
 		<div *ngIf="!refiners">

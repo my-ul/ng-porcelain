@@ -38,6 +38,7 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 })
 export class ApplicatorComponent implements OnInit, OnDestroy {
 	private initialLoad: boolean = true;
+	private ApplyButtonDisable: boolean = false;
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
@@ -46,12 +47,13 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
+	@Input() public incorrectDateMessage: string = 'Please select a valid date range.';
 
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
 	private appliedValues: RefinerValueDictionary = {};
 
-	@Input() public refiners: (BaseRefinerDefinition)[] = [];
+	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
 	constructor(private translationService: TranslationService) {
@@ -91,7 +93,13 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	public canApply(): boolean {
+		if (this.ApplyButtonDisable == false) {
+			return false;
+		}
 		return !isEqual(this.stagedValues, this.appliedValues);
+	}
+	disableButtonCheck(disable: boolean) {
+		this.ApplyButtonDisable = disable;
 	}
 
 	public canReset(): boolean {
