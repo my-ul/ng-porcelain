@@ -17,7 +17,7 @@ steps:
   inputs:
     jsonFile: '$(Build.Repository.LocalPath)/dist/ng-porcelain/package.json'
     shouldPrefixVariables: true
-    
+
 - script: |
     echo "Tagging Build: $env:version"
   displayName: 'Tagging Sources'
