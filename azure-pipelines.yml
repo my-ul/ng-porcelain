@@ -19,10 +19,10 @@ steps:
     shouldPrefixVariables: true
 
 - script: |
-    echo "Tagging Build: $env:version"
+    echo "Tagging Build: $porcelainVersion"
   displayName: 'Tagging Sources'
   env:
-    version: 'v$(json.version)'
+    porcelainVersion: 'v$(json.version)'
 
 - script: |
     npm install
