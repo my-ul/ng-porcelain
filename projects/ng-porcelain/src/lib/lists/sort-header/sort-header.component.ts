@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Loggable } from '../../Loggable';
 
 export type SortDirection = 'asc' | 'desc' | null;
 
@@ -19,7 +20,9 @@ export type SortTuple = [string, SortDirection];
 	templateUrl: './sort-header.component.html',
 	styleUrls: ['./sort-header.component.scss']
 })
-export class SortHeaderComponent implements OnInit {
+export class SortHeaderComponent extends Loggable implements OnInit {
+	readonly name = 'SortHeaderComponent';
+
 	readonly faSortUp = faSortUp;
 	readonly faSortDown = faSortDown;
 	readonly faSort = faSort;
@@ -27,15 +30,13 @@ export class SortHeaderComponent implements OnInit {
 	@HostBinding('class')
 	classes = 'sort-header';
 
+	isNullOrUndefined(subject: any): subject is null | undefined {
+		return subject === null || subject === undefined;
+	}
+
 	@HostBinding('class.sort-header--active')
 	get active() {
-		if (this.activeSortKey === this.sortKey) {
-			console.log('active()', {
-				parent: [this.activeSortKey, this.activeSortDirection],
-				inner: [this.sortKey, this.sortDirection]
-			});
-		}
-		return this.sortKey === this.activeSortKey && this.sortDirection !== null;
+		return this.sortKey === this.activeSortKey && !this.isNullOrUndefined(this.activeSortDirection);
 	}
 
 	@Input()
@@ -45,39 +46,60 @@ export class SortHeaderComponent implements OnInit {
 	sortKey: string = null;
 
 	@Input()
-	activeSortKey: string = '';
+	private _activeSortKey: string;
 
 	@Input()
-	activeSortDirection: SortDirection = null;
-
-	private _sortDirection: SortDirection = null;
-
-	@Input()
-	get sortDirection() {
-		return this._sortDirection;
+	get activeSortKey(): string {
+		return this._activeSortKey;
 	}
-	set sortDirection(sortDirection: SortDirection) {
-		console.log('setDirection(sortDirection)', { sortDirection });
-		this._sortDirection = sortDirection;
-		this.sortDirectionChange.emit([this.sortKey, this._sortDirection]);
+
+	set activeSortKey(activeSortKey: string) {
+		this._activeSortKey = activeSortKey;
+		this.activeSortKeyChange.emit(this.activeSortKey);
 	}
 
 	@Output()
-	sortDirectionChange: EventEmitter<SortTuple> = new EventEmitter();
+	activeSortKeyChange: EventEmitter<string> = new EventEmitter();
 
-	constructor() {}
+	/**
+	 * _activeSortDirection
+	 * Backing field for the current sort direction of the application.
+	 */
+	private _activeSortDirection: SortDirection;
+
+	@Input()
+	get activeSortDirection(): SortDirection {
+		return this._activeSortDirection;
+	}
+
+	set activeSortDirection(activeSortDirection: SortDirection) {
+		this._activeSortDirection = activeSortDirection;
+		this.activeSortDirectionChange.emit(this.activeSortDirection);
+	}
+
+	@Output()
+	activeSortDirectionChange: EventEmitter<string> = new EventEmitter();
+
+	constructor() {
+		super();
+	}
 
 	ngOnInit() {}
 
 	@HostListener('click', ['$event'])
-	toggleSort($event) {
-		console.log('toggleSort', [this.sortKey, this.sortDirection]);
-		if (this.sortDirection === null) {
-			this.sortDirection = 'asc';
-		} else if (this.sortDirection === 'asc') {
-			this.sortDirection = 'desc';
+	toggleSort() {
+		if (this.activeSortKey === this.sortKey) {
+			if (this.isNullOrUndefined(this.activeSortDirection)) {
+				this.activeSortDirection = 'asc';
+			} else if (this.activeSortDirection === 'asc') {
+				this.activeSortDirection = 'desc';
+			} else {
+				this.activeSortDirection = null;
+			}
 		} else {
-			this.sortDirection = null;
+			this.activeSortDirection = 'asc';
+			this.activeSortKey = this.sortKey;
 		}
+		this.log('toggleSort()', [this.sortKey, this.activeSortDirection]);
 	}
 }
