@@ -29,7 +29,7 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.Repository.LocalPath)/dist/ng-porcelain'
-    artifact: 'ng-porcelain--$(json.version)'
+    artifact: 'ng-porcelain'
 
 ## this relies on permissions given to the service account
 ## https://ultfs.visualstudio.com/myUL/_settings/repositories?repositoryId=f2aa6adb-0529-4cfb-83f3-ef8537742fb3&_a=security
