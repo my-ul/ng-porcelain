@@ -13,9 +13,12 @@
 		cursor: pointer;
 	}
 
-	&.sort-header--active,
+	&.sort-header--active {
+		background: #e4ebf5 !important;
+	}
+
 	&:hover {
-		background: #e4ebf5;
+		background: #d8e1ed;
 	}
 
 	.sort-header__box {
