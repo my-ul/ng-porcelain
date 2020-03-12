@@ -30,20 +30,3 @@ steps:
   inputs:
     targetPath: '$(Build.Repository.LocalPath)/dist/ng-porcelain'
     artifact: 'ng-porcelain--$(json.version)'
-
-
-
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(Build.BinariesDirectory)'
-#     includeRootFolder: true
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-
-# - task: Npm@1
-#   inputs:
-#     command: 'publish'
-#     workingDir: 'dist/ng-porcelain'
-#     verbose: true
-#     publishEndpoint: 'bradkovach @ npm'
