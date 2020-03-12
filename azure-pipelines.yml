@@ -21,7 +21,7 @@ steps:
 - script: echo $(Build.Repository.LocalPath) && pwd
   displayName: Print Workspace and pwd
 
-- task: oneLuckiDevJson2Variable@1
+- task: '6f9cdff3-a6b9-47e1-90a8-6590ba11e157@1'
   inputs:
     jsonFile: '$(Build.Repository.LocalPath)/dist/ng-porcelain/package.json'
     shouldPrefixVariables: true
