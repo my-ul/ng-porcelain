@@ -14,6 +14,12 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    echo "Tagging Build: $env:version"
+  displayName: 'Tagging Sources'
+  env:
+    version: 'v$(json.version)'
+
+- script: |
     npm install
     npx ng build ngPorcelain
   displayName: 'npm install and build'
@@ -30,3 +36,4 @@ steps:
   inputs:
     targetPath: '$(Build.Repository.LocalPath)/dist/ng-porcelain'
     artifact: 'ng-porcelain--$(json.version)'
+
