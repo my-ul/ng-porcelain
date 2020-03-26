@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ToLocaleStringPipe implements PipeTransform {
 	transform(value: any, locale?: string): any {
-		locale == locale || navigator.language || 'en-US';
+		locale = locale || navigator.language || 'en-US';
 
 		if (typeof value === 'number') {
 			return value.toLocaleString(locale);

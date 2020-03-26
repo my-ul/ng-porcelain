@@ -13,7 +13,6 @@ export class RefinersComponent implements OnInit {
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
-	@Output() onDisabledChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
 
@@ -28,10 +27,6 @@ export class RefinersComponent implements OnInit {
 		let [slug, selected] = update;
 
 		this.setValue(slug, selected);
-	}
-
-	handleDisabledChange(disableState: boolean) {
-		this.onDisabledChange.emit(disableState);
 	}
 
 	setValue(slug: string, value: any) {

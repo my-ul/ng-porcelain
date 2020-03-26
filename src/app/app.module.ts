@@ -9,7 +9,12 @@ import { PipesModule } from '../../projects/ng-porcelain/src/lib/pipes/pipes.mod
 
 @NgModule({
 	declarations: [AppComponent],
-	imports: [BrowserModule, AppRoutingModule, ListsModule, PipesModule],
+	imports: [
+		BrowserModule,
+		//AppRoutingModule,
+		ListsModule,
+		PipesModule
+	],
 	providers: [],
 	bootstrap: [AppComponent]
 })

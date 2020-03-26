@@ -18,7 +18,6 @@ import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDe
 import { DateRefinerValue } from '../../shared/types/Values/DateRefinerValue';
 import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
 import { IDateRefinerDefinition } from '../../shared/types/Refiners/IDateRefinerDefinition';
-import { Loggable } from '../../Loggable';
 
 // Issue with moment requires this workaround for now
 const moment = _moment;
@@ -49,9 +48,7 @@ export interface ISimplifiedMyDateModel {
 	templateUrl: './date-refiner.component.html',
 	styleUrls: ['./date-refiner.component.scss']
 })
-export class DateRefinerComponent extends Loggable implements OnInit {
-	readonly name = 'DateRefinerComponent';
-
+export class DateRefinerComponent implements OnInit {
 	// Inputs
 	@Input() isOpen: boolean = true;
 	@Input() refiner: DateRefinerDefinition;
@@ -96,7 +93,6 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
-	@Output() onDisabledChange: EventEmitter<any> = new EventEmitter();
 
 	// Icons
 	faChevronDown: IconDefinition = faCaretDown;
@@ -115,12 +111,12 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	toModel: ISimplifiedMyDateModel = null;
 
 	constructor(private translationService: TranslationService) {
-		super();
 		this.log('constructor()');
 
 		/**
 		 * Applies translations using myUL Translation file format.
 		 **/
+
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<DateRefinerComponent>(this, {
 				label_From: 'fromLabel',
@@ -201,15 +197,13 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		const value = this.getValue();
 		if (value.optionSlug === 'custom') {
 			if (this.allowIncompleteEmit) {
-				this.onDisabledChange.emit(true);
 				return true;
 			} else {
-				let disable: boolean =
+				return (
 					value.from instanceof Date &&
 					value.to instanceof Date &&
-					value.from.getTime() < value.to.getTime();
-				this.onDisabledChange.emit(disable);
-				return disable;
+					value.from.getTime() < value.to.getTime()
+				);
 			}
 		}
 		return true;
@@ -248,9 +242,6 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 		const isComplete = this.isComplete();
 		const value = this.getValue();
-		if (this.currentOptionSlug !== 'custom') {
-			this.onDisabledChange.emit(true);
-		}
 
 		this.log('onChange(newOptionSlug)', 'before validation', {
 			allowIncompleteEmit: this.allowIncompleteEmit,
@@ -382,5 +373,14 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	toggleOpen() {
 		this.log('toggleOpen()', { isOpen: this.isOpen });
 		this.isOpen = !this.isOpen;
+	}
+
+	/**
+	 * Logs information to the console while in development mode.
+	 */
+	private log(...args) {
+		if (isDevMode()) {
+			console.log.apply(null, ['DateRefinerComponent'].concat(args));
+		}
 	}
 }

@@ -226,11 +226,11 @@ storiesOf('Toolbars', module)
 
 						<porcelain-toolbar-cell>
 							<porcelain-toolbar-select [(value)]="currentPage" [label]="pageLabel">
-								<porcelain-toolbar-selected-template *ngIf="currentPage != null">
+								<porcelain-toolbar-selected-template *ngIf="currentPage !== null">
 									{{pages[currentPage].pageLabel}}
 								</porcelain-toolbar-selected-template>
 
-								<porcelain-toolbar-selected-template *ngIf="currentPage == null">
+								<porcelain-toolbar-selected-template *ngIf="currentPage === null">
 									&mdash;
 								</porcelain-toolbar-selected-template>
 
@@ -351,11 +351,11 @@ storiesOf('Toolbars', module)
 							(valueChange)="onValueChange($event)" 
 							[label]="pageLabel">
 
-							<porcelain-toolbar-selected-template *ngIf="currentPage != null">
+							<porcelain-toolbar-selected-template *ngIf="currentPage !== null">
 								{{pages[currentPage].pageLabel}}
 							</porcelain-toolbar-selected-template>
 
-							<porcelain-toolbar-selected-template *ngIf="currentPage == null">
+							<porcelain-toolbar-selected-template *ngIf="currentPage === null">
 								&mdash;
 							</porcelain-toolbar-selected-template>
 

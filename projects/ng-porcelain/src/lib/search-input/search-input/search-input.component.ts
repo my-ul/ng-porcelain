@@ -120,7 +120,7 @@ export class SearchInputComponent implements OnInit {
 		/* assigning uservalues */
 		this.currentValue = this.userValue;
 		/*to check if there is previous value*/
-		this.canEmitEmpty = this.userValue == '' ? false : true;
+		this.canEmitEmpty = this.userValue === '' ? false : true;
 	}
 
 	/**
@@ -148,7 +148,7 @@ export class SearchInputComponent implements OnInit {
 			this.canEmitEmpty = true; //to enable empty value sending for submit
 		} else {
 			// is empty
-			if (this.canEmitEmpty == true) {
+			if (this.canEmitEmpty === true) {
 				this.canEmitEmpty = false;
 				this.submitHandler.emit(this.currentValue); //empty value is emitted by submit
 			}

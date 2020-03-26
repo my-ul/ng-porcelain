@@ -3,7 +3,6 @@
 		<ng-container *ngIf="isDateRefiner(refiner)">
 			<porcelain-date-refiner
 				(onRefinerChange)="handleRefinerChange($event)"
-				(onDisabledChange)="handleDisabledChange($event)"
 				[refiner]="refiner"
 				[allowIncompleteEmit]="allowIncompleteEmit"
 			></porcelain-date-refiner>

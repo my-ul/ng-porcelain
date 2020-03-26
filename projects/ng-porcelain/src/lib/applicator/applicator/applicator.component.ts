@@ -14,6 +14,7 @@ import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerVal
 
 import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
+import { Loggable } from '../../Loggable';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -36,9 +37,9 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	templateUrl: './applicator.component.html',
 	styleUrls: ['./applicator.component.scss']
 })
-export class ApplicatorComponent implements OnInit, OnDestroy {
+export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
+	readonly name: string = 'ApplicatorComponent';
 	private initialLoad: boolean = true;
-	private isApplyDisabled: boolean = false;
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
@@ -56,6 +57,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
 	constructor(private translationService: TranslationService) {
+		super();
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<ApplicatorComponent>(this, {
 				label_Apply: 'applyLabel',
@@ -75,18 +77,11 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 
 	public beforeApply(): void {
 		this.initialLoad = false;
-
 		this.apply();
 	}
 
 	public canApply(): boolean {
-		if (this.isApplyDisabled == false) {
-			return false;
-		}
 		return !isEqual(this.stagedValues, this.appliedValues);
-	}
-	handleDisabledChange(disable: boolean) {
-		this.isApplyDisabled = disable;
 	}
 
 	public canReset(): boolean {
@@ -96,6 +91,8 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	public getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
 	): OptionRefinerValue | DateRefinerValue {
+		this.debug('getDefaultValueForRefiner(refiner)', { refiner });
+
 		// If a default value exists for the slug, return it immediately
 		if (this.defaultValues && this.defaultValues[refiner.slug]) {
 			return this.defaultValues[refiner.slug];
@@ -119,6 +116,7 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	public handleRefinerValues(refinerSlug, refinerValue): void {
+		this.log('handleRefinerValues(refinerSlug, refinerValue)', { refinerSlug, refinerValue });
 		this.stagedValues[refinerSlug] = refinerValue;
 	}
 
@@ -158,7 +156,6 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		this.refiners.forEach(refiner => {
 			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
 		});
-
 		this.beforeApply();
 	}
 }
