@@ -15,6 +15,7 @@ import {
 	faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { clamp } from '../../shared/utilities/arrays/clamp';
+import { moveItem } from '../../shared/utilities/arrays/moveItem';
 
 @Component({
 	selector: 'porcelain-rack',
@@ -223,16 +224,6 @@ export class RackComponent<T> implements OnInit {
 	}
 
 	/**
-	 * Moves item at arr[sourceIdx] to arr[destIdx]
-	 */
-	public static moveItem<U>(arr: U[], sourceIdx, destIdx) {
-		// remove `from` item and store it
-		const item = arr.splice(sourceIdx, 1)[0];
-		// insert stored item into position `to`
-		arr.splice(destIdx, 0, item);
-	}
-
-	/**
 	 * Binds keyboard navigation to the document keydown event.
 	 */
 	@HostListener('document:keydown', ['$event'])
@@ -316,7 +307,7 @@ export class RackComponent<T> implements OnInit {
 		if (this.selectedActiveItem !== null) {
 			const srcIdx = this.currentActiveIdx;
 			const destIdx = clamp(destIdxFn(srcIdx), 0, this.lastActiveIdx);
-			RackComponent.moveItem(this.activeItems, srcIdx, destIdx);
+			moveItem(this.activeItems, srcIdx, destIdx);
 		}
 	}
 
