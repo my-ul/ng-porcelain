@@ -1,0 +1,108 @@
+$border-color: #9fadbb;
+$background-color: #cdd6e4;
+$text-color: #303741;
+
+:host {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+		'Open Sans', 'Helvetica Neue', sans-serif;
+	box-sizing: border-box;
+	font-size: 14px;
+
+	.porcelain-dynamic-header__column + .porcelain-dynamic-header__column {
+		border-left: solid 1px $border-color;
+	}
+}
+
+.porcelain-dynamic-header__list {
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+	padding: 0 21px;
+	border-bottom: 3px solid $border-color;
+	background-color: $background-color;
+	&.cdk-drop-list-dragging li:not(.cdk-drag-placeholder) {
+		transition: transform ease-in-out 150ms;
+	}
+}
+
+.cdk-drag-preview,
+.porcelain-dynamic-header__column {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+		'Open Sans', 'Helvetica Neue', sans-serif;
+	list-style: none;
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 0.5em 1.5em;
+	background: $background-color;
+	position: relative;
+	font-weight: bold;
+	color: $text-color;
+
+	::ng-deep {
+		porcelain-sort-header {
+			margin-left: -0.5em;
+		}
+	}
+
+	.porcelain-dynamic-header__column-handle {
+		display: inline-block;
+		opacity: 0.5;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 0;
+		padding: 0 0.25em;
+		font-size: 12px;
+		color: darken($border-color, 10%);
+		transition: opacity ease-in-out 150ms;
+	}
+}
+
+.cdk-drag-preview .porcelain-dynamic-header__column-handle {
+	opacity: 1;
+	cursor: grabbing;
+}
+
+.porcelain-dynamic-header__list {
+	&.cdk-drop-list-dragging {
+		&:hover {
+			.porcelain-dynamic-header__column-handle {
+				cursor: grabbing;
+				opacity: 0;
+			}
+		}
+	}
+}
+
+.porcelain-dynamic-header__column {
+	+ .porcelain-dynamic-header__column {
+		&.cdk-drag-placeholder {
+			//border-left: solid 1px lighten($border-color, 5%);
+		}
+	}
+	&:hover {
+		.porcelain-dynamic-header__column-handle {
+			opacity: 1;
+			cursor: grab;
+		}
+	}
+}
+
+.cdk-drag-preview {
+	opacity: 0.7;
+}
+
+.cdk-drag-placeholder {
+	background-color: lighten($background-color, 5%);
+	text-indent: -9999px;
+}
+
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+	transition: transform 150ms ease-in-out;
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+	transition: transform 150ms ease-in-out;
+}
