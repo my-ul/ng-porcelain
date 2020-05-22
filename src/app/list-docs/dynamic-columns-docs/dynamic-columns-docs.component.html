@@ -1,0 +1,57 @@
+<div class="page">
+	<div class="page__section page__section--padded">
+		<h3>Dynamic Columns</h3>
+
+		<p>Dynamic Columns can be re-ordered, activated and deactivated by the user.</p>
+
+		<p>
+			Query String: <code>{{ queryString }}</code>
+		</p>
+	</div>
+	<div class="page__section">
+		<porcelain-list>
+			<porcelain-dynamic-header
+				[(columns)]="activeColumns"
+				[(activeSortDirection)]="activeSortDirection"
+				[(activeSortKey)]="activeSortKey"
+				(sortChange)="sortChanged($event)"
+				[query]="query"
+				(queryChange)="queryChanged($event)"
+			></porcelain-dynamic-header>
+
+			<porcelain-list-body *ngIf="currentPeople.length === 0">
+				<p class="no-results">There are no people matching the current criteria.</p>
+			</porcelain-list-body>
+
+			<porcelain-list-body *ngIf="currentPeople.length > 0">
+				<porcelain-list-item *ngFor="let person of currentPeople">
+					<porcelain-list-item-cell
+						[width]="column.width"
+						[padAll]="true"
+						*ngFor="let column of activeColumns"
+					>
+						<ng-container *ngIf="column.key === 'last_name'">
+							<strong>{{ person.first_name }} {{ person.last_name }}</strong
+							><br />
+							{{ person.email }}
+						</ng-container>
+						<ng-container *ngIf="column.key !== 'last_name'">
+							{{ person[column.key] }}
+						</ng-container>
+					</porcelain-list-item-cell>
+				</porcelain-list-item>
+			</porcelain-list-body>
+		</porcelain-list>
+	</div>
+	<div class="page__section page__section--padded">
+		<h4>Managing Columns with the Porcelain Rack</h4>
+
+		<p>The Porcelain Rack is useful for managing and reordering lists.</p>
+
+		<porcelain-rack
+			[(activeItems)]="activeColumns"
+			[(inactiveItems)]="inactiveColumns"
+			[size]="6"
+		></porcelain-rack>
+	</div>
+</div>

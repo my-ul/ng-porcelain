@@ -4,7 +4,9 @@ $ulActionBlue: #4a91e2;
 
 %--can-focus {
 	position: relative;
-	outline: rgba($ulActionBlue, 0.7) 2px solid;
+	//outline: rgba($ulActionBlue, 0.7) 2px solid;
+	outline: none;
+	box-shadow: 0 0 0 3px rgba($ulActionBlue, 0.5);
 }
 
 %can-focus {

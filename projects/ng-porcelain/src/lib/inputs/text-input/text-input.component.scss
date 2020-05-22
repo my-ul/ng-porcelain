@@ -1,0 +1,33 @@
+@import '../../toolbar/toolbar.module.scss';
+
+:host {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	font-size: 14px;
+	border: solid 1px transparent;
+	background-color: #fff;
+
+	// Modifiers
+	&.text-input--has-border {
+		border: solid 1px #d0d0d0;
+	}
+
+	&.text-input--has-focus {
+		@extend %--can-focus;
+		&.text-input--has-border {
+			border: solid 1px #67b1e2;
+		}
+	}
+
+	// Elements
+	.text-input__input {
+		flex: 1 1 auto;
+		background: transparent;
+		border: none;
+		padding: 0.5em;
+		outline: none;
+		font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+			Cantarell, 'Helvetica Neue', sans-serif;
+	}
+}

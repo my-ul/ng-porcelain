@@ -47,19 +47,19 @@ describe('SearchInputComponent', () => {
 
 	describe('@Input() userValue', () => {
 		it('should init to the empty string by default', () => {
-			expect(component.userValue).toEqual('');
+			expect(component.value).toEqual('');
 		});
 	});
 
 	describe('submit()', () => {
 		it('should allow submit when cleared to empty', () => {
-			component.currentValue = 'CURRENT_VALUE';
+			component.value = 'CURRENT_VALUE';
 			expect(component.canSubmit()).toBeTruthy();
 			component.submit();
 			expect(component.canEmitEmpty).toBeTruthy();
 			component.clear();
 			expect(component.canSubmit()).toBeTruthy();
-			expect(component.currentValue).toBe('');
+			expect(component.value).toBe('');
 			component.submit();
 			expect(component.canSubmit()).toBeFalsy();
 			expect(component.canEmitEmpty).toBeFalsy();
@@ -68,16 +68,16 @@ describe('SearchInputComponent', () => {
 
 	describe('clear()', () => {
 		it('should clear currentValue when called', () => {
-			component.currentValue = 'CURRENT_VALUE';
+			component.value = 'CURRENT_VALUE';
 			component.clear();
-			expect(component.currentValue).toBe('');
+			expect(component.value).toBe('');
 		});
 
 		it('should call empty() and setFocus()', () => {
 			spyOn(component, 'empty');
 			spyOn(component, 'setFocus');
 
-			component.currentValue = 'CURRENT_VALUE';
+			component.value = 'CURRENT_VALUE';
 			component.clear();
 
 			expect(component.empty).toHaveBeenCalledTimes(1);
@@ -85,7 +85,7 @@ describe('SearchInputComponent', () => {
 		});
 
 		it('should emit on the emptyHandler ', done => {
-			component.currentValue = 'CURRENT_VALUE';
+			component.value = 'CURRENT_VALUE';
 
 			component.emptyHandler.subscribe(called => {
 				expect(called).toEqual('');
@@ -98,19 +98,19 @@ describe('SearchInputComponent', () => {
 
 	describe('isEmpty()', () => {
 		it('should return true when value is the empty string', () => {
-			component.currentValue = '';
+			component.value = '';
 			expect(component.isEmpty()).toBe(true);
 		});
 
 		it('should return false when value is not the empty string', () => {
-			component.currentValue = 'CURRENT_VALUE';
+			component.value = 'CURRENT_VALUE';
 			expect(component.isEmpty()).toBe(false);
 		});
 	});
 
 	describe('canSubmit()', () => {
 		it('should allow an emit when a value is present', () => {
-			component.currentValue = 'CURRENT_VALUE';
+			component.value = 'CURRENT_VALUE';
 			expect(component.canSubmit()).toBeTruthy();
 		});
 	});

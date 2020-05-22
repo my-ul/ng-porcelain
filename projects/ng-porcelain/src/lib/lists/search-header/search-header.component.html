@@ -1,0 +1,33 @@
+<div class="search-header__active-control">
+	<porcelain-sort-header
+		*ngIf="mode === 'sort'"
+		[label]="label"
+		[activeSortDirection]="activeSortDirection"
+		[activeSortKey]="activeSortKey"
+		[sortKey]="sortKey"
+		(sortChange)="sortChanged($event)"
+	></porcelain-sort-header>
+
+	<porcelain-search-input
+		#searchInput
+		*ngIf="mode === 'search'"
+		[placeholderLabel]="label"
+		[borders]="false"
+		[canEmitEmpty]="true"
+		[value]="query"
+		(submitHandler)="searchChanged($event)"
+		(emptyHandler)="searchChanged(null)"
+	></porcelain-search-input>
+</div>
+
+<button (click)="switchModes()" class="search-header__swap">
+	<span title="Switch to Search" *ngIf="mode === 'sort'">
+		<span class="sr-only">Switch to Search</span>
+		<fa-icon [icon]="searchIcon"></fa-icon>
+	</span>
+
+	<span title="Switch to Sort" *ngIf="mode === 'search'">
+		<span class="sr-only">Switch to Sort</span>
+		<fa-icon [icon]="sortIcon"></fa-icon>
+	</span>
+</button>
