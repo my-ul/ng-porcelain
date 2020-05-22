@@ -1,8 +1,8 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Loggable } from '../../Loggable';
 import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
+
 import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { SearchInputModule } from '../../search-input/search-input.module';
 import { SearchInputComponent } from '../../search-input/search-input/search-input.component';
 
 export type SearchTuple = [string, string];
@@ -14,8 +14,8 @@ export type SearchTuple = [string, string];
 })
 export class SearchHeaderComponent extends Loggable implements OnInit {
 	readonly name = 'SearchHeaderComponent';
-	readonly sortIcon = faSort;
-	readonly searchIcon = faSearch;
+	readonly sortIcon: any = faSort;
+	readonly searchIcon: any = faSearch;
 
 	mode: 'search' | 'sort' = 'sort';
 

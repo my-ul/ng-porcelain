@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons';
 
 import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
@@ -30,7 +31,7 @@ export interface DynamicSearchQuery {
 })
 export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
 	readonly name = 'DynamicHeaderComponent';
-	readonly gripIcon = faGripLinesVertical;
+	readonly gripIcon: any = faGripLinesVertical;
 
 	@Input() labelProp: string = 'label';
 

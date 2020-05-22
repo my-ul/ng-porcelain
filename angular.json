@@ -122,6 +122,11 @@
 			"sourceRoot": "projects/ng-porcelain/src",
 			"projectType": "library",
 			"prefix": "porcelain",
+			"schematics": {
+				"@schematics/angular:component": {
+					"styleext": "scss"
+				}
+			},
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-ng-packagr:build",

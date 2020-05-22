@@ -32,10 +32,10 @@ export class RackComponent<T> implements OnInit {
 	 */
 	private _inactiveItems: T[] = [];
 
-	readonly activateIcon = faChevronRight;
-	readonly deactivateIcon = faChevronLeft;
-	readonly moveDownIcon = faChevronDown;
-	readonly moveUpIcon = faChevronUp;
+	readonly activateIcon: any = faChevronRight;
+	readonly deactivateIcon: any = faChevronLeft;
+	readonly moveDownIcon: any = faChevronDown;
+	readonly moveUpIcon: any = faChevronUp;
 
 	/**
 	 * The property on your inactiveItems/activeItems array items that should be shown as label.

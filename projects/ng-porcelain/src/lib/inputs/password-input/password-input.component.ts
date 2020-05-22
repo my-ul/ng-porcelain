@@ -1,8 +1,7 @@
 import { Component, OnInit, HostBinding, Input, Output, EventEmitter } from '@angular/core';
 
-//import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { TranslationService } from '../../services';
+import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
 	selector: 'porcelain-password-input',
@@ -11,8 +10,8 @@ import { TranslationService } from '../../services';
 })
 export class PasswordInputComponent implements OnInit {
 	// Icons
-	showIcon = faEye;
-	hideIcon = faEyeSlash;
+	readonly showIcon: any = faEye;
+	readonly hideIcon: any = faEyeSlash;
 
 	// Labels
 	labels = {

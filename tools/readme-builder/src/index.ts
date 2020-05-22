@@ -38,6 +38,12 @@ const rootNode: SectionIndex = {
 		'Translation Service': '../../projects/ng-porcelain/src/lib/services/translation/README.md'
 	},
 	Modules: {
+		Inputs: {
+			__: '../../projects/ng-porcelain/src/lib/inputs/README.md',
+			'Password Input Component':
+				'../../projects/ng-porcelain/src/lib/inputs/password-input/README.md',
+			'Text Input Component': '../../projects/ng-porcelain/src/lib/inputs/text-input/README.md'
+		},
 		Lists: {
 			__: '../../projects/ng-porcelain/src/lib/lists/README.md',
 			'Dynamic Header Component':
@@ -65,11 +71,21 @@ const rootNode: SectionIndex = {
 			'Toolbar Select Component':
 				'../../projects/ng-porcelain/src/lib/toolbar/toolbar-select/README.md'
 		}
+	},
+	Lists: {
+		__: '../../projects/ng-porcelain/src/lib/lists/README.md',
+		'Dynamic Header': '../../projects/ng-porcelain/src/lib/lists/dynamic-header/README.md',
+		'List Component': '../../projects/ng-porcelain/src/lib/lists/list/README.md',
+		'List Body Component': '../../projects/ng-porcelain/src/lib/lists/list-body/README.md',
+		'List Header Component': '../../projects/ng-porcelain/src/lib/lists/list-header/README.md',
+		'List Header Cell Component':
+			'../../projects/ng-porcelain/src/lib/lists/list-header-cell/README.md',
+		'List Item Component': '../../projects/ng-porcelain/src/lib/lists/list-item/README.md',
+		'List Item Cell Component': '../../projects/ng-porcelain/src/lib/lists/list-item-cell/README.md',
+		'Search Header Component': '../../projects/ng-porcelain/src/lib/lists/search-header/README.md',
+		'Sort Header Component': '../../projects/ng-porcelain/src/lib/lists/sort-header/README.md',
+		'Text Header Component': '../../projects/ng-porcelain/src/lib/lists/text-header/README.md'
 	}
-	// Lists: {
-	//     __: '$/projects/ng-porcelain/src/lib/lists/README.md',
-
-	// }
 };
 
 function isNode(subject: any): subject is SectionIndex {
@@ -79,7 +95,7 @@ function isNode(subject: any): subject is SectionIndex {
 let processHeadings = function(input: string, level: number = 0): string {
 	return input
 		.replace(/^(#+)\s*(.*)$/gm, function(match, headingChars, headingText) {
-			console.log({ headingChars, level });
+			//console.log({ headingChars, level });
 			return `${'#'.repeat(headingChars.length + level)} ${headingText.trim()}`;
 		})
 		.replace(/\r\n/gm, '\n')
