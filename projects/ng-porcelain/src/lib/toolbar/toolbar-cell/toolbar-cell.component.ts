@@ -1,11 +1,14 @@
 import { Component, OnInit, Input, HostBinding, Host } from '@angular/core';
+import { Loggable } from '../../Loggable';
 
 @Component({
 	selector: 'porcelain-toolbar-cell',
 	templateUrl: './toolbar-cell.component.html',
 	styleUrls: ['./toolbar-cell.component.scss']
 })
-export class ToolbarCellComponent implements OnInit {
+export class ToolbarCellComponent extends Loggable implements OnInit {
+	readonly name = 'ToolbarCellComponent';
+
 	_flex = '0 0 auto';
 
 	@HostBinding('style.flex')
@@ -27,7 +30,8 @@ export class ToolbarCellComponent implements OnInit {
 	init = true;
 
 	constructor() {
-		console.log('new ToolbarCellComponent()', { arguments });
+		super();
+		this.log('new ToolbarCellComponent()', { arguments });
 	}
 
 	ngOnInit() {}

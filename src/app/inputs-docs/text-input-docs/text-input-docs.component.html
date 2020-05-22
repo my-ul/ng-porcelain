@@ -1,0 +1,16 @@
+<div class="page">
+	<div class="page__section page__section--padded">
+		<h2>Text Input</h2>
+		<p>
+			The Text Input is two-way bound with a value at <code>[(value)]</code>. Its border is
+			optional with the <code>[border]</code> Input.
+		</p>
+	</div>
+	<div class="page__section page__section--padded page__section--shaded">
+		<h3>No Border</h3>
+		<porcelain-text-input [(value)]="textValue" [border]="false"></porcelain-text-input>
+
+		<h3>Has Border</h3>
+		<porcelain-text-input [(value)]="textValue" [border]="true"></porcelain-text-input>
+	</div>
+</div>

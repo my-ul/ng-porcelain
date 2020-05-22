@@ -1,0 +1,46 @@
+<ul
+	class="porcelain-dynamic-header__list"
+	cdkDropList
+	cdkDropListOrientation="horizontal"
+	cdkDropListLockAxis="x"
+	(cdkDropListDropped)="drop($event)"
+>
+	<li
+		class="porcelain-dynamic-header__column"
+		*ngFor="let column of columns"
+		[style.width]="getWidth(column)"
+		cdkDrag
+	>
+		<div class="porcelain-dynamic-header__column-handle" cdkDragHandle>
+			<fa-icon [icon]="gripIcon"></fa-icon>
+		</div>
+
+		<div class="porcelain-dynamic-header__column-control">
+			<ng-container *ngIf="column.type === 'search'">
+				<porcelain-search-header
+					[sortKey]="column.key"
+					[query]="getQueryValue(column.key)"
+					[label]="getLabel(column)"
+					[activeSortKey]="activeSortKey"
+					[activeSortDirection]="activeSortDirection"
+					(sortChange)="sortChanged($event)"
+					(searchChange)="searchChanged($event)"
+				></porcelain-search-header>
+			</ng-container>
+
+			<ng-container *ngIf="column.type === 'sort'">
+				<porcelain-sort-header
+					[label]="getLabel(column)"
+					[sortKey]="column.key"
+					[activeSortDirection]="activeSortDirection"
+					[activeSortKey]="activeSortKey"
+					(sortChange)="sortChanged($event)"
+				></porcelain-sort-header>
+			</ng-container>
+
+			<ng-container *ngIf="column.type === 'text'">
+				<porcelain-text-header>{{ getLabel(column) }}</porcelain-text-header>
+			</ng-container>
+		</div>
+	</li>
+</ul>

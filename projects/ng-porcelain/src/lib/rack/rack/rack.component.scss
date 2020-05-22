@@ -1,0 +1,89 @@
+.rack {
+	display: grid;
+	grid-template-columns: 3fr 1fr 3fr;
+	//grid-template-rows: 1fr 1fr 1fr;
+	gap: 1em 1em;
+	grid-template-areas:
+		'inactive-label    .                     active-label'
+		'inactive-list     activation-buttons    active-list'
+		'.                 .                     order-buttons';
+}
+
+.inactive-label {
+	grid-area: inactive-label;
+}
+
+.active-label {
+	grid-area: active-label;
+}
+
+.inactive-list {
+	grid-area: inactive-list;
+}
+
+.inactive-list,
+.active-list {
+	border: solid 1px #9ba7b9;
+	border-radius: 3px;
+}
+
+.order-buttons,
+.activation-buttons {
+	button {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+			'Open Sans', 'Helvetica Neue', sans-serif;
+		border: solid 1px #9ba7b9;
+		border-radius: 3px;
+		background-color: #fff;
+		line-height: 2rem;
+		font-size: 14px;
+		transition: all ease-in-out 200ms;
+		&:disabled {
+			color: #888;
+			border: solid 1px #e2ecf4;
+			background-color: #e2ecf4;
+			cursor: not-allowed;
+		}
+
+		.activation-button-label {
+			margin: 0 1em;
+		}
+	}
+}
+
+.rack__option--locked {
+	.rack__locked-asterisk {
+		color: red;
+	}
+}
+
+.activation-buttons {
+	grid-area: activation-buttons;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	button {
+		margin: 0.5em 0;
+	}
+}
+
+.active-list {
+	grid-area: active-list;
+}
+
+.order-buttons {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	//grid-template-rows: 3em;
+	gap: 1em 1em;
+	grid-template-areas: 'move-up-button move-down-button';
+	grid-area: order-buttons;
+}
+
+.move-up-button {
+	grid-area: move-up-button;
+}
+
+.move-down-button {
+	grid-area: move-down-button;
+}

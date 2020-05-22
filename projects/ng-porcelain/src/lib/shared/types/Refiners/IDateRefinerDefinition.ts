@@ -1,4 +1,3 @@
-import { IDateRefinerDefinition } from './IDateRefinerDefinition';
 import { IBaseRefinerDefinition } from './IBaseRefinerDefinition';
 import { IDateOptions } from '../Options/IDateOptions';
 import { IDateRefinerValue } from '../Values/IDateRefinerValue';

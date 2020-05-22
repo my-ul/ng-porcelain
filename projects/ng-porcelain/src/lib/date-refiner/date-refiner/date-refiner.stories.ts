@@ -55,8 +55,6 @@ storiesOf('Refiners/Date Refiner Component', module)
 		}
 	)
 	.add('i18n from TranslationService', () => {
-		console.log('module', module);
-
 		return {
 			component: DateRefinerComponent,
 			props: {

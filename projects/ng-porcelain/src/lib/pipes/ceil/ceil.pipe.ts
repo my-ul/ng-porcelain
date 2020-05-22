@@ -1,10 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { isDevMode } from '@angular/core';
+import { Loggable } from '../../Loggable';
 
 @Pipe({
 	name: 'ceil'
 })
-export class CeilPipe implements PipeTransform {
+export class CeilPipe extends Loggable implements PipeTransform {
+	name = 'CeilPipe';
 	/**
 	 * Applies numeric ceil operation to a value
 	 */
@@ -13,7 +15,7 @@ export class CeilPipe implements PipeTransform {
 			return Math.ceil(value);
 		} else {
 			if (isDevMode()) {
-				console.trace('CeilPipe.transform(value) called with non-numeric value.');
+				this.trace('CeilPipe.transform(value) called with non-numeric value.');
 			}
 			return value;
 		}

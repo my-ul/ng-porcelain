@@ -73,6 +73,8 @@ export { RefinerValue } from './lib/shared/types/Values/RefinerValue';
 // Shared utilities
 export { i18nDateOptions } from './lib/shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
 export { fromEntries } from './lib/shared/utilities/reducers/fromEntries/fromEntries';
+export { clamp } from './lib/shared/utilities/arrays/clamp';
+export { moveItem } from './lib/shared/utilities/arrays/moveItem';
 
 // Pipes module
 export { PipesModule } from './lib/pipes/pipes.module';
@@ -81,6 +83,10 @@ export { FloorPipe } from './lib/pipes/floor/floor.pipe';
 export { RoundPipe } from './lib/pipes/round/round.pipe';
 export { SprintfPipe } from './lib/pipes/sprintf/sprintf.pipe';
 export { ToLocaleStringPipe } from './lib/pipes/toLocaleString/to-locale-string.pipe';
+
+// Rack module
+export { RackModule } from './lib/rack/rack.module';
+export { RackComponent } from './lib/rack/rack/rack.component';
 
 // Services module
 export {
@@ -113,14 +119,26 @@ export {
 } from './lib/services/translation/translation.service';
 export { WindowService } from './lib/services/window/window.service';
 
+// Inputs module
+export { InputsModule } from './lib/inputs/inputs.module';
+export { PasswordInputComponent } from './lib/inputs/password-input/password-input.component';
+export { TextInputComponent } from './lib/inputs/text-input/text-input.component';
+
 // Lists module
 export { ListsModule } from './lib/lists/lists.module';
+export {
+	DynamicColumn,
+	DynamicColumnType,
+	DynamicSearchQuery,
+	DynamicHeaderComponent
+} from './lib/lists/dynamic-header/dynamic-header.component';
 export { ListComponent } from './lib/lists/list/list.component';
 export { ListBodyComponent } from './lib/lists/list-body/list-body.component';
 export { ListHeaderComponent } from './lib/lists/list-header/list-header.component';
 export { ListHeaderCellComponent } from './lib/lists/list-header-cell/list-header-cell.component';
 export { ListItemComponent } from './lib/lists/list-item/list-item.component';
 export { ListItemCellComponent } from './lib/lists/list-item-cell/list-item-cell.component';
+export { SearchHeaderComponent, SearchTuple } from './lib/lists/search-header/search-header.component';
 export {
 	SortHeaderComponent,
 	SortDirection,

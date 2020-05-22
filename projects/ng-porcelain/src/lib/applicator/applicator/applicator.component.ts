@@ -14,6 +14,7 @@ import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerVal
 
 import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
+import { Loggable } from '../../Loggable';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -36,7 +37,8 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	templateUrl: './applicator.component.html',
 	styleUrls: ['./applicator.component.scss']
 })
-export class ApplicatorComponent implements OnInit, OnDestroy {
+export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
+	readonly name: string = 'ApplicatorComponent';
 	private initialLoad: boolean = true;
 	private subscriptions: Subscription[] = [];
 
@@ -51,12 +53,11 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	private stagedValues: RefinerValueDictionary = {};
 	private appliedValues: RefinerValueDictionary = {};
 
-	@Input() public refiners: (BaseRefinerDefinition)[] = [];
+	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 
 	constructor(private translationService: TranslationService) {
-		console.group('new ApplicatorComponent()', { arguments });
-
+		super();
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<ApplicatorComponent>(this, {
 				label_Apply: 'applyLabel',
@@ -64,30 +65,19 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 				label_Reset: 'resetLabel'
 			})
 		);
-
-		console.groupEnd();
 	}
 
 	public apply() {
-		console.group('apply()');
-
 		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
 		this.onApply.emit({
 			appliedValues: this.appliedValues,
 			initialLoad: this.initialLoad
 		});
-
-		console.groupEnd();
 	}
 
 	public beforeApply(): void {
-		console.group('beforeApply()');
-
 		this.initialLoad = false;
-
 		this.apply();
-
-		console.groupEnd();
 	}
 
 	public canApply(): boolean {
@@ -101,6 +91,8 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	public getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
 	): OptionRefinerValue | DateRefinerValue {
+		this.debug('getDefaultValueForRefiner(refiner)', { refiner });
+
 		// If a default value exists for the slug, return it immediately
 		if (this.defaultValues && this.defaultValues[refiner.slug]) {
 			return this.defaultValues[refiner.slug];
@@ -124,14 +116,8 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	public handleRefinerValues(refinerSlug, refinerValue): void {
-		console.group('handleRefinerValues(refinerSlug, refinerValue)', {
-			refinerSlug,
-			refinerValue
-		});
-
+		this.log('handleRefinerValues(refinerSlug, refinerValue)', { refinerSlug, refinerValue });
 		this.stagedValues[refinerSlug] = refinerValue;
-
-		console.groupEnd();
 	}
 
 	public ngOnDestroy() {
@@ -140,16 +126,6 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit() {
-		console.group('ApplicatorComponent.ngOnInit()', {
-			props: {
-				refiners: this.refiners,
-				applyLabel: this.applyLabel,
-				resetLabel: this.resetLabel,
-				loadingLabel: this.loadingLabel,
-				defaultValues: this.defaultValues,
-				allowIncompleteEmit: this.allowIncompleteEmit
-			}
-		});
 		// generate defaultValues dictionary composite from implicit + explicit values
 		this.refiners.forEach(refiner => {
 			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
@@ -170,33 +146,16 @@ export class ApplicatorComponent implements OnInit, OnDestroy {
 		if (this.applyOnInit) {
 			combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
 				allRefinersInitialized => {
-					console.group('combineLatest.subscribe(allRefinersInitialized)', {
-						allRefinersInitialized
-					});
-
 					this.apply();
-
-					console.groupEnd();
 				}
 			);
 		}
-
-		console.groupEnd();
 	}
 
 	public reset(): void {
-		console.group('reset()');
-
 		this.refiners.forEach(refiner => {
-			console.group('this.refiners.forEach(refiner)', { refiner });
-
 			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
-
-			console.groupEnd();
 		});
-
 		this.beforeApply();
-
-		console.groupEnd();
 	}
 }

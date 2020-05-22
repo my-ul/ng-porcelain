@@ -1,15 +1,17 @@
-<input
-	#searchInput
-	type="text"
-	title="{{ placeholderLabel }}"
-	class="search-input__query"
-	[(ngModel)]="currentValue"
-	[placeholder]="placeholderLabel"
-	(keyup.enter)="submit()"
-	(keyup.esc)="clear()"
-	(focus)="handleFocusIn()"
-	(blur)="handleBlur()"
-/>
+<div class="search-input__query-wrap">
+	<input
+		#searchInput
+		type="text"
+		title="{{ placeholderLabel }}"
+		class="search-input__query"
+		[(ngModel)]="value"
+		[placeholder]="placeholderLabel"
+		(keyup.enter)="submit()"
+		(keyup.esc)="clear()"
+		(focus)="updateFocus(true)"
+		(blur)="updateFocus(false)"
+	/>
+</div>
 <button
 	class="search-input__search-action search-input__search-action--clear"
 	title="Clear the search query."

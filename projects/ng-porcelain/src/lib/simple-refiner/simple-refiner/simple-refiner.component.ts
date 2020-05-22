@@ -76,8 +76,6 @@ export class SimpleRefinerComponent implements OnInit {
 	private ignoreNext: boolean = false;
 
 	constructor(private translationService: TranslationService) {
-		console.group('SimpleRefinerComponent > constructor()');
-
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<SimpleRefinerComponent>(this, {
 				label_ShowMore: 'showMoreLabel',
@@ -86,8 +84,6 @@ export class SimpleRefinerComponent implements OnInit {
 				label_SelectNone: 'selectNoneLabel'
 			})
 		);
-
-		console.groupEnd();
 	}
 
 	ngOnInit() {
@@ -133,10 +129,6 @@ export class SimpleRefinerComponent implements OnInit {
 		// Selected options can be modified with the refiner.valueSubject Observable
 		// newValue is an array of option slugs to set as true
 		this.refiner.valueSubject.subscribe(selectedOptionSlugs => {
-			console.group(
-				'SimpleRefinerComponent.ngOnInit > this.refiner.valueSubject.subscribe(selectedOptionSlugs)'
-			);
-
 			if (this.ignoreNext) {
 				this.ignoreNext = false;
 			} else {
@@ -151,8 +143,6 @@ export class SimpleRefinerComponent implements OnInit {
 					this.values[optionSlug] = true;
 				});
 			}
-
-			console.groupEnd();
 		});
 
 		// Enables the callback API <porcelain-simple-refiner (onRefinerChange)="..."></porcelain-simple-refiner>

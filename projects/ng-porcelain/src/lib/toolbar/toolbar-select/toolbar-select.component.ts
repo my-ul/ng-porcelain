@@ -21,6 +21,7 @@ import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Porcelain
 import { ToolbarOptionComponent } from '../toolbar-option/toolbar-option.component';
 import { trigger, style, state, transition, animate } from '@angular/animations';
+import { Loggable } from '../../Loggable';
 
 @Component({
 	selector: 'porcelain-toolbar-select',
@@ -49,7 +50,8 @@ import { trigger, style, state, transition, animate } from '@angular/animations'
 		])
 	]
 })
-export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
+export class ToolbarSelectComponent extends Loggable implements OnDestroy, AfterContentInit {
+	readonly name = 'ToolbarSelectComponent';
 	/**
 	 * Font Awesome 5 icon to use for the dropdown arrow.
 	 */
@@ -186,6 +188,7 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 	 * @param elementRef Reference to the component's host element.
 	 */
 	constructor(private elementRef: ElementRef) {
+		super();
 		this.log('new ToolbarSelectComponent(elementRef)', { elementRef });
 	}
 
@@ -312,15 +315,6 @@ export class ToolbarSelectComponent implements OnDestroy, AfterContentInit {
 			} else {
 				this.open().highlightOptionByIndex(this.selectedIndex > -1 ? this.selectedIndex : 0);
 			}
-		}
-	}
-
-	/**
-	 * Logs information to the console while in development mode.
-	 */
-	private log(...args) {
-		if (isDevMode()) {
-			console.log.apply(null, ['ToolbarSelectComponent', ...args]);
 		}
 	}
 
