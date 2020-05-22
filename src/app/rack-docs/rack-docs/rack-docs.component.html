@@ -1,0 +1,18 @@
+<div class="page">
+	<div class="page__section page__section--padded">
+		<h2>Rack Component</h2>
+
+		<p>
+			The Porcelain Rack is used for managing items between two states: active and inactive. The
+			control accepts two input arrays, as well as some optional configuration properties to
+			control how list items are rendered.
+		</p>
+	</div>
+	<div class="page__section page__section--padded">
+		<porcelain-rack
+			[size]="10"
+			[(activeItems)]="activeFruits"
+			[(inactiveItems)]="inactiveFruits"
+		></porcelain-rack>
+	</div>
+</div>

@@ -1,165 +1,18 @@
-<div>
-	<porcelain-list>
-		<porcelain-list-header>
-			<porcelain-list-header-cell [width]="2 / 3">
-				<porcelain-sort-header [label]="'File Volume'"></porcelain-sort-header>
-			</porcelain-list-header-cell>
-
-			<porcelain-list-header-cell [width]="1 / 6">
-				<porcelain-text-header>
-					Date Modified
-				</porcelain-text-header>
-			</porcelain-list-header-cell>
-
-			<porcelain-list-header-cell [width]="1 / 6">
-				<porcelain-sort-header [label]="'Price'"></porcelain-sort-header>
-			</porcelain-list-header-cell>
-		</porcelain-list-header>
-
-		<porcelain-list-body>
-			<porcelain-list-item [success]="true">
-				<porcelain-list-item-cell [width]="2 / 3" [padAll]="true">
-					<div class="section">
-						<h3>
-							<a href="#list-item__1__link">0000000000</a>
-							| Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque natus ullam
-							iste rem laudantium quia!
-						</h3>
-					</div>
-					<div class="section">
-						<p class="text-muted">
-							<span class="text-accent">Success</span>
-							| Lorem Ipsum | File No: 000000 | File Vol: 0000
-						</p>
-					</div>
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					2020-01-20
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					USD $ {{ 1123456 | toLocaleString }}
-				</porcelain-list-item-cell>
-			</porcelain-list-item>
-
-			<porcelain-list-item [error]="true">
-				<porcelain-list-item-cell [width]="2 / 3" [padAll]="true">
-					<div class="section">
-						<h3>
-							<a href="#list-item__1__link">0000000000</a>
-							| Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque natus ullam
-							iste rem laudantium quia!
-						</h3>
-					</div>
-					<div class="section">
-						<p class="text-muted">
-							<span class="text-accent">Error</span>
-							| Lorem Ipsum | File No: 000000 | File Vol: 0000
-						</p>
-					</div>
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					2020-01-20
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					BTC ₿ {{ 3456789 | toLocaleString }}
-				</porcelain-list-item-cell>
-			</porcelain-list-item>
-
-			<porcelain-list-item [warning]="true">
-				<porcelain-list-item-cell [width]="2 / 3" [padAll]="true">
-					<div class="section">
-						<h3>
-							<a href="#list-item__1__link">0000000000</a>
-							| Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque natus ullam
-							iste rem laudantium quia!
-						</h3>
-					</div>
-					<div class="section">
-						<p class="text-muted">
-							<span class="text-accent">Warning</span>
-							| Lorem Ipsum | File No: 000000 | File Vol: 0000
-						</p>
-					</div>
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					2020-01-20
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					EUR &euro; {{ 2345678 | toLocaleString }}
-				</porcelain-list-item-cell>
-			</porcelain-list-item>
-
-			<porcelain-list-item [primary]="true">
-				<porcelain-list-item-cell [width]="2 / 3" [padAll]="true">
-					<div class="section">
-						<h3>
-							<a href="#list-item__1__link">0000000000</a>
-							| Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque natus ullam
-							iste rem laudantium quia!
-						</h3>
-					</div>
-					<div class="section">
-						<p class="text-muted">
-							<span class="text-accent">Primary</span>
-							| Lorem Ipsum | File No: 000000 | File Vol: 0000
-						</p>
-					</div>
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					2020-01-20
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					CAD $ {{ 1900000 | toLocaleString }}
-				</porcelain-list-item-cell>
-			</porcelain-list-item>
-
-			<porcelain-list-item [secondary]="true">
-				<porcelain-list-item-cell [width]="2 / 3" [padAll]="true">
-					<div class="section">
-						<h3>
-							<a href="#list-item__1__link">0000000000</a>
-							| Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque natus ullam
-							iste rem laudantium quia!
-						</h3>
-					</div>
-					<div class="section">
-						<p class="text-muted">
-							<span class="text-accent">Secondary</span>
-							| Lorem Ipsum | File No: 000000 | File Vol: 0000
-						</p>
-					</div>
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					2020-01-20
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					CNY &yen; {{ 142000 | toLocaleString }}
-				</porcelain-list-item-cell>
-			</porcelain-list-item>
-
-			<porcelain-list-item>
-				<porcelain-list-item-cell [width]="2 / 3" [padAll]="true">
-					<div class="section">
-						<h3>
-							<a href="#list-item__1__link">0000000000</a>
-							| Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque natus ullam
-							iste rem laudantium quia!
-						</h3>
-					</div>
-					<div class="section">
-						<p class="text-muted">
-							<span class="text-accent">Indeterminate</span>
-							| Lorem Ipsum | File No: 000000 | File Vol: 0000
-						</p>
-					</div>
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					2020-01-20
-				</porcelain-list-item-cell>
-				<porcelain-list-item-cell [width]="1 / 6" [padAll]="true">
-					JPY &yen; {{ 142000 | toLocaleString }}
-				</porcelain-list-item-cell>
-			</porcelain-list-item>
-		</porcelain-list-body>
-	</porcelain-list>
+<div class="blade">
+	<div class="blade__navigation">
+		<ul class="navigation">
+			<li class="navigation__item">
+				<a routerLink="/lists" routerLinkActive="active">Lists</a>
+			</li>
+			<li class="navigation__item">
+				<a routerLink="/rack" routerLinkActive="active">Rack</a>
+			</li>
+			<li class="navigation__item">
+				<a routerLink="/inputs" routerLinkActive="active">Inputs</a>
+			</li>
+		</ul>
+	</div>
+	<div class="blade__children">
+		<router-outlet></router-outlet>
+	</div>
 </div>
