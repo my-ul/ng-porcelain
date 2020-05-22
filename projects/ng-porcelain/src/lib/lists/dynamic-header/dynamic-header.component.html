@@ -15,22 +15,32 @@
 			<fa-icon [icon]="gripIcon"></fa-icon>
 		</div>
 
-		<ng-container *ngIf="column.type === 'search'"></ng-container>
+		<div class="porcelain-dynamic-header__column-control">
+			<ng-container *ngIf="column.type === 'search'">
+				<porcelain-search-header
+					[sortKey]="column.key"
+					[query]="getQueryValue(column.key)"
+					[label]="getLabel(column)"
+					[activeSortKey]="activeSortKey"
+					[activeSortDirection]="activeSortDirection"
+					(sortChange)="sortChanged($event)"
+					(searchChange)="searchChanged($event)"
+				></porcelain-search-header>
+			</ng-container>
 
-		<ng-container *ngIf="column.type === 'sort'">
-			<porcelain-sort-header
-				[label]="getLabel(column)"
-				[sortKey]="column.key"
-				[activeSortDirection]="activeSortDirection"
-				(activeSortDirectionChange)="column.sort.activeSortDirectionChange($event)"
-				[activeSortKey]="activeSortKey"
-				(activeSortKeyChange)="column.sort.activeSortKeyChange($event)"
-				(onSortChange)="column.sort.sortChange($event)"
-			></porcelain-sort-header>
-		</ng-container>
+			<ng-container *ngIf="column.type === 'sort'">
+				<porcelain-sort-header
+					[label]="getLabel(column)"
+					[sortKey]="column.key"
+					[activeSortDirection]="activeSortDirection"
+					[activeSortKey]="activeSortKey"
+					(sortChange)="sortChanged($event)"
+				></porcelain-sort-header>
+			</ng-container>
 
-		<ng-container *ngIf="column.type === 'text'">
-			<porcelain-text-header>{{ getLabel(column) }}</porcelain-text-header>
-		</ng-container>
+			<ng-container *ngIf="column.type === 'text'">
+				<porcelain-text-header>{{ getLabel(column) }}</porcelain-text-header>
+			</ng-container>
+		</div>
 	</li>
 </ul>

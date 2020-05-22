@@ -15,13 +15,22 @@ import { ListItemCellComponent } from './list-item-cell/list-item-cell.component
 import { SortHeaderComponent } from './sort-header/sort-header.component';
 import { TextHeaderComponent } from './text-header/text-header.component';
 import { DynamicHeaderComponent } from './dynamic-header/dynamic-header.component';
+import { SearchHeaderComponent } from './search-header/search-header.component';
+import { SearchInputModule } from '../search-input/search-input.module';
 
-export const LISTS_IMPORTS = [CommonModule, FontAwesomeModule, DragDropModule, FormsModule];
+export const LISTS_IMPORTS = [
+	CommonModule,
+	FontAwesomeModule,
+	DragDropModule,
+	FormsModule,
+	SearchInputModule
+];
 
 export const LISTS_DIRECTIVES = [
 	ListHeaderComponent,
 	ListHeaderCellComponent,
 	SortHeaderComponent,
+	SearchHeaderComponent,
 	TextHeaderComponent,
 	ListComponent,
 	ListBodyComponent,

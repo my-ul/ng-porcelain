@@ -1,0 +1,40 @@
+* {
+	box-sizing: border-box;
+}
+
+:host {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	width: 100%;
+	max-width: 30em;
+
+	// > * + * {
+	// 	margin-left: 10px;
+	// }
+
+	.search-header__active-control {
+		flex: 1 1 0px;
+		::ng-deep porcelain-search-input {
+			border-radius: 3px;
+			overflow: hidden;
+			background-color: transparentize($color: #fff, $amount: 0.5);
+			transition: background-color ease-in-out 200ms;
+			&.search-input--has-focus {
+				background-color: #fff;
+			}
+
+			input {
+				background-color: transparent;
+			}
+		}
+	}
+
+	.search-header__swap {
+		flex: 0 0 auto;
+		background: transparent;
+		padding: 0 0 0 10px;
+		border: none;
+		color: #303741;
+	}
+}

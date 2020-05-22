@@ -81,11 +81,18 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 	@Output()
 	activeSortDirectionChange: EventEmitter<string> = new EventEmitter();
 
+	/**
+	 * @deprecated Change bindings like `(onSortChange)="..."` to `(sortChange)="..."`
+	 */
 	@Output()
 	onSortChange: EventEmitter<SortTuple> = new EventEmitter();
 
+	@Output()
+	sortChange: EventEmitter<SortTuple> = new EventEmitter();
+
 	constructor() {
 		super();
+		this.sortChange.subscribe(sort => this.onSortChange.emit(sort));
 	}
 
 	ngOnInit() {}
@@ -104,7 +111,7 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 			this.activeSortDirection = 'asc';
 			this.activeSortKey = this.sortKey;
 		}
-		this.onSortChange.emit([this.sortKey, this.activeSortDirection]);
+		this.sortChange.emit([this.sortKey, this.activeSortDirection]);
 		this.log('toggleSort()', [this.sortKey, this.activeSortDirection]);
 	}
 }

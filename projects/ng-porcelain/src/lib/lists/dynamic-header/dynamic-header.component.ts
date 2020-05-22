@@ -4,13 +4,7 @@ import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons';
 
 import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
 import { Loggable } from '../../Loggable';
-
-export interface DynamicSearchBinding {}
-export interface DynamicSortBinding {
-	activeSortDirectionChange: (sortDirection: SortDirection) => void;
-	activeSortKeyChange: (sortKey: string) => void;
-	sortChange: (sortTuple: SortTuple) => void;
-}
+import { SearchTuple } from '../search-header/search-header.component';
 
 export type DynamicColumnType = 'search' | 'sort' | 'text';
 
@@ -20,9 +14,10 @@ export interface DynamicColumn {
 	locked: boolean;
 	type: DynamicColumnType;
 	width: number;
+}
 
-	search?: DynamicSearchBinding;
-	sort?: DynamicSortBinding;
+export interface DynamicSearchQuery {
+	[key: string]: string;
 }
 
 @Component({
@@ -34,13 +29,14 @@ export interface DynamicColumn {
 	}
 })
 export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
-	name = 'DynamicHeaderComponent';
-
-	gripIcon = faGripLinesVertical;
+	readonly name = 'DynamicHeaderComponent';
+	readonly gripIcon = faGripLinesVertical;
 
 	@Input() labelProp: string = 'label';
 
 	@Input() widthProp: string = 'width';
+
+	//#region `[(column)]` Binding
 
 	private _columns: DynamicColumn[];
 
@@ -56,8 +52,13 @@ export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
 		this.columnsChange.emit(this._columns);
 	}
 
+	//#endregion
+
+	//#region `[(activeSortKey)]` Binding
+
 	private _activeSortKey: string;
 
+	@Output()
 	public activeSortKeyChange: EventEmitter<string> = new EventEmitter();
 
 	@Input()
@@ -70,8 +71,13 @@ export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
 		this.activeSortKeyChange.emit(this._activeSortKey);
 	}
 
+	//#endregion
+
+	//#region `[(activeSortDirection)]` Binding
+
 	private _activeSortDirection: SortDirection;
 
+	@Output()
 	public activeSortDirectionChange: EventEmitter<SortDirection> = new EventEmitter();
 
 	@Input()
@@ -83,6 +89,68 @@ export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
 		this._activeSortDirection = activeSortDirection;
 		this.activeSortDirectionChange.emit(this._activeSortDirection);
 	}
+
+	//#endregion
+
+	//#region `(sortChange)` Binding
+
+	@Output()
+	public sortChange: EventEmitter<SortTuple> = new EventEmitter();
+
+	sortChanged(sort: SortTuple) {
+		this.sortChange.emit(sort);
+	}
+
+	//#endregion
+
+	//#region `[(query)]` Binding
+
+	private _query: DynamicSearchQuery = {};
+
+	@Input()
+	get query(): DynamicSearchQuery {
+		return this._query;
+	}
+
+	set query(query: DynamicSearchQuery) {
+		this._query = query;
+		this.queryChange.emit(this._query);
+	}
+
+	@Output()
+	public queryChange: EventEmitter<DynamicSearchQuery> = new EventEmitter();
+
+	searchChanged([searchKey, searchValue]: SearchTuple): void {
+		if (searchValue === null) {
+			this.query = Object.keys(this.query)
+				.filter(key => key !== searchKey)
+				.reduce((query, key) => {
+					query[key] = this.query[key];
+					return query;
+				}, {});
+		} else {
+			this.query = {
+				[searchKey]: searchValue,
+				...this.query
+			};
+		}
+		this.log(
+			'searchChanged([searchKey, searchValue]) query updated',
+			{ searchKey, searchValue },
+			this.query
+		);
+	}
+
+	getQueryValue(key: string): string {
+		this.info('getQueryValue(key)', { key }, { query: this.query }, this.query[key]);
+		if (this.query[key]) {
+			return this.query[key];
+		} else {
+			return '';
+		}
+	}
+
+	//#endregion
 
 	drop(event: CdkDragDrop<string[]>) {
 		moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
@@ -121,5 +189,16 @@ export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
 		super();
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		let totalWidth = this.columns.reduce((sum, currentColumn) => {
+			return sum + currentColumn.width;
+		}, 0);
+		if (totalWidth !== 1) {
+			this.forceLog().warn(
+				`Column widths do not equal 100%: (${totalWidth} !== 1) column layout may fail.`
+			);
+		}
+
+		this.info('ngOnInit()', { query: this.query });
+	}
 }

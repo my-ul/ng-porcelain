@@ -12,6 +12,7 @@ import {
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { TranslationService } from '../../services/translation/translation.service';
+import { Loggable } from '../../Loggable';
 
 @Component({
 	selector: 'porcelain-search-input',
@@ -23,8 +24,9 @@ import { TranslationService } from '../../services/translation/translation.servi
 		'[class.search-input--has-focus]': 'isSearchFocused'
 	}
 })
-export class SearchInputComponent implements OnInit {
-	@Input() public userValue: string = '';
+export class SearchInputComponent extends Loggable implements OnInit {
+	readonly name = 'SearchInputComponent';
+
 	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
 
 	//#region Appearance
@@ -49,6 +51,25 @@ export class SearchInputComponent implements OnInit {
 
 	//#endregion
 
+	//#region `value` Binding
+
+	private _value: string;
+
+	@Input()
+	get value(): string {
+		return this._value;
+	}
+
+	set value(value: string) {
+		this._value = value;
+		this.valueChange.emit(this._value);
+	}
+
+	@Output()
+	public valueChange: EventEmitter<string> = new EventEmitter();
+
+	//#endregion
+
 	//#region Labels
 
 	@Input() public placeholderLabel: string = 'Type to search...';
@@ -56,9 +77,9 @@ export class SearchInputComponent implements OnInit {
 	//#endregion
 
 	public isSearchFocused = false;
-	public currentValue = '';
 
 	constructor(private translationService: TranslationService) {
+		super();
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate(this, {
 				label_TypeToSearch: 'placeholderLabel'
@@ -77,7 +98,7 @@ export class SearchInputComponent implements OnInit {
 	 * Clears the value of the search field and resets focus.
 	 */
 	public clear(): void {
-		this.currentValue = '';
+		this.value = '';
 
 		//empty value to be emitted to emptyHandler
 		this.empty();
@@ -90,6 +111,11 @@ export class SearchInputComponent implements OnInit {
 	 */
 	public empty(): void {
 		this.emptyHandler.emit('');
+	}
+
+	public updateFocus(isFocused: boolean): this {
+		this.isSearchFocused = isFocused;
+		return this;
 	}
 
 	/**
@@ -110,7 +136,7 @@ export class SearchInputComponent implements OnInit {
 	 * Tests the search box for a value.
 	 */
 	public isEmpty(): boolean {
-		return this.currentValue === '';
+		return this.value === '';
 	}
 
 	/**
@@ -118,9 +144,9 @@ export class SearchInputComponent implements OnInit {
 	 */
 	public ngOnInit(): void {
 		/* assigning uservalues */
-		this.currentValue = this.userValue;
+		this.value = this.value;
 		/*to check if there is previous value*/
-		this.canEmitEmpty = this.userValue === '' ? false : true;
+		this.canEmitEmpty = this.value === '' ? false : true;
 	}
 
 	/**
@@ -137,20 +163,22 @@ export class SearchInputComponent implements OnInit {
 		this.searchInput.nativeElement.focus();
 	}
 
+	@Input()
 	canEmitEmpty: boolean = false;
 
 	/**
 	 * Submits the current value of the search input to outside listener.
 	 */
 	public submit(): void {
+		this.log('submit()', { value: this.value });
 		if (!this.isEmpty()) {
-			this.submitHandler.emit(this.currentValue);
+			this.submitHandler.emit(this.value);
 			this.canEmitEmpty = true; //to enable empty value sending for submit
 		} else {
 			// is empty
 			if (this.canEmitEmpty === true) {
 				this.canEmitEmpty = false;
-				this.submitHandler.emit(this.currentValue); //empty value is emitted by submit
+				this.submitHandler.emit(this.value); //empty value is emitted by submit
 			}
 			this.setFocus();
 		}
