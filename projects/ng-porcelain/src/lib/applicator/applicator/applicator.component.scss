@@ -76,7 +76,7 @@
 		background: #fff;
 		z-index: 2000;
 
-		border-bottom: solid 1px #d0d0d0;
+		border-bottom: solid 1px #d5d7db;
 	}
 	.applicator__section {
 		z-index: 1000;
@@ -93,6 +93,6 @@
 		}
 	}
 	.applicator__section + .applicator__section {
-		border-top: 1px solid #d0d0d0;
+		border-top: 1px solid #d5d7db;
 	}
 }
