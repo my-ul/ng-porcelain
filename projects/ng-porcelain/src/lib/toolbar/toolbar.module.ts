@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Other Modules
-import { SearchInputModule } from '../search-input/search-input.module';
 
 // This module
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -16,13 +15,9 @@ import { ToolbarCellComponent } from './toolbar-cell/toolbar-cell.component';
 import { ToolbarSelectedTemplateComponent } from './toolbar-selected-template/toolbar-selected-template.component';
 import { ToolbarsComponent } from './toolbars/toolbars.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InputsModule } from '../inputs/inputs.module';
 
-export const TOOLBAR_IMPORTS = [
-	CommonModule,
-	FontAwesomeModule,
-	SearchInputModule,
-	BrowserAnimationsModule
-];
+export const TOOLBAR_IMPORTS = [CommonModule, FontAwesomeModule, InputsModule, BrowserAnimationsModule];
 export const TOOLBAR_DIRECTIVES = [
 	ToolbarsComponent,
 	ToolbarComponent,

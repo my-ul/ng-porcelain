@@ -29,7 +29,7 @@ export interface DynamicSearchQuery {
 		'porcelain-dynamic-header': 'true'
 	}
 })
-export class DynamicHeaderComponent<T> extends Loggable implements OnInit {
+export class DynamicHeaderComponent<TColumnType extends any = any> extends Loggable implements OnInit {
 	readonly name = 'DynamicHeaderComponent';
 	readonly gripIcon: any = faGripLinesVertical;
 
