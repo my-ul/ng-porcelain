@@ -22,15 +22,15 @@ import { moveItem } from '../../shared/utilities/arrays/moveItem';
 	templateUrl: './rack.component.html',
 	styleUrls: ['./rack.component.scss']
 })
-export class RackComponent<T> implements OnInit {
+export class RackComponent<TItemType extends any = any> implements OnInit {
 	/**
 	 * activeItems backing field
 	 */
-	private _activeItems: T[] = [];
+	private _activeItems: TItemType[] = [];
 	/**
 	 * inactiveItems backing field
 	 */
-	private _inactiveItems: T[] = [];
+	private _inactiveItems: TItemType[] = [];
 
 	readonly activateIcon: any = faChevronRight;
 	readonly deactivateIcon: any = faChevronLeft;
@@ -62,12 +62,12 @@ export class RackComponent<T> implements OnInit {
 	/**
 	 * activeItems change emitter; emits changes to the activeItems property to parent scopes
 	 */
-	@Output() activeItemsChange = new EventEmitter<T[]>();
+	@Output() activeItemsChange = new EventEmitter<TItemType[]>();
 
 	/**
 	 * inactiveItems EventEmitter; emits changes to the inactiveItems property to parent scopes
 	 */
-	@Output() inactiveItemsChange = new EventEmitter<T[]>();
+	@Output() inactiveItemsChange = new EventEmitter<TItemType[]>();
 
 	@ViewChild('activePicker')
 	activeSelectElement: ElementRef;
@@ -104,18 +104,18 @@ export class RackComponent<T> implements OnInit {
 	/**
 	 * The object defining the currently selected Active item.
 	 */
-	selectedActiveItem: T = null;
+	selectedActiveItem: TItemType = null;
 
 	/**
 	 * The object defining the currently selected Inactive item.
 	 */
-	selectedInactiveItem: T = null;
+	selectedInactiveItem: TItemType = null;
 
 	/**
 	 * activeItems getter; returns the value of _activeItems
 	 */
 	@Input()
-	get activeItems(): T[] {
+	get activeItems(): TItemType[] {
 		return this._activeItems;
 	}
 
@@ -123,14 +123,14 @@ export class RackComponent<T> implements OnInit {
 	 * inactiveItems getter; returns value of _inactiveItems backing field
 	 */
 	@Input()
-	get inactiveItems(): T[] {
+	get inactiveItems(): TItemType[] {
 		return this._inactiveItems;
 	}
 
 	/**
 	 * activeItems setter; sets the value of _activeItems and emits the changes
 	 */
-	set activeItems(activeItems: T[]) {
+	set activeItems(activeItems: TItemType[]) {
 		this._activeItems = activeItems;
 		this.activeItemsChange.emit(this._activeItems);
 	}
@@ -197,7 +197,7 @@ export class RackComponent<T> implements OnInit {
 	/**
 	 * inactiveItems setter; sets value of _inactiveItems backing field and emits the new value.
 	 */
-	set inactiveItems(inactiveItems: T[]) {
+	set inactiveItems(inactiveItems: TItemType[]) {
 		this._inactiveItems = inactiveItems;
 		this.inactiveItemsChange.emit(this._inactiveItems);
 	}
@@ -296,7 +296,7 @@ export class RackComponent<T> implements OnInit {
 		return this;
 	}
 
-	isItemLocked(item: T): boolean {
+	isItemLocked(item: TItemType): boolean {
 		if (this.lockedProp in item) {
 			return !!item[this.lockedProp]; // uses double negate (!!) to ensure boolean;
 		}

@@ -6,17 +6,17 @@
 		class="search-input__query"
 		[(ngModel)]="value"
 		[placeholder]="placeholderLabel"
-		(keyup.enter)="submit()"
-		(keyup.esc)="clear()"
-		(focus)="updateFocus(true)"
-		(blur)="updateFocus(false)"
+		(keyup.enter)="trySubmit()"
+		(keyup.esc)="tryClear()"
+		(focus)="setFocus(true)"
+		(blur)="setFocus(false)"
 	/>
 </div>
 <button
 	class="search-input__search-action search-input__search-action--clear"
 	title="Clear the search query."
 	*ngIf="!isEmpty()"
-	(click)="clear()"
+	(click)="tryClear()"
 >
 	<fa-icon [icon]="clearIcon" [styles]="{ color: clearIconColor }"></fa-icon>
 	<span class="sr-only">Clear the search query.</span>
@@ -25,7 +25,7 @@
 	class=" search-input__search-action  search-input__search"
 	[class.search-input__search-action--not-active]="!canSubmit()"
 	[class.search-input__search-action--is-active]="canSubmit()"
-	(click)="submit()"
+	(click)="trySubmit()"
 	title="Submit the search using the current search query."
 >
 	<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>

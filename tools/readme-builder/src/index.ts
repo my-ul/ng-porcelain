@@ -17,7 +17,6 @@ const rootNode: SectionIndex = {
 			Applicator: '../../projects/ng-porcelain/src/lib/applicator/applicator/README.md',
 			'Refiners Macro': '../../projects/ng-porcelain/src/lib/refiners/refiners/README.md'
 		},
-		'Search Input': '../../projects/ng-porcelain/src/lib/search-input/search-input/README.md',
 		Footer: '../../projects/ng-porcelain/src/lib/footer/footer/README.md',
 		Truncate: '../../projects/ng-porcelain/src/lib/truncate/truncate/README.md',
 		Spinner: '../../projects/ng-porcelain/src/lib/spinner/spinner/README.md'
@@ -40,6 +39,8 @@ const rootNode: SectionIndex = {
 	Modules: {
 		Inputs: {
 			__: '../../projects/ng-porcelain/src/lib/inputs/README.md',
+
+			'Search Input': '../../projects/ng-porcelain/src/lib/inputs/search-input/README.md',
 			'Password Input Component':
 				'../../projects/ng-porcelain/src/lib/inputs/password-input/README.md',
 			'Text Input Component': '../../projects/ng-porcelain/src/lib/inputs/text-input/README.md'

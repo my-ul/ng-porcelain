@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RackComponent } from './rack.component';
 
 describe('RackComponent', () => {
-	let component: RackComponent;
-	let fixture: ComponentFixture<RackComponent>;
+	let component: RackComponent<any>;
+	let fixture: ComponentFixture<RackComponent<any>>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({

@@ -6,6 +6,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { InputsModule } from '../inputs/inputs.module';
+
 import { ListComponent } from './list/list.component';
 import { ListHeaderComponent } from './list-header/list-header.component';
 import { ListHeaderCellComponent } from './list-header-cell/list-header-cell.component';
@@ -16,14 +18,13 @@ import { SortHeaderComponent } from './sort-header/sort-header.component';
 import { TextHeaderComponent } from './text-header/text-header.component';
 import { DynamicHeaderComponent } from './dynamic-header/dynamic-header.component';
 import { SearchHeaderComponent } from './search-header/search-header.component';
-import { SearchInputModule } from '../search-input/search-input.module';
 
 export const LISTS_IMPORTS = [
 	CommonModule,
 	FontAwesomeModule,
 	DragDropModule,
 	FormsModule,
-	SearchInputModule
+	InputsModule
 ];
 
 export const LISTS_DIRECTIVES = [

@@ -6,7 +6,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { faArrowAltCircleRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // Module Imports for synthetic module
-import { SEARCH_INPUT_DIRECTIVES, SEARCH_INPUT_IMPORTS } from '../search-input.module';
+import { INPUTS_IMPORTS, INPUTS_COMPONENTS } from '../inputs.module';
 import { SearchInputComponent } from './search-input.component';
 
 const onQueryChange = 'Search Input Query submitted';
@@ -17,22 +17,28 @@ storiesOf('Search Input Component', module)
 	.addDecorator(
 		// Create Synthetic Module
 		moduleMetadata({
-			declarations: SEARCH_INPUT_DIRECTIVES,
-			imports: SEARCH_INPUT_IMPORTS
+			declarations: INPUTS_COMPONENTS,
+			imports: INPUTS_IMPORTS
 		})
 	)
 	.add('Default Presentation', () => {
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="action(onQueryChange)"
+		 * 		[submit]="action(onQueryChange)"
 		 * 		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear)
+				value: text('[(value)]'),
+				valueChange: (newValue: string) => {
+					if (this.value !== newValue) {
+						this.value = newValue;
+					}
+				},
+				submit: action(onQueryChange),
+				clear: action(onQueryClear)
 			}
 		};
 	})
@@ -40,14 +46,14 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="action(onQueryChange)"
+		 * 		[submit]="action(onQueryChange)"
 		 * 		[placeholderLabel]="'Volume'"></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
 				placeholderLabel: text('Placeholder Label', 'Volume')
 			}
 		};
@@ -56,15 +62,15 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="..."
+		 * 		[submit]="..."
 		 * 		[submitIcon]="faArrowAltCircleRight"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
 				submitIcon: faArrowAltCircleRight
 			}
 		};
@@ -73,15 +79,15 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="..."
+		 * 		[submit]="..."
 		 * 		[clearIcon]="faTimes"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
 				clearIcon: faTimes
 			}
 		};
@@ -90,15 +96,15 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="..."
+		 * 		[submit]="..."
 		 * 		[borders]="false"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
 				borders: boolean('Enable Border', false)
 			}
 		};
@@ -107,15 +113,15 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="..."
+		 * 		[submit]="..."
 		 * 		[submitIconColor]="'red'"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
 				submitIconColor: color('Color', '#ff0000')
 			}
 		};
@@ -124,15 +130,15 @@ storiesOf('Search Input Component', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submitHandler]="..."
+		 * 		[submit]="..."
 		 * 		[clearIconColor]="'red'"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
 				clearIconColor: color('Clear Icon Color', '#ff0000')
 			}
 		};
@@ -141,9 +147,9 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
-				emptyHandler: action(onQueryClear),
-				userValue: text('Value', 'Entered')
+				submit: action(onQueryChange),
+				clear: action(onQueryClear),
+				value: text('[(value)]', '* custom value from your application *')
 			}
 		};
 	})
@@ -151,13 +157,14 @@ storiesOf('Search Input Component', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submitHandler: action(onQueryChange),
 				clearIconColor: color('Clear Icon Color', '#ff0000'),
 				submitIconColor: color('Submit Icon Color', '#00ff00'),
 				placeholderLabel: text('Placeholder Label', 'Volume'),
 				borders: boolean('Enable Border', true),
-				userValue: text('userValue Label', 'Entered'),
-				emptyHandler: action(onQueryClear)
+				value: text('[(value)]', 'Entered'),
+				canEmitEmpty: boolean('Allow Empty Submit?', false),
+				submit: action(onQueryChange),
+				clear: action(onQueryClear)
 			}
 		};
 	});

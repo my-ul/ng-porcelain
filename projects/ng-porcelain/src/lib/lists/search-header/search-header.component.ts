@@ -1,9 +1,10 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Loggable } from '../../Loggable';
-import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
 
 import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { SearchInputComponent } from '../../search-input/search-input/search-input.component';
+
+import { Loggable } from '../../Loggable';
+import { SearchInputComponent } from '../../inputs/search-input/search-input.component';
+import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
 
 export type SearchTuple = [string, string];
 
@@ -129,7 +130,7 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 		setTimeout(() => {
 			if (this.mode === 'search') {
-				this.searchInputComponent.setFocus();
+				this.searchInputComponent.ensureFocus();
 			}
 		}, 0);
 	}
