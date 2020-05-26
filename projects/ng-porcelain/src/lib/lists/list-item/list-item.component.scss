@@ -3,7 +3,7 @@
 
 	.list-item__inner {
 		background: #fff;
-		border: solid 1px #ddd;
+		border: solid 1px #d5d7db;
 		display: flex;
 		flex-direction: row;
 		::ng-deep .text-accent {
@@ -63,7 +63,7 @@
 
 	::ng-deep {
 		porcelain-list-item-cell + porcelain-list-item-cell {
-			border-left: solid 1px #ddd;
+			border-left: solid 1px #d5d7db;
 		}
 	}
 }
