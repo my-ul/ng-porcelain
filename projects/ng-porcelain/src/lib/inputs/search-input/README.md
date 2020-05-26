@@ -24,7 +24,7 @@ As of 1.13.0, the Search Input supports two-way binding. This makes it easy to p
 In your template...
 
 ```html
-<porcelain-search-input [(value)]="searchValue"></porcelain-search-input>
+<porcelain-search-input [(value)]="myValue"></porcelain-search-input>
 ```
 
 In your controller...
