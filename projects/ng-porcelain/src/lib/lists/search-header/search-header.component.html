@@ -15,8 +15,8 @@
 		[borders]="false"
 		[canEmitEmpty]="true"
 		[value]="query"
-		(submitHandler)="searchChanged($event)"
-		(emptyHandler)="searchChanged(null)"
+		(submit)="searchChanged($event)"
+		(clear)="searchChanged(null)"
 	></porcelain-search-input>
 </div>
 

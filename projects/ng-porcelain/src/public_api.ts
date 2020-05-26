@@ -13,9 +13,6 @@ export { RefinersComponent } from './lib/refiners/refiners/refiners.component';
 export { SimpleRefinerModule } from './lib/simple-refiner/simple-refiner.module';
 export { SimpleRefinerComponent } from './lib/simple-refiner/simple-refiner/simple-refiner.component';
 
-export { SearchInputModule } from './lib/search-input/search-input.module';
-export { SearchInputComponent } from './lib/search-input/search-input/search-input.component';
-
 export { SpinnerModule } from './lib/spinner/spinner.module';
 export { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 
@@ -123,6 +120,7 @@ export { WindowService } from './lib/services/window/window.service';
 export { InputsModule } from './lib/inputs/inputs.module';
 export { PasswordInputComponent } from './lib/inputs/password-input/password-input.component';
 export { TextInputComponent } from './lib/inputs/text-input/text-input.component';
+export { SearchInputComponent } from './lib/inputs/search-input/search-input.component';
 
 // Lists module
 export { ListsModule } from './lib/lists/lists.module';
