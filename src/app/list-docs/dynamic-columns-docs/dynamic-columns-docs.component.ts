@@ -7,7 +7,7 @@ import {
 import * as faker from 'faker';
 import { ListComponent } from '../../../../projects/ng-porcelain/src/lib/lists/list/list.component';
 
-import { SortTuple } from 'ng-porcelain/public_api';
+import { SortTuple } from '../../../../projects/ng-porcelain/src/public_api';
 
 interface Person {
 	first_name: string;
