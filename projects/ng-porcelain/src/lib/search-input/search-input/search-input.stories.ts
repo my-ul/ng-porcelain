@@ -6,39 +6,33 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { faArrowAltCircleRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // Module Imports for synthetic module
-import { INPUTS_IMPORTS, INPUTS_COMPONENTS } from '../inputs.module';
+import { SEARCH_INPUT_DIRECTIVES, SEARCH_INPUT_IMPORTS } from '../search-input.module';
 import { SearchInputComponent } from './search-input.component';
 
 const onQueryChange = 'Search Input Query submitted';
 const onQueryClear = 'Search Input Query cleared';
 
-storiesOf('Search Input/Two-Way Bind', module)
+storiesOf('Search Input/Legacy', module)
 	.addDecorator(withKnobs)
 	.addDecorator(
 		// Create Synthetic Module
 		moduleMetadata({
-			declarations: INPUTS_COMPONENTS,
-			imports: INPUTS_IMPORTS
+			declarations: SEARCH_INPUT_DIRECTIVES,
+			imports: SEARCH_INPUT_IMPORTS
 		})
 	)
-	.add('Default Presentation', () => {
+	.add('Default', () => {
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="action(onQueryChange)"
+		 * 		(submitHandler)="action(onQueryChange)"
 		 * 		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				value: text('[(value)]'),
-				valueChange: (newValue: string) => {
-					if (this.value !== newValue) {
-						this.value = newValue;
-					}
-				},
-				submit: action(onQueryChange),
-				clear: action(onQueryClear)
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear)
 			}
 		};
 	})
@@ -46,48 +40,48 @@ storiesOf('Search Input/Two-Way Bind', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="action(onQueryChange)"
+		 * 		[submitHandler]="action(onQueryChange)"
 		 * 		[placeholderLabel]="'Volume'"></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				placeholderLabel: text('Placeholder Label', 'Volume')
 			}
 		};
 	})
-	.add('Custom Submit Icon', () => {
+	.add('Icons/Submit', () => {
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="..."
+		 * 		[submitHandler]="..."
 		 * 		[submitIcon]="faArrowAltCircleRight"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				submitIcon: faArrowAltCircleRight
 			}
 		};
 	})
-	.add('Custom Clear Icon', () => {
+	.add('Icons/Clear', () => {
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="..."
+		 * 		[submitHandler]="..."
 		 * 		[clearIcon]="faTimes"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				clearIcon: faTimes
 			}
 		};
@@ -96,49 +90,49 @@ storiesOf('Search Input/Two-Way Bind', module)
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="..."
+		 * 		[submitHandler]="..."
 		 * 		[borders]="false"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				borders: boolean('Enable Border', false)
 			}
 		};
 	})
-	.add('Custom Submit Button color', () => {
+	.add('Colors/Submit Button', () => {
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="..."
+		 * 		[submitHandler]="..."
 		 * 		[submitIconColor]="'red'"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				submitIconColor: color('Color', '#ff0000')
 			}
 		};
 	})
-	.add('Custom Clear Button color', () => {
+	.add('Colors/Clear Button', () => {
 		/**
 		 * @example
 		 * <porcelain-search-input
-		 * 		[submit]="..."
+		 * 		[submitHandler]="..."
 		 * 		[clearIconColor]="'red'"
 		 *		></porcelain-search-input>
 		 */
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
 				clearIconColor: color('Clear Icon Color', '#ff0000')
 			}
 		};
@@ -147,9 +141,9 @@ storiesOf('Search Input/Two-Way Bind', module)
 		return {
 			component: SearchInputComponent,
 			props: {
-				submit: action(onQueryChange),
-				clear: action(onQueryClear),
-				value: text('[(value)]', '* custom value from your application *')
+				submitHandler: action(onQueryChange),
+				emptyHandler: action(onQueryClear),
+				userValue: text('Value', 'Entered')
 			}
 		};
 	})
@@ -157,14 +151,13 @@ storiesOf('Search Input/Two-Way Bind', module)
 		return {
 			component: SearchInputComponent,
 			props: {
+				submitHandler: action(onQueryChange),
 				clearIconColor: color('Clear Icon Color', '#ff0000'),
 				submitIconColor: color('Submit Icon Color', '#00ff00'),
 				placeholderLabel: text('Placeholder Label', 'Volume'),
 				borders: boolean('Enable Border', true),
-				value: text('[(value)]', 'Entered'),
-				canEmitEmpty: boolean('Allow Empty Submit?', false),
-				submit: action(onQueryChange),
-				clear: action(onQueryClear)
+				userValue: text('userValue Label', 'Entered'),
+				emptyHandler: action(onQueryClear)
 			}
 		};
 	});

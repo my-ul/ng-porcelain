@@ -54,7 +54,7 @@ const dateRefiner = new DateRefinerDefinition({
 	options: i18nDateOptions()
 });
 
-storiesOf('Refiners/Applicator Component', module)
+storiesOf('Refiners/Applicator', module)
 	.addDecorator(
 		moduleMetadata({
 			declarations: APPLICATOR_DIRECTIVES,

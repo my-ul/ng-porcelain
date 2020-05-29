@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ListDocsIndexComponent } from './list-docs-index/list-docs-index.component';
 import { Routes, RouterModule } from '@angular/router';
 import { DynamicColumnsDocsComponent } from './dynamic-columns-docs/dynamic-columns-docs.component';
-import { ListsModule } from '../../../projects/ng-porcelain/src/lib/lists/lists.module';
-import { RackModule } from '../../../projects/ng-porcelain/src/lib/rack/rack.module';
+
+// Ensure use of the "public api" file to ensure that the exports are wired up correctly.
+import { ListsModule, RackModule } from '../../../projects/ng-porcelain/src/public_api';
 
 export const routes: Routes = [
 	{

@@ -11,7 +11,7 @@ import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDe
 import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
 // Porcelain Imports
 
-storiesOf('Refiners/Multi-Refiner Component', module)
+storiesOf('Refiners/Refiners Macro', module)
 	.addDecorator(withKnobs)
 	.addDecorator(withNotes)
 	.add(
