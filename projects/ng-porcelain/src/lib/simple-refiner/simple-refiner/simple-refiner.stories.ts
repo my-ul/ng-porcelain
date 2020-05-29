@@ -137,7 +137,7 @@ storiesOf('Refiners/Simple Refiner', module)
 		}
 	})
 	.add(
-		'Simple `Option` definitions',
+		'Simple `Option` dictionary',
 		() => ({
 			component: SimpleRefinerComponent,
 			moduleMetadata: {
@@ -196,7 +196,7 @@ storiesOf('Refiners/Simple Refiner', module)
 		{}
 	);
 
-storiesOf('Refiners/Simple Refiner Badges', module)
+storiesOf('Refiners/Simple Refiner/Badges', module)
 	.addDecorator(withNotes)
 	.add(
 		'Options with long `label` values and numeric badges',

@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PipesModule } from '../../projects/ng-porcelain/src/lib/pipes/pipes.module';
+import { PipesModule, LegacySearchInputModule } from '../../projects/ng-porcelain/src/public_api';
 
 @NgModule({
 	declarations: [AppComponent],
-	imports: [BrowserModule, AppRoutingModule, PipesModule],
+	imports: [BrowserModule, AppRoutingModule, PipesModule, LegacySearchInputModule],
 	providers: [],
 	bootstrap: [AppComponent]
 })

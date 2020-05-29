@@ -18,7 +18,7 @@ import { DateRefinerComponent, defaultDateOptions, IDateRefinerProps } from './d
 
 const moment = _moment;
 
-storiesOf('Refiners/Date Refiner Component', module)
+storiesOf('Refiners/Date Refiner', module)
 	.addDecorator(withNotes)
 	.addDecorator(withKnobs)
 	.addDecorator(
