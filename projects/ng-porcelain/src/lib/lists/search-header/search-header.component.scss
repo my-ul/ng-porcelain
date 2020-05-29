@@ -16,11 +16,17 @@
 	.search-header__active-control {
 		flex: 1 1 auto;
 		height: 100%;
-		::ng-deep porcelain-search-input {
+		::ng-deep p-search-input {
 			border-radius: 3px;
 			overflow: hidden;
 			background-color: transparentize($color: #fff, $amount: 0.5);
 			transition: background-color ease-in-out 200ms;
+			.search-input__query {
+				padding: 0.5em 0.5em;
+				line-height: 1.25em;
+				font-size: 14px;
+				height: 2.25em;
+			}
 			&.search-input--has-focus {
 				background-color: #fff;
 			}

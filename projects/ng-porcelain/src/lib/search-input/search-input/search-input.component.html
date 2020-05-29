@@ -1,0 +1,31 @@
+<input
+	#searchInput
+	type="text"
+	title="{{ placeholderLabel }}"
+	class="search-input__query"
+	[(ngModel)]="currentValue"
+	[placeholder]="placeholderLabel"
+	(keyup.enter)="submit()"
+	(keyup.esc)="clear()"
+	(focus)="handleFocusIn()"
+	(blur)="handleBlur()"
+/>
+<button
+	class="search-input__search-action search-input__search-action--clear"
+	title="Clear the search query."
+	*ngIf="!isEmpty()"
+	(click)="clear()"
+>
+	<fa-icon [icon]="clearIcon" [styles]="{ color: clearIconColor }"></fa-icon>
+	<span class="sr-only">Clear the search query.</span>
+</button>
+<button
+	class=" search-input__search-action  search-input__search"
+	[class.search-input__search-action--not-active]="!canSubmit()"
+	[class.search-input__search-action--is-active]="canSubmit()"
+	(click)="submit()"
+	title="Submit the search using the current search query."
+>
+	<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>
+	<span class="sr-only">Submit the search using the current query.</span>
+</button>

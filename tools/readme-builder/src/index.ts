@@ -19,7 +19,8 @@ const rootNode: SectionIndex = {
 		},
 		Footer: '../../projects/ng-porcelain/src/lib/footer/footer/README.md',
 		Truncate: '../../projects/ng-porcelain/src/lib/truncate/truncate/README.md',
-		Spinner: '../../projects/ng-porcelain/src/lib/spinner/spinner/README.md'
+		Spinner: '../../projects/ng-porcelain/src/lib/spinner/spinner/README.md',
+		'Legacy Search Input': '../../projects/ng-porcelain/src/lib/search-input/search-input/README.md'
 	},
 
 	Pipes: {

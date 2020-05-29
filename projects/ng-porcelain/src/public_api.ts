@@ -10,6 +10,9 @@ export { FooterComponent } from './lib/footer/footer/footer.component';
 export { RefinersModule } from './lib/refiners/refiners.module';
 export { RefinersComponent } from './lib/refiners/refiners/refiners.component';
 
+export { SearchInputModule as LegacySearchInputModule } from './lib/search-input/search-input.module';
+export { SearchInputComponent as LegacySearchInputComponent } from './lib/search-input/search-input/search-input.component';
+
 export { SimpleRefinerModule } from './lib/simple-refiner/simple-refiner.module';
 export { SimpleRefinerComponent } from './lib/simple-refiner/simple-refiner/simple-refiner.component';
 

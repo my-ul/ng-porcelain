@@ -6,7 +6,7 @@ import { TranslationService } from '../../services/translation/translation.servi
 import { Loggable } from '../../Loggable';
 
 @Component({
-	selector: 'porcelain-search-input',
+	selector: 'p-search-input',
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss'],
 	host: {
