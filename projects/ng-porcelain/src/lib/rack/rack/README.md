@@ -50,19 +50,3 @@ For objects that do not use `label`, `key` and `locked` for binding properties, 
 	[(inactiveItems)]="inactiveColumns"
 ></porcelain-rack>
 ```
-
-# Customization
-
-For changing the header labels for active and inactive column name use `ActiveLabelHeader` and `InactiveLabelHeader`
-
-```html
-<porcelain-rack
-	[lockedProp]=" 'required' "
-	[labelProp]=" 'name' "
-	[keyProp]=" 'id' "
-	[(activeItems)]="activeColumns"
-	[(inactiveItems)]="inactiveColumns"
-	[ActiveLabelHeader]="'Show these columns in this order:'"
-	[InactiveLabelHeader]="'Available columns:'"
-></porcelain-rack>
-```

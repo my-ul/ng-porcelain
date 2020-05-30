@@ -60,15 +60,6 @@ export class RackComponent<TItemType extends any = any> implements OnInit {
 	@Input() valueProp: string = 'value';
 
 	/**
-	 * Active label input
-	 */
-	@Input() ActiveLabelHeader: string = '';
-	/**
-	 * Inactive label input
-	 */
-	@Input() InactiveLabelHeader: string = '';
-
-	/**
 	 * activeItems change emitter; emits changes to the activeItems property to parent scopes
 	 */
 	@Output() activeItemsChange = new EventEmitter<TItemType[]>();
