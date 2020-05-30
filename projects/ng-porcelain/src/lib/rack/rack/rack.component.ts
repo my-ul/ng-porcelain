@@ -75,7 +75,7 @@ export class RackComponent<TItemType extends any = any> implements OnInit {
 	@ViewChild('inactivePicker')
 	inactiveSelectElement: ElementRef;
 
-	labels = {
+	@Input() labels: any = {
 		add: 'Add',
 		activeList: 'Active',
 		activate: 'Add',
