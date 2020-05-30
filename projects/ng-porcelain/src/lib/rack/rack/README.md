@@ -51,9 +51,29 @@ For objects that do not use `label`, `key` and `locked` for binding properties, 
 ></porcelain-rack>
 ```
 
-# Customization
+#label customization
 
-For changing the header labels for active and inactive column name use `ActiveLabelHeader` and `InactiveLabelHeader`
+For displaying custom label add object as below
+
+```typescript
+headerlabels: any = {
+	add: 'Add',
+	activeList: 'Active',
+	activate: 'Add',
+	deactivate: 'Remove',
+	inactiveList: 'Inactive',
+	locked: 'This item cannot be removed from the active items',
+	moveDown: 'Move Down',
+	moveUp: 'Move Up',
+	moveToTop: 'Move to Top',
+	moveToBottom: 'Move to Bottom',
+	pluralItems: 'Items',
+	singleItems: 'Item',
+	zeroItems: 'Items'
+};
+```
+
+Then input them as below
 
 ```html
 <porcelain-rack
@@ -62,7 +82,6 @@ For changing the header labels for active and inactive column name use `ActiveLa
 	[keyProp]=" 'id' "
 	[(activeItems)]="activeColumns"
 	[(inactiveItems)]="inactiveColumns"
-	[ActiveLabelHeader]="'Show these columns in this order:'"
-	[InactiveLabelHeader]="'Available columns:'"
+	[labels]="headerlabels"
 ></porcelain-rack>
 ```
