@@ -1,7 +1,7 @@
 <div class="rack">
 	<!-- Inactive List -->
 	<label class="inactive-label" for="inactive-list">
-		{{ labels.inactiveList }}
+		{{ InactiveLabelHeader || labels.inactiveList }}
 	</label>
 	<select
 		#inactivePicker
@@ -40,7 +40,7 @@
 
 	<!-- Active List -->
 	<label class="active-label" for="active-list">
-		{{ labels.activeList }}
+		{{ ActiveLabelHeader || labels.activeList }}
 	</label>
 	<select
 		#activePicker
