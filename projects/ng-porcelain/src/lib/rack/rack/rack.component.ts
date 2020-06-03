@@ -19,6 +19,10 @@ import { moveItem } from '../../shared/utilities/arrays/moveItem';
 
 import { sprintf } from 'sprintf-js';
 
+interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
+	grid: string;
+}
+
 @Component({
 	selector: 'porcelain-rack',
 	templateUrl: './rack.component.html',
@@ -169,7 +173,9 @@ export class RackComponent<TItemType extends any = any> implements OnInit {
 	}
 
 	supportsGrid(): boolean {
-		return typeof document.createElement('div').style.grid === 'string';
+		return (
+			typeof (document.createElement('div').style as CSSStyleDeclarationWithGrid).grid === 'string'
+		);
 	}
 
 	/**
