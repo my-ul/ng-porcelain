@@ -50,3 +50,38 @@ For objects that do not use `label`, `key` and `locked` for binding properties, 
 	[(inactiveItems)]="inactiveColumns"
 ></porcelain-rack>
 ```
+
+#label customization
+
+For displaying custom label add object as below
+
+```typescript
+headerlabels: any = {
+	add: 'Add',
+	activeList: 'Active',
+	activate: 'Add',
+	deactivate: 'Remove',
+	inactiveList: 'Inactive',
+	locked: 'This item cannot be removed from the active items',
+	moveDown: 'Move Down',
+	moveUp: 'Move Up',
+	moveToTop: 'Move to Top',
+	moveToBottom: 'Move to Bottom',
+	pluralItems: 'Items',
+	singleItems: 'Item',
+	zeroItems: 'Items'
+};
+```
+
+Then input them as below
+
+```html
+<porcelain-rack
+	[lockedProp]=" 'required' "
+	[labelProp]=" 'name' "
+	[keyProp]=" 'id' "
+	[(activeItems)]="activeColumns"
+	[(inactiveItems)]="inactiveColumns"
+	[labels]="headerlabels"
+></porcelain-rack>
+```

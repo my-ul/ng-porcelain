@@ -84,6 +84,21 @@ export class DynamicColumnsDocsComponent implements OnInit {
 		this.query = query;
 		this.applySort(this.activeSortKey, this.activeSortDirection);
 	}
+	headerlabels: any = {
+		add: 'Add',
+		activeList: 'Active',
+		activate: 'Add',
+		deactivate: 'Remove',
+		inactiveList: 'Inactive',
+		locked: 'This item cannot be removed from the active items',
+		moveDown: 'Move Down',
+		moveUp: 'Move Up',
+		moveToTop: 'Move to Top',
+		moveToBottom: 'Move to Bottom',
+		pluralItems: 'Items',
+		singleItems: 'Item',
+		zeroItems: 'Items'
+	};
 
 	inactiveColumns: DynamicColumn[] = [];
 	activeColumns: DynamicColumn[] = [

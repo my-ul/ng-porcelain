@@ -1,47 +1,142 @@
+// Based on UL ux from
+// https://www.figma.com/proto/JF7G0CvDtRLjRwNTWfpVvv/myUL-Style-Guide?node-id=351%3A1363&scaling=min-zoom
+$font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+	Cantarell, 'Helvetica Neue', sans-serif;
+$secondary-enabled--color: #303741;
+$secondary-enabled--border-color: #9ea6ba;
+$secondary-enabled--background-color: #fff;
+$secondary-disabled--color: #9ea6ba;
+$secondary-disabled--border-color: #9ea6ba;
+$secondary-disabled--background-color: #fff;
+
+* {
+	box-sizing: border-box;
+}
+
 .rack {
-	display: grid;
-	grid-template-columns: 3fr 1fr 3fr;
-	//grid-template-rows: 1fr 1fr 1fr;
-	gap: 1em 1em;
-	grid-template-areas:
-		'inactive-label    .                     active-label'
-		'inactive-list     activation-buttons    active-list'
-		'.                 .                     order-buttons';
-}
+	&.rack--grid {
+		display: grid;
+		grid-template-columns: 3fr 1fr 3fr;
+		//grid-template-rows: 1fr 1fr 1fr;
+		gap: 15px 10px;
+		grid-template-areas:
+			'inactive-label    .                     active-label'
+			'inactive-list     activation-buttons    active-list'
+			'.                 .                     order-buttons';
 
-.inactive-label {
-	grid-area: inactive-label;
-}
+		.inactive-label {
+			grid-area: inactive-label;
+		}
 
-.active-label {
-	grid-area: active-label;
-}
+		.active-label {
+			grid-area: active-label;
+		}
 
-.inactive-list {
-	grid-area: inactive-list;
+		.inactive-list {
+			grid-area: inactive-list;
+		}
+		.activation-buttons {
+			grid-area: activation-buttons;
+		}
+
+		.active-list {
+			grid-area: active-list;
+		}
+
+		.order-buttons {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			//grid-template-rows: 3em;
+			gap: 15px 10px;
+			grid-template-areas: 'move-up-button move-down-button';
+			grid-area: order-buttons;
+		}
+
+		.move-up-button {
+			grid-area: move-up-button;
+		}
+
+		.move-down-button {
+			grid-area: move-down-button;
+		}
+	}
+	&.rack--flex {
+		display: flex;
+		flex-direction: row;
+		justify-content: stretch;
+		.inactive-label,
+		.active-label {
+			display: block;
+			margin-bottom: 15px;
+		}
+		.inactive-list,
+		.active-list {
+			display: block;
+			width: 100%;
+			max-width: 100%;
+		}
+		.inactive,
+		.active {
+			flex: 1 1 auto;
+		}
+		.activation-buttons {
+			flex: 0 0 auto;
+			margin: 0 10px;
+			padding: 0 0;
+		}
+
+		.order-buttons {
+			display: flex;
+			flex-direction: row;
+			margin-top: 15px;
+			.move-up-button,
+			.move-down-button {
+				flex: 1 1 auto;
+			}
+			.move-up-button {
+				margin-right: 5px;
+			}
+			.move-down-button {
+				margin-left: 5px;
+			}
+		}
+	}
 }
 
 .inactive-list,
 .active-list {
-	border: solid 1px #9ba7b9;
-	border-radius: 3px;
+	border: solid 1px #cdd6e4;
+	max-width: 100%;
+	&:focus {
+		outline: none;
+	}
+}
+select {
+	option {
+		font-family: $font-family;
+		padding: 3px 6px;
+		color: #303741;
+	}
 }
 
 .order-buttons,
 .activation-buttons {
 	button {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-			'Open Sans', 'Helvetica Neue', sans-serif;
-		border: solid 1px #9ba7b9;
-		border-radius: 3px;
-		background-color: #fff;
-		line-height: 2rem;
-		font-size: 14px;
 		transition: all ease-in-out 200ms;
+		border: solid 1px $secondary-enabled--border-color;
+		border-radius: 4px;
+		background-color: $secondary-enabled--background-color;
+		line-height: 22px;
+		color: $secondary-enabled--color;
+		font-family: $font-family;
+		font-weight: 600;
+		font-size: 14px;
+		text-transform: uppercase;
+		padding: 8px 15px;
 		&:disabled {
-			color: #888;
-			border: solid 1px #e2ecf4;
-			background-color: #e2ecf4;
+			color: $secondary-disabled--color;
+			border: solid 1px $secondary-disabled--border-color;
+			background-color: $secondary-disabled--background-color;
 			cursor: not-allowed;
 		}
 
@@ -58,32 +153,10 @@
 }
 
 .activation-buttons {
-	grid-area: activation-buttons;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	button {
 		margin: 0.5em 0;
 	}
-}
-
-.active-list {
-	grid-area: active-list;
-}
-
-.order-buttons {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	//grid-template-rows: 3em;
-	gap: 1em 1em;
-	grid-template-areas: 'move-up-button move-down-button';
-	grid-area: order-buttons;
-}
-
-.move-up-button {
-	grid-area: move-up-button;
-}
-
-.move-down-button {
-	grid-area: move-down-button;
 }

@@ -17,6 +17,12 @@ import {
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { moveItem } from '../../shared/utilities/arrays/moveItem';
 
+import { sprintf } from 'sprintf-js';
+
+interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
+	grid: string;
+}
+
 @Component({
 	selector: 'porcelain-rack',
 	templateUrl: './rack.component.html',
@@ -75,21 +81,102 @@ export class RackComponent<TItemType extends any = any> implements OnInit {
 	@ViewChild('inactivePicker')
 	inactiveSelectElement: ElementRef;
 
-	labels = {
-		add: 'Add',
-		activeList: 'Active',
-		activate: 'Add',
-		deactivate: 'Remove',
-		inactiveList: 'Inactive',
-		locked: 'This item cannot be removed from the active items',
-		moveDown: 'Move Down',
-		moveUp: 'Move Up',
-		moveToTop: 'Move to Top',
-		moveToBottom: 'Move to Bottom',
-		pluralItems: 'Items',
-		singleItems: 'Item',
-		zeroItems: 'Items'
-	};
+	/**
+	 * Label for the list header of the "active" items.
+	 */
+	@Input() labelActiveList: string = 'Active';
+
+	/**
+	 * Label for the button that moves an item from "inactive" to "active"
+	 */
+	@Input() labelActivate: string = 'Add';
+
+	/**
+	 * Label for the button that moves selected item from "active" to "inactive"
+	 */
+	@Input() labelDeactivate: string = 'Remove';
+
+	/**
+	 * Label for the list header of the "inactive" items.
+	 */
+	@Input() labelInactiveList: string = 'Inactive';
+
+	/**
+	 * Label for the notice shown when hovering over a locked "active" item.
+	 */
+	@Input() labelLocked: string = 'This item cannot be removed from the active items';
+
+	/**
+	 * Label for the button used to move selected item down the "active" list.
+	 */
+	@Input() labelMoveDown: string = 'Move Down';
+
+	/**
+	 * Label for the button used to move the selected item up the "active" list.
+	 */
+	@Input() labelMoveUp: string = 'Move Up';
+
+	/**
+	 * Label for the button where a shift+click/shift+alt+up moves the selected item to the top of the "active" list.
+	 */
+	@Input() labelMoveToTop: string = 'Move to Top';
+
+	/**
+	 * Label for the button where a shift+click/shift+alt+down moves the selected item to the bottom of the "active" list.
+	 */
+	@Input() labelMoveToBottom: string = 'Move to Bottom';
+
+	/**
+	 * Label/string for the inflected form for referring to more than one item.
+	 * Used with i18n/inflection. Example: {{ '%u %s' | sprintf : count : labelPluralItems }}
+	 * @example
+	 * 	5 Columns
+	 * 	5 Apples
+	 * 	5 Deer
+	 */
+	@Input() labelPluralItems: string = 'Items';
+
+	/**
+	 * Label/string for the inflectef form for referring to exactly one item.
+	 * Used with i18n/inflection. Example: {{ '%u %s' | sprintf : count : labelSingleItems }}
+	 * @example
+	 * 	1 Column
+	 * 	1 Apple
+	 * 	1 Deer
+	 */
+	@Input() labelSingleItem: string = 'Item';
+
+	/**
+	 * Label/string for the inflected form for referring to zero/no items.
+	 * Used with i18n/inflection. Example: {{ '%u %s' | sprintf : count : labelZeroItems }}
+	 * @example
+	 *  0 Columns
+	 *  0 Fruits
+	 *  0 Deer
+	 */
+	@Input() labelZeroItems: string = 'Items';
+
+	/**
+	 * Renders an accessible string that is helpful for screen readers to report how many items are in each list.
+	 * @param list A list of items to be counted
+	 */
+	i18nListCount(list: TItemType[]): string {
+		const length = list.length;
+		return sprintf(
+			'%s %s',
+			length.toLocaleString(),
+			// prettier-ignore
+			length === 0 ? this.labelZeroItems
+			: length === 1 ? this.labelSingleItem
+			: this.labelPluralItems
+		);
+	}
+
+	supportsGrid(): boolean {
+		return (
+			typeof (document.createElement('div').style as CSSStyleDeclarationWithGrid).grid === 'string'
+		);
+	}
 
 	/**
 	 * Tracks whether or not the "activeItems" list currently has focus.
