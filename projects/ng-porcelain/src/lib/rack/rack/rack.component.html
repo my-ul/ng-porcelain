@@ -1,97 +1,207 @@
-<div class="rack">
-	<!-- Inactive List -->
-	<label class="inactive-label" for="inactive-list">
-		{{ labels.inactiveList }}
-	</label>
-	<select
-		#inactivePicker
-		[size]="size"
-		class="inactive-list"
-		name="inactive-list"
-		id="inactive-list"
-		[(ngModel)]="selectedInactiveItem"
-		(focus)="setInactiveFocus(true)"
-		(blur)="setInactiveFocus(false)"
-	>
-		<option [ngValue]="item" *ngFor="let item of inactiveItems">{{ item[labelProp] }}</option>
-	</select>
+<ng-container *ngIf="supportsGrid(); then hasGrid; else noGrid"></ng-container>
 
-	<!-- Activation Buttons -->
-	<div class="activation-buttons">
-		<button
-			class="rack__activate-button"
-			(click)="activateItem()"
-			[disabled]="!canActivateItem"
-			[title]="[labels.activate, '(Alt + Right Arrow)'].join(' ')"
+<ng-template #hasGrid>
+	<div class="rack rack--grid">
+		<!-- Inactive List -->
+		<label class="inactive-label" for="inactive-list" aria-live="assertive">
+			{{ labelInactiveList }}
+			<span class="sr-only">({{ i18nListCount(inactiveItems) }})</span>
+		</label>
+		<select
+			#inactivePicker
+			[size]="size"
+			class="inactive-list"
+			name="inactive-list"
+			id="inactive-list"
+			[(ngModel)]="selectedInactiveItem"
+			(focus)="setInactiveFocus(true)"
+			(blur)="setInactiveFocus(false)"
 		>
-			<span class="activation-button-label">{{ labels.activate }}</span>
-			<fa-icon [icon]="activateIcon"></fa-icon>
-		</button>
-		<button
-			class="rack__deactivate-button"
-			(click)="deactivateItem()"
-			[disabled]="!canDeactivateItem"
-			[title]="[labels.deactivate, '(Alt + Left Arrow)'].join(' ')"
+			<option [ngValue]="item" *ngFor="let item of inactiveItems">{{ item[labelProp] }}</option>
+		</select>
+
+		<!-- Activation Buttons -->
+		<div class="activation-buttons">
+			<button
+				class="rack__activate-button"
+				(click)="activateItem()"
+				[disabled]="!canActivateItem"
+				[title]="[labelActivate, '(Alt + Right Arrow)'].join(' ')"
+			>
+				<span class="activation-button-label">{{ labelActivate }}</span>
+				<fa-icon [icon]="activateIcon"></fa-icon>
+			</button>
+			<button
+				class="rack__deactivate-button"
+				(click)="deactivateItem()"
+				[disabled]="!canDeactivateItem"
+				[title]="[labelDeactivate, '(Alt + Left Arrow)'].join(' ')"
+			>
+				<fa-icon [icon]="deactivateIcon"></fa-icon>
+				<span class="activation-button-label">{{ labelDeactivate }}</span>
+			</button>
+		</div>
+
+		<!-- Active List -->
+		<label class="active-label" for="active-list" aria-live="assertive">
+			{{ labelActiveList }}
+			<span class="sr-only">({{ i18nListCount(activeItems) }})</span>
+		</label>
+		<select
+			#activePicker
+			[size]="size"
+			[(ngModel)]="selectedActiveItem"
+			class="active-list"
+			name="active-list"
+			id="active-list"
+			(focus)="setActiveFocus(true)"
+			(blur)="setActiveFocus(false)"
 		>
-			<fa-icon [icon]="deactivateIcon"></fa-icon>
-			<span class="activation-button-label">{{ labels.deactivate }}</span>
-		</button>
+			<option
+				class="rack__option"
+				[class.rack__option--locked]="isItemLocked(item)"
+				[ngValue]="item"
+				[attr.title]="isItemLocked(item) ? labelLocked : null"
+				*ngFor="let item of activeItems"
+			>
+				{{ item[labelProp] }}
+				<span class="rack__locked-asterisk" *ngIf="isItemLocked(item)"> * </span>
+			</option>
+		</select>
+
+		<div class="order-buttons">
+			<button
+				class="move-up-button"
+				(click)="moveSelectedItemUp($event.shiftKey)"
+				[disabled]="!canMoveUp"
+				[title]="
+					[
+						[labelMoveUp, ' (Alt + Up Arrow)'].join(' '),
+						[labelMoveToTop, '(Shift + Alt + Up Arrow)'].join(' ')
+					].join('\n')
+				"
+			>
+				<fa-icon [icon]="moveUpIcon"></fa-icon>
+				<span class="sr-only">{{ labelMoveUp }}</span>
+			</button>
+			<button
+				class="move-down-button"
+				(click)="moveSelectedItemDown($event.shiftKey)"
+				[disabled]="!canMoveDown"
+				[title]="
+					[
+						[labelMoveDown, ' (Alt + Down Arrow)'].join(' '),
+						[labelMoveToBottom, '(Shift + Alt + Down Arrow)'].join(' ')
+					].join('\n')
+				"
+			>
+				<fa-icon [icon]="moveDownIcon"></fa-icon>
+				<span class="sr-only">{{ labelMoveDown }}</span>
+			</button>
+		</div>
 	</div>
+</ng-template>
+<ng-template #noGrid>
+	<div class="rack rack--flex">
+		<div class="inactive">
+			<label class="inactive-label" for="inactive-list" aria-live="assertive">
+				{{ labelInactiveList }}
+				<span class="sr-only">({{ i18nListCount(inactiveItems) }})</span>
+			</label>
+			<select
+				#inactivePicker
+				[size]="size"
+				class="inactive-list"
+				name="inactive-list"
+				id="inactive-list"
+				[(ngModel)]="selectedInactiveItem"
+				(focus)="setInactiveFocus(true)"
+				(blur)="setInactiveFocus(false)"
+			>
+				<option [ngValue]="item" *ngFor="let item of inactiveItems">{{
+					item[labelProp]
+				}}</option>
+			</select>
+		</div>
+		<div class="activation-buttons">
+			<!-- Activation Buttons -->
+			<button
+				class="rack__activate-button"
+				(click)="activateItem()"
+				[disabled]="!canActivateItem"
+				[title]="[labelActivate, '(Alt + Right Arrow)'].join(' ')"
+			>
+				<span class="activation-button-label">{{ labelActivate }}</span>
+				<fa-icon [icon]="activateIcon"></fa-icon>
+			</button>
+			<button
+				class="rack__deactivate-button"
+				(click)="deactivateItem()"
+				[disabled]="!canDeactivateItem"
+				[title]="[labelDeactivate, '(Alt + Left Arrow)'].join(' ')"
+			>
+				<fa-icon [icon]="deactivateIcon"></fa-icon>
+				<span class="activation-button-label">{{ labelDeactivate }}</span>
+			</button>
+		</div>
+		<div class="active">
+			<!-- Active List -->
+			<label class="active-label" for="active-list" aria-live="assertive">
+				{{ labelActiveList }}
+				<span class="sr-only">({{ i18nListCount(activeItems) }})</span>
+			</label>
+			<select
+				#activePicker
+				[size]="size"
+				[(ngModel)]="selectedActiveItem"
+				class="active-list"
+				name="active-list"
+				id="active-list"
+				(focus)="setActiveFocus(true)"
+				(blur)="setActiveFocus(false)"
+			>
+				<option
+					class="rack__option"
+					[class.rack__option--locked]="isItemLocked(item)"
+					[ngValue]="item"
+					[attr.title]="isItemLocked(item) ? labelLocked : null"
+					*ngFor="let item of activeItems"
+				>
+					{{ item[labelProp] }}
+					<span class="rack__locked-asterisk" *ngIf="isItemLocked(item)"> * </span>
+				</option>
+			</select>
 
-	<!-- Active List -->
-	<label class="active-label" for="active-list">
-		{{ labels.activeList }}
-	</label>
-	<select
-		#activePicker
-		[size]="size"
-		[(ngModel)]="selectedActiveItem"
-		class="active-list"
-		name="active-list"
-		id="active-list"
-		(focus)="setActiveFocus(true)"
-		(blur)="setActiveFocus(false)"
-	>
-		<option
-			class="rack__option"
-			[class.rack__option--locked]="isItemLocked(item)"
-			[ngValue]="item"
-			[attr.title]="isItemLocked(item) ? labels.locked : null"
-			*ngFor="let item of activeItems"
-		>
-			{{ item[labelProp] }}
-			<span class="rack__locked-asterisk" *ngIf="isItemLocked(item)"> * </span>
-		</option>
-	</select>
-
-	<div class="order-buttons">
-		<button
-			class="move-up-button"
-			(click)="moveSelectedItemUp($event.shiftKey)"
-			[disabled]="!canMoveUp"
-			[title]="
-				[
-					[labels.moveUp, ' (Alt + Up Arrow)'].join(' '),
-					[labels.moveToTop, '(Shift + Alt + Up Arrow)'].join(' ')
-				].join('\n')
-			"
-		>
-			<fa-icon [icon]="moveUpIcon"></fa-icon>
-			<span class="sr-only">{{ labels.moveUp }}</span>
-		</button>
-		<button
-			class="move-down-button"
-			(click)="moveSelectedItemDown($event.shiftKey)"
-			[disabled]="!canMoveDown"
-			[title]="
-				[
-					[labels.moveDown, ' (Alt + Down Arrow)'].join(' '),
-					[labels.moveToBottom, '(Shift + Alt + Down Arrow)'].join(' ')
-				].join('\n')
-			"
-		>
-			<fa-icon [icon]="moveDownIcon"></fa-icon>
-			<span class="sr-only">{{ labels.moveDown }}</span>
-		</button>
+			<div class="order-buttons">
+				<button
+					class="move-up-button"
+					(click)="moveSelectedItemUp($event.shiftKey)"
+					[disabled]="!canMoveUp"
+					[title]="
+						[
+							[labelMoveUp, ' (Alt + Up Arrow)'].join(' '),
+							[labelMoveToTop, '(Shift + Alt + Up Arrow)'].join(' ')
+						].join('\n')
+					"
+				>
+					<fa-icon [icon]="moveUpIcon"></fa-icon>
+					<span class="sr-only">{{ labelMoveUp }}</span>
+				</button>
+				<button
+					class="move-down-button"
+					(click)="moveSelectedItemDown($event.shiftKey)"
+					[disabled]="!canMoveDown"
+					[title]="
+						[
+							[labelMoveDown, ' (Alt + Down Arrow)'].join(' '),
+							[labelMoveToBottom, '(Shift + Alt + Down Arrow)'].join(' ')
+						].join('\n')
+					"
+				>
+					<fa-icon [icon]="moveDownIcon"></fa-icon>
+					<span class="sr-only">{{ labelMoveDown }}</span>
+				</button>
+			</div>
+		</div>
 	</div>
-</div>
+</ng-template>
