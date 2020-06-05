@@ -17,6 +17,7 @@ interface Person {
 	city: string;
 	state: string;
 	zip: string;
+	displayChild: boolean;
 }
 
 @Component({
@@ -152,7 +153,8 @@ export class DynamicColumnsDocsComponent implements OnInit {
 				address_1: faker.address.streetAddress(),
 				city: faker.address.city(),
 				state: faker.address.state(),
-				zip: faker.address.zipCode()
+				zip: faker.address.zipCode(),
+				displayChild: false
 			};
 		}
 		this.currentPeople = this.allPeople.slice();
