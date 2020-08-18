@@ -23,30 +23,48 @@ import { ToolbarOptionComponent } from '../toolbar-option/toolbar-option.compone
 import { trigger, style, state, transition, animate } from '@angular/animations';
 import { Loggable } from '../../Loggable';
 
+let closedStyle = {
+	transform: 'translateY(-20px)',
+	opacity: 0
+};
+
+let openStyle = {
+	transform: 'translateY(0)',
+	opacity: 1
+};
+
 @Component({
 	selector: 'porcelain-toolbar-select',
 	templateUrl: './toolbar-select.component.html',
 	styleUrls: ['./toolbar-select.component.scss'],
 	animations: [
 		trigger('slideInOut', [
-			state(
-				'open',
-				style({
-					opacity: 1,
-					transform: 'none',
-					display: 'block'
-				})
-			),
-			state(
-				'closed',
-				style({
-					opacity: 0,
-					transform: 'translateY(-10px)',
-					display: 'none'
-				})
-			),
-			transition('open=>closed', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-			transition('closed=>open', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+			transition(':enter', [
+				style(closedStyle),
+				animate('75ms cubic-bezier(0.4, 0.0, 0.2, 1)', style(openStyle))
+			]),
+			transition(':leave', [
+				style(openStyle),
+				animate('150ms cubic-bezier(0.4, 0.0, 0.2, 1)', style(closedStyle))
+			])
+			// state(
+			// 	'open',
+			// 	style({
+			// 		opacity: 1,
+			// 		transform: 'translateY(0px)',
+			// 		display: 'block'
+			// 	})
+			// ),
+			// state(
+			// 	'closed',
+			// 	style({
+			// 		opacity: 0,
+			// 		transform: 'translateY(-10px)',
+			// 		display: 'none'
+			// 	})
+			// ),
+			// transition('open=>closed', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+			// transition('closed=>open', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
 		])
 	]
 })
@@ -313,7 +331,11 @@ export class ToolbarSelectComponent extends Loggable implements OnDestroy, After
 			if (this.isOpen) {
 				this.close();
 			} else {
-				this.open().highlightOptionByIndex(this.selectedIndex > -1 ? this.selectedIndex : 0);
+				this.open();
+				setTimeout(
+					() => this.highlightOptionByIndex(this.selectedIndex > -1 ? this.selectedIndex : 0),
+					0
+				);
 			}
 		}
 	}

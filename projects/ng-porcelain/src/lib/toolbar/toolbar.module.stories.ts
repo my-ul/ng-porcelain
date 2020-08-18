@@ -174,7 +174,7 @@ storiesOf('Toolbars', module)
 
 		return {
 			template: `
-				<porcelain-toolbars style="border: solid 1px #ddd">
+				<porcelain-toolbars>
 
 					<porcelain-toolbar [alignRight]="true">
 						<porcelain-toolbar-cell [flex]="'0 0 auto'">
@@ -191,12 +191,7 @@ storiesOf('Toolbars', module)
 					</porcelain-toolbar>
 
 					<porcelain-toolbar>
-						<porcelain-toolbar-cell [flex]="'0 0 20%'">
-							<porcelain-search-input
-								[borders]="false"
-								(submitHandler)="searchSubmitted($event)"
-								(emptyHandler)="searchCleared()"></porcelain-search-input>
-						</porcelain-toolbar-cell>
+
 
 						<porcelain-toolbar-cell [flex]="'1 1 auto'">
 							<porcelain-toolbar-select 
