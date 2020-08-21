@@ -123,7 +123,7 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 		this.searchChange.emit([this.sortKey, query]);
 	}
 
-	@ViewChild(SearchInputComponent, { static: false }) searchInputComponent: SearchInputComponent;
+	@ViewChild(SearchInputComponent) searchInputComponent: SearchInputComponent;
 
 	switchModes() {
 		this.mode = this.mode === 'sort' ? 'search' : 'sort';
