@@ -1,4 +1,30 @@
 import { readFileSync, writeFileSync, read } from 'fs';
+import * as yargs from 'yargs';
+
+const args = yargs.usage('Usage: $0 -o <file> -t <title> [-c <file]').options({
+	title: {
+		type: 'string',
+		demandOption: true,
+		alias: 't',
+		description: 'Root title for the output document.'
+	},
+	config: {
+		type: 'string',
+		demandOption: true,
+		alias: 'c',
+		description: 'Input JSON file to be parsed as a SectionIndex.'
+	},
+	outfile: {
+		type: 'string',
+		default: 'README.md',
+		demandOption: false,
+		alias: 'o',
+		description: 'Output file; Use -- for stdout.'
+	},
+	init: {
+		type: 'boolean'
+	}
+}).argv;
 
 const outfile = 'README.md';
 const documentTitle = 'Porcelain for Angular';
@@ -6,7 +32,8 @@ const documentTitle = 'Porcelain for Angular';
 interface SectionIndex {
 	[title: string]: string | SectionIndex;
 }
-const rootNode: SectionIndex = {
+
+const example: SectionIndex = {
 	'Quick Start': '../../projects/ng-porcelain/INSTALL.md',
 
 	Components: {
@@ -90,20 +117,49 @@ const rootNode: SectionIndex = {
 	}
 };
 
+/**
+ * Naive test to determine if a node is a nested SectionIndex.
+ * @param subject String or SectionIndex
+ */
 function isNode(subject: any): subject is SectionIndex {
 	return typeof subject !== 'string' && typeof subject === 'object';
 }
 
+/**
+ * Adjusts a Markdown document's heading levels for nesting in a parent document.
+ * @param input String content of a section of Markdown.  Headings in the MD document are assumed to be at root level;
+ * @param level Number of heading levels to decrease the document by.  To see h1 become h2, the level should be 1
+ *
+ * @example
+ * 		Consider the following input string...
+ *
+ * 		```md
+ * 		# Typography Test
+ * 		The quick brown fox jumps over the lazy dog.
+ * 		```
+ *
+ * 		If you run this through the `processHeadings` function with processHeadings(input, 3), the output will be..
+ *
+ * 		```md
+ * 		#### Typography Test
+ * 		The quick brown fox jumps over the lazy dog.
+ * 		```
+ * 		Note the changed heading level (h1 to h4)
+ */
 let processHeadings = function(input: string, level: number = 0): string {
 	return input
 		.replace(/^(#+)\s*(.*)$/gm, function(match, headingChars, headingText) {
-			//console.log({ headingChars, level });
 			return `${'#'.repeat(headingChars.length + level)} ${headingText.trim()}`;
 		})
 		.replace(/\r\n/gm, '\n')
 		.trim();
 };
 
+/**
+ *
+ * @param section A SectionIndex dictionary for Title => filename of document or another nested SectionIndex
+ * @param level
+ */
 let buildSections = function(section: SectionIndex, level: number = 1): string[] {
 	return Object.keys(section).reduce((allChunks: string[], sectionTitle: string) => {
 		const nodeOrFilename = section[sectionTitle];
@@ -125,8 +181,6 @@ let buildSections = function(section: SectionIndex, level: number = 1): string[]
 	}, []);
 };
 
-let output = [...buildSections({ [documentTitle]: rootNode }).map(section => section.trim())].join(
-	'\n\n'
-);
+let output = [...buildSections({ [args.title]: example }).map(section => section.trim())].join('\n\n');
 
-writeFileSync('README.md', output);
+writeFileSync(args.outfile, output);

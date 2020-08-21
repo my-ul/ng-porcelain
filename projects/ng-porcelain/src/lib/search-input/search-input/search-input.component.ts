@@ -30,7 +30,7 @@ import { Loggable } from '../../Loggable';
 export class /* Legacy */ SearchInputComponent extends Loggable implements OnInit {
 	readonly name = '(deprecated) SearchInputComponent';
 	@Input() public userValue: string = '';
-	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
+	@ViewChild('searchInput', { static: true }) public searchInput: ElementRef<HTMLInputElement>;
 
 	//#region Appearance
 

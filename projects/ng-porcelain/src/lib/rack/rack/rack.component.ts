@@ -75,10 +75,10 @@ export class RackComponent<TItemType extends any = any> implements OnInit {
 	 */
 	@Output() inactiveItemsChange = new EventEmitter<TItemType[]>();
 
-	@ViewChild('activePicker')
+	@ViewChild('activePicker', { static: false })
 	activeSelectElement: ElementRef;
 
-	@ViewChild('inactivePicker')
+	@ViewChild('inactivePicker', { static: false })
 	inactiveSelectElement: ElementRef;
 
 	/**

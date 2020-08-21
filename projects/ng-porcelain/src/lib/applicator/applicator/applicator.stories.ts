@@ -1,7 +1,7 @@
 import { APPLICATOR_DIRECTIVES } from '../applicator.module';
 // Storybook
 import { action } from '@storybook/addon-actions';
-import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 
 // Moment
 import * as _moment from 'moment';
@@ -54,57 +54,80 @@ const dateRefiner = new DateRefinerDefinition({
 	options: i18nDateOptions()
 });
 
-storiesOf('Refiners/Applicator', module)
-	.addDecorator(
+export default {
+	title: 'Refiner System/Applicator',
+
+	decorators: [
 		moduleMetadata({
 			declarations: APPLICATOR_DIRECTIVES,
 			imports: APPLICATOR_IMPORTS
 		})
-	)
-	.add('Default (no props)', () => {
-		return {
-			component: ApplicatorComponent,
-			props: {
-				allowIncompleteEmit: false,
-				onApply: action('Applicators update'),
-				refiners: [dateRefiner, simpleRefiner, anotherSimpleRefiner]
-			}
-		};
-	})
-	.add('Provide default value behavior', () => {
-		return {
-			component: ApplicatorComponent,
-			props: {
-				onApply: action('Applicators update'),
-				refiners: [simpleRefiner, anotherSimpleRefiner, dateRefiner],
-				defaultValues: {
-					simpleRefiner: ['al', 'az'],
-					anotherSimpleRefiner: ['ak'],
-					dateRefiner: {
-						optionSlug: 'custom',
-						from: '1989-02-14',
-						to: '1989-11-06'
-					}
+	]
+};
+
+export const DefaultNoProps = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			refiners: [dateRefiner, simpleRefiner, anotherSimpleRefiner]
+		}
+	};
+};
+
+DefaultNoProps.story = {
+	name: 'Default (no props)'
+};
+
+export const ProvideDefaultValueBehavior = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			onApply: action('Applicators update'),
+			refiners: [simpleRefiner, anotherSimpleRefiner, dateRefiner],
+			defaultValues: {
+				simpleRefiner: ['al', 'az'],
+				anotherSimpleRefiner: ['ak'],
+				dateRefiner: {
+					optionSlug: 'custom',
+					from: '1989-02-14',
+					to: '1989-11-06'
 				}
 			}
-		};
-	})
-	.add('Throws errors with invalid refiners (see console)', () => {
-		return {
-			component: ApplicatorComponent,
-			props: {
-				onApply: action('Applicators update'),
-				refiners: [{}, new Date(), new RegExp('invalid refiner')]
-			}
-		};
-	})
-	.add('Set applyOnInit to false', () => {
-		return {
-			component: ApplicatorComponent,
-			props: {
-				onApply: action('Applicators update'),
-				refiners: [simpleRefiner, dateRefiner, anotherSimpleRefiner],
-				applyOnInit: false
-			}
-		};
-	});
+		}
+	};
+};
+
+ProvideDefaultValueBehavior.story = {
+	name: 'Provide default value behavior'
+};
+
+export const ThrowsErrorsWithInvalidRefinersSeeConsole = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			onApply: action('Applicators update'),
+			refiners: [{}, new Date(), new RegExp('invalid refiner')]
+		}
+	};
+};
+
+ThrowsErrorsWithInvalidRefinersSeeConsole.story = {
+	name: 'Throws errors with invalid refiners (see console)'
+};
+
+export const SetApplyOnInitToFalse = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			onApply: action('Applicators update'),
+			refiners: [simpleRefiner, dateRefiner, anotherSimpleRefiner],
+			applyOnInit: false
+		}
+	};
+};
+
+SetApplyOnInitToFalse.story = {
+	name: 'Set applyOnInit to false'
+};

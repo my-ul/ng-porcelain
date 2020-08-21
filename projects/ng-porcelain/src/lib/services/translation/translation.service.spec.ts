@@ -79,7 +79,7 @@ describe('TranslationService', () => {
 
 			translationService
 				.getTranslations()
-				.subscribe(TranslationService.translate<any>(target, translationMap));
+				.subscribe(TranslationService.translate(target, translationMap));
 
 			setTimeout(() => {
 				expect(target.applyLabel).toEqual('APPLY');

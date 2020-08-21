@@ -2,7 +2,6 @@
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
-import { storiesOf } from '@storybook/angular';
 
 // Utilities
 import * as _ from 'underscore';
@@ -16,7 +15,7 @@ import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefin
 import { SimpleRefinerComponent } from './simple-refiner.component';
 import { SIMPLE_REFINER_IMPORTS } from '../simple-refiner.module';
 
-const usStatesHash = {
+export const usStatesHash = {
 	AL: 'Alabama',
 	AK: 'Alaska',
 	AZ: 'Arizona',
@@ -71,7 +70,7 @@ const usStatesHash = {
 	WY: 'Wyoming'
 };
 
-let usStatesFull = {
+export const usStatesFull = {
 	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL' }),
 	AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
 	AZ: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
@@ -129,260 +128,79 @@ let usStatesFull = {
 	WY: new SimpleOption({ badge: 573720, label: 'Wyoming', slug: 'WY' })
 };
 
-storiesOf('Refiners/Simple Refiner', module)
-	.addDecorator(withNotes)
-	.addParameters({
+export default {
+	title: 'Refiner System/Simple Refiner',
+	decorators: [withNotes],
+
+	parameters: {
 		info: {
 			inline: true
 		}
-	})
-	.add(
-		'Simple `Option` dictionary',
-		() => ({
-			component: SimpleRefinerComponent,
-			moduleMetadata: {
-				imports: SIMPLE_REFINER_IMPORTS
-			},
-			props: {
-				refiner: new SimpleRefinerDefinition({
-					slug: 'simple',
-					title: 'United States of America (simple definitions)',
-					options: usStatesHash
-				}),
+	},
 
-				onRefinerChange: action('Refiner changed')
-			}
-		}),
-		{}
-	)
-	.add(
-		'Full `Option` definitions',
-		() => ({
-			component: SimpleRefinerComponent,
-			moduleMetadata: {
-				imports: SIMPLE_REFINER_IMPORTS
-			},
-			props: {
-				refiner: new SimpleRefinerDefinition({
-					slug: 'simple',
-					title: 'United States of America (full definitions; see notes)',
-					options: usStatesFull
-				}),
-				onRefinerChange: action('Refiner changed')
-			}
-		}),
-		{}
-	)
-	.add(
-		'Custom Labels',
-		() => ({
-			component: SimpleRefinerComponent,
-			moduleMetadata: {
-				imports: SIMPLE_REFINER_IMPORTS
-			},
-			props: {
-				showMoreLabel: 'Mostrar %u más',
-				showLessLabel: 'Muestra menos %u',
-				selectAllLabel: 'Seleccionar todo',
-				selectNoneLabel: 'Seleccione Ninguno',
-				refiner: new SimpleRefinerDefinition({
-					slug: 'states',
-					title: 'Estados de los EE.UU.',
-					options: usStatesFull
-				}),
-				onRefinerChange: action('Refiner (Custom Labels)')
-			}
-		}),
-		{}
-	);
+	excludeStories: ['usStatesHash', 'usStatesFull']
+};
 
-storiesOf('Refiners/Simple Refiner/Badges', module)
-	.addDecorator(withNotes)
-	.add(
-		'Options with long `label` values and numeric badges',
-		() => ({
-			component: SimpleRefinerComponent,
-			moduleMetadata: {
-				imports: SIMPLE_REFINER_IMPORTS
-			},
-			props: {
-				isOpen: true,
-				onRefinerChange: action('Refiner onRefinerChange fired'),
-				refiner: new SimpleRefinerDefinition({
-					slug: 'optionsWithBadges',
-					title: 'Options with Badges',
-					options: {
-						option1: new SimpleOption({
-							label: `Option 1. ${lipsum('50w')}`,
-							slug: 'option1',
-							badge: 1234
-						}),
-						option2: new SimpleOption({
-							label: `Option 2. ${lipsum('50w')}`,
-							slug: 'option2',
-							badge: 2341
-						}),
-						option3: new SimpleOption({
-							label: `Option 3. ${lipsum('50w')}`,
-							slug: 'option3',
-							badge: 3412
-						}),
-						option4: new SimpleOption({
-							label: `Option 4. ${lipsum('50w')}`,
-							slug: 'option4',
-							badge: 4123
-						})
-					}
-				})
-			}
+export const SimpleOptionDictionary = () => ({
+	component: SimpleRefinerComponent,
+	moduleMetadata: {
+		imports: SIMPLE_REFINER_IMPORTS
+	},
+	props: {
+		refiner: new SimpleRefinerDefinition({
+			slug: 'simple',
+			title: 'United States of America (simple definitions)',
+			options: usStatesHash
 		}),
-		{
-			info: {
-				markdown: `Options can have very long labels.  They will be truncated when the line is too long.`
-			}
-		}
-	)
-	.add('Text Badges', () => ({
-		component: SimpleRefinerComponent,
-		moduleMetadata: {
-			imports: SIMPLE_REFINER_IMPORTS
-		},
-		props: {
-			isOpen: true,
-			onRefinerChange: action('Refiner onRefinerChange fired'),
-			refiner: new SimpleRefinerDefinition({
-				slug: 'optionsWithBadges',
-				title: 'Options with Badges',
-				options: {
-					option1: new SimpleOption({
-						label: `Velma D. Talbot`,
-						slug: 'option1',
-						badge: 'UL'
-					}),
-					option2: new SimpleOption({
-						label: `Anthony Halls`,
-						slug: 'option2',
-						badge: 'IKEA'
-					}),
-					option3: new SimpleOption({
-						label: `Pam Hastings`,
-						slug: 'option3',
-						badge: 'IBM'
-					}),
-					option4: new SimpleOption({
-						label: `Latoya Sanders`,
-						slug: 'option4',
-						badge: 'AT&T'
-					})
-				}
-			})
-		}
-	}));
 
-storiesOf('Refiners/Simple Refiner Defaults', module)
-	.addDecorator(withNotes)
-	.addDecorator(withKnobs)
-	.addDecorator(withNotes)
-	.add(
-		'Set default shown options by `showCount` component property.',
-		() => ({
-			component: SimpleRefinerComponent,
-			moduleMetadata: {
-				imports: SIMPLE_REFINER_IMPORTS
-			},
-			props: {
-				refiner: new SimpleRefinerDefinition({
-					slug: 'customShowCount',
-					title: 'United States (showing 15 on load)',
-					options: usStatesHash
-				}),
-				showCount: 15,
-				onRefinerChange: action('Option Refiner change')
-			}
+		onRefinerChange: action('Refiner changed')
+	}
+});
+
+SimpleOptionDictionary.story = {
+	name: 'Simple `Option` dictionary',
+	parameters: {}
+};
+
+export const FullOptionDefinitions = () => ({
+	component: SimpleRefinerComponent,
+	moduleMetadata: {
+		imports: SIMPLE_REFINER_IMPORTS
+	},
+	props: {
+		refiner: new SimpleRefinerDefinition({
+			slug: 'simple',
+			title: 'United States of America (full definitions; see notes)',
+			options: usStatesFull
 		}),
-		{}
-	)
-	.add(
-		'Set default shown options by `showCount` refiner property.',
-		() => ({
-			component: SimpleRefinerComponent,
-			moduleMetadata: {
-				imports: SIMPLE_REFINER_IMPORTS
-			},
-			props: {
-				refiner: new SimpleRefinerDefinition({
-					slug: 'customShowCount',
-					title: 'United States (showing 15 on load)',
-					options: usStatesHash,
-					showCount: 15
-				}),
-				onRefinerChange: action('Option Refiner change')
-			}
+		onRefinerChange: action('Refiner changed')
+	}
+});
+
+FullOptionDefinitions.story = {
+	name: 'Full `Option` definitions',
+	parameters: {}
+};
+
+export const CustomLabels = () => ({
+	component: SimpleRefinerComponent,
+	moduleMetadata: {
+		imports: SIMPLE_REFINER_IMPORTS
+	},
+	props: {
+		showMoreLabel: 'Mostrar %u más',
+		showLessLabel: 'Muestra menos %u',
+		selectAllLabel: 'Seleccionar todo',
+		selectNoneLabel: 'Seleccione Ninguno',
+		refiner: new SimpleRefinerDefinition({
+			slug: 'states',
+			title: 'Estados de los EE.UU.',
+			options: usStatesFull
 		}),
-		{}
-	)
-	.add('Set value with `Refiner.selected`', () => ({
-		component: SimpleRefinerComponent,
-		moduleMetadata: {
-			imports: SIMPLE_REFINER_IMPORTS
-		},
-		props: {
-			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefinerDefinition({
-				slug: 'visitedStates',
-				title: "States I've Visited (default selections by refiner definition)",
-				selected: ['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],
-				options: usStatesFull
-			})
-		}
-	}))
-	.add('Set value with `option.isSelected`', () => ({
-		component: SimpleRefinerComponent,
-		moduleMetadata: {
-			imports: SIMPLE_REFINER_IMPORTS
-		},
-		props: {
-			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefinerDefinition({
-				slug: 'visitedStates',
-				title: "States I've Visited (default selections by option.isSelected properties)",
-				options: _.mapObject(usStatesFull, state => {
-					state.isSelected = _.contains(
-						['AL', 'AK', 'AZ', 'UT', 'WA', 'MT', 'ID', 'WY', 'IL'],
-						state.slug
-					);
-					return state;
-				})
-			})
-		}
-	}))
-	.add('Collapsed with `component.isOpen` property', () => ({
-		component: SimpleRefinerComponent,
-		moduleMetadata: {
-			imports: SIMPLE_REFINER_IMPORTS
-		},
-		props: {
-			isOpen: false,
-			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefinerDefinition({
-				slug: 'closedByDefault',
-				title: 'Closed by component.isOpen property (click to open)',
-				options: usStatesFull
-			})
-		}
-	}))
-	.add('Collapsed with `OptionRefiner.isOpen` property', () => ({
-		component: SimpleRefinerComponent,
-		moduleMetadata: {
-			imports: SIMPLE_REFINER_IMPORTS
-		},
-		props: {
-			onRefinerChange: action('Refiner changed'),
-			refiner: new SimpleRefinerDefinition({
-				slug: 'closedByDefault',
-				title: 'Closed by refiner.isOpen property (click to open)',
-				options: usStatesFull,
-				isOpen: false
-			})
-		}
-	}));
+		onRefinerChange: action('Refiner (Custom Labels)')
+	}
+});
+
+CustomLabels.story = {
+	parameters: {}
+};
