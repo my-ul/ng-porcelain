@@ -18,6 +18,7 @@ import { clamp } from '../../shared/utilities/arrays/clamp';
 import { moveItem } from '../../shared/utilities/arrays/moveItem';
 
 import { sprintf } from 'sprintf-js';
+import { Loggable } from '../../Loggable';
 
 interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
 	grid: string;
@@ -28,7 +29,12 @@ interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
 	templateUrl: './rack.component.html',
 	styleUrls: ['./rack.component.scss']
 })
-export class RackComponent<TItemType extends any = any> implements OnInit {
+export class RackComponent<TItemType extends any = any> extends Loggable implements OnInit {
+	/**
+	 * Component name; used for logging.
+	 */
+	name: string = 'RackComponent';
+
 	/**
 	 * activeItems backing field
 	 */
@@ -411,7 +417,7 @@ export class RackComponent<TItemType extends any = any> implements OnInit {
 		for (let inactiveIdx in this.inactiveItems) {
 			let inactiveItem = this.inactiveItems[inactiveIdx];
 			if (this.lockedProp in inactiveItem && !!inactiveItem[this.lockedProp]) {
-				console.warn(
+				this.warn(
 					'Locked item found in inactive array.',
 					`${inactiveItem[this.valueProp]} => ${inactiveItem[this.labelProp]}`
 				);
