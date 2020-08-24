@@ -4,12 +4,11 @@ import { Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angu
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
 import * as _moment from 'moment';
-import { IMyDate } from 'mydatepicker';
-
-// Porcelain
-
 import { of } from 'rxjs';
 
+import { IAngularMyDpOptions, IMyDateModel, IMyDate } from 'angular-mydatepicker';
+
+// Porcelain
 import { TranslationService } from '../../services/translation/translation.service';
 import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
 
@@ -40,7 +39,7 @@ export const defaultDateOptions: IDictionary<DateOption> = i18nDateOptions();
 // 	animationRangeInOut = generateSlideInOut('rangeInOut');
 
 export interface ISimplifiedMyDateModel {
-	date: IMyDate;
+	date: IMyDateModel;
 }
 
 @Component({
@@ -53,7 +52,7 @@ export class DateRefinerComponent implements OnInit {
 	@Input() isOpen: boolean = true;
 	@Input() refiner: DateRefinerDefinition;
 
-	@Input() datePickerOptions = {
+	@Input() datePickerOptions: IAngularMyDpOptions = {
 		dateFormat: 'yyyy-mm-dd',
 		dayLabels: {
 			su: 'Sun',
@@ -78,7 +77,11 @@ export class DateRefinerComponent implements OnInit {
 			11: 'Nov',
 			12: 'Dec'
 		},
-		todayBtnTxt: 'Today'
+		stylesData: {
+			selector: 'date-picker',
+			styles: `
+			`
+		}
 	};
 
 	@Input() fromLabel: string = 'From';
@@ -107,8 +110,8 @@ export class DateRefinerComponent implements OnInit {
 	currentOptionSlug: string;
 	private ignoreNext: boolean = false;
 
-	fromModel: ISimplifiedMyDateModel = null;
-	toModel: ISimplifiedMyDateModel = null;
+	fromModel: IMyDateModel = null;
+	toModel: IMyDateModel = null;
 
 	constructor(private translationService: TranslationService) {
 		this.log('constructor()');
@@ -126,7 +129,7 @@ export class DateRefinerComponent implements OnInit {
 		);
 	}
 
-	parseDateState(date: string | Date | _moment.Moment): ISimplifiedMyDateModel {
+	parseDateState(date: string | Date | _moment.Moment): IMyDateModel {
 		this.log('parseDateState(date)', { date });
 		const parsed: _moment.Moment =
 			typeof date === 'string'
@@ -135,10 +138,13 @@ export class DateRefinerComponent implements OnInit {
 
 		if (parsed.isValid) {
 			return {
-				date: {
-					day: parsed.get('date'),
-					month: parsed.get('month') + 1, // Zero-indexed => One-indexed
-					year: parsed.get('year')
+				isRange: false,
+				singleDate: {
+					date: {
+						day: parsed.get('date'),
+						month: parsed.get('month') + 1, // Zero-indexed => One-indexed
+						year: parsed.get('year')
+					}
 				}
 			};
 		} else {
@@ -299,13 +305,17 @@ export class DateRefinerComponent implements OnInit {
 		const currentOption = this.refiner.options[this.currentOptionSlug];
 
 		if (this.currentOptionSlug === 'custom') {
+			this.log('this.fromModel, this.toModel', {
+				fromModel: this.fromModel,
+				toModel: this.toModel
+			});
 			const from = this.fromModel
 				? currentOption.getFrom(
 						moment()
 							.utc()
-							.year(this.fromModel.date.year)
-							.month(this.fromModel.date.month - 1) // zero-indexed, so Jan is 0; Dec is 11
-							.date(this.fromModel.date.day)
+							.year(this.fromModel.singleDate.date.year)
+							.month(this.fromModel.singleDate.date.month - 1) // zero-indexed, so Jan is 0; Dec is 11
+							.date(this.fromModel.singleDate.date.day)
 							.startOf('day')
 							.toDate()
 				  )
@@ -315,9 +325,9 @@ export class DateRefinerComponent implements OnInit {
 				? currentOption.getTo(
 						moment()
 							.utc()
-							.year(this.toModel.date.year)
-							.month(this.toModel.date.month - 1)
-							.date(this.toModel.date.day)
+							.year(this.toModel.singleDate.date.year)
+							.month(this.toModel.singleDate.date.month - 1)
+							.date(this.toModel.singleDate.date.day)
 							.endOf('day')
 							.toDate()
 				  )

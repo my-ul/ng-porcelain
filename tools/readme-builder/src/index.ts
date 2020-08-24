@@ -10,7 +10,7 @@ const args = yargs.usage('Usage: $0 -o <file> -t <title> [-c <file]').options({
 	},
 	config: {
 		type: 'string',
-		demandOption: true,
+		demandOption: false,
 		alias: 'c',
 		description: 'Input JSON file to be parsed as a SectionIndex.'
 	},

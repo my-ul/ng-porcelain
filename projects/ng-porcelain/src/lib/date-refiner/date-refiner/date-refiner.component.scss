@@ -1,12 +1,22 @@
 @import '../../shared/styles/refiner.base.component.scss';
 
+$ff: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+	'Helvetica Neue', sans-serif;
+
+:host {
+	font-size: 14px;
+	font-family: $ff;
+}
+
 .range {
 	.range__error {
 		color: red;
 	}
-	.from,
-	.to {
+	.range__from,
+	.range__to {
 		display: block;
+
+		position: relative;
 		input {
 			margin-top: 0.3em;
 			width: 50%;
@@ -23,9 +33,27 @@
 	}
 }
 
-.datepicker {
+::ng-deep .date-picker {
+	//font-family: $ff;
+	font-size: 14px;
+	.myDpYearLabel,
+	.myDpMonthLabel,
+	.myDpDayValue {
+		font-family: $ff;
+	}
+	.myDpSelector {
+		top: calc(100% + 0.5em) !important;
+	}
+	.myDpWeekDayTitle {
+		font-weight: 600;
+	}
+}
+
+.range__control {
 	border-radius: 0.3em;
 	border: solid 1px #c0c0c0;
 	padding: 0.3em 0.6em;
 	display: block;
+	font-size: 14px;
+	font-family: $ff;
 }

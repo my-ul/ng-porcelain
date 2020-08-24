@@ -1,6 +1,7 @@
-# Porcelain
+# 9.2.x
 
-A library of durable, beautiful components for Angular 6+.
+-   Replaced peer dependcency `mydatepicker` with `angular-mydatepicker`.
+-   Upgrade angular-fontawesome from `^0.3.0` to `^0.6.1`
 
 # 1.x.x
 

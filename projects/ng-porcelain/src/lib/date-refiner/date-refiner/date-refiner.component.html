@@ -52,29 +52,42 @@
 					<div *ngIf="currentOptionSlug === 'custom'">
 						<div class="range">
 							<div class="range__from">
-								<label for="fromDatePicker">{{ fromLabel }}</label>
+								<label [for]="fromDatePicker">{{ fromLabel }}</label>
 								<!-- [(ngModel)]="fromModel" -->
-								<my-date-picker
-									#fromDatePicker
+								<input
+									angular-mydatepicker
+									#fromDatePicker="angular-mydatepicker"
 									name="fromDatePicker"
+									class="range__control"
 									[options]="datePickerOptions"
 									[(ngModel)]="fromModel"
 									(dateChanged)="onFromChange($event)"
-								></my-date-picker>
+									(click)="fromDatePicker.toggleCalendar()"
+								/>
 							</div>
 
 							<div class="range__to">
-								<label for="toDatePicker">
+								<label [for]="toDatePicker">
 									{{ toLabel }}
 								</label>
+								<input
+									angular-mydatepicker
+									#toDatePicker="angular-mydatepicker"
+									name="toDatePicker"
+									class="range__control"
+									[options]="datePickerOptions"
+									[(ngModel)]="toModel"
+									(dateChanged)="onToChange($event)"
+									(click)="toDatePicker.toggleCalendar()"
+								/>
 								<!-- [(ngModel)]="toModel" -->
-								<my-date-picker
+								<!-- <my-date-picker
 									#toDatePicker
 									name="toDatePicker"
 									[options]="datePickerOptions"
 									[(ngModel)]="toModel"
 									(dateChanged)="onToChange($event)"
-								></my-date-picker>
+								></my-date-picker> -->
 							</div>
 
 							<div class="range__error" *ngIf="!isCustomRangeValid()">
