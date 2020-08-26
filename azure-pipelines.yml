@@ -20,8 +20,8 @@ steps:
 
 - script: |
     npm install
-    npx ng build ngPorcelain
-  displayName: 'npm install and build'
+    npm run create-package
+  displayName: 'create bundle'
 
 - script: echo $(Build.Repository.LocalPath) && pwd
   displayName: Print Workspace and pwd
