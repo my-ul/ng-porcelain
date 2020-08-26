@@ -13,7 +13,7 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- task: "ffd54dce-ce4f-4080-bdda-a110f334feff@1"
+- task: "OneLuckiDev.json2variable.vsts-json-to-variable@1"
   inputs:
     jsonFile: '$(Build.Repository.LocalPath)/projects/ng-porcelain/package.json'
     shouldPrefixVariables: true
