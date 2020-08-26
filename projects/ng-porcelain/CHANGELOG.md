@@ -1,7 +1,11 @@
-# 9.2.x
+# 9.x.x
 
--   Replaced peer dependcency `mydatepicker` with `angular-mydatepicker`.
--   Upgrade angular-fontawesome from `^0.3.0` to `^0.6.1`
+## 9.0.0
+
+-   Versioning has been modified to synchronize with Angular releases. Porcelain's major version number will now match the Angular version number. For example, Porcelain ^9.0.0 is designed to be compatible with Angular ^9.0.0
+-   Replaced peer dependency `mydatepicker` with `angular-mydatepicker`.
+-   Upgrade angular-fontawesome from `^0.3.0` to `^0.6.1`.
+-   Updated storybooks to use new Storybook formats and reorganized to take advantage of new hierarchy tools.
 
 # 1.x.x
 
