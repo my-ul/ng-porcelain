@@ -40,5 +40,5 @@ steps:
       git tag $PORCELAIN_VERSION
       git -c http.extraheader="Authorization: Bearer $ACCESS_TOKEN" push --tags origin 
   env:
-    PORCELAIN_VERSION: 'v$(json.version)'
+    PORCELAIN_VERSION: 'v$(package__version)'
     ACCESS_TOKEN: $(System.AccessToken)
