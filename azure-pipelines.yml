@@ -13,18 +13,17 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- task: oneLuckiDevJson2Variable@1
-  inputs:
-    jsonFile: '$(Build.Repository.LocalPath)/projects/ng-porcelain/package.json'
-    shouldPrefixVariables: true
-
 - script: |
     npm install
-    npm run create-package
-  displayName: 'create bundle'
+  displayName: 'Restore npm packages'
 
-- script: echo $(Build.Repository.LocalPath) && pwd
-  displayName: Print Workspace and pwd
+- script: |
+    npm run build-variables-tool && npm run get-variables
+  displayName: 'Extract package variables into environment'
+
+- script: |
+    npm run create-package
+  displayName: 'Create Angular NPM Package'
 
 - task: PublishPipelineArtifact@1
   inputs:
