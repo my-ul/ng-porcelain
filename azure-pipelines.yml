@@ -14,10 +14,11 @@ steps:
   displayName: 'Install Node.js'
 
 # https://github.com/jeffpriz/vsts-json-to-variable/blob/master/Json2Variable/task.json
-- task: ffd54dce-ce4f-4080-bdda-a110f334feff@1
+- task: OneLuckiDev.json2variable.vsts-json-to-variable.oneLuckiDevJson2Variable@1
+  displayName: 'Load Variables'
   inputs:
     jsonFile: '$(Build.Repository.LocalPath)/projects/ng-porcelain/package.json'
-    shouldPrefixVariables: true
+    shouldPrefixVariables: false
 
 - script: |
     npm install
