@@ -5,7 +5,7 @@
 				class="applicator__action applicator__action--primary"
 				[class.applicator__action--disabled]="!canApply()"
 				[disabled]="!canApply()"
-				(click)="apply()"
+				(click)="beforeApply()"
 			>
 				{{ applyLabel }}
 			</button>

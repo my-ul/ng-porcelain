@@ -4,15 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 	{
 		path: 'lists',
-		loadChildren: './list-docs/list-docs.module#ListDocsModule'
+		loadChildren: () => import('./list-docs/list-docs.module').then(m => m.ListDocsModule)
 	},
 	{
 		path: 'rack',
-		loadChildren: './rack-docs/rack-docs.module#RackDocsModule'
+		loadChildren: () => import('./rack-docs/rack-docs.module').then(m => m.RackDocsModule)
 	},
 	{
 		path: 'inputs',
-		loadChildren: './inputs-docs/inputs-docs.module#InputsDocsModule'
+		loadChildren: () => import('./inputs-docs/inputs-docs.module').then(m => m.InputsDocsModule)
 	}
 ];
 

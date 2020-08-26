@@ -24,52 +24,22 @@
 			</porcelain-list-body>
 
 			<porcelain-list-body *ngIf="currentPeople.length > 0">
-				<ng-container *ngFor="let person of currentPeople; let i = index"
-					><!--assume this as document parent document and ngfor-->
-					<porcelain-list-item>
-						<porcelain-list-item-cell
-							[width]="column.width"
-							[padAll]="true"
-							*ngFor="let column of activeColumns"
-						>
-							<ng-container *ngIf="column.key === 'last_name'">
-								<strong>{{ person.first_name }} {{ person.last_name }}</strong
-								><br />
-								{{ person.email }}
-								<a (click)="person.displayChild = !person.displayChild"
-									>click me for displaying child</a
-								>
-								<!--child document display toggle-->
-							</ng-container>
-							<ng-container *ngIf="column.key !== 'last_name'">
-								{{ person[column.key] }}
-							</ng-container>
-						</porcelain-list-item-cell>
-					</porcelain-list-item>
-					<ng-container
-						><!--ng for here for child document Porcelain Child Component here-->
-						<div *ngIf="person.displayChild">
-							<!--Toogle Collapse-->
-							<div *ngFor="let column of activeColumns">
-								<ng-container *ngIf="column.key === 'last_name'">
-									<span>child document for name</span>
-								</ng-container>
-								<ng-container *ngIf="column.key === 'address_1'">
-									<span>child document for address_1</span>
-								</ng-container>
-								<ng-container *ngIf="column.key === 'city'">
-									<span>child document for city</span>
-								</ng-container>
-								<ng-container *ngIf="column.key === 'state'">
-									<span>child document for state</span>
-								</ng-container>
-								<ng-container *ngIf="column.key === 'zip'">
-									<span>child document for zip</span>
-								</ng-container>
-							</div>
-						</div>
-					</ng-container>
-				</ng-container>
+				<porcelain-list-item *ngFor="let person of currentPeople; let i = index">
+					<porcelain-list-item-cell
+						[width]="column.width"
+						[padAll]="true"
+						*ngFor="let column of activeColumns"
+					>
+						<ng-container *ngIf="column.key === 'last_name'">
+							<strong>{{ person.first_name }} {{ person.last_name }}</strong
+							><br />
+							{{ person.email }}
+						</ng-container>
+						<ng-container *ngIf="column.key !== 'last_name'">
+							{{ person[column.key] }}
+						</ng-container>
+					</porcelain-list-item-cell>
+				</porcelain-list-item>
 			</porcelain-list-body>
 		</porcelain-list>
 	</div>

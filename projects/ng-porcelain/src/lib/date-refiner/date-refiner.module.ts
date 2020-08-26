@@ -2,8 +2,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MyDatePickerModule } from 'mydatepicker';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 
 // From Porcelain
 import { TruncateModule } from '../truncate/truncate.module';
@@ -18,7 +19,7 @@ export const DATE_REFINER_IMPORTS = [
 	FormsModule,
 	FontAwesomeModule,
 	TruncateModule,
-	MyDatePickerModule
+	AngularMyDatePickerModule
 ];
 
 @NgModule({

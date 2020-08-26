@@ -26,7 +26,7 @@ export class ToolbarButtonComponent implements AfterViewInit {
 	/**
 	 * Reference to the #label in the template.
 	 */
-	@ViewChild('label', { read: ElementRef })
+	@ViewChild('label', { read: ElementRef, static: true })
 	labelRef: ElementRef;
 
 	/**

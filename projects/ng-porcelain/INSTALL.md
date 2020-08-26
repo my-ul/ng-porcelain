@@ -1,16 +1,8 @@
 # Install Porcelain and its dependencies
 
-```bash
-npm install --save @my-ul/ng-porcelain \
-	@fortawesome/angular-fontawesome@0.3.0 \
-	@fortawesome/fontawesome-svg-core@1.2.15 \
-	@fortawesome/free-solid-svg-icons@5.7.2 \
-	@w11k/angular-sticky-things@1.1.2 \
-	moment@2.24.0 \
-	mydatepicker@2.6.6 \
-	lodash-es@~4.17.11 \
-	uuid@latest
-```
+It is assumed that you have already used the Angular CLI to install and instantiate an Angular application. Refer to the [Angular documentation](https://angular.io/guide/setup-local) for help setting up an Angular project.
+
+{{install-command}}
 
 # Import and use Porcelain modules
 

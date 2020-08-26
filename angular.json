@@ -10,13 +10,14 @@
 			"prefix": "app",
 			"schematics": {
 				"@schematics/angular:component": {
-					"styleext": "scss"
+					"style": "scss"
 				}
 			},
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+            "aot": true,
 						"outputPath": "dist/ngPorcelain-src",
 						"index": "src/index.html",
 						"main": "src/main.ts",
@@ -48,7 +49,11 @@
 									"type": "initial",
 									"maximumWarning": "2mb",
 									"maximumError": "5mb"
-								}
+								},
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
 							]
 						}
 					}
@@ -124,7 +129,7 @@
 			"prefix": "porcelain",
 			"schematics": {
 				"@schematics/angular:component": {
-					"styleext": "scss"
+					"style": "scss"
 				}
 			},
 			"architect": {
@@ -134,7 +139,12 @@
 						"tsConfig": "projects/ng-porcelain/tsconfig.lib.json",
 						"project": "projects/ng-porcelain/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-porcelain/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {

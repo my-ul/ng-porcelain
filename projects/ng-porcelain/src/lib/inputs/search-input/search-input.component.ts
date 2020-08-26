@@ -39,7 +39,7 @@ export class SearchInputComponent extends Loggable {
 	@Output()
 	public valueChange: EventEmitter<string> = new EventEmitter();
 
-	@ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
+	@ViewChild('searchInput', { static: true }) public searchInput: ElementRef<HTMLInputElement>;
 
 	public isSearchFocused = false;
 

@@ -34,13 +34,10 @@ export class TranslationService extends Loggable {
 	 * 			TranslationService.translate(this, { 'label_Apply': 'applyLabel' })
 	 * 		)
 	 */
-	public static translate<T extends { [key: string]: any }, K extends keyof T = keyof T>(
-		targetObject: T,
-		translationMap: TranslationMap<K>
-	) {
+	public static translate<T>(targetObject: T, translationMap: TranslationMap<any>) {
 		return function(newTranslations: Translations) {
 			for (let sourceKey in translationMap) {
-				let destKey = translationMap[sourceKey] as K;
+				let destKey = translationMap[sourceKey] as string;
 				if (newTranslations[sourceKey]) {
 					let newLabel = newTranslations[sourceKey];
 					targetObject[destKey] = newLabel;

@@ -8,6 +8,6 @@
 	</span>
 </label>
 
-<div class="porcelain-toolbar-select__options" [@slideInOut]="isOpen ? 'open' : 'closed'">
+<div class="porcelain-toolbar-select__options" [@slideInOut] *ngIf="isOpen">
 	<ng-content select="porcelain-toolbar-option"></ng-content>
 </div>
