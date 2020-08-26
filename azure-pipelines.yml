@@ -13,7 +13,7 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- task: '6f9cdff3-a6b9-47e1-90a8-6590ba11e157@1'
+- task: oneLuckiDevJson2Variable@1
   inputs:
     jsonFile: '$(Build.Repository.LocalPath)/projects/ng-porcelain/package.json'
     shouldPrefixVariables: true
