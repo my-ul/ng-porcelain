@@ -1,6 +1,7 @@
-import yargs = require('yargs');
-import chalk = require('chalk');
+import chalk from 'chalk';
+import semver from 'semver';
 import * as path from 'path';
+import * as yargs from 'yargs';
 import { readFileSync, writeFileSync } from 'fs';
 
 /**
@@ -58,6 +59,8 @@ if (args.primary && args.secondary) {
 					const secondaryPackageVersion = secondary.dependencies[primaryPackageName];
 					if (primaryPackageVersion === secondaryPackageVersion) {
 						console.info(chalk.green('match'));
+					} else if (semver.intersects(secondaryPackageVersion, primaryPackageVersion)) {
+						console.info(chalk.yellow('satisfies'));
 					} else {
 						console.error(
 							chalk.red(
