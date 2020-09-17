@@ -392,6 +392,7 @@ export class ToolbarSelectComponent extends Loggable implements OnDestroy, After
 	@HostListener('document:keydown', ['$event'])
 	onDocumentKeyDown(event: KeyboardEvent): void {
 		if (this.hasFocus && !this.disabled) {
+			event.preventDefault();
 			if (this.isOpen) {
 				if (event.key === 'ArrowDown') {
 					this.highlightedIndex = Math.min(this.options.length - 1, this.highlightedIndex + 1);

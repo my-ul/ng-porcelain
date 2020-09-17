@@ -3,10 +3,10 @@
  * and write values to the console so Azure DevOps can use them.
  */
 
-import yargs from 'yargs';
-import flat from 'flat';
-import path from 'path';
-import fs from 'fs';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as yargs from 'yargs';
+import { flatten } from 'flat';
 
 const args = yargs
 	.usage('Usage: $0 --input <file>')
@@ -33,7 +33,7 @@ const args = yargs
 if (args.input) {
 	let fileStr = fs.readFileSync(args.input).toString();
 	let parsed = JSON.parse(fileStr);
-	let flattened = flat(parsed, { delimiter: args.delimiter }) as any;
+	let flattened = flatten(parsed, { delimiter: args.delimiter }) as any;
 
 	const usePrefix = args.prefix || '';
 

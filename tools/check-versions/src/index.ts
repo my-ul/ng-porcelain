@@ -1,6 +1,6 @@
-import yargs = require('yargs');
-import chalk = require('chalk');
+import chalk from 'chalk';
 import * as path from 'path';
+import * as yargs from 'yargs';
 import { readFileSync, writeFileSync } from 'fs';
 
 /**
