@@ -4,14 +4,12 @@ import { Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angu
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
 import * as _moment from 'moment';
-import { of } from 'rxjs';
 
-import { IAngularMyDpOptions, IMyDateModel, IMyDate } from 'angular-mydatepicker';
+import { IMyDateModel } from 'angular-mydatepicker';
 
 // Porcelain
 import { TranslationService } from '../../services/translation/translation.service';
 import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
-
 import { DateOption } from '../../shared/types/Options/DateOption';
 import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
 import { DateRefinerValue } from '../../shared/types/Values/DateRefinerValue';
@@ -52,7 +50,7 @@ export class DateRefinerComponent implements OnInit {
 	@Input() isOpen: boolean = true;
 	@Input() refiner: DateRefinerDefinition;
 
-	@Input() datePickerOptions: IAngularMyDpOptions = {
+	@Input() datePickerOptions = {
 		dateFormat: 'yyyy-mm-dd',
 		dayLabels: {
 			su: 'Sun',
