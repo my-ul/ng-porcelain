@@ -389,10 +389,13 @@ export class ToolbarSelectComponent extends Loggable implements OnDestroy, After
 	 * Processes keyboard presses to enable keyboard navigation.
 	 * @param event An event containing details about the key press.
 	 */
-	@HostListener('document:keydown', ['$event'])
+	@HostListener('keydown', ['$event'])
 	onDocumentKeyDown(event: KeyboardEvent): void {
 		if (this.hasFocus && !this.disabled) {
-			event.preventDefault();
+			// The tab key should always allow navigation
+			if (event.key !== 'Tab') {
+				event.preventDefault();
+			}
 			if (this.isOpen) {
 				if (event.key === 'ArrowDown') {
 					this.highlightedIndex = Math.min(this.options.length - 1, this.highlightedIndex + 1);
