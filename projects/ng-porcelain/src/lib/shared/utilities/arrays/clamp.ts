@@ -7,3 +7,9 @@ export function clamp(value: number, min: number, max: number): number {
 		return max;
 	}
 }
+
+//updated function
+
+export function clamp2(min: number, value: number, max: number) {
+	return Math.min(Math.max(min, value), max);
+}

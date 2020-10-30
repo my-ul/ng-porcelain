@@ -1,0 +1,29 @@
+<div class="select__window" (click)="toggleOpen()">
+	<input
+		type="text"
+		class="select__window-value"
+		[(ngModel)]="searchtext"
+		[placeholder]="Placeholder || 'Search For value'"
+		[class.select__window-value--placeholder]="selectedIndex == -1"
+	/>
+	<span class="select__window-toggle">▼</span>
+</div>
+
+<ul class="select__items" *ngIf="isOpen">
+	<li
+		class="select__item"
+		*ngFor="let item of items | searchPipe: searchtext:isArrayobj:fieldName; index as itemIdx"
+		(mouseover)="setHighlightedIndex(itemIdx)"
+		(click)="onOptionClicked(itemIdx, item)"
+		title="(isArrayobj ? item[fieldName] : item)"
+		[class.select__item--highlighted]="highlightedIndex == itemIdx"
+		[class.select__item--selected]="selectedIndex == itemIdx"
+	>
+		<ng-container *ngIf="isArrayobj; else plainarray">
+			{{ item[fieldName] }}
+		</ng-container>
+		<ng-template #plainarray>
+			{{ item }}
+		</ng-template>
+	</li>
+</ul>
