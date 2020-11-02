@@ -161,3 +161,8 @@ export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
 // Combobox Module
 export { ComboboxModule } from './lib/select-dropdown/combobox.module';
 export { ComboboxComponent } from './lib/select-dropdown/select-dropdown/combobox.component';
+
+//native dropdown module only for development
+
+export { SelectDropdownModule1 } from './lib/native-dropdown/select-dropdown.module';
+export { SelectDropdownComponent1 } from './lib/native-dropdown/select-dropdown/select-dropdown.component';
