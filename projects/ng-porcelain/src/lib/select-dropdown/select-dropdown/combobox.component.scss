@@ -43,6 +43,8 @@ $border-def: solid 1px #d0d0d0;
 		border-bottom: $border-def;
 		border-left: $border-def;
 		border-right: $border-def;
+		overflow-y: auto;
+		max-height: 50vh;
 	}
 
 	.select__item {

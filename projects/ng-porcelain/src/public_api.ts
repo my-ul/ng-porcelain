@@ -158,6 +158,6 @@ export { ToolbarSelectedTemplateComponent } from './lib/toolbar/toolbar-selected
 export { ToolbarTextComponent } from './lib/toolbar/toolbar-text/toolbar-text.component';
 export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
 
-//select DropDown Module
-export { SelectDropdownModule } from './lib/select-dropdown/select-dropdown.module';
-export { SelectDropdownComponent } from './lib/select-dropdown/select-dropdown/select-dropdown.component';
+// Combobox Module
+export { ComboboxModule } from './lib/select-dropdown/combobox.module';
+export { ComboboxComponent } from './lib/select-dropdown/select-dropdown/combobox.component';

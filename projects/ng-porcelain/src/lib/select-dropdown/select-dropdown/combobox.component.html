@@ -5,6 +5,9 @@
 		[(ngModel)]="searchtext"
 		[placeholder]="Placeholder || 'Search For value'"
 		[class.select__window-value--placeholder]="selectedIndex == -1"
+		(focus)="setFocus(true)"
+		(blur)="setFocus(false)"
+		(keydown)="keyDown($event)"
 	/>
 	<span class="select__window-toggle">▼</span>
 </div>

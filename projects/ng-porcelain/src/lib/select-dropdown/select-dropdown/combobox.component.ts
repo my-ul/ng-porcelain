@@ -9,15 +9,14 @@ import {
 	EventEmitter
 } from '@angular/core';
 
-//import clamp 2 function from ultilites
-import { clamp2 } from '../../shared/utilities/arrays/clamp';
+import { clamp } from '../../shared/utilities/arrays/clamp';
 
 @Component({
-	selector: 'porcelain-select-dropdown',
-	templateUrl: './select-dropdown.component.html',
-	styleUrls: ['./select-dropdown.component.scss']
+	selector: 'porcelain-combobox',
+	templateUrl: './combobox.component.html',
+	styleUrls: ['./combobox.component.scss']
 })
-export class SelectDropdownComponent implements OnInit {
+export class ComboboxComponent implements OnInit {
 	searchtext: string = '';
 
 	/**
@@ -26,7 +25,7 @@ export class SelectDropdownComponent implements OnInit {
 	 *
 	 *
 	 */
-	@Input() items: Array<any> = ['Apple', 'Banana', 'Cherry', 'Durian'];
+	@Input() items: Array<any> = [];
 
 	/**
 	 * *PlaceHolder Value
@@ -57,22 +56,10 @@ export class SelectDropdownComponent implements OnInit {
 	constructor(private element: ElementRef) {}
 
 	ngOnInit(): void {}
-	// enables focus on our host element
-	@HostBinding('tabindex')
-	@Input('tabindex')
-	tabindex: number = 0;
 
 	//setting focus
 	setFocus(focus: boolean) {
 		this.hasFocus = focus;
-	}
-	//Host bindings for
-	@HostListener('focus', ['$event']) onFocus(event) {
-		this.setFocus(true);
-	}
-
-	@HostListener('blur', ['$event']) onBlur(event) {
-		this.setFocus(false);
 	}
 
 	//status flag
@@ -102,18 +89,21 @@ export class SelectDropdownComponent implements OnInit {
 
 	setSelectedIndex(idx) {
 		this.selectedIndex = idx;
+		this.onSelectionSearchText();
 		return this;
 	}
 
 	//onSelections show update searchtext via keyboard
 	onSelectionSearchText() {
-		this.searchtext = this.items[this.selectedIndex];
+		this.searchtext = this.isArrayobj
+			? this.items[this.selectedIndex][this.fieldName]
+			: this.items[this.selectedIndex];
 	}
 
 	//onSelection show update searchtext when clicked
 	onOptionClicked(itemIdx: any, Selecteditem: any) {
 		this.setSelectedIndex(itemIdx).setOpen(false);
-		this.searchtext = this.isArrayobj ? Selecteditem[this.fieldName] : Selecteditem;
+		//this.searchtext = this.isArrayobj ? Selecteditem[this.fieldName] : Selecteditem;
 		this.SelectedValue.emit(Selecteditem);
 	}
 
@@ -126,8 +116,6 @@ export class SelectDropdownComponent implements OnInit {
 	}
 
 	//Handling keyboard events
-
-	@HostListener('keydown', ['$event'])
 	keyDown(event: KeyboardEvent) {
 		//Check focus exists
 		if (this.hasFocus) {
@@ -157,7 +145,7 @@ export class SelectDropdownComponent implements OnInit {
 			else {
 				//opens only if enter is clicked
 				if (~['Enter', 'Space', ' '].indexOf(key)) {
-					this.setHighlightedIndex(clamp2(0, this.selectedIndex, lastIndex)).setOpen(true);
+					this.setHighlightedIndex(clamp(0, this.selectedIndex, lastIndex)).setOpen(true);
 				} else if ('ArrowUp' == key) {
 					this.setSelectedIndex(Math.max(0, this.selectedIndex - 1));
 				} else if ('ArrowDown' == key) {
@@ -169,8 +157,10 @@ export class SelectDropdownComponent implements OnInit {
 				}
 			}
 
-			//stopping event propagation for tab
-			if ('Tab' !== key) {
+			// These keys should have their default actions stopped.
+			// Calling stopPropagation() and returning false will ensure a stopped event.
+			const swallowKeys = ['ArrowUp', 'ArrowDown', 'Enter', 'Space', 'Home', 'End', 'Escape', ' '];
+			if (~swallowKeys.indexOf(key)) {
 				event.stopPropagation();
 				return false;
 			}

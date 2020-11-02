@@ -4,18 +4,18 @@ import { moduleMetadata } from '@storybook/angular';
 
 //module imports
 
-import { SELECT_DROPDOWN_DIRECTIVES, SELECT_DROPDOWN_IMPORTS } from '../select-dropdown.module';
+import { SELECT_DROPDOWN_DIRECTIVES, SELECT_DROPDOWN_IMPORTS } from '../combobox.module';
 
 //import component
 
-import { SelectDropdownComponent } from './select-dropdown.component';
+import { ComboboxComponent } from './combobox.component';
 
 //action messages
 const SelectedValueEmitted = 'Value is selected';
 
 //create a default
 export default {
-	title: 'MultiSelect/Select Dropdown with Search',
+	title: 'Controls/Combobox Input',
 	decorators: [
 		withKnobs,
 		moduleMetadata({
@@ -27,19 +27,21 @@ export default {
 
 export const DefaultPresentation = () => {
 	return {
-		component: SelectDropdownComponent,
-		props: {}
+		component: ComboboxComponent,
+		props: {
+			items: ['Apple', 'Banana', 'Cherry', 'Durian']
+		}
 	};
 };
 
 //name the story
 DefaultPresentation.story = {
-	name: 'Default presentation'
+	name: 'Default Presentation'
 };
 
 export const NormalArrayInput = () => {
 	return {
-		component: SelectDropdownComponent,
+		component: ComboboxComponent,
 		props: {
 			items: [
 				'carrot',
@@ -66,7 +68,7 @@ NormalArrayInput.story = {
 
 export const ArrayOfobjectsInput = () => {
 	return {
-		component: SelectDropdownComponent,
+		component: ComboboxComponent,
 		props: {
 			items: [
 				{ id: '5001', type: 'None' },
