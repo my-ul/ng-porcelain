@@ -157,3 +157,8 @@ export { ToolbarSelectComponent } from './lib/toolbar/toolbar-select/toolbar-sel
 export { ToolbarSelectedTemplateComponent } from './lib/toolbar/toolbar-selected-template/toolbar-selected-template.component';
 export { ToolbarTextComponent } from './lib/toolbar/toolbar-text/toolbar-text.component';
 export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
+
+// Breadcrumb Modules
+export { BreadcrumbModule } from './lib/breadcrumb/breadcrumb.module';
+export { BreadcrumbsComponent } from './lib/breadcrumb/breadcrumbs/breadcrumbs.component';
+export { BreadcrumbItemComponent } from './lib/breadcrumb/breadcrumb-item/breadcrumb-item.component';

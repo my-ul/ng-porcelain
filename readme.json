@@ -26,6 +26,9 @@
 		"Translation Service": "projects/ng-porcelain/src/lib/services/translation/README.md"
 	},
 	"Modules": {
+		"Breadcrumbs": {
+			"__": "projects/ng-porcelain/src/lib/breadcrumb/README.md"
+		},
 		"Inputs": {
 			"__": "projects/ng-porcelain/src/lib/inputs/README.md",
 			"Search Input": "projects/ng-porcelain/src/lib/inputs/search-input/README.md",
