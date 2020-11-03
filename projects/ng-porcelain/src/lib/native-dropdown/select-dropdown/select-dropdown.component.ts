@@ -189,7 +189,7 @@ export class SelectDropdownComponent1 implements OnInit {
 			} else if (~['Enter', 'Space', ' '].indexOf(key)) {
 				//item selected handling
 				this.setSelectedIndex(this.highlightedIndex).setOpen(false);
-				console.log(this.domOptionList);
+
 				//send the wholelist
 				this.onSelectedList(this.domOptionList.toArray());
 			} else if ('Home' == key) {
