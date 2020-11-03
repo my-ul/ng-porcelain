@@ -129,36 +129,48 @@ export class SelectDropdownComponent1 implements OnInit {
 
 	//keyboard selection
 	onSelectedList = (selectedlist: Array<ElementRef>) => {
-		let selectedvalue = selectedlist.find(({ nativeElement: { className } }) => {
-			if (className == 'select__item select__item--highlighted') {
-				return className;
+		let selectedItem: ElementRef = selectedlist.find(x => {
+			if (x.nativeElement) {
+				let classNameSubstring: string = `${x.nativeElement['className']}`;
+				if (classNameSubstring.indexOf('item--highlighted') !== -1) {
+					return x;
+				}
 			}
 		});
-		let {
-			nativeElement: { innerText }
-		} = selectedvalue;
-		if (innerText) {
-			this.SetSearchTextEmitValue(innerText);
+		let selectedValue =
+			selectedItem && selectedItem.nativeElement ? selectedItem.nativeElement['innerText'] : '';
+
+		if (selectedValue) {
+			this.searchtext = selectedValue;
+			this.isArrayobj
+				? this.SetSearchTextEmitValue(selectedValue)
+				: this.emitSelectedValue(selectedValue);
 		}
 	};
 
-	//set searchtext and emit value
-	SetSearchTextEmitValue(Selecteditem: string) {
-		this.searchtext = Selecteditem;
-		if (this.previousEmittedValue != Selecteditem) {
+	//if isArrayObj and keyboard selected value then search and send the object
+	SetSearchTextEmitValue(domSelectedValue: any) {
+		if (this.isArrayobj) {
+			let selectedArrayObj = this.items.find(x => x[this.fieldName] == domSelectedValue);
+			this.emitSelectedValue(selectedArrayObj);
+		}
+	}
+	//emit value
+	emitSelectedValue(itemSelected: any) {
+		if (this.previousEmittedValue != itemSelected) {
 			//emit value
-			this.SelectedValue.emit(Selecteditem);
+			this.SelectedValue.emit(itemSelected);
 			//update previous value to avoid debounce
-			this.previousEmittedValue = Selecteditem;
+			this.previousEmittedValue = itemSelected;
 		}
 	}
 
 	//onSelection show update searchtext when clicked
 	onOptionClicked(itemIdx: any, Selecteditem: any) {
 		this.setSelectedIndex(itemIdx).setOpen(false);
-
+		this.searchtext = this.isArrayobj ? Selecteditem[this.fieldName] : Selecteditem;
 		//send values
-		this.SetSearchTextEmitValue(Selecteditem);
+		this.emitSelectedValue(Selecteditem);
 	}
 
 	//dropdown closing functionality to detect click outside host
