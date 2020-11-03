@@ -17,6 +17,7 @@
 
 <ul class="select__items" *ngIf="isOpen">
 	<li
+		#dropdownValues
 		class="select__item"
 		*ngFor="let item of items | searchPipe: searchtext:isArrayobj:fieldName; index as itemIdx"
 		(mouseover)="setHighlightedIndex(itemIdx)"

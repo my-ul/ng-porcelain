@@ -6,7 +6,10 @@ import {
 	HostListener,
 	ElementRef,
 	Output,
-	EventEmitter
+	EventEmitter,
+	ViewChild,
+	ViewChildren,
+	QueryList
 } from '@angular/core';
 
 //import clamp  function from ultilites
@@ -124,17 +127,38 @@ export class SelectDropdownComponent1 implements OnInit {
 		this.searchtext = this.items[this.selectedIndex];
 	}
 
-	//onSelection show update searchtext when clicked
-	onOptionClicked(itemIdx: any, Selecteditem: any) {
-		this.setSelectedIndex(itemIdx).setOpen(false);
-		this.searchtext = this.isArrayobj ? Selecteditem[this.fieldName] : Selecteditem;
-		//check for previous value
+	//keyboard selection
+	onSelectedList = (selectedlist: Array<ElementRef>) => {
+		let selectedvalue = selectedlist.find(({ nativeElement: { className } }) => {
+			if (className == 'select__item select__item--highlighted') {
+				return className;
+			}
+		});
+		let {
+			nativeElement: { innerText }
+		} = selectedvalue;
+		if (innerText) {
+			this.SetSearchTextEmitValue(innerText);
+		}
+	};
+
+	//set searchtext and emit value
+	SetSearchTextEmitValue(Selecteditem: string) {
+		this.searchtext = Selecteditem;
 		if (this.previousEmittedValue != Selecteditem) {
 			//emit value
 			this.SelectedValue.emit(Selecteditem);
 			//update previous value to avoid debounce
 			this.previousEmittedValue = Selecteditem;
 		}
+	}
+
+	//onSelection show update searchtext when clicked
+	onOptionClicked(itemIdx: any, Selecteditem: any) {
+		this.setSelectedIndex(itemIdx).setOpen(false);
+
+		//send values
+		this.SetSearchTextEmitValue(Selecteditem);
 	}
 
 	//dropdown closing functionality to detect click outside host
@@ -145,55 +169,58 @@ export class SelectDropdownComponent1 implements OnInit {
 		}
 	}
 
+	//adding view child to track the highlighted index and get value from DOM
+	@ViewChildren('dropdownValues', { read: ElementRef }) domOptionList: QueryList<ElementRef>;
+
 	//Handling keyboard events
 
-	@HostListener('keydown', ['$event'])
 	keyDown(event: KeyboardEvent) {
 		//Check focus exists
-		if (this.hasFocus) {
-			let key = event.key,
-				lastIndex = this.items.length - 1;
 
-			//check if open
-			if (this.isOpen) {
-				if ('ArrowUp' == key) {
-					this.setHighlightedIndex(Math.max(0, this.highlightedIndex - 1));
-				} else if ('ArrowDown' == key) {
-					this.setHighlightedIndex(Math.min(lastIndex, this.highlightedIndex + 1));
-				} else if (~['Enter', 'Space', ' '].indexOf(key)) {
-					//item selected handling
-					this.setSelectedIndex(this.highlightedIndex).setOpen(false);
-					this.onSelectionSearchText();
-				} else if ('Home' == key) {
-					this.setHighlightedIndex(0);
-				} else if ('End' == key) {
-					this.setHighlightedIndex(lastIndex);
-				} else if ('Escape' == key) {
-					this.setOpen(false);
-				}
+		let key = event.key,
+			lastIndex = this.items.length - 1;
+
+		//check if open
+		if (this.isOpen) {
+			if ('ArrowUp' == key) {
+				this.setHighlightedIndex(Math.max(0, this.highlightedIndex - 1));
+			} else if ('ArrowDown' == key) {
+				this.setHighlightedIndex(Math.min(lastIndex, this.highlightedIndex + 1));
+			} else if (~['Enter', 'Space', ' '].indexOf(key)) {
+				//item selected handling
+				this.setSelectedIndex(this.highlightedIndex).setOpen(false);
+				console.log(this.domOptionList);
+				//send the wholelist
+				this.onSelectedList(this.domOptionList.toArray());
+			} else if ('Home' == key) {
+				this.setHighlightedIndex(0);
+			} else if ('End' == key) {
+				this.setHighlightedIndex(lastIndex);
+			} else if ('Escape' == key) {
+				this.setOpen(false);
 			}
-
-			//if closed
-			else {
-				//opens only if enter is clicked
-				if (~['Enter', 'Space', ' '].indexOf(key)) {
-					this.setHighlightedIndex(clamp(0, this.selectedIndex, lastIndex)).setOpen(true);
-				} else if ('ArrowUp' == key) {
-					this.setSelectedIndex(Math.max(0, this.selectedIndex - 1));
-				} else if ('ArrowDown' == key) {
-					this.setSelectedIndex(Math.min(lastIndex, this.selectedIndex + 1));
-				} else if ('Home' == key) {
-					this.setSelectedIndex(0);
-				} else if ('End' == key) {
-					this.setSelectedIndex(lastIndex);
-				}
-			}
-
-			//stopping event propagation for tab
-			//if ('Tab' !== key) {
-			//	event.stopPropagation();
-			//	return false;
-			//}
 		}
+
+		//if closed
+		else {
+			//opens only if enter is clicked
+			if (~['Enter', 'Space', ' '].indexOf(key)) {
+				this.setHighlightedIndex(clamp(0, this.selectedIndex, lastIndex)).setOpen(true);
+			} else if ('ArrowUp' == key) {
+				this.setSelectedIndex(Math.max(0, this.selectedIndex - 1));
+			} else if ('ArrowDown' == key) {
+				this.setSelectedIndex(Math.min(lastIndex, this.selectedIndex + 1));
+			} else if ('Home' == key) {
+				this.setSelectedIndex(0);
+			} else if ('End' == key) {
+				this.setSelectedIndex(lastIndex);
+			}
+		}
+
+		//stopping event propagation for tab
+		//if ('Tab' !== key) {
+		//	event.stopPropagation();
+		//	return false;
+		//}
 	}
 }
