@@ -83,6 +83,8 @@ export { FloorPipe } from './lib/pipes/floor/floor.pipe';
 export { RoundPipe } from './lib/pipes/round/round.pipe';
 export { SprintfPipe } from './lib/pipes/sprintf/sprintf.pipe';
 export { ToLocaleStringPipe } from './lib/pipes/toLocaleString/to-locale-string.pipe';
+export { FilterPipe, FilterItem } from './lib/pipes/filter/filter.pipe';
+export { HighlightPipe } from './lib/pipes/highlight/highlight.pipe';
 
 // Rack module
 export { RackModule } from './lib/rack/rack.module';
@@ -159,5 +161,5 @@ export { ToolbarTextComponent } from './lib/toolbar/toolbar-text/toolbar-text.co
 export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
 
 // Combobox Module
-export { ComboboxModule } from './lib/select-dropdown/combobox.module';
-export { ComboboxComponent } from './lib/select-dropdown/select-dropdown/combobox.component';
+export { ComboboxModule } from './lib/combobox/combobox.module';
+export { ComboboxComponent } from './lib/combobox/combobox/combobox.component';

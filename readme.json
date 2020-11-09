@@ -1,6 +1,7 @@
 {
 	"Quick Start": "projects/ng-porcelain/INSTALL.md",
 	"Components": {
+		"Combobox": "projects/ng-porcelain/src/lib/combobox/combobox/README.md",
 		"Refiners": {
 			"Simple Refiner": "projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/README.md",
 			"Date Refiner": "projects/ng-porcelain/src/lib/date-refiner/date-refiner/README.md",
@@ -18,6 +19,8 @@
 		"`floor` Pipe": "projects/ng-porcelain/src/lib/pipes/floor/README.md",
 		"`round` Pipe": "projects/ng-porcelain/src/lib/pipes/round/README.md",
 		"`sprintf` Pipe": "projects/ng-porcelain/src/lib/pipes/sprintf/README.md",
+		"`filter` Pipe": "projects/ng-porcelain/src/lib/pipes/filter/README.md",
+		"`highlight` Pipe": "projects/ng-porcelain/src/lib/pipes/highlight/README.md",
 		"`toLocaleString` Pipe": "projects/ng-porcelain/src/lib/pipes/toLocaleString/README.md"
 	},
 	"Services": {

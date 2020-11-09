@@ -3,11 +3,9 @@ import { withKnobs, text, boolean, color } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 
 //module imports
-
-import { SELECT_DROPDOWN_DIRECTIVES, SELECT_DROPDOWN_IMPORTS } from '../combobox.module';
+import { COMBOBOX_DIRECTIVES, COMBOBOX_IMPORTS } from '../combobox.module';
 
 //import component
-
 import { ComboboxComponent } from './combobox.component';
 
 //action messages
@@ -19,17 +17,24 @@ export default {
 	decorators: [
 		withKnobs,
 		moduleMetadata({
-			declarations: SELECT_DROPDOWN_DIRECTIVES,
-			imports: SELECT_DROPDOWN_IMPORTS
+			declarations: COMBOBOX_DIRECTIVES,
+			imports: COMBOBOX_IMPORTS
 		})
 	]
 };
 
 export const DefaultPresentation = () => {
+	let value = '';
+	let actionCB = action(SelectedValueEmitted);
 	return {
 		component: ComboboxComponent,
 		props: {
-			items: ['Apple', 'Banana', 'Cherry', 'Durian']
+			items: ['Apple', 'Banana', 'Cherry', 'Durian'],
+			value: 'Apple',
+			valueChange: function(newValue) {
+				value = newValue;
+				actionCB(value);
+			}
 		}
 	};
 };
@@ -56,7 +61,7 @@ export const NormalArrayInput = () => {
 				'grean peas'
 			],
 			Placeholder: 'type here to search in the box in array list',
-			SelectedValue: action(SelectedValueEmitted)
+			valueChange: action(SelectedValueEmitted)
 		}
 	};
 };
@@ -79,10 +84,11 @@ export const ArrayOfobjectsInput = () => {
 				{ id: '5003', type: 'Chocolate' },
 				{ id: '5004', type: 'Maple' }
 			],
-			Placeholder: 'type here to search in the box in array of objects',
-			isArrayobj: true,
-			fieldName: 'type',
-			SelectedValue: action(SelectedValueEmitted)
+			placeholder: 'type here to search in the box in array of objects',
+			isObjectArray: true,
+			labelProp: 'type',
+			value: null,
+			valueChange: action(SelectedValueEmitted)
 		}
 	};
 };
