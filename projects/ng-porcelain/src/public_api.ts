@@ -22,6 +22,10 @@ export { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 export { TruncateModule } from './lib/truncate/truncate.module';
 export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 
+// saved search modal
+export { SavedsearchModalpopupModule } from './lib/savedsearch-modalpopup/savedsearch-modalpopup.module';
+export { SavedsearchModalpopupComponent } from './lib/savedsearch-modalpopup/savedsearch-modalpopup/savedsearch-modalpopup.component';
+
 // Shared
 export { generateSlideInOut } from './lib/shared/animations/slideInOut.animation';
 

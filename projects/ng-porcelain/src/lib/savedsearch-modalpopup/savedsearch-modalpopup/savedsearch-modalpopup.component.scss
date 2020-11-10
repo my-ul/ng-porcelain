@@ -1,0 +1,57 @@
+.tooltip {
+	position: relative;
+	font: Open Sans Regular;
+}
+
+.tooltip .tooltipContent {
+	width: 300px;
+	background-color: white;
+	color: black;
+	text-align: justify;
+	border-radius: 6px;
+	border: 1px solid black;
+	padding: 20px 20px 5px 20px;
+	position: absolute;
+	top: 150%;
+	left: 50%;
+	height: 208px;
+	font: Open Sans Regular;
+	font-size: 12px;
+	line-height: 18px;
+	color: #303741;
+	line-height: 1.33;
+	border: 6px solid hsla(0, 0%, 100%, 0);
+	border-bottom-color: #fff;
+	box-shadow: 0 6px 53px rgba(0, 0, 0, 0.175);
+}
+
+.tooltip .tooltipContent::after {
+	bottom: 100%;
+	right: 10em;
+	content: ' ';
+	height: 0;
+	width: 0px;
+	position: absolute;
+	pointer-events: none;
+	border: 22px solid hsla(0, 0%, 100%, 0);
+	border-bottom-color: white;
+	margin-left: -6px;
+}
+
+.header {
+	margin-bottom: 10px;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+.checkbox {
+	margin-top: 20px;
+}
+
+.close-modal {
+	margin-left: 155px;
+	position: absolute;
+	font-size: 25px;
+	top: 9px;
+	font-weight: bolder;
+}
