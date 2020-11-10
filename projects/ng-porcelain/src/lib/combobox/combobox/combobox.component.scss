@@ -36,9 +36,11 @@ $border-def: solid 1px #bbc1c8;
 			}
 		}
 
-		.select__window-toggle {
+		.select__window-action {
 			padding: 7px;
-			color: #aaa;
+			color: #9dacba;
+			background: transparent;
+			border: none;
 		}
 	}
 
@@ -68,7 +70,7 @@ $border-def: solid 1px #bbc1c8;
 	.select__item {
 		cursor: pointer;
 		padding: 7px;
-		line-height: 20px;
+		line-height: 14px;
 
 		&--highlighted {
 			background-color: #edf1f6;

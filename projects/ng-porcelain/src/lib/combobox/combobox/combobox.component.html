@@ -1,18 +1,29 @@
-<div class="select__window" (click)="toggleOpen()">
+<div class="select__window">
 	<input
 		type="text"
 		class="select__window-value"
 		[(ngModel)]="query"
 		[placeholder]="placeholder || labelPlaceholder"
 		[class.select__window-value--placeholder]="query === ''"
-		(focus)="setFocus(true)"
+		(focus)="setOpen(true).setFocus(true)"
 		(blur)="setFocus(false)"
 		(keyup)="keyUp($event)"
 	/>
-	<span class="select__window-toggle">
+
+	<button
+		class="select__window-action"
+		*ngIf="query !== ''"
+		[style.color]="clearIconColor"
+		(click)="clear()"
+	>
+		<span class="sr-only">{{ labelClear }}</span>
+		<fa-icon [icon]="clearIcon"></fa-icon>
+	</button>
+
+	<button class="select__window-action" (click)="toggleOpen()">
 		<span class="sr-only">{{ labelSelect }}</span>
-		<fa-icon [icon]="faChevronDown"></fa-icon>
-	</span>
+		<fa-icon [icon]="dropdownToggleIcon"></fa-icon>
+	</button>
 </div>
 
 <ul class="select__items" *ngIf="isOpen">

@@ -11,7 +11,7 @@ import {
 	ViewChild
 } from '@angular/core';
 
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { Loggable } from '../../Loggable';
@@ -28,7 +28,17 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Icon of chevron pointing down, used for the dropdown toggle.
 	 */
-	readonly faChevronDown = faChevronDown;
+	@Input() dropdownToggleIcon = faChevronDown;
+
+	/**
+	 * Icon for the clear button
+	 */
+	@Input() clearIcon = faTimesCircle;
+
+	/**
+	 * Color for the clear icon.  By default, #9dacba
+	 */
+	@Input() clearIconColor: string = '#9dacba';
 
 	/**
 	 * Name of the component, used when the Loggable behaviors are used.
@@ -93,6 +103,11 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	isOpen: boolean = false;
 
 	/**
+	 * Accessibility label for the clear button.
+	 */
+	labelClear: string = 'Clear';
+
+	/**
 	 * Shown when the user has filtered too much, and no valid items remain in filteredItems.
 	 */
 	labelNoItemsFound: string = 'No items found.';
@@ -126,9 +141,18 @@ export class ComboboxComponent extends Loggable implements OnInit {
 			TranslationService.translate(this, {
 				label_TypeToSearch: 'labelPlaceholder',
 				label_Select: 'labelSelect',
-				label_NoItemsFound: 'labelNoItemsFound'
+				label_NoItemsFound: 'labelNoItemsFound',
+				label_Clear: 'labelClear'
 			})
 		);
+	}
+
+	/**
+	 * Resets the component state to blank query and resets the filteredItems array.
+	 */
+	clear() {
+		this.query = '';
+		this.applyFilter();
 	}
 
 	/**
@@ -155,7 +179,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * @param event Event emitted when the document is clicked.
 	 */
 	@HostListener('document:click', ['$event'])
-	onClick(event): void {
+	onStrayClick(event): void {
 		if (!this.element.nativeElement.contains(event.target)) {
 			this.setOpen(false);
 		}
@@ -314,8 +338,9 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Sets the status of focus.
 	 * @param focus Boolean. Set to true when the component gains focus.
 	 */
-	setFocus(focus: boolean) {
+	setFocus(focus: boolean): this {
 		this.hasFocus = focus;
+		return this;
 	}
 
 	/**
@@ -342,11 +367,12 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Tracks the index of the selected item. Sets the value,
 	 * which locates the filtered item in the items array.
-	 * @param selectedIndex The index of the selected item in the filteredItems array
+	 * @param selectedFilteredIndex The index of the selected item in the filteredItems array
 	 */
-	setSelectedIndex(selectedIndex: number) {
+	setSelectedIndex(selectedFilteredIndex: number) {
+		this.info('setSelectedIndex(selectedFilteredIndex)', { selectedFilteredIndex });
 		// the this.value setter will find the item in the items array
-		this.value = this.filteredItems[selectedIndex];
+		this.value = this.filteredItems[selectedFilteredIndex];
 		return this;
 	}
 
