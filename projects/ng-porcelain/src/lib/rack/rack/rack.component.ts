@@ -14,10 +14,10 @@ import {
 	faChevronUp,
 	faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
+import { sprintf } from 'sprintf-js';
+
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { moveItem } from '../../shared/utilities/arrays/moveItem';
-
-import { sprintf } from 'sprintf-js';
 import { Loggable } from '../../Loggable';
 
 interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
@@ -377,14 +377,14 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 
 	ensureActiveFocus(targetIdx: number = 0): this {
 		this.activeSelectElement.nativeElement.focus();
-		const newActiveIdx = clamp(targetIdx, 0, this.lastActiveIdx);
+		const newActiveIdx = clamp(0, targetIdx, this.lastActiveIdx);
 		this.setActiveItem(newActiveIdx).setInactiveItem(-1);
 		return this;
 	}
 
 	ensureInactiveFocus(targetIdx: number = 0): this {
 		this.inactiveSelectElement.nativeElement.focus();
-		const newInactiveIdx = clamp(targetIdx, 0, this.lastInactiveIdx);
+		const newInactiveIdx = clamp(0, targetIdx, this.lastInactiveIdx);
 		this.setInactiveItem(newInactiveIdx).setActiveItem(-1);
 		return this;
 	}
@@ -399,7 +399,7 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 	moveActiveItem(destIdxFn: (number) => number) {
 		if (this.selectedActiveItem !== null) {
 			const srcIdx = this.currentActiveIdx;
-			const destIdx = clamp(destIdxFn(srcIdx), 0, this.lastActiveIdx);
+			const destIdx = clamp(0, destIdxFn(srcIdx), this.lastActiveIdx);
 			moveItem(this.activeItems, srcIdx, destIdx);
 		}
 	}
@@ -446,7 +446,7 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 		if (targetIdx === -1) {
 			this.selectedActiveItem = null;
 		} else if (targetIdx > -1 && this.activeItems.length > 0) {
-			const newActiveIdx = clamp(targetIdx, 0, this.lastActiveIdx);
+			const newActiveIdx = clamp(0, targetIdx, this.lastActiveIdx);
 			this.selectedActiveItem = this.activeItems[newActiveIdx];
 		}
 		return this;
@@ -472,7 +472,7 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 			this.selectedInactiveItem = null;
 		} else if (targetIdx > -1 && this.inactiveItems.length > 0) {
 			// Clamp the selected item to the bounds of the array
-			const newInactiveIdx = clamp(targetIdx, 0, this.lastInactiveIdx);
+			const newInactiveIdx = clamp(0, targetIdx, this.lastInactiveIdx);
 			this.selectedInactiveItem = this.inactiveItems[newInactiveIdx];
 		}
 		return this;

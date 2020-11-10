@@ -83,6 +83,8 @@ export { FloorPipe } from './lib/pipes/floor/floor.pipe';
 export { RoundPipe } from './lib/pipes/round/round.pipe';
 export { SprintfPipe } from './lib/pipes/sprintf/sprintf.pipe';
 export { ToLocaleStringPipe } from './lib/pipes/toLocaleString/to-locale-string.pipe';
+export { FilterPipe, FilterItem } from './lib/pipes/filter/filter.pipe';
+export { HighlightPipe } from './lib/pipes/highlight/highlight.pipe';
 
 // Rack module
 export { RackModule } from './lib/rack/rack.module';
@@ -157,3 +159,12 @@ export { ToolbarSelectComponent } from './lib/toolbar/toolbar-select/toolbar-sel
 export { ToolbarSelectedTemplateComponent } from './lib/toolbar/toolbar-selected-template/toolbar-selected-template.component';
 export { ToolbarTextComponent } from './lib/toolbar/toolbar-text/toolbar-text.component';
 export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
+
+// Combobox Module
+export { ComboboxModule } from './lib/combobox/combobox.module';
+export { ComboboxComponent } from './lib/combobox/combobox/combobox.component';
+
+// Breadcrumb Modules
+export { BreadcrumbModule } from './lib/breadcrumb/breadcrumb.module';
+export { BreadcrumbsComponent } from './lib/breadcrumb/breadcrumbs/breadcrumbs.component';
+export { BreadcrumbItemComponent } from './lib/breadcrumb/breadcrumb-item/breadcrumb-item.component';
