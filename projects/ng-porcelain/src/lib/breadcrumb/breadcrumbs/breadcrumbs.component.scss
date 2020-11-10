@@ -1,0 +1,16 @@
+:host {
+	display: flex;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	color: #9ea6ba;
+
+	::ng-deep {
+		& > porcelain-breadcrumb-item + porcelain-breadcrumb-item {
+			&::before {
+				content: '/';
+				margin: 0 0.5em;
+			}
+		}
+	}
+}
