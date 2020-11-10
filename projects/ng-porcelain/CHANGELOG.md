@@ -1,5 +1,10 @@
 # 9.x.x
 
+## 9.0.4
+
+-   Added Breadcrumb component system.
+-   Removed getter/setters from toolbar-select to improve performance by reducing redraws.
+
 ## 9.0.0
 
 -   Versioning has been modified to synchronize with Angular releases. Porcelain's major version number will now match the Angular version number. For example, Porcelain ^9.0.0 is designed to be compatible with Angular ^9.0.0
