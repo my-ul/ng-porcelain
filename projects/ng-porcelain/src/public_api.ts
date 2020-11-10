@@ -163,3 +163,8 @@ export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
 // Combobox Module
 export { ComboboxModule } from './lib/combobox/combobox.module';
 export { ComboboxComponent } from './lib/combobox/combobox/combobox.component';
+
+// Breadcrumb Modules
+export { BreadcrumbModule } from './lib/breadcrumb/breadcrumb.module';
+export { BreadcrumbsComponent } from './lib/breadcrumb/breadcrumbs/breadcrumbs.component';
+export { BreadcrumbItemComponent } from './lib/breadcrumb/breadcrumb-item/breadcrumb-item.component';
