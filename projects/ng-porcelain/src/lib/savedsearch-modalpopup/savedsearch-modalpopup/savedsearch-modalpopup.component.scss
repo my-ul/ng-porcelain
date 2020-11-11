@@ -1,25 +1,19 @@
 .tooltip {
 	position: relative;
-	font: Open Sans Regular;
+	font-family: 'Open Sans', sans-serif !important;
 }
 
 .tooltip .tooltipContent {
 	width: 300px;
-	background-color: white;
-	color: black;
-	text-align: justify;
 	border-radius: 6px;
 	border: 1px solid black;
-	padding: 20px 20px 5px 20px;
+	padding: 18px 20px 5px 9px;
 	position: absolute;
-	top: 150%;
-	left: 50%;
-	height: 208px;
-	font: Open Sans Regular;
+	height: 204px;
+	font-family: 'Open Sans', sans-serif !important;
 	font-size: 12px;
-	line-height: 18px;
+	line-height: 19px;
 	color: #303741;
-	line-height: 1.33;
 	border: 6px solid hsla(0, 0%, 100%, 0);
 	border-bottom-color: #fff;
 	box-shadow: 0 6px 53px rgba(0, 0, 0, 0.175);
@@ -39,19 +33,23 @@
 }
 
 .header {
-	margin-bottom: 10px;
-	font-size: 14pt;
-	font-weight: bold;
+	margin-bottom: 15px;
+	font-size: 16px;
+	font-weight: 600;
 }
 
 .checkbox {
-	margin-top: 20px;
+	margin-top: 15px;
 }
-
-.close-modal {
-	margin-left: 155px;
+.warn-msg {
 	position: absolute;
-	font-size: 25px;
+	padding-left: 9px;
+	padding-top: 1px;
+}
+.close-modal {
+	margin-left: 181px;
+	position: absolute;
+	font-size: 28px;
 	top: 9px;
-	font-weight: bolder;
+	font-weight: 600 !important;
 }
