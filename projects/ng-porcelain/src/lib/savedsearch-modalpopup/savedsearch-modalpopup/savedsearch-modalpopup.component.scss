@@ -1,9 +1,9 @@
-.tooltip {
+.modal-tooltip {
 	position: relative;
 	font-family: 'Open Sans', sans-serif !important;
 }
 
-.tooltip .tooltipContent {
+.modal-tooltip .tooltipContent {
 	width: 300px;
 	border-radius: 6px;
 	border: 1px solid black;
@@ -19,7 +19,7 @@
 	box-shadow: 0 6px 53px rgba(0, 0, 0, 0.175);
 }
 
-.tooltip .tooltipContent::after {
+.modal-tooltip .tooltipContent::after {
 	bottom: 100%;
 	right: 10em;
 	content: ' ';
@@ -38,7 +38,7 @@
 	font-weight: 600;
 }
 
-.checkbox {
+.warn-checkbox {
 	margin-top: 15px;
 }
 .warn-msg {
