@@ -16,7 +16,7 @@ import { Input } from '@angular/core';
 	templateUrl: './toolbar-button.component.html',
 	styleUrls: ['./toolbar-button.component.scss']
 })
-export class ToolbarButtonComponent implements AfterViewInit {
+export class ToolbarButtonComponent {
 	/**
 	 * Initializes the button by adding the default porcelain classes.
 	 */
@@ -129,15 +129,5 @@ export class ToolbarButtonComponent implements AfterViewInit {
 		if (!this.disabled) {
 			this.onClick.emit();
 		}
-	}
-
-	/**
-	 * Sets the title to be equal to the label's innerText.
-	 */
-	ngAfterViewInit() {
-		/*
-			Take the text from the #label and make it the title for the button.
-		*/
-		this.title = this.labelRef.nativeElement.innerText.trim();
 	}
 }

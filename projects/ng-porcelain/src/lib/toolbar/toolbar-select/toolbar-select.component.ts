@@ -110,17 +110,7 @@ export class ToolbarSelectComponent extends Loggable implements OnDestroy, After
 	/**
 	 * Boolean. True when the component has focus, otherwise false.
 	 */
-	private _hasFocus = false;
-
-	get hasFocus() {
-		this.log('get hasFocus()');
-		return this._hasFocus;
-	}
-
-	set hasFocus(hasFocus: boolean) {
-		this.log('set hasFocus(hasFocus)', { hasFocus });
-		this._hasFocus = hasFocus;
-	}
+	hasFocus = false;
 
 	/**
 	 * Allows the control to be disabled.
@@ -132,48 +122,17 @@ export class ToolbarSelectComponent extends Loggable implements OnDestroy, After
 	/**
 	 * The index of the currently-highlighted option
 	 */
-	private _highlightedIndex: number = -1;
-
-	get highlightedIndex() {
-		this.log('get highlightedIndex()');
-		return this._highlightedIndex;
-	}
-
-	set highlightedIndex(highlightedIndex: number) {
-		this.log('set highlightedIndex(highlightedIndex)', { highlightedIndex });
-		this._highlightedIndex = highlightedIndex;
-	}
+	highlightedIndex: number = -1;
 
 	/**
 	 * Label for the input, shown to the left of the current value.
 	 */
-	private _label: string;
-
-	@Input()
-	get label() {
-		this.log('get label()');
-		return this._label;
-	}
-
-	set label(label: string) {
-		this.log('set label(label)', { label });
-		this._label = label;
-	}
+	@Input() label: string;
 
 	/**
 	 * The index of the currently-selected option.
 	 */
-	private _selectedIndex: number = -1;
-
-	get selectedIndex() {
-		this.log('get selectedIndex()');
-		return this._selectedIndex;
-	}
-
-	set selectedIndex(selectedIndex: number) {
-		this.log('set selectedIndex(selectedIndex)', { selectedIndex });
-		this._selectedIndex = selectedIndex;
-	}
+	selectedIndex: number = -1;
 
 	/**
 	 * Array of subscriptions created during the life of the component.

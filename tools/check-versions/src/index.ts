@@ -35,6 +35,7 @@ interface IDependencies {
 
 interface IPackage {
 	name: string;
+	version: string;
 	dependencies?: IDependencies;
 	peerDependencies?: IDependencies;
 	devDependencies?: IDependencies;
@@ -49,6 +50,17 @@ if (args.primary && args.secondary) {
 
 	let toInstall: string[] = [];
 	let toUpdate: string[] = [];
+
+	if (primary && secondary) {
+		if (primary.version && secondary.version) {
+			process.stdout.write(`Checking package versions... `);
+			if (primary.version === secondary.version) {
+				console.log(`${chalk.green('match')}`);
+			} else {
+				console.log(`${chalk.red('does not match')}`);
+			}
+		}
+	}
 
 	if (primary.peerDependencies) {
 		for (let primaryPackageName in primary.peerDependencies) {
