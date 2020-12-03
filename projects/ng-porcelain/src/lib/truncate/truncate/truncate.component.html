@@ -1,5 +1,8 @@
 <div class="truncate">
-	<span class="truncate__value" title="{{ value }}">
-		{{ value }}
+	<span
+		class="truncate__value"
+		title="{{ value }}"
+		innerHTML="{{ value | highlight: CharacterHighlighter }}"
+	>
 	</span>
 </div>

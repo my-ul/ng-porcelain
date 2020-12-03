@@ -3,7 +3,8 @@ import {
 	faCaretDown,
 	faChevronDown,
 	faChevronUp,
-	IconDefinition
+	IconDefinition,
+	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { TranslationService } from '../../services/translation/translation.service';
@@ -36,6 +37,33 @@ export class SimpleRefinerComponent implements OnInit {
 	@Input('selectNoneLabel') selectNoneLabel = defaultSelectNoneLabel;
 
 	//#endregion
+
+	/**
+	 ** filtered refiner items which hold items that needs to be displayed
+	 * */
+	filteredRefinerItems: SimpleRefinerDefinition;
+
+	/**
+	 * UI Filtered refiner optionKey that needs to be displayed**/
+	filteredOptionKeys: string[] = [];
+	/**
+	 * The current query.
+	 */
+	query: string = '';
+
+	/**
+	 * Placeholder for text input when search field is empty
+	 */
+	@Input() labelPlaceholder: string = '';
+
+	/**
+	 * Icon for the clear button
+	 */
+	@Input() clearIcon = faTimesCircle;
+
+	/**
+	 * Refiner section without scroll and with button **/
+	@Input() isRefinerButtonDisplay = false;
 
 	// Getters
 	get showCount() {
@@ -87,6 +115,10 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		//set intiial state for refiners and filtered items
+		this.filteredRefinerItems = Object.assign({}, this.refiner);
+		this.filteredOptionKeys = Object.keys(this.refiner.options);
+
 		// Pick the `isOpen` value;
 		let isOpen = true;
 
@@ -146,9 +178,11 @@ export class SimpleRefinerComponent implements OnInit {
 		});
 
 		// Enables the callback API <porcelain-simple-refiner (onRefinerChange)="..."></porcelain-simple-refiner>
-		this.refiner.valueSubject.subscribe(newValue =>
-			this.onRefinerChange.emit([this.refiner.slug, newValue])
-		);
+		this.refiner.valueSubject.subscribe(newValue => {
+			this.onRefinerChange.emit([this.refiner.slug, newValue]);
+			//clear after emiting
+			this.clear();
+		});
 	}
 
 	toggleExpanded(): void {
@@ -170,6 +204,9 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	getExpandedOptionKeys(): string[] {
+		let check = Object.keys(this.refiner.options);
+		console.log(check);
+
 		return this._isExpanded
 			? Object.keys(this.refiner.options)
 			: Object.keys(this.refiner.options).slice(0, this._showCount);
@@ -241,5 +278,68 @@ export class SimpleRefinerComponent implements OnInit {
 	onSelectionChange() {
 		this.ignoreNext = true;
 		this.refiner.valueSubject.next(this.getValue());
+	}
+
+	/*
+	 * onkey press filter options*
+	 */
+
+	keyUp(event: KeyboardEvent) {
+		this.applyFilter();
+	}
+	applyFilter(): this {
+		/**
+		 * Logic :
+		 *
+		 *We destrucutre options object from refiners
+		 *
+		 * inside options object
+		 *
+		 * 1.) Object.keys gives list object keys => creates an array of string of object keys
+		 * 2.) Inside that array user filter
+		 *		a) use that key and access that options object and label feild. treat it as string. conevert all to lowercase . use indexof query to check the occurence
+		 * 3.) Then use reduce to build new object but with only allowed properties
+		 *
+		 *
+		 *
+		 * **/
+
+		let { options } = this.refiner;
+		if (options) {
+			this.filteredRefinerItems.options = Object.keys(options)
+				.filter(optionObjectKey => {
+					console.log(options[optionObjectKey]);
+					if ('string' == typeof options[optionObjectKey]) {
+						return (
+							(options[optionObjectKey] as string)
+								.toLowerCase()
+								.indexOf(this.query.trim().toLowerCase()) > -1
+						);
+					} else {
+						return (
+							(options[optionObjectKey]['label'] as string)
+								.toLowerCase()
+								.indexOf(this.query.trim().toLowerCase()) > -1
+						);
+					}
+				})
+				.reduce((obj, key) => {
+					obj[key] = this.refiner.options[key];
+					return obj;
+				}, {});
+
+			//update filteroptions to display in UI
+
+			this.filteredOptionKeys = Object.keys(this.filteredRefinerItems.options);
+		}
+
+		return this;
+	}
+	/**
+	 * Resets the component state to blank query and resets the filteredItems array.
+	 */
+	clear() {
+		this.query = '';
+		this.applyFilter();
 	}
 }

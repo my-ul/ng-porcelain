@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TruncateComponent implements OnInit {
 	@Input() value: string;
-
+	@Input() CharacterHighlighter: string = '';
 	constructor() {}
 
 	ngOnInit() {}
