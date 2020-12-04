@@ -44,6 +44,11 @@ export class SimpleRefinerComponent implements OnInit {
 	filteredRefinerItems: SimpleRefinerDefinition;
 
 	/**
+	 * Accessibility label for the clear button.
+	 */
+	labelClear: string = 'Clear';
+
+	/**
 	 * Color for the clear icon.  By default, #9dacba
 	 */
 	@Input() clearIconColor: string = '#9dacba';
