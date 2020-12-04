@@ -77,8 +77,27 @@ $border-def: solid 1px #bbc1c8;
 		}
 	}
 }
+
+//highlighter
+
 ::ng-deep .highlight__query {
 	border: none;
 	font-weight: bold;
 	background-color: #fff883;
+}
+
+//scroll bar css
+.select__items::-webkit-scrollbar {
+	width: 0.25em;
+}
+
+.select__items::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #ffffff;
+	border-radius: 10px;
+}
+
+.select__items::-webkit-scrollbar-thumb {
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 0 6px #666666;
+	height: 2.2em;
 }
