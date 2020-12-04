@@ -178,11 +178,9 @@ export class SimpleRefinerComponent implements OnInit {
 		});
 
 		// Enables the callback API <porcelain-simple-refiner (onRefinerChange)="..."></porcelain-simple-refiner>
-		this.refiner.valueSubject.subscribe(newValue => {
-			this.onRefinerChange.emit([this.refiner.slug, newValue]);
-			//clear after emiting
-			this.clear();
-		});
+		this.refiner.valueSubject.subscribe(newValue =>
+			this.onRefinerChange.emit([this.refiner.slug, newValue])
+		);
 	}
 
 	toggleExpanded(): void {

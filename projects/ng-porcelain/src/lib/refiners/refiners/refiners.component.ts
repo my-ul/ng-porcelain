@@ -1,5 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
 import { BaseRefinerDefinition } from '../../shared/types/Refiners/BaseRefinerDefinition';
+
+//simplerefiner import
+
+import { SimpleRefinerComponent } from '../../simple-refiner/simple-refiner/simple-refiner.component';
 
 @Component({
 	selector: 'porcelain-refiners',
@@ -16,12 +20,24 @@ export class RefinersComponent implements OnInit {
 
 	// Icons
 
+	//view children components to clear values
+	@ViewChildren(SimpleRefinerComponent) Simplerefiners: QueryList<SimpleRefinerComponent>;
+
 	// State
 	values: { [slug: string]: string[] } = {};
 
 	constructor() {}
 
 	ngOnInit() {}
+
+	public clearSearchTextOfSimpleRefiners(): void {
+		//clear all the queries of simple refiners if exists in DOM
+		if (this.Simplerefiners) {
+			this.Simplerefiners.forEach(x => {
+				x.clear();
+			});
+		}
+	}
 
 	handleRefinerChange(update: [string, any]) {
 		let [slug, selected] = update;

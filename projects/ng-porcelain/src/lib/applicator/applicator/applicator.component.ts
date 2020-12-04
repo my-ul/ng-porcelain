@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
@@ -15,6 +15,9 @@ import { OptionRefinerValue } from './../../shared/types/Values/OptionRefinerVal
 import { DateRefinerDefinition } from './../../shared/types/Refiners/DateRefinerDefinition';
 import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
 import { Loggable } from '../../Loggable';
+
+//import refiner component
+import { RefinersComponent } from '../../refiners/refiners/refiners.component';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -55,6 +58,10 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 
 	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
+
+	//view child for manipulating child components
+
+	@ViewChild(RefinersComponent, { static: false }) refinerComponent: RefinersComponent;
 
 	constructor(private translationService: TranslationService) {
 		super();
@@ -157,5 +164,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
 		});
 		this.beforeApply();
+		//if reset if clicked empty simple refiner text selections
+		this.refinerComponent.clearSearchTextOfSimpleRefiners();
 	}
 }
