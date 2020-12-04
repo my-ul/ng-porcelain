@@ -21,7 +21,7 @@ export class RefinersComponent implements OnInit {
 	// Icons
 
 	//view children components to clear values
-	@ViewChildren(SimpleRefinerComponent) Simplerefiners: QueryList<SimpleRefinerComponent>;
+	@ViewChildren(SimpleRefinerComponent) SimpleRefiners: QueryList<SimpleRefinerComponent>;
 
 	// State
 	values: { [slug: string]: string[] } = {};
@@ -32,8 +32,8 @@ export class RefinersComponent implements OnInit {
 
 	public clearSearchTextOfSimpleRefiners(): void {
 		//clear all the queries of simple refiners if exists in DOM
-		if (this.Simplerefiners) {
-			this.Simplerefiners.forEach(x => {
+		if (this.SimpleRefiners) {
+			this.SimpleRefiners.forEach(x => {
 				x.clear();
 			});
 		}
