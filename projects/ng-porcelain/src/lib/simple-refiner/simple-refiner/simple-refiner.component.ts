@@ -44,6 +44,11 @@ export class SimpleRefinerComponent implements OnInit {
 	filteredRefinerItems: SimpleRefinerDefinition;
 
 	/**
+	 * Color for the clear icon.  By default, #9dacba
+	 */
+	@Input() clearIconColor: string = '#9dacba';
+
+	/**
 	 * UI Filtered refiner optionKey that needs to be displayed**/
 	filteredOptionKeys: string[] = [];
 	/**
