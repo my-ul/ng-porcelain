@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	HostBinding,
+	ChangeDetectorRef
+} from '@angular/core';
 import {
 	faCaretDown,
 	faChevronDown,
@@ -73,7 +81,9 @@ export class SimpleRefinerComponent implements OnInit {
 
 	/**
 	 * Refiner section without scroll and with button **/
-	@Input() isRefinerButtonDisplay = false;
+	@HostBinding('class.refiner__options')
+	@Input()
+	isRefinerButtonDisplay: boolean = true;
 
 	// Getters
 	get showCount() {
@@ -113,7 +123,10 @@ export class SimpleRefinerComponent implements OnInit {
 	values: { [optionSlug: string]: boolean } = {};
 	private ignoreNext: boolean = false;
 
-	constructor(private translationService: TranslationService) {
+	constructor(
+		private translationService: TranslationService,
+		private changeDetection: ChangeDetectorRef
+	) {
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<SimpleRefinerComponent>(this, {
 				label_ShowMore: 'showMoreLabel',
@@ -195,6 +208,7 @@ export class SimpleRefinerComponent implements OnInit {
 
 	toggleExpanded(): void {
 		this._isExpanded = !this._isExpanded;
+		this.getExpandedOptionKeys();
 	}
 
 	toggleOpen(): void {
@@ -202,22 +216,27 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	countTail(): number {
-		return Object.keys(this.refiner.options).length - this._showCount;
+		return Object.keys(this.filteredRefinerItems.options).length - this._showCount;
 	}
 
 	canExpand(): boolean {
 		return this.refiner.type === 'simple'
-			? Object.keys(this.refiner.options).length > this._showCount
+			? Object.keys(this.filteredRefinerItems.options).length > this._showCount
 			: false;
 	}
 
-	getExpandedOptionKeys(): string[] {
-		let check = Object.keys(this.refiner.options);
-		console.log(check);
-
-		return this._isExpanded
+	getExpandedOptionKeys(): any {
+		if (this.isRefinerButtonDisplay) {
+			this.filteredOptionKeys = this._isExpanded
+				? Object.keys(this.filteredRefinerItems.options)
+				: Object.keys(this.filteredRefinerItems.options).slice(0, this._showCount);
+			this.changeDetection.detectChanges();
+		} else {
+			this.filteredOptionKeys = Object.keys(this.filteredRefinerItems.options);
+		}
+		/*return this._isExpanded
 			? Object.keys(this.refiner.options)
-			: Object.keys(this.refiner.options).slice(0, this._showCount);
+			: Object.keys(this.refiner.options).slice(0, this._showCount);*/
 	}
 
 	optionHasBadge(option: string | SimpleOption): boolean {

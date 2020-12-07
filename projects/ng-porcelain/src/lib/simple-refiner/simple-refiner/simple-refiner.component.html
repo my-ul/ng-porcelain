@@ -11,27 +11,29 @@
 		</div>
 	</div>
 	<!-- ./refiner__section -->
-	<!--Input Box section-->
-	<div class="search__window">
-		<input
-			type="text"
-			class="search__window-value"
-			[(ngModel)]="query"
-			[placeholder]="labelPlaceholder"
-			[class.search__window-value--placeholder]="query === ''"
-			(keyup)="keyUp($event)"
-		/>
+	<ng-container *ngIf="!isRefinerButtonDisplay">
+		<!--Input Box section-->
+		<div class="search__window">
+			<input
+				type="text"
+				class="search__window-value"
+				[(ngModel)]="query"
+				[placeholder]="labelPlaceholder"
+				[class.search__window-value--placeholder]="query === ''"
+				(keyup)="keyUp($event)"
+			/>
 
-		<button
-			class="search__window-action"
-			*ngIf="query !== ''"
-			[style.color]="clearIconColor"
-			(click)="clear()"
-		>
-			<span class="sr-only">{{ labelClear }}</span>
-			<fa-icon [icon]="clearIcon"></fa-icon>
-		</button>
-	</div>
+			<button
+				class="search__window-action"
+				*ngIf="query !== ''"
+				[style.color]="clearIconColor"
+				(click)="clear()"
+			>
+				<span class="sr-only">{{ labelClear }}</span>
+				<fa-icon [icon]="clearIcon"></fa-icon>
+			</button>
+		</div>
+	</ng-container>
 
 	<!-- [@blockInitialAnimation -->
 	<div class="refiner__section refiner__toggleable">
@@ -47,7 +49,7 @@
 			</div>
 			<!-- /.refiner__selection-toggles -->
 
-			<div class="refiner__section refiner__options">
+			<div class="refiner__section" [class.refiner__options]="!isRefinerButtonDisplay">
 				<ul class="options">
 					<li class="option" *ngFor="let optionKey of filteredOptionKeys">
 						<label class="media media--align-items-center">

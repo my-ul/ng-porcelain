@@ -204,3 +204,23 @@ export const CustomLabels = () => ({
 CustomLabels.story = {
 	parameters: {}
 };
+
+export const SearchScrollButtonTypeRefiner = () => ({
+	component: SimpleRefinerComponent,
+	moduleMetadata: {
+		imports: SIMPLE_REFINER_IMPORTS
+	},
+	props: {
+		refiner: new SimpleRefinerDefinition({
+			slug: 'simple',
+			title: 'United States of America (simple definitions) with search',
+			options: usStatesHash
+		}),
+		isRefinerButtonDisplay: false,
+		onRefinerChange: action('Refiner changed')
+	}
+});
+
+SearchScrollButtonTypeRefiner.story = {
+	name: `refiner with search and scroll`
+};
