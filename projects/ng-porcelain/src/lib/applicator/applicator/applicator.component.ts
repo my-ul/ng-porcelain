@@ -48,6 +48,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 	@Input() public applyLabel: string = 'Apply';
 	@Input() public loadingLabel: string = 'Loading';
 	@Input() public resetLabel: string = 'Reset';
+	@Input() public searchPlaceHolderLabel: string = 'search';
 
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;

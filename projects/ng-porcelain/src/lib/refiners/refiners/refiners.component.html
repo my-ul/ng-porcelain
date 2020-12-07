@@ -11,6 +11,7 @@
 		<ng-container *ngIf="isSimpleRefiner(refiner)">
 			<porcelain-simple-refiner
 				(onRefinerChange)="handleRefinerChange($event)"
+				[labelPlaceholder]="searchPlaceHolderLabel"
 				[refiner]="refiner"
 			></porcelain-simple-refiner>
 		</ng-container>

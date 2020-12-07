@@ -14,6 +14,7 @@ export class RefinersComponent implements OnInit {
 	// Inputs
 	@Input() refiners: BaseRefinerDefinition[];
 	@Input() allowIncompleteEmit: boolean = true;
+	@Input() public searchPlaceHolderLabel: string = 'search';
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();

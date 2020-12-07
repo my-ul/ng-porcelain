@@ -64,7 +64,7 @@ export class SimpleRefinerComponent implements OnInit {
 	/**
 	 * Placeholder for text input when search field is empty
 	 */
-	@Input() labelPlaceholder: string = '';
+	@Input() labelPlaceholder: string = 'search';
 
 	/**
 	 * Icon for the clear button

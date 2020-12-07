@@ -85,6 +85,7 @@ export const ProvideDefaultValueBehavior = () => {
 		component: ApplicatorComponent,
 		props: {
 			onApply: action('Applicators update'),
+			searchPlaceHolderLabel: 'type to search',
 			refiners: [simpleRefiner, anotherSimpleRefiner, dateRefiner],
 			defaultValues: {
 				simpleRefiner: ['al', 'az'],
