@@ -15,6 +15,7 @@ import { defaultSelectAllLabel } from '../../shared/defaults/labels/defaultSelec
 import { defaultSelectNoneLabel } from '../../shared/defaults/labels/defaultSelectNoneLabel';
 import { defaultOptionShowCount } from '../../shared/defaults/properties/defaultOptionShowCount';
 import { SimpleOption } from '../../shared/types/Options/SimpleOption';
+import { SimpleOptions } from '../../shared/types/Options/SimpleOptions';
 
 @Component({
 	selector: 'porcelain-simple-refiner',
@@ -41,7 +42,26 @@ export class SimpleRefinerComponent implements OnInit {
 	/**
 	 ** filtered refiner items which hold items that needs to be displayed
 	 * */
-	filteredRefinerItems: SimpleRefinerDefinition;
+	filteredUnSelectedRefinerItems: SimpleRefinerDefinition;
+
+	/**
+	 *
+	 * * UI UN-Selected Filtered refiner optionKey that needs to be displayed
+	 *
+	 * */
+	filteredUnselectedOptionKeys: string[] = [];
+
+	/**
+	 ** selected refiner items which hold items that needs to be displayed
+	 * */
+	SelectedRefinerItems: SimpleRefinerDefinition;
+
+	/**
+	 *
+	 * * UI Selected Filtered refiner optionKey that needs to be displayed
+	 *
+	 * */
+	selectedOptionKeys: string[] = [];
 
 	/**
 	 * Accessibility label for the clear button.
@@ -53,9 +73,6 @@ export class SimpleRefinerComponent implements OnInit {
 	 */
 	@Input() clearIconColor: string = '#9dacba';
 
-	/**
-	 * UI Filtered refiner optionKey that needs to be displayed**/
-	filteredOptionKeys: string[] = [];
 	/**
 	 * The current query.
 	 */
@@ -124,11 +141,80 @@ export class SimpleRefinerComponent implements OnInit {
 		);
 	}
 
+	/***
+	 *Logic:-
+	 * Refiner options is master object list having all selected and unselected object items.
+	 *
+	 * Separate the unselected items into filteredUnSelectedRefinerItems and its UI filteredUnselectedOptionKeys
+	 * separate the selected items into SelectedRefinerItems and its UI selectedOptionKeys
+	 *
+	 *
+	 * */
+
+	/***
+	 *
+	 *filterOptionsBasedOnSelection takes 3 parameters of refiner options, selectionfiltertype and return object
+	 *
+	 * */
+	filterOptionsBasedOnSelection = (
+		refinerOptions: SimpleOptions<SimpleOption, any>,
+		isSelectedRefinersRequired: boolean = false,
+		filteredOptionsBasedOnSelection: SimpleOptions<SimpleOption, any> = {}
+	): SimpleOptions<SimpleOption, any> => {
+		filteredOptionsBasedOnSelection = Object.keys(refinerOptions)
+			.filter(optionidx => {
+				if (refinerOptions[optionidx]) {
+					//for fitlering selected block
+					if (isSelectedRefinersRequired) {
+						return refinerOptions[optionidx]['isSelected'] ? true : false;
+					}
+					//unselected block
+					else {
+						return refinerOptions[optionidx]['isSelected'] ? false : true;
+					}
+				}
+				return false;
+			})
+			.reduce((valueidx, indexkey) => {
+				valueidx[indexkey] = refinerOptions[indexkey];
+				return valueidx;
+			}, {});
+
+		return filteredOptionsBasedOnSelection;
+	};
+	/***
+	 * Set object list and object keys updates the state of boths SelectedRefinerItems & filteredUnSelectedRefinerItems
+	 * For UI purposes the selectedOptionKeys And filteredUnselectedOptionKeys are also updated
+	 * */
+	updateSelectedAndUnselectedList = (): void => {
+		this.filteredUnSelectedRefinerItems = this.SelectedRefinerItems = Object.assign(
+			{},
+			this.refiner
+		);
+
+		//set unselected items
+		let { options: Refineroptions } = this.refiner;
+		this.filteredUnSelectedRefinerItems.options = this.filterOptionsBasedOnSelection(
+			Refineroptions,
+			false
+		);
+		this.filteredUnselectedOptionKeys = Object.keys(this.filteredUnSelectedRefinerItems.options);
+		//set selected items
+		this.SelectedRefinerItems.options = this.filterOptionsBasedOnSelection(Refineroptions, true);
+		this.selectedOptionKeys = Object.keys(this.SelectedRefinerItems.options);
+	};
+	/**
+	 *Updates indivigual selected options
+	 * */
+	UpdateRefinerIsSelectedSate = (key: string, refinerValue: boolean): void => {
+		if (this.refiner.options[key] && this.refiner.options[key].hasOwnProperty('isSelected')) {
+			this.refiner.options[key].isSelected = refinerValue;
+		}
+	};
+
 	ngOnInit() {
 		//set intiial state for refiners and filtered items
-		this.filteredRefinerItems = Object.assign({}, this.refiner);
-		this.filteredOptionKeys = Object.keys(this.refiner.options);
-
+		this.updateSelectedAndUnselectedList();
 		// Pick the `isOpen` value;
 		let isOpen = true;
 
@@ -188,9 +274,9 @@ export class SimpleRefinerComponent implements OnInit {
 		});
 
 		// Enables the callback API <porcelain-simple-refiner (onRefinerChange)="..."></porcelain-simple-refiner>
-		this.refiner.valueSubject.subscribe(newValue =>
-			this.onRefinerChange.emit([this.refiner.slug, newValue])
-		);
+		this.refiner.valueSubject.subscribe(newValue => {
+			this.onRefinerChange.emit([this.refiner.slug, newValue]);
+		});
 	}
 
 	toggleExpanded(): void {
@@ -232,7 +318,9 @@ export class SimpleRefinerComponent implements OnInit {
 		if (typeof option === 'string') {
 			return option;
 		} else {
-			return option.label;
+			if (option.label) {
+				return option.label;
+			} else return '';
 		}
 	}
 
@@ -246,6 +334,7 @@ export class SimpleRefinerComponent implements OnInit {
 
 	getValue(): string[] {
 		// return the keys where the value is true
+		console.log(Object.keys(this.values).filter(key => this.values[key]));
 		return Object.keys(this.values).filter(key => this.values[key]);
 	}
 
@@ -283,9 +372,14 @@ export class SimpleRefinerComponent implements OnInit {
 	/**
 	 * Called in Angular template to initiate the propagation of the new values.
 	 */
-	onSelectionChange() {
+	onSelectionChange(optionKey: string, value: boolean) {
+		console.log(optionKey, value);
 		this.ignoreNext = true;
 		this.refiner.valueSubject.next(this.getValue());
+		//update main refiner list sate
+		this.UpdateRefinerIsSelectedSate(optionKey, value);
+		//update selected and unselectedlist state
+		this.updateSelectedAndUnselectedList();
 	}
 
 	/*
@@ -314,7 +408,7 @@ export class SimpleRefinerComponent implements OnInit {
 
 		let { options } = this.refiner;
 		if (options) {
-			this.filteredRefinerItems.options = Object.keys(options)
+			this.filteredUnSelectedRefinerItems.options = Object.keys(options)
 				.filter(optionObjectKey => {
 					console.log(options[optionObjectKey]);
 					if ('string' == typeof options[optionObjectKey]) {
@@ -338,7 +432,7 @@ export class SimpleRefinerComponent implements OnInit {
 
 			//update filteroptions to display in UI
 
-			this.filteredOptionKeys = Object.keys(this.filteredRefinerItems.options);
+			this.filteredUnselectedOptionKeys = Object.keys(this.filteredUnSelectedRefinerItems.options);
 		}
 
 		return this;

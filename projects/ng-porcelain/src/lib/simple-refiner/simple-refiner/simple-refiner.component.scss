@@ -41,26 +41,36 @@ $border-def: solid 1px #bbc1c8;
 		}
 	}
 	//setting height based on UX
-	.refiner__options {
+	.refiner__scroll {
 		height: auto;
 		max-height: 7em;
 		overflow-x: hidden;
-		overflow-y: auto;
-	}
-	//scroll bar css
-	.refiner__options::-webkit-scrollbar {
-		width: 0.25em;
+		overflow-y: scroll;
+
+		&::-webkit-scrollbar {
+			width: 0.25em;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 2px;
+			-webkit-box-shadow: inset 0 0 6px #666666;
+			height: 2.2em;
+		}
+
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px #ffffff;
+			border-radius: 10px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 2px;
+			-webkit-box-shadow: inset 0 0 6px #666666;
+			height: 2.2em;
+		}
 	}
 
-	.refiner__options::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px #ffffff;
-		border-radius: 10px;
-	}
-
-	.refiner__options::-webkit-scrollbar-thumb {
-		border-radius: 2px;
-		-webkit-box-shadow: inset 0 0 6px #666666;
-		height: 2.2em;
+	.refiner__section + .refiner__section {
+		border-top: 1px solid #ccc;
 	}
 	//highlighter
 	::ng-deep .highlight__query {
