@@ -47,7 +47,15 @@
 			</div>
 			<!-- /.refiner__selection-toggles -->
 			<div class="refiner__container refiner__scroll">
-				<ng-container *ngIf="!showNoResults; else NoResults">
+				<ng-container *ngIf="filteredUnselectedOptionKeys.length <= 0 && query != ''">
+					<div class="option__no_results">
+						<span
+							class="option__no_results--message"
+							innerHtml="{{ diplayNoResultsMessage || 'No results found' }}"
+						></span>
+					</div>
+				</ng-container>
+				<ng-container *ngIf="selectedOptionKeys.length > 0">
 					<div class="refiner__section">
 						<ul class="options">
 							<li class="option" *ngFor="let optionKey of selectedOptionKeys">
@@ -79,7 +87,8 @@
 							</li>
 						</ul>
 					</div>
-
+				</ng-container>
+				<ng-container *ngIf="filteredUnselectedOptionKeys.length > 0">
 					<div class="refiner__section">
 						<ul class="options">
 							<li class="option" *ngFor="let optionKey of filteredUnselectedOptionKeys">
@@ -112,12 +121,6 @@
 						</ul>
 					</div>
 				</ng-container>
-				<ng-template #NoResults>
-					<span
-						class="option__no_results"
-						innerHtml="{{ diplayNoResultsMessage || 'No results found' }}"
-					></span>
-				</ng-template>
 			</div>
 			<!-- ./refiner__options-->
 			<!-- /.refiner__show-hide -->

@@ -91,7 +91,7 @@ export class SimpleRefinerComponent implements OnInit {
 	/***
 	 * To see if we can filter
 	 **/
-	isFilterListPossible: boolean = true;
+	isAllOptionsSelected: boolean = false;
 
 	/**
 	 * **/
@@ -358,16 +358,16 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	canSelectNone(): boolean {
-		return Object.keys(this.values).every(paramName => this.values[paramName] === true);
+		this.isAllOptionsSelected = Object.keys(this.values).every(paramName => this.values[paramName] === true)
+		return this.isAllOptionsSelected;
 	}
 
 	selectNone() {
 		this.setAll(false);
 	}
 
-	canSelectAll(): boolean {
-		return Object.keys(this.values).some(paramName => this.values[paramName] === false);
-	}
+	canSelectAll(): boolean {		 
+		return Object.keys(this.values).some(paramName => this.values[paramName] === false);	}
 
 	selectAll() {
 		return this.setAll(true);
@@ -389,8 +389,7 @@ export class SimpleRefinerComponent implements OnInit {
 		//updates states
 		this.UpdateAllRefinerIsSelectedState(newValue);
 		//update selected and unselectedlist state
-		this.updateSelectedAndUnselectedList();
-		this.isFilterListPossible = newValue;
+		this.updateSelectedAndUnselectedList();		
 	}
 
 	/**
@@ -428,7 +427,7 @@ export class SimpleRefinerComponent implements OnInit {
 		 *
 		 *
 		 * **/
-		let isAllOptionsSelected: boolean = this.canSelectNone();
+		
 
 		let { options } = this.refiner;
 		if (options) {
@@ -465,12 +464,27 @@ export class SimpleRefinerComponent implements OnInit {
 			 *IF filteredUnselectedoptionskeys are empty and all options are not selected then display no results found message
 			 * **/
 			this.showNoResults =
-				this.filteredUnselectedOptionKeys.length > 0 ||
-				this.refiner.options == this.SelectedRefinerItems.options
-					? false
-					: true;
+				this.filteredUnselectedOptionKeys.length <=0 ? true :false;
 		}
 		return this;
+	}
+	/**
+	 *List No results chek for 
+	 * */
+	showlist = ():boolean => {
+		if (this.showNoResults) {
+			if (this.isAllOptionsSelected) {
+				//if no results found and all options are selected displat result
+				return true;
+			}
+			else {
+				//hide list and display no message found incase if if all options are not selected
+				return false;
+			}
+		} else {
+			//by default display all results
+			return true;
+		}
 	}
 	/**
 	 * Resets the component state to blank query and resets the filteredItems array.

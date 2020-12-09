@@ -70,6 +70,10 @@ $border-def: solid 1px #bbc1c8;
 		}
 	}
 
+	.refiner__section:first-child {
+		border-top: none;
+	}
+
 	.refiner__section + .refiner__section {
 		border-top: 1px solid #ccc;
 	}
@@ -81,7 +85,15 @@ $border-def: solid 1px #bbc1c8;
 	}
 	//no results
 	.option__no_results {
+		min-height: 10px;
 		text-align: center;
-		color: #303741;
+		padding: 0.2em 0;
+		border-bottom: 1px solid #ccc;
+
+		&--message {
+			text-align: center;
+			color: #303741;
+			padding: 0.2em 0;
+		}
 	}
 }

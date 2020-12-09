@@ -130,6 +130,7 @@ export const usStatesFull = {
 
 export default {
 	title: 'Refiner System/Simple Refiner',
+	withKnobs, // Create Synthetic Module
 	decorators: [withNotes],
 
 	parameters: {
