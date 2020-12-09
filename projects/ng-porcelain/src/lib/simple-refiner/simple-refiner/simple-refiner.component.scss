@@ -46,6 +46,7 @@ $border-def: solid 1px #bbc1c8;
 		max-height: 7em;
 		overflow-x: hidden;
 		overflow-y: scroll;
+		padding-right: 0.6em;
 
 		&::-webkit-scrollbar {
 			width: 0.25em;

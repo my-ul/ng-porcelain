@@ -88,14 +88,14 @@ export class SimpleRefinerComponent implements OnInit {
 	 */
 	@Input() clearIcon = faTimesCircle;
 
+	/***
+	 * To see if we can filter
+	 **/
+	isFilterListPossible: boolean = true;
+
 	/**
 	 * **/
 	showNoResults: boolean = false;
-
-	/**
-	 * Refiner section without scroll and with button **/
-	@Input() isRefinerButtonDisplay = false;
-
 	/**
 	 *No results refiner message
 	 * **/
@@ -340,9 +340,7 @@ export class SimpleRefinerComponent implements OnInit {
 		if (typeof option === 'string') {
 			return option;
 		} else {
-			if (option.label) {
-				return option.label;
-			} else return '';
+			return option.hasOwnProperty('label') && option.label ? option.label : '';
 		}
 	}
 
@@ -392,6 +390,7 @@ export class SimpleRefinerComponent implements OnInit {
 		this.UpdateAllRefinerIsSelectedState(newValue);
 		//update selected and unselectedlist state
 		this.updateSelectedAndUnselectedList();
+		this.isFilterListPossible = newValue;
 	}
 
 	/**
@@ -466,9 +465,11 @@ export class SimpleRefinerComponent implements OnInit {
 			 *IF filteredUnselectedoptionskeys are empty and all options are not selected then display no results found message
 			 * **/
 			this.showNoResults =
-				this.filteredUnselectedOptionKeys.length > 0 && !isAllOptionsSelected ? false : true;
+				this.filteredUnselectedOptionKeys.length > 0 ||
+				this.refiner.options == this.SelectedRefinerItems.options
+					? false
+					: true;
 		}
-
 		return this;
 	}
 	/**

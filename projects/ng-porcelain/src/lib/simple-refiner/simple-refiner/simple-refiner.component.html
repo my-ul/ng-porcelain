@@ -120,20 +120,6 @@
 				</ng-template>
 			</div>
 			<!-- ./refiner__options-->
-			<ng-container *ngIf="isRefinerButtonDisplay">
-				<div class="refiner__section refiner__show-hide" *ngIf="canExpand()">
-					<button (click)="toggleExpanded()" class="refiner__expand-toggle">
-						<span *ngIf="isExpanded">
-							{{ showLessLabel | sprintf: countTail() }}
-							<fa-icon [icon]="contractIcon"></fa-icon>
-						</span>
-						<span *ngIf="!isExpanded">
-							{{ showMoreLabel | sprintf: countTail() }}
-							<fa-icon [icon]="expandIcon"></fa-icon>
-						</span>
-					</button>
-				</div>
-			</ng-container>
 			<!-- /.refiner__show-hide -->
 		</div>
 		<!-- /.refiner__body -->
