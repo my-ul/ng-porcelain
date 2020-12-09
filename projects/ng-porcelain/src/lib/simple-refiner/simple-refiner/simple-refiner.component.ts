@@ -89,8 +89,17 @@ export class SimpleRefinerComponent implements OnInit {
 	@Input() clearIcon = faTimesCircle;
 
 	/**
+	 * **/
+	showNoResults: boolean = false;
+
+	/**
 	 * Refiner section without scroll and with button **/
 	@Input() isRefinerButtonDisplay = false;
+
+	/**
+	 *No results refiner message
+	 * **/
+	@Input() diplayNoResultsMessage: string = 'No results found';
 
 	// Getters
 	get showCount() {
@@ -187,11 +196,6 @@ export class SimpleRefinerComponent implements OnInit {
 	 * For UI purposes the selectedOptionKeys And filteredUnselectedOptionKeys are also updated
 	 * */
 	updateSelectedAndUnselectedList = (): void => {
-		this.filteredUnSelectedRefinerItems = this.SelectedRefinerItems = Object.assign(
-			{},
-			this.refiner
-		);
-
 		//set unselected items
 		let { options: Refineroptions } = this.refiner;
 		this.filteredUnSelectedRefinerItems.options = this.filterOptionsBasedOnSelection(
@@ -204,7 +208,8 @@ export class SimpleRefinerComponent implements OnInit {
 		this.selectedOptionKeys = Object.keys(this.SelectedRefinerItems.options);
 	};
 	/**
-	 *Updates indivigual selected options
+	 *Updates indivigual selected options for
+	 * @param refiner
 	 * */
 	UpdateRefinerIsSelectedSate = (key: string, refinerValue: boolean): void => {
 		if (this.refiner.options[key] && this.refiner.options[key].hasOwnProperty('isSelected')) {
@@ -212,8 +217,25 @@ export class SimpleRefinerComponent implements OnInit {
 		}
 	};
 
+	/***
+	 *Updates all Selected options select/unselect for @param refiner
+	 *
+	 * */
+	UpdateAllRefinerIsSelectedState = (SelectAllValue: boolean): void => {
+		let { options: Alloptions } = this.refiner;
+		Object.keys(Alloptions).map(key => {
+			if (this.refiner.options[key] && this.refiner.options[key].hasOwnProperty('isSelected')) {
+				this.refiner.options[key].isSelected = SelectAllValue;
+			}
+		});
+	};
+
 	ngOnInit() {
 		//set intiial state for refiners and filtered items
+		this.filteredUnSelectedRefinerItems = this.SelectedRefinerItems = Object.assign(
+			{},
+			this.refiner
+		);
 		this.updateSelectedAndUnselectedList();
 		// Pick the `isOpen` value;
 		let isOpen = true;
@@ -334,7 +356,6 @@ export class SimpleRefinerComponent implements OnInit {
 
 	getValue(): string[] {
 		// return the keys where the value is true
-		console.log(Object.keys(this.values).filter(key => this.values[key]));
 		return Object.keys(this.values).filter(key => this.values[key]);
 	}
 
@@ -355,7 +376,7 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	/**
-	 * Sets all options to newValue; Used to enable select all/select none capability.
+	 * Sets all options to newValue; Used to enable select all/select none capability. And Also update all lists
 	 */
 	setAll(newValue: boolean) {
 		// only needed for TypeScript
@@ -367,13 +388,16 @@ export class SimpleRefinerComponent implements OnInit {
 			this.ignoreNext = false;
 			this.refiner.valueSubject.next(checked);
 		}
+		//updates states
+		this.UpdateAllRefinerIsSelectedState(newValue);
+		//update selected and unselectedlist state
+		this.updateSelectedAndUnselectedList();
 	}
 
 	/**
 	 * Called in Angular template to initiate the propagation of the new values.
 	 */
 	onSelectionChange(optionKey: string, value: boolean) {
-		console.log(optionKey, value);
 		this.ignoreNext = true;
 		this.refiner.valueSubject.next(this.getValue());
 		//update main refiner list sate
@@ -405,12 +429,12 @@ export class SimpleRefinerComponent implements OnInit {
 		 *
 		 *
 		 * **/
+		let isAllOptionsSelected: boolean = this.canSelectNone();
 
 		let { options } = this.refiner;
 		if (options) {
 			this.filteredUnSelectedRefinerItems.options = Object.keys(options)
 				.filter(optionObjectKey => {
-					console.log(options[optionObjectKey]);
 					if ('string' == typeof options[optionObjectKey]) {
 						return (
 							(options[optionObjectKey] as string)
@@ -418,11 +442,16 @@ export class SimpleRefinerComponent implements OnInit {
 								.indexOf(this.query.trim().toLowerCase()) > -1
 						);
 					} else {
-						return (
-							(options[optionObjectKey]['label'] as string)
-								.toLowerCase()
-								.indexOf(this.query.trim().toLowerCase()) > -1
-						);
+						//consider only unselected options
+						if (!options[optionObjectKey].isSelected) {
+							return (
+								(options[optionObjectKey]['label'] as string)
+									.toLowerCase()
+									.indexOf(this.query.trim().toLowerCase()) > -1
+							);
+						} else {
+							return false;
+						}
 					}
 				})
 				.reduce((obj, key) => {
@@ -433,6 +462,11 @@ export class SimpleRefinerComponent implements OnInit {
 			//update filteroptions to display in UI
 
 			this.filteredUnselectedOptionKeys = Object.keys(this.filteredUnSelectedRefinerItems.options);
+			/**
+			 *IF filteredUnselectedoptionskeys are empty and all options are not selected then display no results found message
+			 * **/
+			this.showNoResults =
+				this.filteredUnselectedOptionKeys.length > 0 && !isAllOptionsSelected ? false : true;
 		}
 
 		return this;
