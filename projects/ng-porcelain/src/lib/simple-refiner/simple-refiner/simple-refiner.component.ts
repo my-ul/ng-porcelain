@@ -264,7 +264,10 @@ export class SimpleRefinerComponent implements OnInit {
 		if (typeof option === 'string') {
 			return false;
 		} else {
-			return option.badge && option.badge !== '';
+			if (option && option.badge && option.badge !== '') {
+				return true;
+			}
+			return false;
 		}
 	}
 
