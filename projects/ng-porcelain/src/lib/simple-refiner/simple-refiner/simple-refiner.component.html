@@ -47,7 +47,7 @@
 			</div>
 			<!-- /.refiner__selection-toggles -->
 			<div class="refiner__container refiner__scroll">
-				<ng-container *ngIf="filteredUnselectedOptionKeys.length <= 0 && query != ''">
+				<ng-container *ngIf="dsiplayErrorMessage()">
 					<div class="option__no_results">
 						<span
 							class="option__no_results--message"
@@ -55,10 +55,10 @@
 						></span>
 					</div>
 				</ng-container>
-				<ng-container *ngIf="selectedOptionKeys.length > 0">
+				<ng-container *ngIf="getSelectedOptionKeys().length > 0">
 					<div class="refiner__section">
 						<ul class="options">
-							<li class="option" *ngFor="let optionKey of selectedOptionKeys">
+							<li class="option" *ngFor="let optionKey of getSelectedOptionKeys()">
 								<label class="media media--align-items-center">
 									<div class="media__left">
 										<input
@@ -88,10 +88,10 @@
 						</ul>
 					</div>
 				</ng-container>
-				<ng-container *ngIf="filteredUnselectedOptionKeys.length > 0">
+				<ng-container *ngIf="getUnSelectedOptionKeys().length > 0">
 					<div class="refiner__section">
 						<ul class="options">
-							<li class="option" *ngFor="let optionKey of filteredUnselectedOptionKeys">
+							<li class="option" *ngFor="let optionKey of getUnSelectedOptionKeys()">
 								<label class="media media--align-items-center">
 									<div class="media__left">
 										<input

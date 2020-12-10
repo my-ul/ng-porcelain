@@ -126,7 +126,7 @@ const UnselectedUStates = {
 };
 
 const SomeSelectedFull = {
-	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL', isSelected: true }),
+	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL' }),
 	AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
 	AZ: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
 	AR: new SimpleOption({ badge: 3020327, label: 'Arkansas', slug: 'AR' }),
@@ -140,14 +140,14 @@ const SomeSelectedFull = {
 		slug: 'DC'
 	}),
 	FL: new SimpleOption({ badge: 21312211, label: 'Florida', slug: 'FL' }),
-	GE: new SimpleOption({ badge: 10545138, label: 'Georgia', slug: 'GE', isSelected: true }),
+	GE: new SimpleOption({ badge: 10545138, label: 'Georgia', slug: 'GE' }),
 	HI: new SimpleOption({ badge: 1426393, label: 'Hawaii', slug: 'HI' }),
 	ID: new SimpleOption({ badge: 1753860, label: 'Idaho', slug: 'ID' }),
-	IL: new SimpleOption({ badge: 12768320, label: 'Illinois', slug: 'IL', isSelected: true }),
+	IL: new SimpleOption({ badge: 12768320, label: 'Illinois', slug: 'IL' }),
 	IN: new SimpleOption({ badge: 6699629, label: 'Indiana', slug: 'IN' }),
 	IA: new SimpleOption({ badge: 3160553, label: 'Iowa', slug: 'IA' }),
 	KA: new SimpleOption({ badge: 2918515, label: 'Kansas', slug: 'KA' }),
-	KY: new SimpleOption({ badge: 4472265, label: 'Kentucky', slug: 'KY', isSelected: true }),
+	KY: new SimpleOption({ badge: 4472265, label: 'Kentucky', slug: 'KY' }),
 	LA: new SimpleOption({ badge: 4682509, label: 'Louisiana', slug: 'LA' }),
 	ME: new SimpleOption({ badge: 1341582, label: 'Maine', slug: 'ME' }),
 	MD: new SimpleOption({ badge: 6079602, label: 'Maryland', slug: 'MD' }),
@@ -192,6 +192,7 @@ const fulloptionsCompleteNextVersionRefiner = new SimpleRefinerDefinition({
 const fulloptionsSemiSelectedVersionRefiner = new SimpleRefinerDefinition({
 	slug: 'semiselected',
 	title: 'US Selected State Refiners',
+	selected: ['OR', 'MT', 'KA', 'IA'],
 	options: SomeSelectedFull
 });
 

@@ -40,30 +40,6 @@ export class SimpleRefinerComponent implements OnInit {
 	//#endregion
 
 	/**
-	 ** filtered refiner items which hold items that needs to be displayed
-	 * */
-	filteredUnSelectedRefinerItems: SimpleRefinerDefinition;
-
-	/**
-	 *
-	 * * UI UN-Selected Filtered refiner optionKey that needs to be displayed
-	 *
-	 * */
-	filteredUnselectedOptionKeys: string[] = [];
-
-	/**
-	 ** selected refiner items which hold items that needs to be displayed
-	 * */
-	SelectedRefinerItems: SimpleRefinerDefinition;
-
-	/**
-	 *
-	 * * UI Selected Filtered refiner optionKey that needs to be displayed
-	 *
-	 * */
-	selectedOptionKeys: string[] = [];
-
-	/**
 	 * Accessibility label for the clear button.
 	 */
 	labelClear: string = 'Clear';
@@ -88,14 +64,6 @@ export class SimpleRefinerComponent implements OnInit {
 	 */
 	@Input() clearIcon = faTimesCircle;
 
-	/***
-	 * To see if we can filter
-	 **/
-	isAllOptionsSelected: boolean = false;
-
-	/**
-	 * **/
-	showNoResults: boolean = false;
 	/**
 	 *No results refiner message
 	 * **/
@@ -149,94 +117,39 @@ export class SimpleRefinerComponent implements OnInit {
 			})
 		);
 	}
-
-	/***
-	 *Logic:-
-	 * Refiner options is master object list having all selected and unselected object items.
-	 *
-	 * Separate the unselected items into filteredUnSelectedRefinerItems and its UI filteredUnselectedOptionKeys
-	 * separate the selected items into SelectedRefinerItems and its UI selectedOptionKeys
-	 *
-	 *
-	 * */
-
-	/***
-	 *
-	 *filterOptionsBasedOnSelection takes 3 parameters of refiner options, selectionfiltertype and return object
-	 *
-	 * */
-	filterOptionsBasedOnSelection = (
-		refinerOptions: SimpleOptions<SimpleOption, any>,
-		isSelectedRefinersRequired: boolean = false,
-		filteredOptionsBasedOnSelection: SimpleOptions<SimpleOption, any> = {}
-	): SimpleOptions<SimpleOption, any> => {
-		filteredOptionsBasedOnSelection = Object.keys(refinerOptions)
-			.filter(optionidx => {
-				if (refinerOptions[optionidx]) {
-					//for fitlering selected block
-					if (isSelectedRefinersRequired) {
-						return refinerOptions[optionidx]['isSelected'] ? true : false;
-					}
-					//unselected block
-					else {
-						return refinerOptions[optionidx]['isSelected'] ? false : true;
-					}
-				}
-				return false;
-			})
-			.reduce((valueidx, indexkey) => {
-				valueidx[indexkey] = refinerOptions[indexkey];
-				return valueidx;
-			}, {});
-
-		return filteredOptionsBasedOnSelection;
-	};
-	/***
-	 * Set object list and object keys updates the state of boths SelectedRefinerItems & filteredUnSelectedRefinerItems
-	 * For UI purposes the selectedOptionKeys And filteredUnselectedOptionKeys are also updated
-	 * */
-	updateSelectedAndUnselectedList = (): void => {
-		//set unselected items
-		let { options: Refineroptions } = this.refiner;
-		this.filteredUnSelectedRefinerItems.options = this.filterOptionsBasedOnSelection(
-			Refineroptions,
-			false
-		);
-		this.filteredUnselectedOptionKeys = Object.keys(this.filteredUnSelectedRefinerItems.options);
-		//set selected items
-		this.SelectedRefinerItems.options = this.filterOptionsBasedOnSelection(Refineroptions, true);
-		this.selectedOptionKeys = Object.keys(this.SelectedRefinerItems.options);
-	};
 	/**
-	 *Updates indivigual selected options for
-	 * @param refiner
+	 *Selected Values State
 	 * */
-	UpdateRefinerIsSelectedSate = (key: string, refinerValue: boolean): void => {
-		if (this.refiner.options[key] && this.refiner.options[key].hasOwnProperty('isSelected')) {
-			this.refiner.options[key].isSelected = refinerValue;
-		}
-	};
-
-	/***
-	 *Updates all Selected options select/unselect for @param refiner
+	Selectedvalues: { [optionSlug: string]: boolean } = {};
+	/**
+	 *UnSelected Values State
 	 *
 	 * */
-	UpdateAllRefinerIsSelectedState = (SelectAllValue: boolean): void => {
-		let { options: Alloptions } = this.refiner;
-		Object.keys(Alloptions).map(key => {
-			if (this.refiner.options[key] && this.refiner.options[key].hasOwnProperty('isSelected')) {
-				this.refiner.options[key].isSelected = SelectAllValue;
-			}
-		});
+	UnSelectedValues: { [optionSlug: string]: boolean } = {};
+	/***
+	 *FilterUnselectedvalues stae
+	 * */
+	filterUnselectedValues: { [optionSlug: string]: boolean } = {};
+
+	public SortSelectedAndUnSelectedValues = (): void => {
+		//transfer all objects to unSelected
+		let ArrayKeys: string[] = Object.keys(this.values);
+		this.UnSelectedValues = ArrayKeys.filter(CurrentObjectkey => {
+			return !this.values[CurrentObjectkey];
+		}).reduce((resultObject, Objectkey) => {
+			resultObject[Objectkey] = false;
+			return resultObject;
+		}, {});
+
+		this.Selectedvalues = ArrayKeys.filter(CurrentObjectkey => {
+			return this.values[CurrentObjectkey];
+		}).reduce((resultObject, Objectkey) => {
+			resultObject[Objectkey] = true;
+			return resultObject;
+		}, {});
 	};
 
 	ngOnInit() {
-		//set intiial state for refiners and filtered items
-		this.filteredUnSelectedRefinerItems = this.SelectedRefinerItems = Object.assign(
-			{},
-			this.refiner
-		);
-		this.updateSelectedAndUnselectedList();
 		// Pick the `isOpen` value;
 		let isOpen = true;
 
@@ -292,12 +205,17 @@ export class SimpleRefinerComponent implements OnInit {
 				selectedOptionSlugs.forEach(optionSlug => {
 					this.values[optionSlug] = true;
 				});
+
+				//updated other selected and unselected states as well
+				this.SortSelectedAndUnSelectedValues();
 			}
 		});
 
 		// Enables the callback API <porcelain-simple-refiner (onRefinerChange)="..."></porcelain-simple-refiner>
 		this.refiner.valueSubject.subscribe(newValue => {
 			this.onRefinerChange.emit([this.refiner.slug, newValue]);
+			this.SortSelectedAndUnSelectedValues();
+			this.applyFilter();
 		});
 	}
 
@@ -326,6 +244,20 @@ export class SimpleRefinerComponent implements OnInit {
 		return this._isExpanded
 			? Object.keys(this.refiner.options)
 			: Object.keys(this.refiner.options).slice(0, this._showCount);
+	}
+
+	getSelectedOptionKeys(): string[] {
+		return Object.keys(this.Selectedvalues);
+	}
+	getUnSelectedOptionKeys(): string[] {
+		return Object.keys(this.filterUnselectedValues);
+	}
+	dsiplayErrorMessage(): boolean {
+		return (
+			Object.keys(this.filterUnselectedValues).length <= 0 &&
+			this.query != '' &&
+			Object.keys(this.Selectedvalues).length != Object.keys(this.values).length
+		);
 	}
 
 	optionHasBadge(option: string | SimpleOption): boolean {
@@ -358,16 +290,16 @@ export class SimpleRefinerComponent implements OnInit {
 	}
 
 	canSelectNone(): boolean {
-		this.isAllOptionsSelected = Object.keys(this.values).every(paramName => this.values[paramName] === true)
-		return this.isAllOptionsSelected;
+		return Object.keys(this.values).every(paramName => this.values[paramName] === true);
 	}
 
 	selectNone() {
 		this.setAll(false);
 	}
 
-	canSelectAll(): boolean {		 
-		return Object.keys(this.values).some(paramName => this.values[paramName] === false);	}
+	canSelectAll(): boolean {
+		return Object.keys(this.values).some(paramName => this.values[paramName] === false);
+	}
 
 	selectAll() {
 		return this.setAll(true);
@@ -386,10 +318,6 @@ export class SimpleRefinerComponent implements OnInit {
 			this.ignoreNext = false;
 			this.refiner.valueSubject.next(checked);
 		}
-		//updates states
-		this.UpdateAllRefinerIsSelectedState(newValue);
-		//update selected and unselectedlist state
-		this.updateSelectedAndUnselectedList();		
 	}
 
 	/**
@@ -398,10 +326,6 @@ export class SimpleRefinerComponent implements OnInit {
 	onSelectionChange(optionKey: string, value: boolean) {
 		this.ignoreNext = true;
 		this.refiner.valueSubject.next(this.getValue());
-		//update main refiner list sate
-		this.UpdateRefinerIsSelectedSate(optionKey, value);
-		//update selected and unselectedlist state
-		this.updateSelectedAndUnselectedList();
 	}
 
 	/*
@@ -412,80 +336,31 @@ export class SimpleRefinerComponent implements OnInit {
 		this.applyFilter();
 	}
 	applyFilter(): this {
-		/**
-		 * Logic :
-		 *
-		 *We destrucutre options object from refiners
-		 *
-		 * inside options object
-		 *
-		 * 1.) Object.keys gives list object keys => creates an array of string of object keys
-		 * 2.) Inside that array user filter
-		 *		a) use that key and access that options object and label feild. treat it as string. conevert all to lowercase . use indexof query to check the occurence
-		 * 3.) Then use reduce to build new object but with only allowed properties
-		 *
-		 *
-		 *
-		 * **/
-		
+		let RefinerArrayKeys: string[] = Object.keys(this.UnSelectedValues);
 
-		let { options } = this.refiner;
-		if (options) {
-			this.filteredUnSelectedRefinerItems.options = Object.keys(options)
-				.filter(optionObjectKey => {
-					if ('string' == typeof options[optionObjectKey]) {
-						return (
-							(options[optionObjectKey] as string)
-								.toLowerCase()
-								.indexOf(this.query.trim().toLowerCase()) > -1
-						);
-					} else {
-						//consider only unselected options
-						if (!options[optionObjectKey].isSelected) {
-							return (
-								(options[optionObjectKey]['label'] as string)
-									.toLowerCase()
-									.indexOf(this.query.trim().toLowerCase()) > -1
-							);
-						} else {
-							return false;
-						}
-					}
-				})
-				.reduce((obj, key) => {
-					obj[key] = this.refiner.options[key];
-					return obj;
-				}, {});
-
-			//update filteroptions to display in UI
-
-			this.filteredUnselectedOptionKeys = Object.keys(this.filteredUnSelectedRefinerItems.options);
-			/**
-			 *IF filteredUnselectedoptionskeys are empty and all options are not selected then display no results found message
-			 * **/
-			this.showNoResults =
-				this.filteredUnselectedOptionKeys.length <=0 ? true :false;
+		if (this.query != '') {
+			this.filterUnselectedValues = RefinerArrayKeys.filter(CurrentObjectKey => {
+				let optionlabel = this.getOptionLabel(this.refiner.options[CurrentObjectKey]);
+				if (!this.UnSelectedValues[CurrentObjectKey]) {
+					return optionlabel.toLowerCase().indexOf(this.query.trim().toLowerCase()) > -1;
+				}
+				return false;
+			}).reduce((resultObject, Objectkey) => {
+				resultObject[Objectkey] = false;
+				return resultObject;
+			}, {});
+		} else {
+			//As caution check for any true object using filter and use reduce to put new object in filterUnselectedValues
+			this.filterUnselectedValues = RefinerArrayKeys.filter(CurrentObjectKey => {
+				return !this.UnSelectedValues[CurrentObjectKey];
+			}).reduce((resultObject, objectkey) => {
+				resultObject[objectkey] = false;
+				return resultObject;
+			}, {});
 		}
 		return this;
 	}
-	/**
-	 *List No results chek for 
-	 * */
-	showlist = ():boolean => {
-		if (this.showNoResults) {
-			if (this.isAllOptionsSelected) {
-				//if no results found and all options are selected displat result
-				return true;
-			}
-			else {
-				//hide list and display no message found incase if if all options are not selected
-				return false;
-			}
-		} else {
-			//by default display all results
-			return true;
-		}
-	}
+
 	/**
 	 * Resets the component state to blank query and resets the filteredItems array.
 	 */
