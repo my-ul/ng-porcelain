@@ -272,7 +272,7 @@ export class SimpleRefinerComponent implements OnInit {
 		if (typeof option === 'string') {
 			return option;
 		} else {
-			return option.hasOwnProperty('label') && option.label ? option.label : '';
+			return option['label'] ? option['label'] : '';
 		}
 	}
 
