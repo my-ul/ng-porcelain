@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
-	selector: 'porcelain-footer',
+	selector: 'porcelain-footer, p-footer',
 	templateUrl: './footer.component.html',
 	styleUrls: ['./footer.component.scss']
 })

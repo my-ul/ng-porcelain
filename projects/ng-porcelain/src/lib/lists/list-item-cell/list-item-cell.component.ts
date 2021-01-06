@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, Input } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-list-item-cell',
+	selector: 'porcelain-list-item-cell, p-list-item-cell',
 	templateUrl: './list-item-cell.component.html',
 	styleUrls: ['./list-item-cell.component.scss']
 })

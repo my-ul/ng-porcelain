@@ -1,0 +1,110 @@
+<porcelain-expando [title]="refiner.title" [(isOpen)]="refiner.isOpen">
+	<div
+		class="search-refiner__section search-refiner__search"
+		[class.search-refiner__search--has-focus]="searchHasFocus"
+		[class.search-refiner__search--disabled]="inactiveKeys.length === 0"
+	>
+		<input
+			#searchInput
+			class="search-refiner__search-query"
+			type="text"
+			(blur)="trackSearchFocus(false)"
+			(focus)="trackSearchFocus(true)"
+			(keyup.esc)="clear()"
+			(keyup)="updateFilteredInactiveItems()"
+			[(ngModel)]="query"
+			[disabled]="inactiveKeys.length === 0"
+			[placeholder]="placeholder"
+		/>
+		<button
+			class="search-refiner__search-clear"
+			[disabled]="inactiveKeys.length === 0"
+			*ngIf="query !== ''"
+			(click)="clear()"
+		>
+			<fa-icon [icon]="clearIcon"></fa-icon>
+			<span class="sr-only">{{ labels.clear }}</span>
+		</button>
+	</div>
+	<div class="search-refiner__section search-refiner__active-keys" *ngIf="activeKeys.length > 0">
+		<button
+			(click)="selectNone()"
+			*ngIf="activeKeys.length === allKeys.length"
+			class="search-refiner__select-preset"
+		>
+			{{ labels.selectNone }}
+		</button>
+		<ul
+			class="search-refiner__key-list"
+			[class.search-refiner__key-list--scroll]="activeKeys.length > showLines"
+			[style.height.em]="activeKeys.length * 1.74"
+			[style.max-height.em]="showLines * 1.74"
+		>
+			<li *ngFor="let key of activeKeys">
+				<label class="option-row" *ngIf="this.refiner.options[key]">
+					<div class="option-row__shrink-cell">
+						<input type="checkbox" (change)="deactivateKey(key)" [checked]="true" />
+					</div>
+					<div class="option-row__grow-cell option__label">
+						<span class="search-refiner__truncate">{{
+							this.refiner.options[key].label
+						}}</span>
+					</div>
+					<div class="option-row__shrink-cell" *ngIf="this.refiner.options[key].badge">
+						{{ this.refiner.options[key].badge | toLocaleString }}
+					</div>
+				</label>
+			</li>
+		</ul>
+	</div>
+	<div class="search-refiner__section search-refiner__inactive-keys" *ngIf="inactiveKeys.length > 0">
+		<p class="search-refiner__select-preset-group">
+			<button
+				(click)="selectAll()"
+				*ngIf="activeKeys.length < allKeys.length"
+				class="search-refiner__select-preset"
+			>
+				{{ labels.selectAll }}
+				<span *ngIf="inactiveKeys.length !== filteredInactiveKeys.length">
+					({{
+						labels.nHiddenByFilter
+							| sprintf
+								: (inactiveKeys.length - filteredInactiveKeys.length).toLocaleString()
+					}})</span
+				>
+			</button>
+			<button
+				(click)="selectFiltered()"
+				class="search-refiner__select-preset"
+				*ngIf="query.trim() !== '' && filteredInactiveKeys.length > 0"
+			>
+				{{ labels.selectFiltered }}
+			</button>
+		</p>
+		<ul
+			*ngIf="filteredInactiveKeys.length > 0"
+			class="search-refiner__key-list"
+			[class.search-refiner__key-list--scroll]="filteredInactiveKeys.length >= 4"
+			[style.min-height.em]="4 * 1.74"
+			[style.height.em]="(showLines - activeKeys.length) * 1.74"
+			[style.max-height.em]="showLines * 1.74"
+		>
+			<li *ngFor="let key of filteredInactiveKeys">
+				<label class="option-row" *ngIf="this.refiner.options[key]">
+					<div class="option-row__shrink-cell">
+						<input type="checkbox" (change)="activateKey(key)" />
+					</div>
+					<div class="option-row__grow-cell option__label">
+						<span
+							class="search-refiner__truncate"
+							innerHTML="{{ this.refiner.options[key].label | highlight: query }}"
+						></span>
+					</div>
+					<div class="option-row__shrink-cell" *ngIf="this.refiner.options[key].badge">
+						{{ this.refiner.options[key].badge | toLocaleString }}
+					</div>
+				</label>
+			</li>
+		</ul>
+	</div>
+</porcelain-expando>

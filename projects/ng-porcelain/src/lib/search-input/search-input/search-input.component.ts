@@ -18,7 +18,7 @@ import { Loggable } from '../../Loggable';
  * @deprecated Update your Search Inputs to use p2-search-input.
  */
 @Component({
-	selector: 'porcelain-search-input',
+	selector: 'porcelain-search-input, p-legacy-search-input',
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss'],
 	host: {

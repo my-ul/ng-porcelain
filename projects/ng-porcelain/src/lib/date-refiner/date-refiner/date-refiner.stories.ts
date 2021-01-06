@@ -199,7 +199,7 @@ export const CustomLabels = () => ({
 	props: {
 		refiner: new DateRefinerDefinition({
 			slug: 'myRefinerDefinition',
-			title: 'Simple Date Refiner',
+			title: 'Custom Labels',
 			options: defaultDateOptions
 		}),
 		onRefinerChange: action('Date Refiner (simple) changed')

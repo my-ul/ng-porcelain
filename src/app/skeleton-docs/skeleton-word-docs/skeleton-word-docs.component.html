@@ -1,0 +1,20 @@
+<div class="page">
+	<div class="page__section page__section--padded">
+		<h2>Word Skeletons</h2>
+		<p>Word Skeletons can be used to create glowing/flashing loading indicators</p>
+		<div>
+			<h2><porcelain-skeleton-word [characters]="5"></porcelain-skeleton-word></h2>
+			<p>Text can be added with the paragraph.</p>
+			<p><porcelain-skeleton-paragraph [lines]="5"></porcelain-skeleton-paragraph></p>
+			<p>Or, text can be added line by line.</p>
+			<p><porcelain-skeleton-line></porcelain-skeleton-line></p>
+			<h3><porcelain-skeleton-word></porcelain-skeleton-word></h3>
+			<p>Skeletons automatical size based on the ambient font size (em).</p>
+			<h2><porcelain-skeleton-line></porcelain-skeleton-line></h2>
+			<p>The Skeleton block can be used to create loaders for images or other arbitrary blocks.</p>
+			<div style="width:200px; height:200px;">
+				<p-skeleton-block></p-skeleton-block>
+			</div>
+		</div>
+	</div>
+</div>

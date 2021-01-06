@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Loggable } from '../../../lib/Loggable';
 
 @Component({
-	selector: 'porcelain-breadcrumb-item',
+	selector: 'porcelain-breadcrumb-item, p-breadcrumb-item',
 	templateUrl: './breadcrumb-item.component.html',
 	styleUrls: ['./breadcrumb-item.component.scss']
 })

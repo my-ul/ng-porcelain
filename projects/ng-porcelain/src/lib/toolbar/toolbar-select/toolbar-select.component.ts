@@ -34,7 +34,7 @@ let openStyle = {
 };
 
 @Component({
-	selector: 'porcelain-toolbar-select',
+	selector: 'porcelain-toolbar-select, p-toolbar-select',
 	templateUrl: './toolbar-select.component.html',
 	styleUrls: ['./toolbar-select.component.scss'],
 	animations: [

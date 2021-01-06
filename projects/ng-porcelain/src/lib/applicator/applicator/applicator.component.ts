@@ -33,7 +33,7 @@ import { Loggable } from '../../Loggable';
 export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefinerValue>;
 
 @Component({
-	selector: 'porcelain-applicator',
+	selector: 'porcelain-applicator, p-applicator',
 	templateUrl: './applicator.component.html',
 	styleUrls: ['./applicator.component.scss']
 })
@@ -68,7 +68,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 	}
 
 	public apply() {
-		this.appliedValues = Object.assign(this.appliedValues, this.stagedValues);
+		this.appliedValues = Object.assign({}, this.stagedValues);
 		this.onApply.emit({
 			appliedValues: this.appliedValues,
 			initialLoad: this.initialLoad
@@ -81,10 +81,12 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 	}
 
 	public canApply(): boolean {
+		this.debug('canApply()', { stagedValues: this.stagedValues, appliedValues: this.appliedValues });
 		return !isEqual(this.stagedValues, this.appliedValues);
 	}
 
 	public canReset(): boolean {
+		this.debug('canReset()', { stagedValues: this.stagedValues, defaultValues: this.defaultValues });
 		return !isEqual(this.stagedValues, this.defaultValues);
 	}
 
@@ -107,6 +109,8 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 				to: null,
 				optionSlug: '-1'
 			} as DateRefinerValue;
+		} else if (refiner.type === 'search') {
+			return [];
 		}
 
 		// Only reached with invalid refiner definitions.
@@ -154,7 +158,8 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 
 	public reset(): void {
 		this.refiners.forEach(refiner => {
-			refiner.valueSubject.next(this.getDefaultValueForRefiner(refiner));
+			console.debug('reset()', refiner.slug, this.defaultValues[refiner.slug]);
+			refiner.valueSubject.next(this.defaultValues[refiner.slug]);
 		});
 		this.beforeApply();
 	}

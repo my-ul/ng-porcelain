@@ -22,6 +22,10 @@ export { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 export { TruncateModule } from './lib/truncate/truncate.module';
 export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 
+// saved search modal
+export { SavedsearchModalpopupModule } from './lib/savedsearch-modalpopup/savedsearch-modalpopup.module';
+export { SavedsearchModalpopupComponent } from './lib/savedsearch-modalpopup/savedsearch-modalpopup/savedsearch-modalpopup.component';
+
 // Shared
 export { generateSlideInOut } from './lib/shared/animations/slideInOut.animation';
 
@@ -168,3 +172,23 @@ export { ComboboxComponent } from './lib/combobox/combobox/combobox.component';
 export { BreadcrumbModule } from './lib/breadcrumb/breadcrumb.module';
 export { BreadcrumbsComponent } from './lib/breadcrumb/breadcrumbs/breadcrumbs.component';
 export { BreadcrumbItemComponent } from './lib/breadcrumb/breadcrumb-item/breadcrumb-item.component';
+
+// Expando Module
+export { ExpandoModule } from './lib/expando/expando.module';
+export { ExpandoComponent, ExpandoIconPosition } from './lib/expando/expando/expando.component';
+export { ExpandoBodyComponent } from './lib/expando/expando-body/expando-body.component';
+export { ExpandoHeaderComponent } from './lib/expando/expando-header/expando-header.component';
+
+// Skeleton Module
+export { SkeletonsModule } from './lib/skeletons/skeletons.module';
+export { SkeletonBlockComponent } from './lib/skeletons/block/block.component';
+export { SkeletonWordComponent } from './lib/skeletons/word/word.component';
+export { SkeletonLineComponent } from './lib/skeletons/line/line.component';
+export { SkeletonParagraphComponent } from './lib/skeletons/paragraph/paragraph.component';
+
+// toSimpleOptionDictionary utility
+export { toSimpleOptionDictionary } from './lib/shared/utilities/toSimpleOptionDictionary';
+
+// SearchRefiner module
+export { SearchRefinerModule } from './lib/search-refiner/search-refiner.module';
+export { SearchRefinerComponent } from './lib/search-refiner/search-refiner/search-refiner.component';

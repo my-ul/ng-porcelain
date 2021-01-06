@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-truncate',
+	selector: 'porcelain-truncate, p-truncate',
 	templateUrl: './truncate.component.html',
 	styleUrls: ['./truncate.component.scss']
 })

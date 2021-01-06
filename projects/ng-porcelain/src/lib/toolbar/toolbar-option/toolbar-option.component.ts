@@ -5,7 +5,7 @@ import { HostListener } from '@angular/core';
 import { Loggable } from '../../Loggable';
 
 @Component({
-	selector: 'porcelain-toolbar-option',
+	selector: 'porcelain-toolbar-option, p-toolbar-option',
 	templateUrl: './toolbar-option.component.html',
 	styleUrls: ['./toolbar-option.component.scss']
 })

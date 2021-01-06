@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-list-body',
+	selector: 'porcelain-list-body, p-list-body',
 	templateUrl: './list-body.component.html',
 	styleUrls: ['./list-body.component.scss']
 })

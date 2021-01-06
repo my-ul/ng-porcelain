@@ -1,7 +1,9 @@
 <label class="porcelain-toolbar-select__toggle" (click)="toggleOpen()">
 	<span class="porcelain-toolbar-select__toggle-label">{{ label }}</span>
 	<span class="porcelain-toolbar-select__toggle-current">
-		<ng-content select="porcelain-toolbar-selected-template"></ng-content>
+		<ng-content
+			select="porcelain-toolbar-selected-template, p-toolbar-selected-template"
+		></ng-content>
 	</span>
 	<span class="porcelain-toolbar-select__toggle-caret">
 		<fa-icon [icon]="faAngleDown"></fa-icon>
@@ -9,5 +11,5 @@
 </label>
 
 <div class="porcelain-toolbar-select__options" [@slideInOut] *ngIf="isOpen">
-	<ng-content select="porcelain-toolbar-option"></ng-content>
+	<ng-content select="porcelain-toolbar-option, p-toolbar-option"></ng-content>
 </div>

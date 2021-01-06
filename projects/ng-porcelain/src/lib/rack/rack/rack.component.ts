@@ -25,7 +25,7 @@ interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
 }
 
 @Component({
-	selector: 'porcelain-rack',
+	selector: 'porcelain-rack, p-rack',
 	templateUrl: './rack.component.html',
 	styleUrls: ['./rack.component.scss']
 })

@@ -13,6 +13,11 @@ const routes: Routes = [
 	{
 		path: 'inputs',
 		loadChildren: () => import('./inputs-docs/inputs-docs.module').then(m => m.InputsDocsModule)
+	},
+	{
+		path: 'skeletons',
+		loadChildren: () =>
+			import('./skeleton-docs/skeleton-docs.module').then(m => m.SkeletonDocsModule)
 	}
 ];
 

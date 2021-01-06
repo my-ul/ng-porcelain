@@ -22,7 +22,7 @@ export interface DynamicSearchQuery {
 }
 
 @Component({
-	selector: 'porcelain-dynamic-header',
+	selector: 'porcelain-dynamic-header, p-dynamic-header',
 	templateUrl: './dynamic-header.component.html',
 	styleUrls: ['./dynamic-header.component.scss'],
 	host: {

@@ -16,7 +16,7 @@ import { defaultOptionShowCount } from '../../shared/defaults/properties/default
 import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 
 @Component({
-	selector: 'porcelain-simple-refiner',
+	selector: 'porcelain-simple-refiner, p-simple-refiner',
 	templateUrl: './simple-refiner.component.html',
 	styleUrls: ['./simple-refiner.component.scss'],
 	animations: []
