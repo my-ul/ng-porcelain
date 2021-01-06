@@ -15,6 +15,7 @@ import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDe
 import { DateRefinerValue } from '../../shared/types/Values/DateRefinerValue';
 import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
 import { IDateRefinerDefinition } from '../../shared/types/Refiners/IDateRefinerDefinition';
+import { Loggable } from '../../Loggable';
 
 // Issue with moment requires this workaround for now
 const moment = _moment;
@@ -41,11 +42,13 @@ export interface ISimplifiedMyDateModel {
 }
 
 @Component({
-	selector: 'porcelain-date-refiner',
+	selector: 'porcelain-date-refiner, p-date-refiner',
 	templateUrl: './date-refiner.component.html',
 	styleUrls: ['./date-refiner.component.scss']
 })
-export class DateRefinerComponent implements OnInit {
+export class DateRefinerComponent extends Loggable implements OnInit {
+	readonly name = 'DateRefinerComponent';
+
 	// Inputs
 	@Input() isOpen: boolean = true;
 	@Input() refiner: DateRefinerDefinition;
@@ -112,6 +115,7 @@ export class DateRefinerComponent implements OnInit {
 	toModel: IMyDateModel = null;
 
 	constructor(private translationService: TranslationService) {
+		super();
 		this.log('constructor()');
 
 		/**
@@ -128,7 +132,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	parseDateState(date: string | Date | _moment.Moment): IMyDateModel {
-		this.log('parseDateState(date)', { date });
+		this.debug('parseDateState(date)', { date });
 		const parsed: _moment.Moment =
 			typeof date === 'string'
 				? moment.utc(date, 'YYYY-MM-DD') // needs to be parsed as UTC
@@ -151,7 +155,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.log('ngOnInit()');
+		this.debug('ngOnInit()');
 
 		this.options = this.refiner.options ? this.refiner.options : defaultDateOptions;
 
@@ -186,13 +190,13 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	onFromChange($event) {
-		this.log('onFromChange($event)', { $event });
+		this.debug('onFromChange($event)', { $event });
 		this.fromModel = $event;
 		this.onChange(this.currentOptionSlug);
 	}
 
 	onToChange($event) {
-		this.log('onToChange($event)', { $event });
+		this.debug('onToChange($event)', { $event });
 		this.toModel = $event;
 		this.onChange(this.currentOptionSlug);
 	}
@@ -218,7 +222,7 @@ export class DateRefinerComponent implements OnInit {
 	 */
 	isComplete(): boolean {
 		const value = this.getValue();
-		this.log('isComplete()', { value });
+		this.debug('isComplete()', { value });
 
 		// -1 is a slug commonly associated with 'all' (as in no start or end)
 		if (value.optionSlug === '-1') {
@@ -247,7 +251,7 @@ export class DateRefinerComponent implements OnInit {
 		const isComplete = this.isComplete();
 		const value = this.getValue();
 
-		this.log('onChange(newOptionSlug)', 'before validation', {
+		this.debug('onChange(newOptionSlug)', 'before validation', {
 			allowIncompleteEmit: this.allowIncompleteEmit,
 			isComplete,
 			value,
@@ -275,7 +279,7 @@ export class DateRefinerComponent implements OnInit {
 		}
 
 		if (shouldEmit === true) {
-			this.log('onChange()', 'emitting value', { value });
+			this.debug('onChange()', 'emitting value', { value });
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(value);
 		}
@@ -283,7 +287,6 @@ export class DateRefinerComponent implements OnInit {
 
 	// States
 	optionHasBadge(dateOptionOrDate: DateOption | Date): boolean {
-		this.log('optionHasBadge(dateOptionOrDate)', { dateOptionOrDate });
 		return dateOptionOrDate instanceof DateOption && typeof dateOptionOrDate.badge !== 'undefined';
 	}
 
@@ -298,12 +301,12 @@ export class DateRefinerComponent implements OnInit {
 	 * 	set [shouldEmitIncomplete]="false" to ensure that your application only receives COMPLETE ranges.
 	 */
 	getValue(): DateRefinerValue {
-		this.log('getValue()');
+		this.debug('getValue()');
 
 		const currentOption = this.refiner.options[this.currentOptionSlug];
 
 		if (this.currentOptionSlug === 'custom') {
-			this.log('this.fromModel, this.toModel', {
+			this.debug('this.fromModel, this.toModel', {
 				fromModel: this.fromModel,
 				toModel: this.toModel
 			});
@@ -354,7 +357,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	getOptionLabel(option: DateOption): string {
-		this.log('getOptionLabel(option)', { option });
+		this.debug('getOptionLabel(option)', { option });
 		if (option instanceof DateOption) {
 			if (option.label) {
 				return option.label;
@@ -363,7 +366,7 @@ export class DateRefinerComponent implements OnInit {
 	}
 
 	getOptionBadge(option: DateOption | Date): string {
-		this.log('getOptionBadge(option)', { option });
+		this.debug('getOptionBadge(option)', { option });
 		if (option instanceof DateOption) {
 			if (option.badge) {
 				if (typeof option.badge === 'number') {
@@ -379,16 +382,7 @@ export class DateRefinerComponent implements OnInit {
 
 	// Mutators
 	toggleOpen() {
-		this.log('toggleOpen()', { isOpen: this.isOpen });
+		this.debug('toggleOpen()', { isOpen: this.isOpen });
 		this.isOpen = !this.isOpen;
-	}
-
-	/**
-	 * Logs information to the console while in development mode.
-	 */
-	private log(...args) {
-		if (isDevMode()) {
-			console.log.apply(null, ['DateRefinerComponent'].concat(args));
-		}
 	}
 }

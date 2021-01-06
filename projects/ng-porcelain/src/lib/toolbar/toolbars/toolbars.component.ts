@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-toolbars',
+	selector: 'porcelain-toolbars, p-toolbars',
 	templateUrl: './toolbars.component.html',
 	styleUrls: ['./toolbars.component.scss']
 })

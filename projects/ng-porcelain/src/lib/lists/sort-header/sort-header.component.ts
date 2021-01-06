@@ -16,7 +16,7 @@ export type SortDirection = 'asc' | 'desc' | null;
 export type SortTuple = [string, SortDirection];
 
 @Component({
-	selector: 'porcelain-sort-header',
+	selector: 'porcelain-sort-header, p-sort-header',
 	templateUrl: './sort-header.component.html',
 	styleUrls: ['./sort-header.component.scss']
 })

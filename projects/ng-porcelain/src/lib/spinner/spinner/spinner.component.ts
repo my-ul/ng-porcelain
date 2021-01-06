@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
-	selector: 'porcelain-spinner',
+	selector: 'porcelain-spinner, p-spinner',
 	templateUrl: './spinner.component.html',
 	styleUrls: ['./spinner.component.scss']
 })

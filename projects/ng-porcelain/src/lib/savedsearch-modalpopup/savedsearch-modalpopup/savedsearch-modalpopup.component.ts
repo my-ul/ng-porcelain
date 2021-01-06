@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-savedsearch-modal',
+	selector: 'porcelain-savedsearch-modal, p-savedsearch-modal',
 	templateUrl: './savedsearch-modalpopup.component.html',
 	styleUrls: ['./savedsearch-modalpopup.component.scss']
 })

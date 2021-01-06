@@ -9,7 +9,7 @@ import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
 export type SearchTuple = [string, string];
 
 @Component({
-	selector: 'porcelain-search-header',
+	selector: 'porcelain-search-header, p-search-header',
 	templateUrl: './search-header.component.html',
 	styleUrls: ['./search-header.component.scss']
 })

@@ -12,7 +12,7 @@ import {
 import { Input } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-toolbar-button',
+	selector: 'porcelain-toolbar-button, p-toolbar-button',
 	templateUrl: './toolbar-button.component.html',
 	styleUrls: ['./toolbar-button.component.scss']
 })

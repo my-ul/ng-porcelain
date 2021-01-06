@@ -20,7 +20,7 @@ import { TranslationService } from '../../services/translation/translation.servi
 type ItemType = string | object;
 
 @Component({
-	selector: 'porcelain-combobox',
+	selector: 'porcelain-combobox, p-combobox',
 	templateUrl: './combobox.component.html',
 	styleUrls: ['./combobox.component.scss']
 })

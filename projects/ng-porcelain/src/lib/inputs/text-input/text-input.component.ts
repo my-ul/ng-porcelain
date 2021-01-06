@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output, HostBinding } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-text-input',
+	selector: 'porcelain-text-input, p-text-input',
 	templateUrl: './text-input.component.html',
 	styleUrls: ['./text-input.component.scss']
 })

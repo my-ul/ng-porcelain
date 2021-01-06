@@ -2,7 +2,7 @@ import { Component, OnInit, Input, HostBinding, Host } from '@angular/core';
 import { Loggable } from '../../Loggable';
 
 @Component({
-	selector: 'porcelain-toolbar-cell',
+	selector: 'porcelain-toolbar-cell, p-toolbar-cell',
 	templateUrl: './toolbar-cell.component.html',
 	styleUrls: ['./toolbar-cell.component.scss']
 })

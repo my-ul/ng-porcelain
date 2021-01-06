@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { Input } from '@angular/core';
 
 @Component({
-	selector: 'porcelain-toolbar-text',
+	selector: 'porcelain-toolbar-text, p-toolbar-text',
 	templateUrl: './toolbar-text.component.html',
 	styleUrls: ['./toolbar-text.component.scss'],
 	host: {

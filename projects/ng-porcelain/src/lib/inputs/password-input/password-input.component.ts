@@ -4,7 +4,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { TranslationService } from '../../services/translation/translation.service';
 
 @Component({
-	selector: 'porcelain-password-input',
+	selector: 'porcelain-password-input, p-password-input',
 	templateUrl: './password-input.component.html',
 	styleUrls: ['./password-input.component.scss']
 })

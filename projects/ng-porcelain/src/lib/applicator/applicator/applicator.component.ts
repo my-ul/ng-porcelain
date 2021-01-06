@@ -33,7 +33,7 @@ import { Loggable } from '../../Loggable';
 export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefinerValue>;
 
 @Component({
-	selector: 'porcelain-applicator',
+	selector: 'porcelain-applicator, p-applicator',
 	templateUrl: './applicator.component.html',
 	styleUrls: ['./applicator.component.scss']
 })
