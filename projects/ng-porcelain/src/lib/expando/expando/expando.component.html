@@ -1,0 +1,43 @@
+<div class="expando__header" (click)="toggle($event)">
+	<ng-container
+		*ngTemplateOutlet="icon && iconPosition === 'before' ? iconTemplate : nothing"
+	></ng-container>
+
+	<ng-container
+		*ngTemplateOutlet="title !== '' ? useTitleProperty : useHeaderComponent"
+	></ng-container>
+
+	<ng-template #useHeaderComponent>
+		<div class="expando__title">
+			<ng-content select="porcelain-expando-header, p-expando-header"></ng-content>
+		</div>
+	</ng-template>
+	<ng-template #useTitleProperty>
+		<span class="expando__title">{{ title }}</span>
+	</ng-template>
+
+	<ng-container
+		*ngTemplateOutlet="icon && iconPosition === 'after' ? iconTemplate : nothing"
+	></ng-container>
+
+	<ng-template #iconTemplate>
+		<span
+			class="expando__toggle"
+			[class.expando__toggle--before]="iconPosition === 'before'"
+			[class.expando__toggle--after]="iconPosition === 'after'"
+		>
+			<fa-icon [icon]="icon"></fa-icon>
+		</span>
+	</ng-template>
+
+	<ng-template #nothing></ng-template>
+</div>
+<div class="expando__body" *ngIf="isOpen" @slideInOut>
+	<ng-container *ngTemplateOutlet="title !== '' ? useAllContent : useBodyComponent"></ng-container>
+	<ng-template #useAllContent>
+		<ng-content></ng-content>
+	</ng-template>
+	<ng-template #useBodyComponent>
+		<ng-content select="porcelain-expando-body, p-expando-body"></ng-content>
+	</ng-template>
+</div>

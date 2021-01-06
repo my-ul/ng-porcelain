@@ -172,3 +172,10 @@ export { ComboboxComponent } from './lib/combobox/combobox/combobox.component';
 export { BreadcrumbModule } from './lib/breadcrumb/breadcrumb.module';
 export { BreadcrumbsComponent } from './lib/breadcrumb/breadcrumbs/breadcrumbs.component';
 export { BreadcrumbItemComponent } from './lib/breadcrumb/breadcrumb-item/breadcrumb-item.component';
+
+// Expando Module
+export { ExpandoModule } from './lib/expando/expando.module';
+export { ExpandoComponent, ExpandoIconPosition } from './lib/expando/expando/expando.component';
+export { ExpandoBodyComponent } from './lib/expando/expando-body/expando-body.component';
+export { ExpandoHeaderComponent } from './lib/expando/expando-header/expando-header.component';
+

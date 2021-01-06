@@ -2,16 +2,17 @@
 	"Quick Start": "projects/ng-porcelain/INSTALL.md",
 	"Components": {
 		"Combobox": "projects/ng-porcelain/src/lib/combobox/combobox/README.md",
+		"Expando": "projects/ng-porcelain/src/lib/expando/README.md",
+		"Footer": "projects/ng-porcelain/src/lib/footer/footer/README.md",
+		"Legacy Search Input": "projects/ng-porcelain/src/lib/search-input/search-input/README.md",
 		"Refiners": {
 			"Simple Refiner": "projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/README.md",
 			"Date Refiner": "projects/ng-porcelain/src/lib/date-refiner/date-refiner/README.md",
 			"Applicator": "projects/ng-porcelain/src/lib/applicator/applicator/README.md",
 			"Refiners Macro": "projects/ng-porcelain/src/lib/refiners/refiners/README.md"
 		},
-		"Footer": "projects/ng-porcelain/src/lib/footer/footer/README.md",
-		"Truncate": "projects/ng-porcelain/src/lib/truncate/truncate/README.md",
 		"Spinner": "projects/ng-porcelain/src/lib/spinner/spinner/README.md",
-		"Legacy Search Input": "projects/ng-porcelain/src/lib/search-input/search-input/README.md"
+		"Truncate": "projects/ng-porcelain/src/lib/truncate/truncate/README.md"
 	},
 	"Pipes": {
 		"__": "projects/ng-porcelain/src/lib/pipes/README.md",

@@ -1,0 +1,38 @@
+:host {
+	display: block;
+	font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Helvetica Neue', sans-serif;
+	font-size: 14px;
+	padding: 1em;
+
+	.expando__header {
+		display: flex;
+		flex-direction: row;
+		cursor: pointer;
+		align-items: center;
+	}
+
+	&.expando--closed {
+		.expando__toggle--before {
+			transform: rotate(-90deg);
+		}
+		.expando__toggle--after {
+			transform: rotate(90deg);
+		}
+	}
+
+	.expando__toggle {
+		flex: 0 0 auto;
+		transition: all ease-in-out 100ms;
+	}
+
+	.expando__title {
+		flex: 1 1 auto;
+		font-weight: 600;
+	}
+
+	.expando__body {
+		display: block;
+		margin-top: 1em;
+	}
+}
