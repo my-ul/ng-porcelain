@@ -50,6 +50,7 @@
 			"List Item Cell Component": "projects/ng-porcelain/src/lib/lists/list-item-cell/README.md",
 			"Sort Header Component": "projects/ng-porcelain/src/lib/lists/sort-header/README.md"
 		},
+		"Skeletons": "projects/ng-porcelain/src/lib/skeletons/README.md",
 		"Toolbars": {
 			"__": "projects/ng-porcelain/src/lib/toolbar/README.md",
 			"Toolbar Component": "projects/ng-porcelain/src/lib/toolbar/toolbar/README.md",
