@@ -46,6 +46,7 @@ $ul-steel-dark: #9dacba;
 
 	&.search-input--has-focus {
 		border-color: $ul-steel-dark;
+		@extend %--can-focus;
 	}
 
 	&.search-input--no-borders.search-input--has-focus {
@@ -66,6 +67,10 @@ $ul-steel-dark: #9dacba;
 		border-radius: 0.25em;
 		font-size: 14px;
 		min-width: 0;
+		&:focus {
+			border: none;
+			outline: none;
+		}
 	}
 
 	.search-input__search-action {
