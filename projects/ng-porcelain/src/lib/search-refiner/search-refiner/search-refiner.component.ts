@@ -208,7 +208,7 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 	 * @param key Option key/slug to deactivate
 	 * @param event? MouseEvent/KeyboardEvent used to call the method.
 	 */
-	deactivateKey(key: string, event) {
+	deactivateKey(key: string) {
 		// find the index of the key to deactivate
 		const keyIdx = this.activeKeys.indexOf(key);
 

@@ -43,7 +43,7 @@
 			<li *ngFor="let key of activeKeys">
 				<label class="option-row" *ngIf="this.refiner.options[key]">
 					<div class="option-row__shrink-cell">
-						<input type="checkbox" (change)="deactivateKey(key, $event)" [checked]="true" />
+						<input type="checkbox" (change)="deactivateKey(key)" [checked]="true" />
 					</div>
 					<div class="option-row__grow-cell option__label">
 						<span class="search-refiner__truncate">{{
@@ -92,7 +92,7 @@
 			<li *ngFor="let key of filteredInactiveKeys">
 				<label class="option-row" *ngIf="this.refiner.options[key]">
 					<div class="option-row__shrink-cell">
-						<input type="checkbox" (change)="activateKey(key, $event)" />
+						<input type="checkbox" (change)="activateKey(key)" />
 					</div>
 					<div class="option-row__grow-cell option__label">
 						<span
