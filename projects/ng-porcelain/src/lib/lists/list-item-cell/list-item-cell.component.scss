@@ -36,14 +36,14 @@ $list-item-padding: 20px;
 		width: 100%;
 		::ng-deep {
 			p-section + p-section {
-				border-top: solid 1px  #bbc1c8;
+				border-top: solid 1px #bbc1c8;
 			}
 		}
 	}
 
 	::ng-deep {
 		.section + .section {
-			border-top: solid 1px  #bbc1c8;
+			border-top: solid 1px #bbc1c8;
 			margin-top: $list-item-padding;
 			padding-top: $list-item-padding;
 		}
@@ -85,5 +85,5 @@ $list-item-padding: 20px;
 }
 
 .list-item__cell + .list-item__cell {
-	border-left: solid 1px #d5d7db;
+	border-left: solid 1px #bbc1c8;
 }

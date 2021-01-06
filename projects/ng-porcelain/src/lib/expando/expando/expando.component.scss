@@ -33,6 +33,14 @@
 
 	.expando__body {
 		display: block;
+		transition: margin-top 1s linear;
+	}
+
+	&.expando--open .expando__body {
 		margin-top: 1em;
+	}
+
+	.ng-animating.expando__body {
+		overflow: hidden;
 	}
 }

@@ -1,4 +1,1 @@
-export enum RefinerType {
-	simple = 'simple',
-	date = 'date'
-}
+export type RefinerType = 'simple' | 'date' | 'search';

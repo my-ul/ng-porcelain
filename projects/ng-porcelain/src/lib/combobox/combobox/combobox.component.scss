@@ -1,5 +1,7 @@
 $border-def: solid 1px #bbc1c8;
 
+@import '../../toolbar/toolbar.module.scss';
+
 :host {
 	display: block;
 	position: relative;
@@ -9,6 +11,10 @@ $border-def: solid 1px #bbc1c8;
 
 	&.combobox--has-border .select__window {
 		border: $border-def;
+	}
+
+	&.combobox--has-focus .select__window {
+		@extend %--can-focus;
 	}
 
 	p {

@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Loggable } from '../../Loggable';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, style, transition, group, animate } from '@angular/animations';
 
 export type ExpandoIconPosition = 'before' | 'after';
+
+const expandoRestrictInitialAnimation = trigger('restrictInitialAnimation', [transition(':enter', [])]);
 
 const expandoSlideInOut = trigger('slideInOut', [
 	state('in', style({ height: '*' })),
@@ -19,7 +21,7 @@ const expandoSlideInOut = trigger('slideInOut', [
 		'[class.expando--open]': 'isOpen',
 		'[class.expando--closed]': '!isOpen'
 	},
-	animations: [expandoSlideInOut]
+	animations: [expandoRestrictInitialAnimation, expandoSlideInOut]
 })
 export class ExpandoComponent extends Loggable implements OnInit {
 	readonly name = 'ExpandoComponent';
@@ -30,7 +32,20 @@ export class ExpandoComponent extends Loggable implements OnInit {
 
 	@Input() icon: any = faCaretDown;
 
-	@Input() isOpen: boolean = true;
+	private _isOpen: boolean;
+
+	@Input()
+	get isOpen(): boolean {
+		return this._isOpen;
+	}
+
+	set isOpen(isOpen: boolean) {
+		this._isOpen = isOpen;
+		this.isOpenChange.emit(this._isOpen);
+	}
+
+	@Output()
+	public isOpenChange: EventEmitter<boolean> = new EventEmitter();
 
 	constructor() {
 		super();

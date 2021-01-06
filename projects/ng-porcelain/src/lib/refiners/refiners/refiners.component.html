@@ -14,5 +14,13 @@
 				[refiner]="refiner"
 			></porcelain-simple-refiner>
 		</ng-container>
+
+		<ng-container *ngIf="isSearchRefiner(refiner)">
+			<porcelain-search-refiner
+				[activeKeys]="values[refiner.slug]"
+				(activeKeysChange)="handleRefinerChange([refiner.slug, $event])"
+				[refiner]="refiner"
+			></porcelain-search-refiner>
+		</ng-container>
 	</li>
 </ul>

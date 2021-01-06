@@ -1,5 +1,15 @@
 # 9.x.x
 
+## 9.0.7
+
+-   Added Expando module
+-   Added Skeletons Module
+-   Added Search Refiner
+-   Updated border colors
+-   Added Skeleton Docs
+-   Replaced expanding functionality in refiners with ExpandoComponent
+-   Added new shorthands... use `p-xxx` instead of `porcelain-xxx` if you want.
+
 ## 9.0.4
 
 -   Added Breadcrumb component system.

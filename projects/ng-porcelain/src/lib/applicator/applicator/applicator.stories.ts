@@ -14,6 +14,7 @@ import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18
 
 import { APPLICATOR_IMPORTS } from '../applicator.module';
 import { ApplicatorComponent } from './applicator.component';
+import { toSimpleOptionDictionary } from '../../shared/utilities/toSimpleOptionDictionary';
 
 const simpleRefiner = new SimpleRefinerDefinition({
 	slug: 'simpleRefiner',
@@ -29,12 +30,13 @@ const simpleRefiner = new SimpleRefinerDefinition({
 const anotherSimpleRefiner = new SimpleRefinerDefinition({
 	slug: 'anotherSimpleRefiner',
 	title: 'Another Simple Refiner',
+	type: 'search',
 	selected: ['al', 'az'],
-	options: {
+	options: toSimpleOptionDictionary({
 		al: 'Alabama',
 		ak: 'Alaska',
 		az: 'Arizona'
-	}
+	})
 });
 
 const dateRefiner = new DateRefinerDefinition({

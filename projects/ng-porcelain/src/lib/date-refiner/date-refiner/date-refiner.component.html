@@ -1,21 +1,7 @@
-<div class="refiner refiner--date" [class.refiner--open]="isOpen" [class.refiner--closed]="!isOpen">
-	<div class="refiner__section refiner__header" (click)="toggleOpen()">
-		<div class="media media--clickable">
-			<div class="media__body  media--align-center">
-				<h3 class="refiner__title">{{ refiner.title }}</h3>
-			</div>
-			<div class="refiner__toggle | media__right media--align-center">
-				<fa-icon [icon]="faChevronDown"></fa-icon>
-				<span class="sr-only">Expand {{ refiner.title }} refiner</span>
-			</div>
-		</div>
-	</div>
-	<!-- /.refiner__header -->
-
-	<!-- [@blockInitialAnimation] -->
+<porcelain-expando [title]="refiner.title" [(isOpen)]="isOpen">
 	<div class="refiner__section refiner__toggleable">
 		<!-- [@optionsInOut] -->
-		<div *ngIf="isOpen" class="refiner__section  refiner__body">
+		<div class="refiner__section  refiner__body">
 			<div class="refiner__section refiner__options">
 				<ul class="options">
 					<li *ngFor="let optionSlug of objectKeys(options)" class="option">
@@ -101,4 +87,4 @@
 		</div>
 		<!-- /.refiner__body -->
 	</div>
-</div>
+</porcelain-expando>

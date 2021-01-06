@@ -186,3 +186,9 @@ export { SkeletonWordComponent } from './lib/skeletons/word/word.component';
 export { SkeletonLineComponent } from './lib/skeletons/line/line.component';
 export { SkeletonParagraphComponent } from './lib/skeletons/paragraph/paragraph.component';
 
+// toSimpleOptionDictionary utility
+export { toSimpleOptionDictionary } from './lib/shared/utilities/toSimpleOptionDictionary';
+
+// SearchRefiner module
+export { SearchRefinerModule } from './lib/search-refiner/search-refiner.module';
+export { SearchRefinerComponent } from './lib/search-refiner/search-refiner/search-refiner.component';

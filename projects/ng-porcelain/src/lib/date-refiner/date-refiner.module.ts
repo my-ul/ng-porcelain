@@ -11,6 +11,7 @@ import { TruncateModule } from '../truncate/truncate.module';
 
 // From Module
 import { DateRefinerComponent } from './date-refiner/date-refiner.component';
+import { ExpandoModule } from '../expando/expando.module';
 
 export const DATE_REFINER_DIRECTIVES = [DateRefinerComponent];
 
@@ -19,7 +20,8 @@ export const DATE_REFINER_IMPORTS = [
 	FormsModule,
 	FontAwesomeModule,
 	TruncateModule,
-	AngularMyDatePickerModule
+	AngularMyDatePickerModule,
+	ExpandoModule
 ];
 
 @NgModule({

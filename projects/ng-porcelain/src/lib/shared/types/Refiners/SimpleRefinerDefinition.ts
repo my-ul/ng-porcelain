@@ -26,12 +26,28 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 
 	constructor(refinerDefinition: ISimpleRefinerDefinition) {
 		super(refinerDefinition);
-		this.type = RefinerType.simple;
+		/**
+		 * Set the refiner type according to the definition type string.
+		 * The search option will display a
+		 */
+		this.type = refinerDefinition.type === 'search' ? 'search' : 'simple';
+
+		/**
+		 * Set the default showCount value.  This affects the Show %s More and Show Less button.
+		 */
 		this.showCount = refinerDefinition.showCount ? refinerDefinition.showCount : 5;
+
+		/**
+		 * Determines whether expandos are open or closed by default.
+		 */
 		this.isExpanded =
 			typeof refinerDefinition.isExpanded === 'boolean' ? refinerDefinition.isExpanded : false;
 
+		/**
+		 * Used to send new selection values to subscribers
+		 */
 		this.valueSubject = new BehaviorSubject<string[]>([]);
+
 		if (refinerDefinition.selected) {
 			this.valueSubject.next(refinerDefinition.selected);
 		}

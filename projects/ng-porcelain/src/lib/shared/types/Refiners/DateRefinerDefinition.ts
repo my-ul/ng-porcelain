@@ -21,7 +21,7 @@ export class DateRefinerDefinition extends BaseRefinerDefinition implements IDat
 	valueSubject: BehaviorSubject<IDateRefinerState>;
 	constructor(dateRefiner: IDateRefinerDefinition) {
 		super(dateRefiner);
-		this.type = RefinerType.date;
+		this.type = 'date';
 
 		if (dateRefiner) {
 			this.options = dateRefiner.options || i18nDateOptions();
