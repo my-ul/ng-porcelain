@@ -179,3 +179,10 @@ export { ExpandoComponent, ExpandoIconPosition } from './lib/expando/expando/exp
 export { ExpandoBodyComponent } from './lib/expando/expando-body/expando-body.component';
 export { ExpandoHeaderComponent } from './lib/expando/expando-header/expando-header.component';
 
+// Skeleton Module
+export { SkeletonsModule } from './lib/skeletons/skeletons.module';
+export { SkeletonBlockComponent } from './lib/skeletons/block/block.component';
+export { SkeletonWordComponent } from './lib/skeletons/word/word.component';
+export { SkeletonLineComponent } from './lib/skeletons/line/line.component';
+export { SkeletonParagraphComponent } from './lib/skeletons/paragraph/paragraph.component';
+
