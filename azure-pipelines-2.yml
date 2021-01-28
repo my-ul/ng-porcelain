@@ -26,7 +26,10 @@ steps:
 
 - script: |
     npx build-storybook -o $(Build.ArtifactStagingDirectory)/$(package__version)/
-    echo "<?php header('Location: ./$(package__version)/');" >> $(Build.ArtifactStagingDirectory)/index.php
+    echo "<?php header('Location: /$(package__version)/');" >> $(Build.ArtifactStagingDirectory)/index.php
+    mkdir $(Build.ArtifactStagingDirectory)/latest/
+    cp $(Build.ArtifactStagingDirectory)/index.php $(Build.ArtifactStagingDirectory)/latest/index.php
+  displayName: 'Build storybook and create redirects'
 
 - task: PublishBuildArtifacts@1
   inputs:
