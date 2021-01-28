@@ -17,5 +17,12 @@ steps:
 
 - script: |
     npm install
-    npx build-storybook -o ./dist
+    npm run build-variables-tool && npm run get-variables
+    npx build-storybook -o $(Build.ArtifactStagingDirectory)/$(package__version)/
+    cat "<?php header('Location: /$(package__version)/'); " > $(Build.ArtifactStagingDirectory)/index.php
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'porcelain-storybook'
+    publishLocation: 'Container'
   displayName: 'npm install and build'
