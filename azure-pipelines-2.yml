@@ -17,9 +17,13 @@ steps:
 
 - script: |
     npm install
-    npm run build-variables-tool && npm run get-variables
+  displayName: 'npm install'
+
+- script: |
+    npm run build-variables-tool
+    npm run get-variables
     npx build-storybook -o $(Build.ArtifactStagingDirectory)/$(package__version)/
-    cat "<?php header('Location: /$(package__version)/'); " > $(Build.ArtifactStagingDirectory)/index.php
+    echo "<?php header('Location: /$(package__version)/');" > $(Build.ArtifactStagingDirectory)/index.php
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
