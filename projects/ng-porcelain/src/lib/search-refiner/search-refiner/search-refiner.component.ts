@@ -50,7 +50,8 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 		this._activeKeys = activeKeys;
 
 		if (updateValueSubject) {
-			this.refiner.valueSubject.next(this._activeKeys);
+			if (this.refiner && this.refiner.valueSubject)
+				this.refiner.valueSubject.next(this._activeKeys);
 		}
 	}
 
