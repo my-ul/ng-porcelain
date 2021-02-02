@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnDestroy,
+	OnInit,
+	Output,
+	OnChanges,
+	SimpleChanges
+} from '@angular/core';
 
 import { isEqual } from 'lodash-es';
 import { combineLatest, Subscription } from 'rxjs';
@@ -37,7 +46,7 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 	templateUrl: './applicator.component.html',
 	styleUrls: ['./applicator.component.scss']
 })
-export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
+export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, OnDestroy {
 	readonly name: string = 'ApplicatorComponent';
 	private initialLoad: boolean = true;
 	private subscriptions: Subscription[] = [];
@@ -125,27 +134,11 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy() {
-		// prevents memory leaks by properly unsubscribing when this component unmounts.
-		this.subscriptions.forEach(subscription => subscription.unsubscribe());
+		this.destroyExistingSubscriptions();
 	}
 
 	public ngOnInit() {
-		// generate defaultValues dictionary composite from implicit + explicit values
-		this.refiners.forEach(refiner => {
-			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
-		});
-
-		// take first values and send up
-		this.subscriptions = this.refiners.reduce((allSubscriptions, refiner) => {
-			return [
-				...allSubscriptions,
-				// Get notified when value changes
-				refiner.valueSubject.subscribe(newRefinerValues =>
-					this.handleRefinerValues(refiner.slug, newRefinerValues)
-				)
-			];
-		}, []);
-
+		this.refinerNewSubscriptions();
 		// Must execute after the rest of the subscriptions callbacks.
 		if (this.applyOnInit) {
 			combineLatest(this.refiners.map(refiner => refiner.valueSubject.pipe(take(1)))).subscribe(
@@ -156,6 +149,13 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 		}
 	}
 
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['refiners']) {
+			this.destroyExistingSubscriptions();
+			this.refinerNewSubscriptions();
+		}
+	}
+
 	public reset(): void {
 		this.refiners.forEach(refiner => {
 			console.debug('reset()', refiner.slug, this.defaultValues[refiner.slug]);
@@ -163,4 +163,28 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnDestroy {
 		});
 		this.beforeApply();
 	}
+
+	public refinerNewSubscriptions = (): void => {
+		//reset default values for reset and apply states
+		this.defaultValues = {};
+		// update default values
+		this.refiners.forEach(refiner => {
+			this.defaultValues[refiner.slug] = this.getDefaultValueForRefiner(refiner);
+		});
+		// take first values and send up
+		this.subscriptions = new Array<Subscription>();
+		this.subscriptions = this.refiners.reduce((allSubscriptions, refiner) => {
+			return [
+				...allSubscriptions,
+				// Get notified when value changes
+				refiner.valueSubject.subscribe(newRefinerValues =>
+					this.handleRefinerValues(refiner.slug, newRefinerValues)
+				)
+			];
+		}, []);
+	};
+	public destroyExistingSubscriptions = (): void => {
+		// prevents memory leaks by properly unsubscribing when this component unmounts.
+		this.subscriptions.forEach(subscription => subscription.unsubscribe());
+	};
 }
