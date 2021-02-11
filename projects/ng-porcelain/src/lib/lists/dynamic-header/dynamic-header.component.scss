@@ -45,6 +45,8 @@ $text-color: #303741;
 	display: flex;
 
 	::ng-deep {
+		p-sort-header,
+		p-search-input,
 		porcelain-sort-header,
 		porcelain-search-input {
 			margin-left: -0.5em;

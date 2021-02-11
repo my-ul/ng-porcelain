@@ -3,6 +3,11 @@
 :host {
 	font-size: 14px;
 }
-:host ::ng-deep porcelain-expando.expando--open .expando__body {
-	margin-top: 0.5em !important;
+:host ::ng-deep {
+	p-expando,
+	porcelain-expando {
+		&.expando--open .expando__body {
+			margin-top: 0.5em !important;
+		}
+	}
 }

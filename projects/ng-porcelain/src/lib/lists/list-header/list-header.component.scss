@@ -8,6 +8,7 @@
 	padding: 0 21px 0 21px;
 
 	::ng-deep {
+		p-list-header-cell + p-list-header-cell,
 		porcelain-list-header-cell + porcelain-list-header-cell {
 			border-left: solid 1px #9fadbb;
 		}
