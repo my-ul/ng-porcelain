@@ -1,0 +1,19 @@
+<div class="modalpopup-tooltip">
+	<div class="tooltip-Content">
+		<span class="close-modal" (click)="oncloseModelclick()">&times;</span>
+		<div class="header">
+			<ng-content select="porcelain-tooltip-head, p-tooltip-head"></ng-content>
+		</div>
+
+		<div class="Content-Tooltip">
+			<ng-content select="porcelain-tooltip-content, p-tooltip-content"></ng-content>
+		</div>
+
+		<div class="warn-checkbox">
+			<input class="check_box" type="checkbox" (click)="onCheckboxClick()" />
+			<span class="warn-msg">
+				<ng-content select="porcelain-tooltip-msg, p-tooltip-msg"></ng-content>
+			</span>
+		</div>
+	</div>
+</div>

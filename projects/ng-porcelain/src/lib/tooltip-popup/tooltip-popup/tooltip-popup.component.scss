@@ -1,0 +1,79 @@
+$border-color: #303741;
+:host {
+	position: relative;
+	font-family: 'Open Sans', sans-serif !important;
+
+	.modalpopup-tooltip .tooltip-Content {
+		margin: 30px;
+		min-width: 280px;
+		border-radius: 6px;
+		border: 1px solid $border-color;
+		padding: 18px 10px 12px 10px;
+		position: absolute;
+		min-height: 180px;
+		font-family: 'Open Sans', sans-serif !important;
+		font-size: 12px;
+		line-height: 19px;
+		color: $border-color;
+		border: 6px solid hsla(0, 0%, 100%, 0);
+		border-bottom-color: #fff;
+		box-shadow: 0 6px 53px rgba(0, 0, 0, 0.175);
+		//box-shadow: 0 0 25px 15px rgba(0,0,0,0.2);
+	}
+
+	.modalpopup-tooltip .tooltip-Content::after {
+		bottom: 100%;
+		content: ' ';
+		height: 0;
+		width: 0px;
+		position: absolute;
+		pointer-events: none;
+		border: 18px solid rgba(255, 255, 255, 0);
+		border-right-color: white;
+		margin-left: -48px;
+		margin-bottom: -44px;
+	}
+
+	.header {
+		margin-bottom: 15px;
+		font-size: 16px;
+		font-weight: 600;
+		margin-right: 10px;
+		margin-left: 2px;
+	}
+
+	.warn-checkbox {
+		margin-top: 25px;
+	}
+
+	.warn-msg {
+		vertical-align: text-bottom;
+		padding-left: 6px;
+		padding-top: 1px;
+	}
+
+	.close-modal {
+		cursor: pointer;
+		margin-left: 236px;
+		position: absolute;
+		font-size: 28px;
+		top: 9px;
+		font-weight: 600 !important;
+	}
+
+	.Content-Tooltip {
+		margin: 3px;
+	}
+
+	.checkbox {
+		box-sizing: border-box;
+		height: 14px;
+		width: 14px;
+		border: 1px solid #9ea6ba;
+		background-color: #ffffff;
+	}
+
+	.check_box {
+		cursor: pointer;
+	}
+}
