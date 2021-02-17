@@ -192,3 +192,10 @@ export { toSimpleOptionDictionary } from './lib/shared/utilities/toSimpleOptionD
 // SearchRefiner module
 export { SearchRefinerModule } from './lib/search-refiner/search-refiner.module';
 export { SearchRefinerComponent } from './lib/search-refiner/search-refiner/search-refiner.component';
+
+//ToolTip popup modal
+export { TooltipPopupModule } from './lib/tooltip-popup/tooltip-popup.module';
+export { TooltipPopupComponent } from './lib/tooltip-popup/tooltip-popup/tooltip-popup.component';
+export { TooltipHeadComponent } from './lib/tooltip-popup/tooltip-head/tooltip-head.component';
+export { TooltipContentComponent } from './lib/tooltip-popup/tooltip-content/tooltip-content.component';
+export { TooltipMsgComponent } from './lib/tooltip-popup/tooltip-msg/tooltip-msg.component';
