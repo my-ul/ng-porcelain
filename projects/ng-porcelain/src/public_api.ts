@@ -192,3 +192,7 @@ export { toSimpleOptionDictionary } from './lib/shared/utilities/toSimpleOptionD
 // SearchRefiner module
 export { SearchRefinerModule } from './lib/search-refiner/search-refiner.module';
 export { SearchRefinerComponent } from './lib/search-refiner/search-refiner/search-refiner.component';
+
+//DatePicker module
+export { datePickerComponent } from './lib/date-picker/date-picker/date-picker.component';
+export { DatePickerModule } from './lib/date-picker/date-picker.module';
