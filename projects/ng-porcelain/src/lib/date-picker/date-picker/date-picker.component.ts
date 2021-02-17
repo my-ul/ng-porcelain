@@ -134,14 +134,13 @@ export class datePickerComponent implements OnInit {
 	 *
 	 *Onchange date update ngmodel date and emits value
 	 * */
-	/* Needs to be Implemented if Required
+
 	public onDateChanged(event: IMyDateModel) {
 		// Update value of selDate variable
 		this.selectedDate = event.singleDate.date;
 		this.userSelectedDate.emit(event);
 		this.selectedFormatDate.emit(event.singleDate.formatted);
 	}
-	*/
 
 	/**
 	 *
