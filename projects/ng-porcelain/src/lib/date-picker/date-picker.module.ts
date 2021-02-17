@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { CalenderControlComponent } from './calender-control/calender-control.component';
+import { datePickerComponent } from './date-picker/date-picker.component';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 //directives
 
-export const DATE_PICKER_DIRECTIVES = [CalenderControlComponent];
+export const DATE_PICKER_DIRECTIVES = [datePickerComponent];
 
-export const DATE_PICKER_IMPORTS = [AngularMyDatePickerModule, CommonModule, FormsModule];
+export const DATE_PICKER_IMPORTS = [
+	AngularMyDatePickerModule,
+	CommonModule,
+	FormsModule,
+	FontAwesomeModule
+];
 
 @NgModule({
 	declarations: DATE_PICKER_DIRECTIVES,
