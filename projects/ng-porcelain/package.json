@@ -1,14 +1,14 @@
 {
 	"name": "@my-ul/ng-porcelain",
-	"version": "9.0.8",
+	"version": "9.0.8-beta.1",
 	"private": false,
 	"peerDependencies": {
+		"@angular/cdk": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
 		"@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
 		"@angular/core": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
-		"@angular/cdk": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
 		"@angular/forms": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
-		"@angular/platform-browser-dynamic": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
 		"@angular/platform-browser": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
+		"@angular/platform-browser-dynamic": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
 		"@fortawesome/angular-fontawesome": "^0.6.1",
 		"@fortawesome/fontawesome-svg-core": "^1.2.30",
 		"@fortawesome/free-solid-svg-icons": "^5.14.0",

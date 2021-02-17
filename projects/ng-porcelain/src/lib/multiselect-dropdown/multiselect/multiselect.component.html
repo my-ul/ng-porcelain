@@ -1,0 +1,48 @@
+<div class="porcelain-multiselect-content">
+	<label
+		class="porcelain-toolbar-select__toggle"
+		(click)="toggleOpen()"
+		[class.porcelain-multiselect-items]="activeItems.length > 0"
+	>
+		<span class="porcelain-toolbar-select__toggle-label">{{ selectedLabel }}</span>
+		<span class="porcelain-toolbar-select__toggle-current">
+			<!--<ng-content select="porcelain-toolbar-selected-template, p-toolbar-selected-template"></ng-content>-->
+		</span>
+		<span class="porcelain-toolbar-select__toggle-caret">
+			<fa-icon [icon]="faAngleDown"></fa-icon>
+		</span>
+	</label>
+
+	<div *ngIf="isOpen" class="select__items">
+		<div *ngIf="activeItems.length > 0">
+			<div class="multiselect-list-items select_item" *ngFor="let item of activeItems">
+				<span>
+					<input
+						type="checkbox"
+						[checked]="item.isSelected"
+						(click)="onItemsSelection(item)"
+					/>
+					<span class="checkbox-content">
+						{{ item.name }}
+					</span>
+				</span>
+			</div>
+		</div>
+		<div [class.porcelain-multiselect-border]="activeItems.length > 0"></div>
+		<div>
+			<div class="multiselect-list-items" *ngFor="let item of listItems">
+				<span>
+					<input
+						type="checkbox"
+						[checked]="item.isSelected"
+						(click)="onItemsSelection(item)"
+					/>
+					<span class="checkbox-content">
+						{{ item.name }}
+					</span>
+				</span>
+				<!--<ng-content select="porcelain-toolbar-option, p-toolbar-option"></ng-content>-->
+			</div>
+		</div>
+	</div>
+</div>

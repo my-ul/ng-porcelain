@@ -1,3 +1,5 @@
+import { from } from 'rxjs';
+
 export { ApplicatorModule } from './lib/applicator/applicator.module';
 export { ApplicatorComponent } from './lib/applicator/applicator/applicator.component';
 
@@ -25,6 +27,9 @@ export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 // saved search modal
 export { SavedsearchModalpopupModule } from './lib/savedsearch-modalpopup/savedsearch-modalpopup.module';
 export { SavedsearchModalpopupComponent } from './lib/savedsearch-modalpopup/savedsearch-modalpopup/savedsearch-modalpopup.component';
+
+export { MultiSelectModule } from './lib/multiselect-dropdown/multiselect.module';
+export { MultiSelectComponent } from './lib/multiselect-dropdown/multiselect/multiselect.component';
 
 // Shared
 export { generateSlideInOut } from './lib/shared/animations/slideInOut.animation';
