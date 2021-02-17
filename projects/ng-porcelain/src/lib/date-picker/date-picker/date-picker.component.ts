@@ -5,7 +5,7 @@ import { IMyOptions, IMyDateModel, IMyDate } from 'angular-mydatepicker';
 import { faCalendarAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-	selector: 'calender-control',
+	selector: 'porcelain-datepicker',
 	templateUrl: './date-picker.component.html',
 	styleUrls: ['./date-picker.component.scss']
 })
