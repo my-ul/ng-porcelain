@@ -9,12 +9,7 @@ import { ToolbarOptionComponent } from '../toolbar/toolbar-option/toolbar-option
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-export const MULTISELECT_DIRECTIVES = [
-	MultiSelectComponent,
-	ToolbarSelectComponent,
-	ToolbarSelectedTemplateComponent,
-	ToolbarOptionComponent
-];
+export const MULTISELECT_DIRECTIVES = [MultiSelectComponent];
 export const MULTISELECT_IMPORTS = [CommonModule, FontAwesomeModule, BrowserAnimationsModule];
 
 @NgModule({

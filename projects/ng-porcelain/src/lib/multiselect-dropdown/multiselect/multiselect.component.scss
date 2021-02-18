@@ -109,7 +109,7 @@ $border-def: solid 1px #bbc1c8;
 	}
 
 	.porcelain-multiselect-content {
-		width: 50%;
+		width: 40%;
 	}
 
 	.porcelain-multiselect-border {
@@ -121,5 +121,14 @@ $border-def: solid 1px #bbc1c8;
 	.porcelain-multiselect-items {
 		color: #303741 !important;
 		font-weight: 400 !important;
+	}
+
+	.select__items::-webkit-scrollbar {
+		width: 5px !important;
+	}
+
+	.select__items::-webkit-scrollbar-thumb {
+		border-radius: 10px !important;
+		background-color: #a2a3a7 !important;
 	}
 }
