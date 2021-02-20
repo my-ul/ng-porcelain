@@ -33,12 +33,12 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * Icon for the clear button
 	 */
-	@Input() clearIcon = faTimesCircle;
+	@Input() public clearIcon = faTimesCircle;
 
 	/**
 	 * Color for the clear icon.  By default, #9dacba
 	 */
-	@Input() clearIconColor: string = '#9dacba';
+	@Input() public clearIconColor: string = '#9dacba';
 
 	/**
 	 * Name of the component, used when the Loggable behaviors are used.
@@ -48,47 +48,47 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * The current user input box value
 	 */
-	@Input() inputBoxValue: string = '';
+	@Input() public inputBoxValue: string = '';
 
 	/**
 	 * debounce Time controls time Eventmitter fire
 	 * @param debounceTime
 	 */
-	@Input() debounceTime: number = 1000;
+	@Input() public debounceTime: number = 1000;
 
 	/**
 	 * Input Box Value Change behaviour subject will emit user value change based on ngmodelchange
 	 */
-	inputBoxBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+	public inputBoxBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 	/**
 	 * Array of items that hold AutoComplete Items. Strictly uses strings only
 	 */
-	@Input() AutoCompleteitems: Array<string> = new Array<string>();
+	@Input() public AutoCompleteitems: Array<string> = new Array<string>();
 
 	/**
 	 * If autocomplete items are fetched, then spinner is shown
 	 * @param:AutoCompleteLoadingSpinner
 	 */
-	@Input() AutoCompleteLoadingSpinner: boolean = false;
+	@Input() public AutoCompleteLoadingSpinner: boolean = false;
 
 	/**
 	 * Property is used to enable internal filter. To disable set to false. For example,
 	 * if Filter is disabled
 	 * @param isFilterEnabled
 	 */
-	@Input() isFilterEnabled: boolean = true;
+	@Input() public isFilterEnabled: boolean = true;
 
 	/**
 	 * Placeholder value shown in the input when query
 	 * is the empty string.
 	 */
-	@Input() placeholder: string = '';
+	@Input() public placeholder: string = '';
 
 	/**
 	 * The throttled or debounced user selected value emit
 	 */
-	@Output() userEnteredInputBoxValue: EventEmitter<string> = new EventEmitter<string>();
+	@Output() public userEnteredInputBoxValue: EventEmitter<string> = new EventEmitter<string>();
 
 	/**
 	 * Event emitter that emits whenever a item in the autocomplete List is selected. OPTIONAL
@@ -111,7 +111,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * Boolean that tracks if the query input has focus.
 	 */
-	hasFocus: boolean = false;
+	public hasFocus: boolean = false;
 
 	/**
 	 * The index of the currently highlighted item in filteredItems
@@ -121,32 +121,32 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * When true, the dropdown will be displayed; if false, the dropdown will not be displayed.
 	 */
-	isOpen: boolean = false;
+	public isOpen: boolean = false;
 
 	/**
 	 * Accessibility label for the clear button.
 	 */
-	labelClear: string = 'Clear';
+	@Input() public labelClear: string = 'Clear';
 
 	/**
 	 * Shown when the user has filtered too much, and no valid items remain in filteredItems.
 	 */
-	labelNoItemsFound: string = 'No items found.';
+	@Input() public labelNoItemsFound: string = 'No items found.';
 
 	/**
 	 * Placeholder for text input when search field is empty
 	 */
-	labelPlaceholder: string = 'type to search...';
+	@Input() public labelPlaceholder: string = 'type to search...';
 
 	/**
 	 * Accessibility label for dropdown icon.
 	 */
-	labelSelect: string = 'Select';
+	@Input() public labelSelect: string = 'Select';
 
 	/**
 	 * Index of the selected item with respect to the `items` array.
 	 */
-	selectedIndex: number = -1;
+	public selectedIndex: number = -1;
 
 	constructor(
 		private element: ElementRef<HTMLElement>,
@@ -166,7 +166,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * Resets the component state to blank query and resets the filteredItems array.
 	 */
-	clear() {
+	public clear() {
 		this.inputBoxValue = '';
 		this.debounceEmit('');
 		this.applyFilter();
@@ -301,12 +301,11 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 
 		//initialize and listen for input box value changes
 		this.inputBoxBehaviorSubject.pipe(debounceTime(this.debounceTime)).subscribe(uservalue => {
-			console.log(uservalue);
 			this.userEnteredInputBoxValue.emit(uservalue);
 		});
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
+	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['AutoCompleteitems']) {
 			this.filteredItems = this.AutoCompleteitems.slice();
 			this.applyFilter();
@@ -320,7 +319,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * Calculates and scrolls the item dropdown to the current highlightedIndex.
 	 */
-	scrollToHighlighted(): this {
+	public scrollToHighlighted(): this {
 		let itemElements = this.element.nativeElement.querySelectorAll('.select__item');
 		if (itemElements && itemElements[this.highlightedIndex] /** && elementNotInView */) {
 			let childElement = itemElements[this.highlightedIndex] as HTMLElement;
@@ -364,7 +363,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	 * Sets the status of focus.
 	 * @param focus Boolean. Set to true when the component gains focus.
 	 */
-	setFocus(focus: boolean): this {
+	public setFocus(focus: boolean): this {
 		this.hasFocus = focus;
 		return this;
 	}
@@ -373,7 +372,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	 * Sets the highlighted item within the filteredItems array.
 	 * @param idx Index of the highlighted item (within filteredItems array).
 	 */
-	setHighlightedIndex(idx: number) {
+	public setHighlightedIndex(idx: number) {
 		this.highlightedIndex = idx;
 		return this;
 	}
@@ -382,7 +381,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	 * Opens or closes the suggestion dropdown.
 	 * @param isOpen Boolean value for the desired state of the control.
 	 */
-	setOpen(isOpen: boolean): this {
+	public setOpen(isOpen: boolean): this {
 		this.isOpen = isOpen;
 		if (this.isOpen) {
 			this.applyFilter();
@@ -395,7 +394,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	 * which locates the filtered item in the items array.
 	 * @param selectedFilteredIndex The index of the selected item in the filteredItems array
 	 */
-	setSelectedIndex(selectedFilteredIndex: number) {
+	public setSelectedIndex(selectedFilteredIndex: number) {
 		this.info('setSelectedIndex(selectedFilteredIndex)', { selectedFilteredIndex });
 		// the this.value setter will find the item in the items array
 		this.value = this.filteredItems[selectedFilteredIndex];
@@ -405,7 +404,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * Toggles the isOpen property by negation.
 	 */
-	toggleOpen() {
+	public toggleOpen() {
 		this.setOpen(!this.isOpen);
 	}
 	ngOnDestroy(): void {

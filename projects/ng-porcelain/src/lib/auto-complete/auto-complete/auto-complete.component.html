@@ -7,6 +7,7 @@
 		[placeholder]="placeholder || labelPlaceholder"
 		[class.autocomplete__window-value--placeholder]="inputBoxValue === ''"
 		(focus)="setOpen(true).setFocus(true)"
+		(keypress)="setOpen(true)"
 		(blur)="setFocus(false)"
 		(keyup)="keyUp($event)"
 	/>
@@ -24,7 +25,9 @@
 
 <ul class="autocomplete__items" *ngIf="isOpen">
 	<li class="autocomplete__no-results" *ngIf="filteredItems.length === 0">
-		{{ labelNoItemsFound }}
+		<ng-container *ngIf="!AutoCompleteLoadingSpinner">
+			{{ labelNoItemsFound }}
+		</ng-container>
 	</li>
 	<li
 		class="autocomplete__item"

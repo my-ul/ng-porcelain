@@ -153,7 +153,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Resets the component state to blank query and resets the filteredItems array.
 	 */
-	clear() {
+	public clear() {
 		this.query = '';
 		this.applyFilter();
 	}
