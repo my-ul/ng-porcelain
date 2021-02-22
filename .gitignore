@@ -53,3 +53,5 @@ dist/
 .vscode/settings.json
 projects/ng-porcelain/README.md
 projects/ng-porcelain/README.md
+/.vs/Porcelain/v16
+/.vs/slnx.sqlite

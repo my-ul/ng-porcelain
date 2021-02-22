@@ -4,9 +4,9 @@
 		(click)="toggleOpen()"
 		[class.porcelain-multiselect-items]="activeItems.length > 0"
 	>
-		<span class="porcelain-toolbar-select__toggle-label">{{ selectedLabel }}</span>
-		<span class="porcelain-toolbar-select__toggle-current">
-			<!--<ng-content select="porcelain-toolbar-selected-template, p-toolbar-selected-template"></ng-content>-->
+		<span class="porcelain-toolbar-select__toggle-label">
+			<porcelain-truncate [value]="selectedLabel"></porcelain-truncate>
+			<!--{{selectedLabel}}-->
 		</span>
 		<span class="porcelain-toolbar-select__toggle-caret">
 			<fa-icon [icon]="faAngleDown"></fa-icon>

@@ -11,6 +11,7 @@ import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export class MultiSelectComponent implements OnInit {
 	readonly faAngleDown: IconDefinition = faAngleDown;
 	isOpen: boolean = false;
+	text: string = 'yyfdffffffffffgdfcvgfvcgsdvcgscdvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvcbdcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
 
 	listItems: any[] = [
 		{ id: 1, name: 'apple', isSelected: false },
@@ -50,7 +51,8 @@ export class MultiSelectComponent implements OnInit {
 	}
 
 	getSelectedItems(): string {
-		return this.activeItems.map(item => item.name).toString();
+		var items = this.activeItems.map(item => item.name);
+		return items.length > 1 ? items.join(', ') : items.toString();
 	}
 
 	toggleOpen() {

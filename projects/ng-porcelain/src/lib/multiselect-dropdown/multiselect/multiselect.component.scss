@@ -8,6 +8,10 @@ $border-def: solid 1px #bbc1c8;
 		padding: 0 1em;
 		line-height: 3em;
 		cursor: pointer;
+		margin: 0px !important;
+		box-shadow: 0px 0px 10px #00000033;
+		font-family: 'Open Sans';
+		font-weight: 600 !important;
 		border: $border-def;
 
 		> * + * {
@@ -18,7 +22,6 @@ $border-def: solid 1px #bbc1c8;
 	.select_item {
 		cursor: pointer;
 		padding: 7px;
-		line-height: 14px;
 
 		&--highlighted {
 			background-color: #edf1f6;
@@ -38,16 +41,23 @@ $border-def: solid 1px #bbc1c8;
 		border-right: $border-def;
 		overflow-y: auto;
 		max-height: 50vh;
+		box-shadow: 0px 0px 10px #00000033;
+		font-family: 'Open Sans';
 	}
 
 	.porcelain-toolbar-select__toggle-label {
 		cursor: pointer;
-		font-weight: 500;
+		font-weight: 600;
+		font-family: 'Open Sans';
 	}
 
-	.porcelain-toolbar-select__toggle-label,
+	.porcelain-toolbar-select__toggle-label {
+		flex: 1 1 auto;
+	}
+
 	.porcelain-toolbar-select__toggle-caret {
 		flex: 0 0 auto;
+		color:#9ea6ba;
 	}
 
 	.porcelain-toolbar-select__toggle-current {
