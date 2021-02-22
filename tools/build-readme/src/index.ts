@@ -57,8 +57,8 @@ class BuildReadme extends Command {
 		assets: flags.string({
 			required: false,
 			char: 'a',
-			default: 'assets',
-			description: 'Name of the assets directory; if blank, `assets` is used.',
+			default: 'doc-assets',
+			description: 'Name of the assets directory; if blank, `doc-assets` is used.',
 			parse: assets => path.resolve(assets)
 		}),
 		packageFile: flags.string({
