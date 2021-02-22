@@ -1,10 +1,20 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import {
+	AfterContentInit,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	ViewChild
+} from '@angular/core';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Loggable } from '../../Loggable';
 import { TranslationService } from '../../services/translation/translation.service';
 import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
+import { clamp } from '../../shared/utilities/arrays/clamp';
 import { subtract as arraySubtract } from '../../shared/utilities/arrays/subtract';
-import { array } from '@storybook/addon-knobs';
 
 @Component({
 	selector: 'porcelain-search-refiner, p-search-refiner',
@@ -12,9 +22,24 @@ import { array } from '@storybook/addon-knobs';
 	styleUrls: ['./search-refiner.component.scss'],
 	host: {
 		'[class.porcelain__search-refiner]': 'true'
-	}
+	},
+	animations: [
+		trigger('highlight', [
+			transition(':enter', [
+				animate(
+					300,
+					keyframes([
+						style({ backgroundColor: 'transparent' }),
+						style({ backgroundColor: '#fff883' }),
+						style({ backgroundColor: 'transparent' })
+					])
+				)
+			])
+		]),
+		trigger('blockEnterAnimations', [transition(':enter', [])])
+	]
 })
-export class SearchRefinerComponent extends Loggable implements OnInit {
+export class SearchRefinerComponent extends Loggable implements OnInit, AfterContentInit {
 	/**
 	 * Name of the component, required by Loggable.
 	 */
@@ -43,10 +68,6 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 	}
 
 	setActiveKeys(activeKeys: string[], updateValueSubject: boolean = true) {
-		console.trace('setActiveKeys(activeKeys, updateValueSubject)', {
-			activeKeys,
-			updateValueSubject
-		});
 		this._activeKeys = activeKeys;
 
 		if (updateValueSubject) {
@@ -75,11 +96,6 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 	 * A Font Awesome icon to use for the clear button.
 	 */
 	@Input() clearIcon: any = faTimesCircle;
-
-	/**
-	 * Placeholder value to show in the query input.
-	 */
-	@Input() placeholder: string = 'search...';
 
 	/**
 	 * Search string used to filter the inactiveItems into filteredInactiveItems
@@ -145,7 +161,8 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 		selectFiltered: 'Select Filtered',
 		selectNone: 'Select None',
 		clear: 'Clear',
-		nHiddenByFilter: '%s hidden by filter'
+		nHiddenByFilter: '%s hidden by filter',
+		placeholder: 'Search'
 	};
 
 	//#endregion
@@ -166,7 +183,8 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 				label_SelectAll: 'selectAll',
 				label_SelectNone: 'selectNone',
 				label_Clear: 'clear',
-				label_nHiddenByFilter: 'nHiddenByFilter'
+				label_nHiddenByFilter: 'nHiddenByFilter',
+				label_Search: 'placeholder'
 			})
 		);
 	}
@@ -192,8 +210,15 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 			*/
 			this.setActiveKeys([...this.activeKeys, key]);
 
-			this.updateFilteredInactiveItems();
+			this.updateFilteredInactiveItems().scrollActiveToBottom();
 		}
+	}
+
+	scrollActiveToBottom(): this {
+		setTimeout(() => {
+			this.activeList.nativeElement.scrollTop = this.activeList.nativeElement.scrollHeight;
+		});
+		return this;
 	}
 
 	/**
@@ -218,10 +243,9 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 			this.activeKeys.splice(keyIdx, 1);
 
 			// slice to trigger event emitters
+			// setActiveKeys will trigger valueSubject, which handles
+			// updates to the inactiveKeys array.
 			this.setActiveKeys([...this.activeKeys.slice()]);
-
-			// add the key to inactive items
-			this.inactiveKeys = [...this.inactiveKeys, key];
 
 			this
 				// make sure the inactive list is in the same order as allKeys
@@ -278,14 +302,53 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 		this.updateFilteredInactiveItems();
 
 		this.refiner.valueSubject.subscribe(activeKeys => {
-			this.debug('valueSubject.subscribe(keys)', { keys: activeKeys });
+			this.debug('valueSubject.subscribe(activeKeys)', {
+				activeKeys,
+				allKeys: this.allKeys,
+				inactiveKeys: this.inactiveKeys
+			});
 			this.onRefinerChange.emit([this.refiner.slug, activeKeys]);
 			this.activeKeysChange.emit(activeKeys);
 
 			this.setActiveKeys([...activeKeys], false);
-			this.inactiveKeys = arraySubtract(this.allKeys.slice(), this.activeKeys);
+			// Providing a shortcut reduces the expensive array.filter action
+			// prettier-ignore
+			this.inactiveKeys =
+				// if nothing is active, everything is inactive
+				activeKeys.length === 0 ? this.allKeys.slice()
+				// if everything is active, nothing is inactive
+				: activeKeys.length === this.allKeys.length ? []
+				// or we're somewhere in between.
+				: arraySubtract(this.allKeys.slice(), this.activeKeys);
+
 			this.sortInactive().updateFilteredInactiveItems();
 		});
+	}
+
+	@ViewChild('inactiveList') inactiveList!: ElementRef<HTMLUListElement>;
+	@ViewChild('activeList') activeList!: ElementRef<HTMLUListElement>;
+
+	itemHeight: number = 25;
+
+	ngAfterContentInit(): void {
+		setTimeout(() => {
+			let useList: HTMLUListElement;
+			if (this.inactiveList) {
+				useList = this.inactiveList.nativeElement;
+			} else if (this.activeList) {
+				useList = this.activeList.nativeElement;
+			}
+			if (useList) {
+				const el = useList.querySelector('li');
+				this.itemHeight = el.scrollHeight;
+				this.debug('itemHeight updated', { itemHeight: this.itemHeight });
+			}
+		});
+	}
+
+	getListHeight(list: any[]): number {
+		let useLines = clamp(0, list.length, this.showLines);
+		return this.itemHeight * useLines;
 	}
 
 	/**
@@ -294,8 +357,7 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 	 */
 	selectAll(): this {
 		this.setActiveKeys(this.allKeys.slice());
-		this.inactiveKeys = [];
-		return this.clear();
+		return this.clear().scrollActiveToBottom();
 	}
 
 	/**
@@ -308,7 +370,7 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 		this.setActiveKeys([...this.activeKeys.slice(), ...this.filteredInactiveKeys.slice()]);
 
 		// Set subtraction: this.inactiveKeys = this.allKeys - this.activeKeys
-		this.inactiveKeys = arraySubtract(this.allKeys.slice(), this.activeKeys);
+		//this.inactiveKeys = arraySubtract(this.allKeys.slice(), this.activeKeys);
 
 		return (
 			this
@@ -327,7 +389,7 @@ export class SearchRefinerComponent extends Loggable implements OnInit {
 	 */
 	selectNone(): this {
 		this.setActiveKeys([]);
-		this.inactiveKeys = this.allKeys.slice();
+		//this.inactiveKeys = this.allKeys.slice();
 		return this.updateFilteredInactiveItems();
 	}
 
