@@ -6,8 +6,7 @@
 		[style.color]="datePickerIconColor"
 		[title]="labelSelect"
 	>
-		<span class="sr-only">{{ labelSelect }}</span>
-		<fa-icon [icon]="datePickerIcon"></fa-icon>
+		<i class="calendar_icon"></i>
 	</button>
 	<input
 		angular-mydatepicker
@@ -22,7 +21,7 @@
 	/>
 	<!-- clear date button -->
 	<button
-		class="datePicker__window-action"
+		class="datePicker__clear"
 		*ngIf="selectedDate"
 		[style.color]="clearIconColor"
 		(click)="DatePicker.clearDate()"
