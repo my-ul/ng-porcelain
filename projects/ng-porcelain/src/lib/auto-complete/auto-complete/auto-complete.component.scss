@@ -1,0 +1,95 @@
+$border-def: solid 1px #bbc1c8;
+
+@import '../../toolbar/toolbar.module.scss';
+
+:host {
+	display: block;
+	position: relative;
+	font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	font-size: 14px;
+
+	&.autocomplete--has-border .autocomplete__window {
+		border: $border-def;
+	}
+
+	&.autocomplete--has-focus .autocomplete__window {
+		@extend %--can-focus;
+	}
+
+	p {
+		margin: 0;
+		padding: 0;
+	}
+
+	.autocomplete__window {
+		display: flex;
+		cursor: pointer;
+
+		.autocomplete__window-value {
+			padding: 7px;
+			flex: 1 1 auto;
+			border: none;
+			outline: none;
+			font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+			font-size: 14px;
+
+			&--placeholder {
+				//font-style: italic;
+				color: #9ea6ba;
+				font-weight: 600;
+			}
+		}
+
+		.autocomplete__window-action {
+			padding: 7px;
+			color: #9dacba;
+			background: transparent;
+			border: none;
+			cursor: pointer;
+		}
+	}
+
+	.autocomplete__items {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		list-style: none;
+		margin: 0;
+		padding: 9px 0;
+		background: #fff;
+		border-bottom: $border-def;
+		border-left: $border-def;
+		border-right: $border-def;
+		overflow-y: auto;
+		max-height: 50vh;
+	}
+
+		.autocomplete__spinner {
+		text-align: center;
+	}
+
+	.select__no-results {
+		padding: 7px;
+	}
+
+	.autocomplete__item + .autocomplete__item {
+		//margin-top:16px;
+	}
+
+	.autocomplete__item {
+		cursor: pointer;
+		padding: 7px;
+		line-height: 14px;
+
+		&--highlighted {
+			background-color: #edf1f6;
+		}
+	}
+}
+
+::ng-deep .highlight__query {
+	border: none;
+	font-weight: bold;
+	background-color: #fff883;
+}

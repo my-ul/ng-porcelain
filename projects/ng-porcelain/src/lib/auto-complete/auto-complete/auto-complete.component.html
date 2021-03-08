@@ -1,0 +1,46 @@
+<div class="autocomplete__window">
+	<input
+		type="text"
+		class="autocomplete__window-value"
+		[(ngModel)]="inputBoxValue"
+		(ngModelChange)="debounceEmit($event)"
+		[placeholder]="placeholder || labelPlaceholder"
+		[class.autocomplete__window-value--placeholder]="inputBoxValue === ''"
+		(focus)="setOpen(true).setFocus(true)"
+		(keypress)="setOpen(true)"
+		(blur)="setFocus(false)"
+		(keyup)="keyUp($event)"
+	/>
+
+	<button
+		class="autocomplete__window-action"
+		*ngIf="inputBoxValue !== ''"
+		[style.color]="clearIconColor"
+		(click)="clear()"
+	>
+		<span class="sr-only">{{ labelClear }}</span>
+		<fa-icon [icon]="clearIcon"></fa-icon>
+	</button>
+</div>
+
+<ul class="autocomplete__items" *ngIf="isOpen">
+	<li class="autocomplete__no-results" *ngIf="filteredItems.length === 0">
+		<ng-container *ngIf="!AutoCompleteLoadingSpinner">
+			{{ labelNoItemsFound }}
+		</ng-container>
+	</li>
+	<li
+		class="autocomplete__item"
+		*ngFor="let item of filteredItems; index as idx"
+		(mouseover)="setHighlightedIndex(idx)"
+		(click)="setSelectedIndex(idx).setOpen(false)"
+		[title]="item"
+		[class.autocomplete__item--highlighted]="highlightedIndex == idx"
+		[class.autocomplete__item--selected]="selectedIndex == idx"
+	>
+		<span innerHTML="{{ item | highlight: inputBoxValue }}"></span>
+	</li>
+	<li class="autocomplete__spinner" *ngIf="AutoCompleteLoadingSpinner">
+		<porcelain-spinner></porcelain-spinner>
+	</li>
+</ul>
