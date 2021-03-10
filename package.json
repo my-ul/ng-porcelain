@@ -10,16 +10,11 @@
 		"e2e": "ng e2e",
 		"storybook": "start-storybook",
 		"format-staged": "pretty-quick --staged",
-		"build-sync-tool": "cd tools/check-versions/ && tsc",
-		"build-readme-tool": "cd tools/readme-builder/ && tsc",
-		"build-variables-tool": "cd tools/get-variables/ && tsc",
-		"build-tools": "npm run build-sync-tool && npm run build-readme-tool && npm run build-variables-tool",
-		"clean-tools": "rm -rf tools/readme-builder/dist/ tools/check-versions/dist/ tools/get-variables/dist/",
 		"build-readme": "npx build-readme -t \"Porcelain for Angular\" -c readme.json -o \"projects/ng-porcelain/README.md\" -p \"projects/ng-porcelain/package.json\" ",
 		"sync-packages": "npx sync-packages --fix --primary \"projects/ng-porcelain/package.json\" --secondary \"package.json\" ",
 		"get-variables": "npx set-azdo-variables --input \"projects/ng-porcelain/package.json\" --prefix \"package__\" --delimiter \"__\" ",
 		"pre-commit": "npm run format-staged && npm run sync-packages",
-		"create-package": "npm run build-tools && npm run build-readme && npm run sync-packages && npm run build "
+		"create-package": "npm run build-readme && npm run sync-packages && npm run build "
 	},
 	"bin": {
 		"sync-packages": "tools/sync-packages/bin/run",
