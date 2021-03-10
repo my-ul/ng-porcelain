@@ -19,5 +19,8 @@
 			"ng-porcelain": ["dist/ng-porcelain"],
 			"ng-porcelain/*": ["dist/ng-porcelain/*"]
 		}
+	},
+	"angularCompilerOptions": {
+		"strictTemplates": true
 	}
 }

@@ -51,5 +51,7 @@ projects/ng-porcelain/node_modules/
 
 dist/
 .vscode/settings.json
+
+# Documentation Build
 projects/ng-porcelain/README.md
-projects/ng-porcelain/README.md
+projects/ng-porcelain/doc-assets/

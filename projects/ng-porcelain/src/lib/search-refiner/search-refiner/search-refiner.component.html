@@ -14,7 +14,7 @@
 			(keyup)="updateFilteredInactiveItems()"
 			[(ngModel)]="query"
 			[disabled]="inactiveKeys.length === 0"
-			[placeholder]="placeholder"
+			[placeholder]="labels.placeholder"
 		/>
 		<button
 			class="search-refiner__search-clear"
@@ -37,10 +37,11 @@
 		<ul
 			class="search-refiner__key-list"
 			[class.search-refiner__key-list--scroll]="activeKeys.length > showLines"
-			[style.height.em]="activeKeys.length * 1.74"
-			[style.max-height.em]="showLines * 1.74"
+			[style.height.px]="getListHeight(activeKeys)"
+			#activeList
+			[@blockEnterAnimations]
 		>
-			<li *ngFor="let key of activeKeys">
+			<li *ngFor="let key of activeKeys" class="search-refiner__key-list-item" [@highlight]>
 				<label class="option-row" *ngIf="this.refiner.options[key]">
 					<div class="option-row__shrink-cell">
 						<input type="checkbox" (change)="deactivateKey(key)" [checked]="true" />
@@ -85,11 +86,10 @@
 			*ngIf="filteredInactiveKeys.length > 0"
 			class="search-refiner__key-list"
 			[class.search-refiner__key-list--scroll]="filteredInactiveKeys.length >= 4"
-			[style.min-height.em]="4 * 1.74"
-			[style.height.em]="(showLines - activeKeys.length) * 1.74"
-			[style.max-height.em]="showLines * 1.74"
+			[style.height.px]="getListHeight(filteredInactiveKeys)"
+			#inactiveList
 		>
-			<li *ngFor="let key of filteredInactiveKeys">
+			<li *ngFor="let key of filteredInactiveKeys" class="search-refiner__key-list-item">
 				<label class="option-row" *ngIf="this.refiner.options[key]">
 					<div class="option-row__shrink-cell">
 						<input type="checkbox" (change)="activateKey(key)" />

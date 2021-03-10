@@ -62,6 +62,7 @@
 	}
 
 	::ng-deep {
+		p-list-item-cell + p-list-item-cell,
 		porcelain-list-item-cell + porcelain-list-item-cell {
 			border-left: solid 1px #bbc1c8;
 		}

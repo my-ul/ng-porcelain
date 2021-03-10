@@ -2,7 +2,10 @@
 :host {
 	display: flex;
 	flex-direction: column;
-	::ng-deep porcelain-toolbar + porcelain-toolbar {
-		border-top: $border-props;
+	::ng-deep {
+		p-toolbar + p-toolbar,
+		porcelain-toolbar + porcelain-toolbar {
+			border-top: $border-props;
+		}
 	}
 }

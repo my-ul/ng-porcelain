@@ -6,6 +6,7 @@
 	color: #9ea6ba;
 
 	::ng-deep {
+		& > p-breadcrumb-item + p-breadcrumb-item,
 		& > porcelain-breadcrumb-item + porcelain-breadcrumb-item {
 			&::before {
 				content: '/';
