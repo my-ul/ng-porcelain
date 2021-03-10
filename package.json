@@ -58,7 +58,10 @@
 		"sprintf-js": "^1.1.2",
 		"tslib": "^1.10.0",
 		"uuid": "^3.4.0",
-		"zone.js": "~0.10.2"
+		"zone.js": "~0.10.2",
+		"@oclif/command": "^1.8.0",
+		"@oclif/config": "^1.17.0",
+		"@oclif/plugin-help": "^2.2.3"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "~0.901.12",
@@ -115,7 +118,18 @@
 		"tslint": "~5.11.0",
 		"typescript": "~3.8.3",
 		"underscore": "^1.10.2",
-		"yargs": "^15.4.1"
+		"yargs": "^15.4.1",
+		"@oclif/dev-cli": "^1.26.0",
+		"@oclif/test": "^1.2.8",
+		"@types/chai": "^4.2.14",
+		"@types/mocha": "^5.2.7",
+		"chai": "^4.3.0",
+		"eslint": "^5.16.0",
+		"eslint-config-oclif": "^3.1.0",
+		"eslint-config-oclif-typescript": "^0.1.0",
+		"mocha": "^5.2.0",
+		"nyc": "^14.1.1",
+		"rimraf": "^3.0.2"
 	},
 	"prettier": {
 		"useTabs": true,
