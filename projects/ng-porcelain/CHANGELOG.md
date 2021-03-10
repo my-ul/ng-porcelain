@@ -1,5 +1,16 @@
 # 9.x.x
 
+## 9.0.9
+
+-   Refactored tools to use `oclif`, which can compile TS files on demand, which takes the compile steps out of the package.json.
+-   Added image link capability to the build-readme tool. Images are now resolved and copied to an output directory.
+-   Added `get-latest-version` tool, which is used to resolve the 'latest' version for npm.
+-   Fixed the scss styling for shorthand selectors.
+
+## 9.0.8
+
+-   Search Refiner fixes
+
 ## 9.0.7
 
 -   Added Expando module
