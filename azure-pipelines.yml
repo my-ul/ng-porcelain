@@ -15,6 +15,7 @@ steps:
 
 - script: |
     npm install
+    npx run
   displayName: 'Restore npm packages'
 
 - script: |
