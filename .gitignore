@@ -32,6 +32,9 @@ speed-measure-plugin.json
 !.vscode/extensions.json
 .history/*
 
+# IDE - Visual Studio
+.vs/
+
 # misc
 /.sass-cache
 /connect.lock
@@ -53,5 +56,5 @@ dist/
 .vscode/settings.json
 
 # Documentation Build
-projects/ng-porcelain/README.md
 projects/ng-porcelain/doc-assets/
+projects/ng-porcelain/README.md
