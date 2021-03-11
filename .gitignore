@@ -55,3 +55,6 @@ dist/
 # Documentation Build
 projects/ng-porcelain/README.md
 projects/ng-porcelain/doc-assets/
+
+# Ignore tools node_modules directories in child projects
+tools/*/node_modules/
