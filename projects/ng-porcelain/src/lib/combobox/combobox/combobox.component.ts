@@ -245,7 +245,6 @@ export class ComboboxComponent extends Loggable implements OnInit {
 				return (item as string).toLowerCase().indexOf(this.query.trim().toLowerCase()) > -1;
 			}
 		});
-		console.log(this.filteredItems);
 		return this;
 	}
 	/**
