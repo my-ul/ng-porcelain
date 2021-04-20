@@ -29,7 +29,6 @@ $border-def: solid 1px #bbc1c8;
 	}
 
 	.select__items {
-		top: 100%;
 		left: 0;
 		width: 100%;
 		list-style: none;
@@ -47,7 +46,6 @@ $border-def: solid 1px #bbc1c8;
 
 	.porcelain-toolbar-select__toggle-label {
 		cursor: pointer;
-		font-weight: 600;
 		font-family: 'Open Sans';
 	}
 
@@ -57,7 +55,7 @@ $border-def: solid 1px #bbc1c8;
 
 	.porcelain-toolbar-select__toggle-caret {
 		flex: 0 0 auto;
-		color:#9ea6ba;
+		color: #9ea6ba;
 	}
 
 	.porcelain-toolbar-select__toggle-current {

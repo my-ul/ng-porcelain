@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { ToolbarSelectComponent } from '../../toolbar/toolbar-select/toolbar-select.component';
 
 import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'porcelain-multiselect',
@@ -11,21 +12,23 @@ import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export class MultiSelectComponent implements OnInit {
 	readonly faAngleDown: IconDefinition = faAngleDown;
 	isOpen: boolean = false;
-	text: string = 'yyfdffffffffffgdfcvgfvcgsdvcgscdvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvcbdcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
 
-	listItems: any[] = [
-		{ id: 1, name: 'apple', isSelected: false },
-		{ id: 2, name: 'banana', isSelected: false },
-		{ id: 3, name: 'pineapple', isSelected: false },
-		{ id: 4, name: 'orange', isSelected: false },
-		{ id: 5, name: 'mango', isSelected: false },
-		{ id: 6, name: 'melon', isSelected: false }
-	];
+	//send the user selected value
+
+	@Output() public userEnteredInputBoxValue: EventEmitter<string> = new EventEmitter<string>();
+	@Input() selectedLabel: string;
+	@Input() multiselectItems: any[];
+
+	/*{ id: 1, name: 'apple', isSelected: false },
+		{ id: 2, name: 'banana', isSelected: false }  Data format for multiselect
+		*/
+
+	@Input() listItems: any[] = [];
 
 	activeItems: any[] = [];
 	inActiveItems: any[] = [];
-	selectedLabel: string = 'Select';
-	constructor() {}
+	focusToggle: boolean = false;
+	constructor(public eRef: ElementRef) {}
 
 	getValues(obj) {
 		return Object.values(obj);
@@ -48,11 +51,14 @@ export class MultiSelectComponent implements OnInit {
 			this.activeItems.splice(key, 1);
 		}
 		this.selectedLabel = this.getSelectedItems();
+		this.selectedLabel == '' ? (this.selectedLabel = 'Select') : '';
 	}
 
 	getSelectedItems(): string {
 		var items = this.activeItems.map(item => item.name);
-		return items.length > 1 ? items.join(', ') : items.toString();
+		let selectedValues = items.length > 1 ? items.join(', ') : items.toString();
+		this.userEnteredInputBoxValue.emit(selectedValues);
+		return selectedValues;
 	}
 
 	toggleOpen() {
@@ -63,9 +69,6 @@ export class MultiSelectComponent implements OnInit {
 		}
 	}
 
-	/**
-	 * Opens the dropdown.
-	 */
 	private open(): this {
 		this.isOpen = true;
 		return this;
