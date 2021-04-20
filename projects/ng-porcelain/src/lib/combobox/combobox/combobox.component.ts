@@ -15,7 +15,6 @@ import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { Loggable } from '../../Loggable';
 import { TranslationService } from '../../services/translation/translation.service';
-import { from } from 'rxjs';
 
 type ItemType = string | object;
 
@@ -77,7 +76,9 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 */
 	@Output()
 	public valueChange: EventEmitter<ItemType> = new EventEmitter();
-
+	/**
+	 * Event emitter that emits whenever clear icon is clicked.
+	 */
 	@Output()
 	public clearEvent = new EventEmitter();
 	/**
@@ -136,11 +137,26 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Index of the selected item with respect to the `items` array.
 	 */
 	selectedIndex: number = -1;
-
+	/**
+	 * Strings containing html template.
+	 */
 	@Input() type: string = '';
 	@Input() types: string = '';
+
+	/**
+	 * isComplexArray checks whether its normal object array or it contains any html template contents.
+	 * @param isComplexArray
+	 */
 	@Input() isComplexArray: boolean = false;
+
+	/**
+	 *boolean to check whether clearing the values in input field needs confirmation or not.
+	 */
 	@Input() isConfirmationNeeded: boolean = false;
+
+	/**
+	 *boolean to decide whether to clear the values in the input field.
+	 */
 	@Input() isCleared: boolean = false;
 
 	constructor(
