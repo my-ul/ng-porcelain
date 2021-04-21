@@ -1,6 +1,6 @@
 {
 	"name": "ng-porcelain-src",
-	"version": "9.0.9-beta.0",
+	"version": "9.0.9-beta.3",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",

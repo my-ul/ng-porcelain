@@ -16,18 +16,18 @@ export class MultiSelectComponent implements OnInit {
 	//send the user selected value
 
 	@Output() public userEnteredInputBoxValue: EventEmitter<string> = new EventEmitter<string>();
-	@Input() selectedLabel: string;
-	@Input() multiselectItems: any[];
+	@Input() public selectedLabel: string;
+	@Input() public multiselectItems: any[];
 
 	/*{ id: 1, name: 'apple', isSelected: false },
 		{ id: 2, name: 'banana', isSelected: false }  Data format for multiselect
 		*/
 
-	@Input() listItems: any[] = [];
+	@Input() public listItems: any[] = [];
 
-	activeItems: any[] = [];
-	inActiveItems: any[] = [];
-	focusToggle: boolean = false;
+	public activeItems: any[] = [];
+	public inActiveItems: any[] = [];
+	public focusToggle: boolean = false;
 	constructor(public eRef: ElementRef) {}
 
 	getValues(obj) {

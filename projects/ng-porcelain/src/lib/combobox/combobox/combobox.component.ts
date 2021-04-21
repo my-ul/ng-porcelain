@@ -80,7 +80,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Event emitter that emits whenever clear icon is clicked.
 	 */
 	@Output()
-	public clearEvent = new EventEmitter();
+	public clearEvent: EventEmitter<string> = new EventEmitter<string>();
 	/**
 	 * The current filtered set of items.  Force repopulation with applyFilter().
 	 */
@@ -183,8 +183,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Resets the component state to blank query and resets the filteredItems array.
 	 */
 	public clear() {
-		let clearText = 'clear event emitted';
-		this.clearEvent.emit(clearText);
+		this.clearEvent.emit('');
 		if (this.isConfirmationNeeded) {
 			if (this.isCleared) {
 				if (this.query != '') {
@@ -238,7 +237,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Searches the `items` array for items that match the query.
 	 * Result is placed at this.filteredItems
 	 */
-	applyFilter(): this {
+	public applyFilter(): this {
 		this.filteredItems = this.items.filter(item => {
 			if (this.isObjectArray) {
 				if (this.isComplexArray) {
@@ -438,5 +437,14 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 */
 	toggleOpen() {
 		this.setOpen(!this.isOpen);
+	}
+
+	/**
+	 * Insert query Value and filter programmatically. Use angular ViewChild,ViewChildren
+	 *
+	 * */
+	public setSelectData(SerachValue: string = '') {
+		this.query = SerachValue;
+		this.applyFilter();
 	}
 }

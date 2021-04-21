@@ -47,7 +47,6 @@ DefaultPresentation.story = {
 	name: 'Normal Date picker'
 };
 
-/*
 export const PreselecteDates = () => {
 	return {
 		component: datePickerComponent,
@@ -55,7 +54,7 @@ export const PreselecteDates = () => {
 			labelClear: text('clear title text', 'clear'),
 			labelSelect: text('select title text', 'select date'),
 			placeHolderValue: text('Place Holder Value', 'YYYY-MM-DD'),
-			preselectedDate:text('preselected Date','2021-01-14'),
+			preselectedDate: text('preselected Date', '2021-01-14'),
 			border: boolean('border', true),
 			userSelectedDate: action(SelectedValueEmitted),
 			selectedFormatDate: action(SelectedFormattedValue)
@@ -66,4 +65,3 @@ export const PreselecteDates = () => {
 PreselecteDates.story = {
 	name: 'Date picker with PreselectValues'
 };
-*/
