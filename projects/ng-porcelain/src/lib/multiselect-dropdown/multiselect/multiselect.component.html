@@ -2,7 +2,7 @@
 	<label
 		class="porcelain-toolbar-select__toggle"
 		(click)="toggleOpen()"
-		[class.porcelain-multiselect-items]="activeItems.length > 0"
+		[class.porcelain-multiselect-items]="listItems.length > 0"
 	>
 		<span class="porcelain-toolbar-select__toggle-label">
 			<porcelain-truncate [value]="selectedLabel"></porcelain-truncate>
@@ -13,34 +13,44 @@
 	</label>
 
 	<div *ngIf="isOpen" class="select__items">
-		<div *ngIf="activeItems.length > 0">
-			<div class="multiselect-list-items select_item" *ngFor="let item of activeItems">
-				<span>
-					<input
-						type="checkbox"
-						[checked]="item.isSelected"
-						(click)="onItemsSelection(item)"
-					/>
-					<span class="checkbox-content">
-						{{ item.name }}
-					</span>
-				</span>
-			</div>
+		<div *ngIf="listItems.length > 0">
+			<ng-container *ngFor="let item of listItems; let j = index">
+				<ng-container *ngIf="item.isSelected">
+					<div class="multiselect-list-items select_item">
+						<span>
+							<input
+								type="checkbox"
+								style="cursor:pointer"
+								[(ngModel)]="item.isSelected"
+								(ngModelChange)="onUserselection(item, j)"
+							/>
+							<span class="checkbox-content">
+								{{ item[LabelProp] }}
+							</span>
+						</span>
+					</div>
+				</ng-container>
+			</ng-container>
 		</div>
-		<div [class.porcelain-multiselect-border]="activeItems.length > 0"></div>
+		<div [class.porcelain-multiselect-border]="allOrNoneSelected()"></div>
 		<div>
-			<div class="multiselect-list-items" *ngFor="let item of listItems">
-				<span>
-					<input
-						type="checkbox"
-						[checked]="item.isSelected"
-						(click)="onItemsSelection(item)"
-					/>
-					<span class="checkbox-content">
-						{{ item.name }}
-					</span>
-				</span>
-			</div>
+			<ng-container *ngFor="let item of listItems; let i = index">
+				<ng-container *ngIf="!item.isSelected">
+					<div class="multiselect-list-items">
+						<span>
+							<input
+								type="checkbox"
+								style="cursor:pointer"
+								[(ngModel)]="item.isSelected"
+								(ngModelChange)="onUserselection(item, i)"
+							/>
+							<span class="checkbox-content">
+								{{ item[LabelProp] }}
+							</span>
+						</span>
+					</div>
+				</ng-container>
+			</ng-container>
 		</div>
 	</div>
 </div>
