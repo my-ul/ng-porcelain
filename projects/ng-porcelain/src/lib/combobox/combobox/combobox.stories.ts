@@ -10,7 +10,7 @@ import { ComboboxComponent } from './combobox.component';
 
 //action messages
 const SelectedValueEmitted = 'Value is selected';
-
+const clearEventEmitted = 'Clear Event Emitted';
 //create a default
 export default {
 	title: 'Controls/Combobox Input',
@@ -34,6 +34,9 @@ export const DefaultPresentation = () => {
 			valueChange: function(newValue) {
 				value = newValue;
 				actionCB(value);
+			},
+			clearEvent: function() {
+				actionCB();
 			}
 		}
 	};
@@ -71,6 +74,62 @@ NormalArrayInput.story = {
 	name: 'Normal Array Input'
 };
 
+export const ArrayOfComplexobjectsInput = () => {
+	return {
+		component: ComboboxComponent,
+		props: {
+			items: [
+				{
+					psn: '15472',
+					Comname: 'Sterling LLC',
+					CompleteAddress: '2763 Star Plaza Rd, Building A, Chicago IL 60660',
+					item1: '<div class="topchange">15472 | Sterling LLC</div>',
+					item2:
+						'<div class="colourchange"> 2763 Star Plaza Rd, Building A, Chicago IL 60660 </div>'
+				},
+				{
+					psn: '15473',
+					Comname: 'Sterling Parts Unlimited, LLC',
+					CompleteAddress: '3286 Star Plaza Rd, Building D, Chicago IL 60660',
+					item1: '<div class="topchange">15473 | Sterling Parts Unlimited, LLC</div>',
+					item2:
+						'<div class="colourchange"> 3286 Star Plaza Rd, Building D, Chicago IL 60660 </div>'
+				},
+				{
+					psn: '15477',
+					Comname: 'Sterling LLC, copy',
+					CompleteAddress: '2993 Star Plaza Rd, Suite 203, Chicago IL 60660',
+					item1: '<div class="topchange">15477 | Sterling LLC, copy</div>',
+					item2:
+						'<div class="colourchange" > 2993 Star Plaza Rd, Suite 203, Chicago IL 60660 </div>'
+				},
+				{
+					psn: '764479',
+					Comname: 'Hellotester',
+					CompleteAddress: 'neyveli,India',
+					item1: '<div class="topchange">764479 | Hellotester</div>',
+					item2: '<div class="colourchange" > neyveli,India </div>'
+				}
+			],
+			placeholder: 'type here to search in the box in array of objects',
+			isObjectArray: true,
+			isComplexArray: true,
+			isConfirmationNeeded: true,
+			isCleared: true,
+			type: 'item1',
+			types: 'item2',
+			value: null,
+			query: '15472',
+			valueChange: action(SelectedValueEmitted),
+			clearEvent: action(clearEventEmitted)
+		}
+	};
+};
+
+//name the story
+ArrayOfComplexobjectsInput.story = {
+	name: 'Array of Complex Objects Input'
+};
 export const ArrayOfobjectsInput = () => {
 	return {
 		component: ComboboxComponent,
@@ -91,9 +150,4 @@ export const ArrayOfobjectsInput = () => {
 			valueChange: action(SelectedValueEmitted)
 		}
 	};
-};
-
-//name the story
-ArrayOfobjectsInput.story = {
-	name: 'Array of Objects Input'
 };

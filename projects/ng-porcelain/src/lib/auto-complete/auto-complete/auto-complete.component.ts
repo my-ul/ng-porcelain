@@ -7,80 +7,95 @@ import {
 	ElementRef,
 	Output,
 	EventEmitter,
+	SimpleChanges,
 	ViewChildren,
-	ViewChild
+	ViewChild,
+	OnChanges,
+	OnDestroy
 } from '@angular/core';
 import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { Loggable } from '../../Loggable';
 import { TranslationService } from '../../services/translation/translation.service';
-
-type ItemType = string | object;
+import { BehaviorSubject } from 'rxjs';
+import { throttleTime, debounceTime } from 'rxjs/operators';
 
 @Component({
-	selector: 'porcelain-combobox, p-combobox',
-	templateUrl: './combobox.component.html',
-	styleUrls: ['./combobox.component.scss'],
+	selector: 'porcelain-auto-complete',
+	templateUrl: './auto-complete.component.html',
+	styleUrls: ['./auto-complete.component.scss'],
 	host: {
-		'[class.combobox--has-focus]': 'hasFocus'
+		'[class.autocomplete--has-focus]': 'hasFocus'
 	}
 })
-export class ComboboxComponent extends Loggable implements OnInit {
-	/**
-	 * Icon of chevron pointing down, used for the dropdown toggle.
-	 */
-	@Input() dropdownToggleIcon = faChevronDown;
-
+export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges, OnDestroy {
 	/**
 	 * Icon for the clear button
 	 */
-	@Input() clearIcon = faTimesCircle;
+	@Input() public clearIcon = faTimesCircle;
 
 	/**
 	 * Color for the clear icon.  By default, #9dacba
 	 */
-	@Input() clearIconColor: string = '#9dacba';
+	@Input() public clearIconColor: string = '#9dacba';
 
 	/**
 	 * Name of the component, used when the Loggable behaviors are used.
 	 */
-	readonly name = 'ComboboxComponent';
+	readonly name = 'AutoCompleteComponent';
 
 	/**
-	 * isObjectArray checks whether its plain value array or array of objects
-	 * @param isObjectArray
+	 * The current user input box value
 	 */
-	@Input() isObjectArray: boolean = false;
+	@Input() public inputBoxValue: string = '';
 
 	/**
-	 * Array of items to filter. Can be strings or objects.
+	 * debounce Time controls time Eventmitter fire
+	 * @param debounceTime
 	 */
-	@Input() items: ItemType[] = [];
+	@Input() public debounceTime: number = 1000;
 
 	/**
-	 * Property used for comparison when isObjectArray is true. For example,
-	 * if item['name'] contains the label, labelProp should be 'name'.
-	 * @param labelProp
+	 * Input Box Value Change behaviour subject will emit user value change based on ngmodelchange
 	 */
-	@Input() labelProp: string = '';
+	public inputBoxBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+	/**
+	 * Array of items that hold AutoComplete Items. Strictly uses strings only
+	 */
+	@Input() public AutoCompleteitems: Array<string> = new Array<string>();
+
+	/**
+	 * If autocomplete items are fetched, then spinner is shown
+	 * @param:AutoCompleteLoadingSpinner
+	 */
+	@Input() public AutoCompleteLoadingSpinner: boolean = false;
+
+	/**
+	 * Property is used to enable internal filter. To disable set to false. For example,
+	 * if Filter is disabled
+	 * @param isFilterEnabled
+	 */
+	@Input() public isFilterEnabled: boolean = true;
 
 	/**
 	 * Placeholder value shown in the input when query
 	 * is the empty string.
 	 */
-	@Input() placeholder: string = '';
+	@Input() public placeholder: string = '';
 
 	/**
-	 * Event emitter that emits whenever the selected item changes.
+	 * The throttled or debounced user selected value emit
 	 */
-	@Output()
-	public valueChange: EventEmitter<ItemType> = new EventEmitter();
+	@Output() public userEnteredInputBoxValue: EventEmitter<string> = new EventEmitter<string>();
+
 	/**
-	 * Event emitter that emits whenever clear icon is clicked.
+	 * Event emitter that emits whenever a item in the autocomplete List is selected. OPTIONAL
 	 */
 	@Output()
-	public clearEvent: EventEmitter<string> = new EventEmitter<string>();
+	public autoCompleteSelectedItem: EventEmitter<string> = new EventEmitter<string>();
+
 	/**
 	 * The current filtered set of items.  Force repopulation with applyFilter().
 	 */
@@ -89,14 +104,14 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Controls the display of the border.  Set to false to eliminate borders.
 	 */
-	@HostBinding('class.combobox--has-border')
+	@HostBinding('class.autocomplete--has-border')
 	@Input()
 	border: boolean = true;
 
 	/**
 	 * Boolean that tracks if the query input has focus.
 	 */
-	hasFocus: boolean = false;
+	public hasFocus: boolean = false;
 
 	/**
 	 * The index of the currently highlighted item in filteredItems
@@ -106,58 +121,32 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * When true, the dropdown will be displayed; if false, the dropdown will not be displayed.
 	 */
-	isOpen: boolean = false;
+	public isOpen: boolean = false;
 
 	/**
 	 * Accessibility label for the clear button.
 	 */
-	labelClear: string = 'Clear';
+	@Input() public labelClear: string = 'Clear';
 
 	/**
 	 * Shown when the user has filtered too much, and no valid items remain in filteredItems.
 	 */
-	labelNoItemsFound: string = 'No items found.';
+	@Input() public labelNoItemsFound: string = 'No items found.';
 
 	/**
 	 * Placeholder for text input when search field is empty
 	 */
-	labelPlaceholder: string = 'type to search...';
+	@Input() public labelPlaceholder: string = 'type to search...';
 
 	/**
 	 * Accessibility label for dropdown icon.
 	 */
-	labelSelect: string = 'Select';
-
-	/**
-	 * The current query.
-	 */
-	@Input() public query: string = '';
+	@Input() public labelSelect: string = 'Select';
 
 	/**
 	 * Index of the selected item with respect to the `items` array.
 	 */
-	selectedIndex: number = -1;
-	/**
-	 * Strings containing html template.
-	 */
-	@Input() type: string = '';
-	@Input() types: string = '';
-
-	/**
-	 * isComplexArray checks whether its normal object array or it contains any html template contents.
-	 * @param isComplexArray
-	 */
-	@Input() isComplexArray: boolean = false;
-
-	/**
-	 *boolean to check whether clearing the values in input field needs confirmation or not.
-	 */
-	@Input() isConfirmationNeeded: boolean = false;
-
-	/**
-	 *boolean to decide whether to clear the values in the input field.
-	 */
-	@Input() isCleared: boolean = false;
+	public selectedIndex: number = -1;
 
 	constructor(
 		private element: ElementRef<HTMLElement>,
@@ -172,53 +161,34 @@ export class ComboboxComponent extends Loggable implements OnInit {
 				label_Clear: 'labelClear'
 			})
 		);
-		if (this.items[this.labelProp] == '') {
-			this.items[this.labelProp] = ((this.items[this.type].replace(/\<(.+?)\>/g, '') as string) +
-				', ' +
-				this.items[this.types].replace(/\<(.+?)\>/g, '')) as string;
-		}
 	}
 
 	/**
 	 * Resets the component state to blank query and resets the filteredItems array.
 	 */
 	public clear() {
-		this.clearEvent.emit('');
-		if (this.isConfirmationNeeded) {
-			if (this.isCleared) {
-				if (this.query != '') {
-					this.query = '';
-					this.applyFilter();
-				}
-			}
-		} else {
-			this.query = '';
-			this.applyFilter();
-		}
+		this.inputBoxValue = '';
+		this.debounceEmit('');
+		this.applyFilter();
 	}
 
 	/**
 	 * Returns the currently selected item. Returns null when no item is selected.
 	 */
-	get value(): ItemType {
-		return this.selectedIndex > -1 ? this.items[this.selectedIndex] : null;
+	get value(): string {
+		return this.selectedIndex > -1 ? this.AutoCompleteitems[this.selectedIndex] : null;
 	}
 
 	/**
 	 * Sets the selectedIndex by reference to selected item.
 	 */
 	@Input()
-	set value(value: ItemType) {
-		this.selectedIndex = this.items.indexOf(value);
+	set value(value: string) {
+		this.selectedIndex = this.AutoCompleteitems.indexOf(value);
 		if (this.selectedIndex > -1) {
-			if (this.isComplexArray) {
-				this.query = this.isObjectArray
-					? this.value[this.type].replace(/\<(.+?)\>/g, '')
-					: this.value;
-			} else {
-				this.query = this.isObjectArray ? this.value[this.labelProp] : this.value;
-			}
-			this.valueChange.emit(this.value);
+			this.inputBoxValue = this.value;
+			this.autoCompleteSelectedItem.emit(this.value);
+			this.debounceEmit(this.value);
 		}
 	}
 
@@ -237,31 +207,13 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Searches the `items` array for items that match the query.
 	 * Result is placed at this.filteredItems
 	 */
-	public applyFilter(): this {
-		this.filteredItems = this.items.filter(item => {
-			if (this.isObjectArray) {
-				if (this.isComplexArray) {
-					item[this.labelProp] = (((item[this.type] as string) +
-						', ' +
-						item[this.types]) as string).replace(/\<(.+?)\>/g, '');
-					return (
-						(item[this.labelProp] as string)
-							.toLowerCase()
-							.indexOf(this.query.trim().toLowerCase()) > -1
-					);
-				} else {
-					return (
-						(item[this.labelProp] as string)
-							.toLowerCase()
-							.indexOf(this.query.trim().toLowerCase()) > -1
-					);
-				}
-			} else {
-				return (item as string).toLowerCase().indexOf(this.query.trim().toLowerCase()) > -1;
-			}
+	applyFilter(): this {
+		this.filteredItems = this.AutoCompleteitems.filter(item => {
+			return (item as string).toLowerCase().indexOf(this.inputBoxValue.trim().toLowerCase()) > -1;
 		});
 		return this;
 	}
+
 	/**
 	 * Handles keyup events when the user types in the field. Binds special keys
 	 * to create and maintain traditional key behaviors expected of a select control.
@@ -271,6 +223,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 		//Check focus exists
 		if (this.hasFocus) {
 			this.applyFilter();
+
 			let key = event.key,
 				lastIndex = this.filteredItems.length - 1;
 
@@ -297,10 +250,10 @@ export class ComboboxComponent extends Loggable implements OnInit {
 				} else if ('End' == key) {
 					this.setHighlightedIndex(lastIndex).scrollToHighlighted();
 				} else if ('Escape' == key) {
-					if (this.query === '') {
+					if (this.inputBoxValue === '') {
 						this.setOpen(false);
 					} else {
-						this.query = '';
+						this.inputBoxValue = '';
 						this.applyFilter();
 					}
 				}
@@ -322,8 +275,8 @@ export class ComboboxComponent extends Loggable implements OnInit {
 				} else if ('End' == key) {
 					this.setSelectedIndex(lastIndex);
 				} else if ('Escape' == key) {
-					if (this.query !== '') {
-						this.query = '';
+					if (this.inputBoxValue !== '') {
+						this.inputBoxValue = '';
 						this.applyFilter();
 					}
 				}
@@ -344,13 +297,29 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Set up the component after the Inputs are mounted.
 	 */
 	ngOnInit(): void {
-		this.filteredItems = this.items.slice();
+		this.filteredItems = this.AutoCompleteitems.slice();
+
+		//initialize and listen for input box value changes
+		this.inputBoxBehaviorSubject.pipe(debounceTime(this.debounceTime)).subscribe(uservalue => {
+			this.userEnteredInputBoxValue.emit(uservalue);
+		});
 	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['AutoCompleteitems']) {
+			this.filteredItems = this.AutoCompleteitems.slice();
+			this.applyFilter();
+		}
+	}
+
+	public debounceEmit = (selectevalue: string): void => {
+		this.inputBoxBehaviorSubject.next(selectevalue);
+	};
 
 	/**
 	 * Calculates and scrolls the item dropdown to the current highlightedIndex.
 	 */
-	scrollToHighlighted(): this {
+	public scrollToHighlighted(): this {
 		let itemElements = this.element.nativeElement.querySelectorAll('.select__item');
 		if (itemElements && itemElements[this.highlightedIndex] /** && elementNotInView */) {
 			let childElement = itemElements[this.highlightedIndex] as HTMLElement;
@@ -394,7 +363,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Sets the status of focus.
 	 * @param focus Boolean. Set to true when the component gains focus.
 	 */
-	setFocus(focus: boolean): this {
+	public setFocus(focus: boolean): this {
 		this.hasFocus = focus;
 		return this;
 	}
@@ -403,7 +372,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Sets the highlighted item within the filteredItems array.
 	 * @param idx Index of the highlighted item (within filteredItems array).
 	 */
-	setHighlightedIndex(idx: number) {
+	public setHighlightedIndex(idx: number) {
 		this.highlightedIndex = idx;
 		return this;
 	}
@@ -412,7 +381,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Opens or closes the suggestion dropdown.
 	 * @param isOpen Boolean value for the desired state of the control.
 	 */
-	setOpen(isOpen: boolean): this {
+	public setOpen(isOpen: boolean): this {
 		this.isOpen = isOpen;
 		if (this.isOpen) {
 			this.applyFilter();
@@ -425,7 +394,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * which locates the filtered item in the items array.
 	 * @param selectedFilteredIndex The index of the selected item in the filteredItems array
 	 */
-	setSelectedIndex(selectedFilteredIndex: number) {
+	public setSelectedIndex(selectedFilteredIndex: number) {
 		this.info('setSelectedIndex(selectedFilteredIndex)', { selectedFilteredIndex });
 		// the this.value setter will find the item in the items array
 		this.value = this.filteredItems[selectedFilteredIndex];
@@ -435,16 +404,11 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Toggles the isOpen property by negation.
 	 */
-	toggleOpen() {
+	public toggleOpen() {
 		this.setOpen(!this.isOpen);
 	}
-
-	/**
-	 * Insert query Value and filter programmatically. Use angular ViewChild,ViewChildren
-	 *
-	 * */
-	public setSelectData(SerachValue: string = '') {
-		this.query = SerachValue;
-		this.applyFilter();
+	ngOnDestroy(): void {
+		//unsubscribe Rxjs behaviour subject to prevent memory leaks
+		this.inputBoxBehaviorSubject.unsubscribe();
 	}
 }

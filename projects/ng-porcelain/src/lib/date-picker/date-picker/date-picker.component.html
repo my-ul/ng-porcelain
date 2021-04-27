@@ -1,0 +1,33 @@
+<div class="datePicker__window">
+	<!-- toggle calendar button -->
+	<button
+		class="datePicker__window-action"
+		(click)="DatePicker.toggleCalendar()"
+		[style.color]="datePickerIconColor"
+		[title]="labelSelect"
+	>
+		<i class="calendar_icon"></i>
+	</button>
+	<input
+		angular-mydatepicker
+		class="datePicker__window-value"
+		#DatePicker="angular-mydatepicker"
+		name="DatePicker"
+		[placeholder]="placeHolderValue"
+		[options]="datePickerOptions"
+		[(ngModel)]="selectedDate"
+		(dateChanged)="onDateChanged($event)"
+		(click)="DatePicker.toggleCalendar()"
+	/>
+	<!-- clear date button -->
+	<button
+		class="datePicker__clear"
+		*ngIf="selectedDate"
+		[style.color]="clearIconColor"
+		(click)="clear()"
+		[title]="labelClear"
+	>
+		<span class="sr-only">{{ labelClear }}</span>
+		<fa-icon [icon]="clearIcon"></fa-icon>
+	</button>
+</div>

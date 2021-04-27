@@ -39,11 +39,15 @@
 		[class.select__item--highlighted]="highlightedIndex == idx"
 		[class.select__item--selected]="selectedIndex == idx"
 	>
-		<ng-container *ngIf="isObjectArray; else plainarray">
+		<ng-container *ngIf="isComplexArray && isObjectArray">
+			<span innerHTML="{{ item[type] | highlight: query }}{{ item[types] | highlight: query }}">
+			</span>
+		</ng-container>
+		<ng-container *ngIf="!isComplexArray && isObjectArray">
 			<span innerHTML="{{ item[labelProp] | highlight: query }}"> </span>
 		</ng-container>
-		<ng-template #plainarray>
+		<ng-container *ngIf="!isObjectArray">
 			<span innerHTML="{{ item | highlight: query }}"></span>
-		</ng-template>
+		</ng-container>
 	</li>
 </ul>

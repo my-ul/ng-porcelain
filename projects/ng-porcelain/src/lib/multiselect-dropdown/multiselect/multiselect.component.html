@@ -1,0 +1,56 @@
+<div class="porcelain-multiselect-content">
+	<label
+		class="porcelain-toolbar-select__toggle"
+		(click)="toggleOpen()"
+		[class.porcelain-multiselect-items]="listItems.length > 0"
+	>
+		<span class="porcelain-toolbar-select__toggle-label">
+			<porcelain-truncate [value]="selectedLabel"></porcelain-truncate>
+		</span>
+		<span class="porcelain-toolbar-select__toggle-caret">
+			<fa-icon [icon]="faAngleDown"></fa-icon>
+		</span>
+	</label>
+
+	<div *ngIf="isOpen" class="select__items">
+		<div *ngIf="listItems.length > 0">
+			<ng-container *ngFor="let item of listItems; let j = index">
+				<ng-container *ngIf="item.isSelected">
+					<div class="multiselect-list-items select_item">
+						<span>
+							<input
+								type="checkbox"
+								style="cursor:pointer"
+								[(ngModel)]="item.isSelected"
+								(ngModelChange)="onUserselection(item, j)"
+							/>
+							<span class="checkbox-content">
+								{{ item[LabelProp] }}
+							</span>
+						</span>
+					</div>
+				</ng-container>
+			</ng-container>
+		</div>
+		<div [class.porcelain-multiselect-border]="allOrNoneSelected()"></div>
+		<div>
+			<ng-container *ngFor="let item of listItems; let i = index">
+				<ng-container *ngIf="!item.isSelected">
+					<div class="multiselect-list-items">
+						<span>
+							<input
+								type="checkbox"
+								style="cursor:pointer"
+								[(ngModel)]="item.isSelected"
+								(ngModelChange)="onUserselection(item, i)"
+							/>
+							<span class="checkbox-content">
+								{{ item[LabelProp] }}
+							</span>
+						</span>
+					</div>
+				</ng-container>
+			</ng-container>
+		</div>
+	</div>
+</div>

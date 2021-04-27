@@ -15,6 +15,7 @@ steps:
 
 - script: |
     npm install
+    npm link
   displayName: 'Restore npm packages'
 
 - script: |
