@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren } from '@angular/core';
 import { BaseRefinerDefinition } from '../../shared/types/Refiners/BaseRefinerDefinition';
 import { Loggable } from '../../Loggable';
 import { isEqual } from 'lodash-es';
-
+import { SearchRefinerComponent } from '../../search-refiner/search-refiner/search-refiner.component';
 @Component({
 	selector: 'porcelain-refiners, p-refiners',
 	templateUrl: './refiners.component.html',
@@ -17,6 +17,9 @@ export class RefinersComponent extends Loggable implements OnInit {
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
+
+	//viewchildren refs
+	@ViewChildren('searchRef') public searchRefinerCmpRefs: SearchRefinerComponent;
 
 	// Icons
 

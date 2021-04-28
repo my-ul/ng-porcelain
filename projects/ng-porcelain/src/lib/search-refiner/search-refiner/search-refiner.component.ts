@@ -98,6 +98,12 @@ export class SearchRefinerComponent extends Loggable implements OnInit, AfterCon
 	@Input() clearIcon: any = faTimesCircle;
 
 	/**
+	 *
+	 * Message to show No value incase no search values are shown
+	 * */
+	@Input() public SearchInputPlaceHolderValue: string = 'Search';
+
+	/**
 	 * Search string used to filter the inactiveItems into filteredInactiveItems
 	 */
 	@Input() query: string = '';
