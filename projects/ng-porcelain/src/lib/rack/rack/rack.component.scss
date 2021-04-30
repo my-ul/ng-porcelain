@@ -19,10 +19,7 @@ $secondary-disabled--background-color: #fff;
 		grid-template-columns: 3fr 1fr 3fr;
 		//grid-template-rows: 1fr 1fr 1fr;
 		gap: 15px 10px;
-		grid-template-areas:
-			'inactive-label    .                     active-label'
-			'inactive-list     activation-buttons    active-list'
-			'.                 .                     order-buttons';
+		grid-template-areas: 'inactive-label    .                     active-label' 'inactive-list     activation-buttons    active-list' '.                 .                     order-buttons';
 
 		.inactive-label {
 			grid-area: inactive-label;
@@ -35,11 +32,13 @@ $secondary-disabled--background-color: #fff;
 		.inactive-list {
 			grid-area: inactive-list;
 		}
+
 		.activation-buttons {
 			grid-area: activation-buttons;
 		}
 
-		.active-list {
+		.active-list,
+		.active-listError {
 			grid-area: active-list;
 		}
 
@@ -52,50 +51,82 @@ $secondary-disabled--background-color: #fff;
 			grid-area: order-buttons;
 		}
 
+		.order-buttonsDT {
+			display: grid;
+			gap: 15px 10px;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-area: order-buttons;
+			grid-template-areas: 'errTxt move-up-button move-down-button';
+		}
+
+		.errTxt {
+			grid-row: 1;
+			color: red;
+			font-family: $font-family;
+		}
+
+		.btnUp,
+		.btnDwn,
+		.btnAddAgain {
+			grid-row: 2;
+		}
+
 		.move-up-button {
 			grid-area: move-up-button;
+			width: 100%;
 		}
 
 		.move-down-button {
 			grid-area: move-down-button;
+			width: 100%;
 		}
 	}
+
 	&.rack--flex {
 		display: flex;
 		flex-direction: row;
 		justify-content: stretch;
+
 		.inactive-label,
 		.active-label {
 			display: block;
 			margin-bottom: 15px;
 		}
+
 		.inactive-list,
-		.active-list {
+		.active-list,
+		active-listError {
 			display: block;
 			width: 100%;
 			max-width: 100%;
 		}
+
 		.inactive,
 		.active {
 			flex: 1 1 auto;
 		}
+
 		.activation-buttons {
 			flex: 0 0 auto;
 			margin: 0 10px;
 			padding: 0 0;
 		}
 
-		.order-buttons {
+		.order-buttons,
+		.order-buttonsDT {
 			display: flex;
 			flex-direction: row;
 			margin-top: 15px;
+
 			.move-up-button,
 			.move-down-button {
-				flex: 1 1 auto;
+				flex: 1;
 			}
+
 			.move-up-button {
 				margin-right: 5px;
 			}
+
 			.move-down-button {
 				margin-left: 5px;
 			}
@@ -103,14 +134,42 @@ $secondary-disabled--background-color: #fff;
 	}
 }
 
-.inactive-list,
-.active-list {
+.inactive-list {
 	border: solid 1px #bbc1c8;
 	max-width: 100%;
+
 	&:focus {
 		outline: none;
 	}
 }
+.active-list {
+	border: solid 1px #bbc1c8;
+	max-width: 100%;
+
+	&:focus {
+		outline: none;
+	}
+}
+.addAgainActive {
+	color: #ffffff !important;
+	background-color: #2c343f !important;
+	width: 100%;
+}
+.addAgainInActive {
+	color: #ffffff !important;
+	background-color: #7b8c9c !important;
+	width: 100%;
+}
+
+.active-listError {
+	border: solid 1px red;
+	max-width: 100%;
+
+	&:focus {
+		outline: none;
+	}
+}
+
 select {
 	option {
 		font-family: $font-family;
@@ -120,6 +179,8 @@ select {
 }
 
 .order-buttons,
+.order-buttonsDT,
+.buttonTxt1,
 .activation-buttons {
 	button {
 		transition: all ease-in-out 200ms;
@@ -133,6 +194,7 @@ select {
 		font-size: 14px;
 		text-transform: uppercase;
 		padding: 8px 15px;
+
 		&:disabled {
 			color: $secondary-disabled--color;
 			border: solid 1px $secondary-disabled--border-color;
@@ -160,3 +222,13 @@ select {
 		margin: 0.5em 0;
 	}
 }
+.rack_addAll {
+	font-family: $font-family;
+	margin-top: 10px;
+	margin-left: 50px;
+	color: #303741;
+}
+/*.dtCustomizebutton {
+	width: 30% !important;
+	margin-right: 10px !important;
+}*/

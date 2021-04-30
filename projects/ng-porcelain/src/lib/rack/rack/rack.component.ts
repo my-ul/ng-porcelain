@@ -19,6 +19,7 @@ import { sprintf } from 'sprintf-js';
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { moveItem } from '../../shared/utilities/arrays/moveItem';
 import { Loggable } from '../../Loggable';
+import { BehaviorSubject } from 'rxjs';
 
 interface CSSStyleDeclarationWithGrid extends CSSStyleDeclaration {
 	grid: string;
@@ -48,6 +49,10 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 	readonly deactivateIcon: any = faChevronLeft;
 	readonly moveDownIcon: any = faChevronDown;
 	readonly moveUpIcon: any = faChevronUp;
+	itemsToBeAddedOnDblClk: TItemType[] = [];
+	singleItemTobeAdded: TItemType[] = [];
+
+	@Input() dtCustomizedFlag: boolean = true;
 
 	/**
 	 * The property on your inactiveItems/activeItems array items that should be shown as label.
@@ -64,6 +69,8 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 	 * The number of rows to show in the column <select> elements.
 	 */
 	@Input() size: number = 6;
+	@Input() errBorderOnSave: boolean = false;
+	valueerr: any = '';
 
 	/**
 	 * The property on your inactiveItems/activeItems array items that should be used as the value.
@@ -80,6 +87,8 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 	 * inactiveItems EventEmitter; emits changes to the inactiveItems property to parent scopes
 	 */
 	@Output() inactiveItemsChange = new EventEmitter<TItemType[]>();
+
+	@Output() itemsEmittedOnAdd = new EventEmitter<any>();
 
 	@ViewChild('activePicker')
 	activeSelectElement: ElementRef;
@@ -273,6 +282,13 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 		);
 	}
 
+	get canAddAgain(): boolean {
+		if (this.dtCustomizedFlag)
+			return (
+				this.currentActiveIdx > -1 && this.activeItems.length >= 1 // an item is selected // there is more than one item to move
+			);
+	}
+
 	/**
 	 * Calculates the index of the currently-selected active item.  Returns -1 when nothing is selected.
 	 */
@@ -350,14 +366,124 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 	 */
 	activateItem() {
 		if (this.canActivateItem) {
-			const inactiveItemIdx = this.currentInactiveIdx;
-			const item = this.inactiveItems.splice(inactiveItemIdx, 1)[0];
-			this.activeItems.push(item);
-			this.setInactiveItem(inactiveItemIdx);
-			if (this.inactiveItems.length === 0) {
-				this.ensureActiveFocus(this.activeItems.length);
+			if (!this.dtCustomizedFlag) {
+				const inactiveItemIdx = this.currentInactiveIdx;
+				const item = this.inactiveItems.splice(inactiveItemIdx, 1)[0];
+				this.activeItems.push(item);
+				this.setInactiveItem(inactiveItemIdx);
+				if (this.inactiveItems.length === 0) {
+					this.ensureActiveFocus(this.activeItems.length);
+				}
+			}
+
+			if (this.dtCustomizedFlag) {
+				// This functionality run only for dataSheet test puller.
+
+				// Concat items selected on both double click and single click.
+				if (this.singleItemTobeAdded.length > 0)
+					this.itemsToBeAddedOnDblClk = this.itemsToBeAddedOnDblClk.concat(
+						this.singleItemTobeAdded
+					);
+
+				// Add final items on  activeItems array.
+				if (this.itemsToBeAddedOnDblClk.length > 0)
+					this.activeItems = this.activeItems.concat(this.itemsToBeAddedOnDblClk);
+
+				// Items to remove from InactiveList.
+				this.itemsToBeAddedOnDblClk.forEach((item: any) => {
+					var index = this.inactiveItems.findIndex(x => x.key == item.key);
+					if (index != -1) this.inactiveItems.splice(index, 1)[0];
+				});
+
+				this.itemsToBeAddedOnDblClk = [];
+				this.singleItemTobeAdded = [];
+
+				// Hide error border on Items adding.
+				if (this.activeItems.length > 0) this.errBorderOnSave = false;
+
+				// Emiting value to the portal to hide error text on Item Add.
+				this.itemsEmittedOnAdd.emit(this.activeItems);
 			}
 		}
+	}
+
+	isSingleClick: boolean = false;
+	isSelected: boolean;
+	previousActiveIdx: number;
+
+	addMultipleItemsOnDoubleClick() {
+		this.isSingleClick = false;
+		if (this.dtCustomizedFlag) {
+			var index = this.itemsToBeAddedOnDblClk.findIndex(
+				x => x.value == this.inactiveItems[this.currentInactiveIdx].value
+			);
+			index == -1
+				? this.itemsToBeAddedOnDblClk.push(this.inactiveItems[this.currentInactiveIdx])
+				: this.itemsToBeAddedOnDblClk.splice(index, 1);
+			this.inactiveItems[this.currentInactiveIdx].isSelected = !this.inactiveItems[
+				this.currentInactiveIdx
+			].isSelected;
+		}
+	}
+
+	addSingleItem() {
+		this.isSingleClick = true;
+		setTimeout(() => {
+			if (this.isSingleClick) {
+				if (this.inactiveItems[this.currentInactiveIdx].isSelected == true) return;
+				this.singleItemTobeAdded = [];
+				this.singleItemTobeAdded.push(this.inactiveItems[this.currentInactiveIdx]);
+				this.inactiveItems[this.currentInactiveIdx].isSelected = true;
+				this.previousActiveIdx != undefined
+					? (this.inactiveItems[this.previousActiveIdx].isSelected = false)
+					: '';
+				this.previousActiveIdx = this.currentInactiveIdx;
+			}
+		}, 250);
+
+		//Maintain previousActiveIdx to deselect CheckBox in UI for single click.
+		//Do return if check box is already selected. Only on double click we do deselect in UI.
+	}
+
+	//addMultipleItemsOnDoubleClick() {
+	//	this.isSingleClick = false;
+	//	if (this.dtCustomizedFlag) {
+
+	//		var index = this.itemsToBeAddedOnDblClk.findIndex(x => x.key == this.inactiveItems[this.currentInactiveIdx].key);
+
+	//		index == -1 ?
+	//		this.itemsToBeAddedOnDblClk.push(this.inactiveItems[this.currentInactiveIdx])
+	//		: this.itemsToBeAddedOnDblClk.splice(index, 1)
+	//	}
+	//}
+
+	////setTimeout will help to differentiate Single and Double select
+	//addSingleItem() {
+	//	this.isSingleClick = true;
+	//	setTimeout(() => {
+	//		if (this.isSingleClick) {
+	//			this.singleItemTobeAdded = [];
+	//			this.singleItemTobeAdded.push(this.inactiveItems[this.currentInactiveIdx])
+	//		}
+	//	}, 250)
+	//}
+
+	addAll() {
+		if (this.dtCustomizedFlag) {
+			this.activeItems = this.activeItems.concat(this.inactiveItems);
+			this.inactiveItems = [];
+			this.itemsEmittedOnAdd.emit(this.activeItems);
+			this.errBorderOnSave = false;
+			//To add all Items in active items.
+		}
+	}
+
+	addAgain() {
+		if (this.dtCustomizedFlag) {
+			const activeItemIdx = this.currentActiveIdx;
+			this.activeItems = this.activeItems.concat(this.activeItems[activeItemIdx]);
+		}
+		// To duplicatate selection Items
 	}
 
 	/**
