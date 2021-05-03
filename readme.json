@@ -1,6 +1,7 @@
 {
 	"Quick Start": "projects/ng-porcelain/INSTALL.md",
 	"Components": {
+		"Checkbox": "projects/ng-porcelain/src/lib/checkbox/checkbox/README.md",
 		"Combobox": "projects/ng-porcelain/src/lib/combobox/combobox/README.md",
 		"Expando": "projects/ng-porcelain/src/lib/expando/README.md",
 		"Footer": "projects/ng-porcelain/src/lib/footer/footer/README.md",
