@@ -232,3 +232,22 @@ select {
 	width: 30% !important;
 	margin-right: 10px !important;
 }*/
+
+select {
+	option {
+		font-family: $font-family;
+		padding: 3px 6px;
+		color: #303741 !important;
+	}
+
+	option.activelable {
+		background-color: #1e90ff;
+		color: #303741 !important;
+	}
+
+	option.inactive {
+		/*box-shadow: 0 0 10px 100px #FFFF inset;*/
+		background-color: #fff !important;
+		color: #303741 !important;
+	}
+}

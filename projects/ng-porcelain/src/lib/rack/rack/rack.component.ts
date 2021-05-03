@@ -426,6 +426,20 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 		}
 	}
 
+	addMultipleItemsOnDoubleClick1() {
+		this.isSingleClick = false;
+		if (this.dtCustomizedFlag) {
+			var index = this.itemsToBeAddedOnDblClk.findIndex(
+				x => x.value == this.inactiveItems[this.currentInactiveIdx].value
+			);
+			index == -1
+				? this.itemsToBeAddedOnDblClk.push(this.inactiveItems[this.currentInactiveIdx])
+				: this.itemsToBeAddedOnDblClk.splice(index, 1);
+			this.inactiveItems[this.currentInactiveIdx].isSelected = !this.inactiveItems[
+				this.currentInactiveIdx
+			].isSelected;
+		}
+	}
 	addSingleItem() {
 		this.isSingleClick = true;
 		setTimeout(() => {
@@ -444,29 +458,6 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 		//Maintain previousActiveIdx to deselect CheckBox in UI for single click.
 		//Do return if check box is already selected. Only on double click we do deselect in UI.
 	}
-
-	//addMultipleItemsOnDoubleClick() {
-	//	this.isSingleClick = false;
-	//	if (this.dtCustomizedFlag) {
-
-	//		var index = this.itemsToBeAddedOnDblClk.findIndex(x => x.key == this.inactiveItems[this.currentInactiveIdx].key);
-
-	//		index == -1 ?
-	//		this.itemsToBeAddedOnDblClk.push(this.inactiveItems[this.currentInactiveIdx])
-	//		: this.itemsToBeAddedOnDblClk.splice(index, 1)
-	//	}
-	//}
-
-	////setTimeout will help to differentiate Single and Double select
-	//addSingleItem() {
-	//	this.isSingleClick = true;
-	//	setTimeout(() => {
-	//		if (this.isSingleClick) {
-	//			this.singleItemTobeAdded = [];
-	//			this.singleItemTobeAdded.push(this.inactiveItems[this.currentInactiveIdx])
-	//		}
-	//	}, 250)
-	//}
 
 	addAll() {
 		if (this.dtCustomizedFlag) {
