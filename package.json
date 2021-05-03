@@ -20,7 +20,7 @@
 		"sync-packages": "tools/sync-packages/bin/run",
 		"set-azdo-variables": "tools/set-azdo-variables/bin/run",
 		"build-readme": "tools/build-readme/bin/run",
-		"get-latest-version": "tools/build-readme/bin/run"
+		"get-latest-version": "tools/get-latest-version/bin/run"
 	},
 	"husky": {
 		"hooks": {
