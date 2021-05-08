@@ -92,7 +92,7 @@
 		"karma-jasmine-html-reporter": "^0.2.2",
 		"lodash-es": "^4.17.15",
 		"lorem-ipsum": "^2.0.0",
-		"ng-packagr": "^9.0.0",
+		"ng-packagr": "^10.1.1",
 		"node-sass": "^4.14.1",
 		"package-diff": "0.0.6",
 		"prettier": "^1.16.4",
