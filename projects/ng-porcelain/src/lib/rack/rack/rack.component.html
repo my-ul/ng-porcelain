@@ -16,8 +16,15 @@
 			[(ngModel)]="selectedInactiveItem"
 			(focus)="setInactiveFocus(true)"
 			(blur)="setInactiveFocus(false)"
+			(click)="addSingleItem()"
+			(dblclick)="addMultipleItemsOnDoubleClick1()"
 		>
-			<option [ngValue]="item" *ngFor="let item of inactiveItems">{{ item[labelProp] }}</option>
+			<option
+				[ngValue]="item"
+				*ngFor="let item of inactiveItems"
+				[ngClass]="{ activelable: item.isSelected, inactive: !item.isSelected }"
+				>{{ item[labelProp] }}</option
+			>
 		</select>
 
 		<!-- Activation Buttons -->
@@ -40,6 +47,11 @@
 				<fa-icon [icon]="deactivateIcon"></fa-icon>
 				<span class="activation-button-label">{{ labelDeactivate }}</span>
 			</button>
+			<ng-container *ngIf="dtCustomizedFlag">
+				<span class="rack_addAll" (click)="addAll()">
+					<u>Add All</u>
+				</span>
+			</ng-container>
 		</div>
 
 		<!-- Active List -->
@@ -51,7 +63,7 @@
 			#activePicker
 			[size]="size"
 			[(ngModel)]="selectedActiveItem"
-			class="active-list"
+			[ngClass]="errBorderOnSave ? 'active-listError' : 'active-list'"
 			name="active-list"
 			id="active-list"
 			(focus)="setActiveFocus(true)"
@@ -69,35 +81,93 @@
 			</option>
 		</select>
 
-		<div class="order-buttons">
-			<button
-				class="move-up-button"
-				(click)="moveSelectedItemUp($event.shiftKey)"
-				[disabled]="!canMoveUp"
-				[title]="
-					[
-						[labelMoveUp, ' (Alt + Up Arrow)'].join(' '),
-						[labelMoveToTop, '(Shift + Alt + Up Arrow)'].join(' ')
-					].join('\n')
-				"
-			>
-				<fa-icon [icon]="moveUpIcon"></fa-icon>
-				<span class="sr-only">{{ labelMoveUp }}</span>
-			</button>
-			<button
-				class="move-down-button"
-				(click)="moveSelectedItemDown($event.shiftKey)"
-				[disabled]="!canMoveDown"
-				[title]="
-					[
-						[labelMoveDown, ' (Alt + Down Arrow)'].join(' '),
-						[labelMoveToBottom, '(Shift + Alt + Down Arrow)'].join(' ')
-					].join('\n')
-				"
-			>
-				<fa-icon [icon]="moveDownIcon"></fa-icon>
-				<span class="sr-only">{{ labelMoveDown }}</span>
-			</button>
+		<div [ngClass]="dtCustomizedFlag ? 'order-buttonsDT' : 'order-buttons'">
+			<ng-container *ngIf="dtCustomizedFlag">
+				<div *ngIf="errBorderOnSave" class="errTxt">This field is required.</div>
+				<div class="btnUp">
+					<button
+						class="move-up-button"
+						(click)="moveSelectedItemUp($event.shiftKey)"
+						[disabled]="!canMoveUp"
+						[title]="
+							[
+								[labelMoveUp, ' (Alt + Up Arrow)'].join(' '),
+								[labelMoveToTop, '(Shift + Alt + Up Arrow)'].join(' ')
+							].join('\n')
+						"
+					>
+						<fa-icon [icon]="moveUpIcon"></fa-icon>
+						<span class="sr-only">{{ labelMoveUp }}</span>
+					</button>
+				</div>
+				<div class="btnDwn">
+					<button
+						class="move-down-button"
+						(click)="moveSelectedItemDown($event.shiftKey)"
+						[disabled]="!canMoveDown"
+						[title]="
+							[
+								[labelMoveDown, ' (Alt + Down Arrow)'].join(' '),
+								[labelMoveToBottom, '(Shift + Alt + Down Arrow)'].join(' ')
+							].join('\n')
+						"
+					>
+						<fa-icon [icon]="moveDownIcon"></fa-icon>
+						<span class="sr-only">{{ labelMoveDown }}</span>
+					</button>
+				</div>
+				<div class="btnAddAgain">
+					<button
+						[ngClass]="!canAddAgain ? 'addAgainInActive' : 'addAgainActive'"
+						*ngIf="dtCustomizedFlag"
+						[disabled]="!canAddAgain"
+						(click)="addAgain()"
+					>
+						Add Again
+					</button>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="!dtCustomizedFlag">
+				<button
+					class="move-up-button"
+					(click)="moveSelectedItemUp($event.shiftKey)"
+					[disabled]="!canMoveUp"
+					[title]="
+						[
+							[labelMoveUp, ' (Alt + Up Arrow)'].join(' '),
+							[labelMoveToTop, '(Shift + Alt + Up Arrow)'].join(' ')
+						].join('\n')
+					"
+				>
+					<fa-icon [icon]="moveUpIcon"></fa-icon>
+					<span class="sr-only">{{ labelMoveUp }}</span>
+				</button>
+
+				<button
+					class="move-down-button"
+					(click)="moveSelectedItemDown($event.shiftKey)"
+					[disabled]="!canMoveDown"
+					[title]="
+						[
+							[labelMoveDown, ' (Alt + Down Arrow)'].join(' '),
+							[labelMoveToBottom, '(Shift + Alt + Down Arrow)'].join(' ')
+						].join('\n')
+					"
+				>
+					<fa-icon [icon]="moveDownIcon"></fa-icon>
+					<span class="sr-only">{{ labelMoveDown }}</span>
+				</button>
+
+				<button
+					[ngClass]="!canAddAgain ? 'addAgainInActive' : 'addAgainActive'"
+					*ngIf="dtCustomizedFlag"
+					[disabled]="!canAddAgain"
+					(click)="addAgain()"
+				>
+					Add Again
+				</button>
+			</ng-container>
 		</div>
 	</div>
 </ng-template>
