@@ -9,22 +9,19 @@ export class RackDocsComponent implements OnInit {
 	inactiveFruits = [
 		{
 			label: 'Kiwi',
-			key: 'kiwi',
-			value: 'kiwi'
+			value: 'kiwi',
+			locked: true
 		},
 		{
 			label: 'Cherry',
-			key: 'cherry',
 			value: 'cherry'
 		},
 		{
 			label: 'Watermelon',
-			key: 'watermelon',
 			value: 'watermelon'
 		},
 		{
 			label: 'Mango',
-			key: 'mango',
 			value: 'mango'
 		}
 	];
@@ -32,17 +29,15 @@ export class RackDocsComponent implements OnInit {
 	activeFruits = [
 		{
 			label: 'Banana',
-			key: 'banana',
 			value: 'banana'
 		},
 		{
 			label: 'Apple',
-			key: 'apple',
-			value: 'apple'
+			value: 'apple',
+			locked: true
 		},
 		{
 			label: 'Orange',
-			key: 'orange',
 			value: 'orange'
 		}
 	];
