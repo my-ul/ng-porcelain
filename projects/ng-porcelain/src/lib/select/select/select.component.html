@@ -1,0 +1,14 @@
+<div
+	class="porcelain-select__selected-window"
+	*ngIf="search && isOpen; then searchWindow; else staticWindow"
+	[class.porcelain-select__selected-window--search]="search"
+	[class.porcelain-select__selected-window--static]="!search"
+></div>
+<ng-template #searchWindow>
+	<input type="text" [(ngModel)]="query" (focus)="setFocus(true)" (blur)="setFocus(false)" />
+</ng-template>
+<ng-template #staticWindow> </ng-template>
+
+<div class="porcelain-select__options">
+	<ng-content select="porcelain-options,p-options"></ng-content>
+</div>

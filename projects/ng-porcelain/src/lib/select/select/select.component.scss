@@ -1,0 +1,23 @@
+:host {
+	font-size: 14px;
+	display: block;
+	position: relative;
+	.porcelain-select__selected-window {
+		display: block;
+		border: 1px solid #bbc1c8;
+	}
+	.porcelain-select__options {
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 50vh;
+		left: 0;
+		top: 100%;
+		overflow-y: scroll;
+		border: solid 1px #bbc1c8;
+	}
+
+	porcelain-option {
+		display: block;
+	}
+}
