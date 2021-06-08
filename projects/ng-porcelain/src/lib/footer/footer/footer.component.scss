@@ -9,18 +9,29 @@
 	color: #fff;
 	padding: 1.5em 0 1.5em 100px;
 	//line-height: 60px;
+	display: flex;
+	flex-direction: row;
 
-	p {
+	.ul-logdetail-container {
+		display: flex;
+		flex: 1.5;
 		margin: 0;
 		color: #fff;
 		letter-spacing: normal;
-		//line-height: 60px;
+	}
+
+	.policies-container {
+		justify-content: space-between;
+		display: flex;
+		flex: 1;
+		color: #fff;
+		text-decoration: none;
+		margin: 0 1em;
 	}
 
 	a {
 		color: #fff;
 		text-decoration: none;
-		display: inline-block;
 		margin: 0 1em;
 
 		&:hover {
