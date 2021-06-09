@@ -1,0 +1,9 @@
+<label
+	class="b-contain"
+	[class.porcelain-checkbox__container--checked]="checked"
+	[class.porcelain-checkbox__container--disabled]="disabled"
+>
+	<span class="porcelain-checkbox__label"><ng-content></ng-content></span>
+	<input type="checkbox" [checked]="checked" [disabled]="disabled" #cbx />
+	<div class="b-input"></div>
+</label>
