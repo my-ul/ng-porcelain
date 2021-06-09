@@ -116,7 +116,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Shown when the user has filtered too much, and no valid items remain in filteredItems.
 	 */
-	labelNoItemsFound: string = 'No items found.';
+	@Input() public labelNoItemsFound: string = 'No results found.';
 
 	/**
 	 * Placeholder for text input when search field is empty
