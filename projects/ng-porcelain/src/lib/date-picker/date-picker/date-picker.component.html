@@ -24,7 +24,7 @@
 		class="datePicker__clear"
 		*ngIf="selectedDate"
 		[style.color]="clearIconColor"
-		(click)="DatePicker.clearDate()"
+		(click)="clear()"
 		[title]="labelClear"
 	>
 		<span class="sr-only">{{ labelClear }}</span>

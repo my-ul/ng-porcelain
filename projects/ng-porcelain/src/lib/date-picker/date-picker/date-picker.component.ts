@@ -1,6 +1,17 @@
-import { Component, OnInit, Input, Inject, Output, EventEmitter, HostBinding } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	Inject,
+	Output,
+	EventEmitter,
+	HostBinding,
+	ViewChild,
+	OnChanges,
+	SimpleChanges
+} from '@angular/core';
 import * as moment from 'moment';
-import { IMyOptions, IMyDateModel, IMyDate } from 'angular-mydatepicker';
+import { IMyOptions, IMyDateModel, IMyDate, AngularMyDatePickerDirective } from 'angular-mydatepicker';
 
 import { faCalendarAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,7 +20,7 @@ import { faCalendarAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 	templateUrl: './date-picker.component.html',
 	styleUrls: ['./date-picker.component.scss']
 })
-export class datePickerComponent implements OnInit {
+export class datePickerComponent implements OnInit, OnChanges {
 	@Input() placeHolderValue: string = 'YYYY-MM-DD';
 
 	/**
@@ -100,35 +111,49 @@ export class datePickerComponent implements OnInit {
 	 */
 	@Output() selectedFormatDate: EventEmitter<string> = new EventEmitter<string>();
 
-	public selectedDate: IMyDate = null;
+	@ViewChild('DatePicker', { static: false })
+	public myDatePickRef: AngularMyDatePickerDirective = null;
+	public selectedDate: IMyDateModel = null;
 	constructor() {}
 
 	public ngOnInit() {
-		/*
-		//load preselected date if existed
 		if (this.preselectedDate !== '') {
 			this.setPreselectedDate();
 		}
-		*/
+	}
+	/**
+	 *
+	 * Incase input changes update datepicker
+	 *
+	 * @param changes
+	 */
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['preselectedDate']) {
+			this.setPreselectedDate();
+		}
 	}
 
 	/**
 	 *
 	 *SetPreselectedDate After Validation
 	 * */
-	/*
-	 * Needs to be Implemented if Required
+
 	public setPreselectedDate() {
 		let preselectedDate: Date = this.getPreSelectedDate(this.preselectedDate);
 		if (preselectedDate) {
 			this.selectedDate = {
-				year: preselectedDate.getFullYear(),
-				month: preselectedDate.getMonth(),
-				day: preselectedDate.getDay()
+				isRange: false,
+				singleDate: {
+					date: {
+						day: preselectedDate.getDate(),
+						month: preselectedDate.getMonth() + 1, // Zero-indexed => One-indexed
+						year: preselectedDate.getFullYear()
+					}
+				}
 			};
 		}
 	}
-	*/
 
 	/**
 	 *
@@ -137,7 +162,7 @@ export class datePickerComponent implements OnInit {
 
 	public onDateChanged(event: IMyDateModel) {
 		// Update value of selDate variable
-		this.selectedDate = event.singleDate.date;
+		this.selectedDate = event;
 		this.userSelectedDate.emit(event);
 		this.selectedFormatDate.emit(event.singleDate.formatted);
 	}
@@ -147,17 +172,15 @@ export class datePickerComponent implements OnInit {
 	 * Below function is reference to convert from date to string
 	 * @param date
 	 */
-	/**
-	 * Needs to be developed
-	public getPreSelectedDate(date: string): Date{
-		if (moment.isDate(date)) {
-			return moment(date, 'YYYY-MM-DD').toDate();			
-		}
-		else {
+
+	public getPreSelectedDate(date: string): Date {
+		let parsed = moment.utc(date, 'YYYY-MM-DD');
+		if (parsed.isValid) {
+			return moment(date, 'YYYY-MM-DD').toDate();
+		} else {
 			return null;
 		}
 	}
-	*/
 
 	/**
 	 *
@@ -167,5 +190,20 @@ export class datePickerComponent implements OnInit {
 	public filterDateToStringFormat(date: Date): string {
 		let DateValues = moment.utc(date).format('YYYY-MM-DD');
 		return DateValues;
+	}
+	/**
+	 * Below Function is for clearing Datepicker. Use ViewChild to get value
+	 * */
+	public clear() {
+		this.myDatePickRef.clearDate();
+	}
+
+	/**
+	 *
+	 * Utility function for setting date via viewChild. USE OF Preselected Input is adviced!!
+	 * */
+	public SetDatePickerValue(inputdate: string) {
+		this.preselectedDate = inputdate;
+		this.setPreselectedDate();
 	}
 }

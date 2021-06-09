@@ -1,17 +1,23 @@
 <div class="footer">
-	<p>
+	<div class="ul-logdetail-container">
 		UL and the UL logo are trademarks of UL LLC &copy; {{ year }} All Rights Reserved.
-		<a target="_blank" href="http://www.ul.com/customer-resources/online-policies/">{{
-			onlinePoliciesLabel
-		}}</a>
-		<a target="_blank" href="http://www.ul.com/customer-resources/online-policies/about-cookies/">{{
-			aboutCookiesLabel
-		}}</a>
+	</div>
+	<div class="policies-container">
+		<a target="_blank" href="http://www.ul.com/customer-resources/online-policies/">
+			{{ onlinePoliciesLabel }}
+		</a>
+		<a
+			class="online-policies"
+			target="_blank"
+			href="http://www.ul.com/customer-resources/online-policies/about-cookies/"
+		>
+			{{ aboutCookiesLabel }}
+		</a>
 		<a
 			target="_blank"
 			href="https://app-de.onetrust.com/app/#/webform/e348820f-6ffc-48f0-aa9f-2d80a79304fc"
-			class="footer-font"
+			class="footer-font DataAccess"
 			>{{ accessYourDataLabel }}</a
 		>
-	</p>
+	</div>
 </div>

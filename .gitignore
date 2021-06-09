@@ -56,5 +56,8 @@ dist/
 .vscode/settings.json
 
 # Documentation Build
-projects/ng-porcelain/doc-assets/
 projects/ng-porcelain/README.md
+projects/ng-porcelain/doc-assets/
+
+# Ignore tools node_modules directories in child projects
+tools/*/node_modules/

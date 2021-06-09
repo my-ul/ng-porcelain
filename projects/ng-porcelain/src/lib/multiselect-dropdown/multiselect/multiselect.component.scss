@@ -2,6 +2,9 @@ $border-color: #bbc1c8;
 $border-def: solid 1px #bbc1c8;
 
 :host {
+	display: block;
+	width: 100%;
+	font-size: 14px;
 	.porcelain-toolbar-select__toggle {
 		color: #9ea6ba;
 		display: flex;
@@ -20,7 +23,6 @@ $border-def: solid 1px #bbc1c8;
 	}
 
 	.select_item {
-		cursor: pointer;
 		padding: 7px;
 
 		&--highlighted {
@@ -29,7 +31,6 @@ $border-def: solid 1px #bbc1c8;
 	}
 
 	.select__items {
-		top: 100%;
 		left: 0;
 		width: 100%;
 		list-style: none;
@@ -47,7 +48,6 @@ $border-def: solid 1px #bbc1c8;
 
 	.porcelain-toolbar-select__toggle-label {
 		cursor: pointer;
-		font-weight: 600;
 		font-family: 'Open Sans';
 	}
 
@@ -57,7 +57,7 @@ $border-def: solid 1px #bbc1c8;
 
 	.porcelain-toolbar-select__toggle-caret {
 		flex: 0 0 auto;
-		color:#9ea6ba;
+		color: #9ea6ba;
 	}
 
 	.porcelain-toolbar-select__toggle-current {
@@ -118,14 +118,10 @@ $border-def: solid 1px #bbc1c8;
 		padding-left: 24px;
 	}
 
-	.porcelain-multiselect-content {
-		width: 40%;
-	}
-
 	.porcelain-multiselect-border {
-		margin-top: 0.5em;
+		//margin-top: 0.5em;
 		border-top: 1px solid $border-color;
-		margin: 2% 2.5% 0 2.5%;
+		//margin: 2% 2.5% 0 2.5%;
 	}
 
 	.porcelain-multiselect-items {
