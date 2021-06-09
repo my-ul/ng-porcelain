@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { ComboboxComponent } from './combobox/combobox.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PipesModule } from '../pipes/pipes.module';
-
 export const COMBOBOX_DIRECTIVES = [ComboboxComponent];
 export const COMBOBOX_IMPORTS = [CommonModule, FormsModule, PipesModule, FontAwesomeModule];
 

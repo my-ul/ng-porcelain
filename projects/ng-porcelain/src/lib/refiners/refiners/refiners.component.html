@@ -17,6 +17,7 @@
 
 		<ng-container *ngIf="isSearchRefiner(refiner)">
 			<porcelain-search-refiner
+				#searchRef
 				[activeKeys]="values[refiner.slug]"
 				(activeKeysChange)="handleRefinerChange([refiner.slug, $event])"
 				[refiner]="refiner"

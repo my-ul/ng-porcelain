@@ -202,3 +202,7 @@ export { MultiSelectComponent } from './lib/multiselect-dropdown/multiselect/mul
 
 export { AutoCompleteModule } from './lib/auto-complete/auto-complete.module';
 export { AutoCompleteComponent } from './lib/auto-complete/auto-complete/auto-complete.component';
+
+// Checkbox module
+export { CheckboxModule } from './lib/checkbox/checkbox.module';
+export { CheckboxComponent } from './lib/checkbox/checkbox/checkbox.component';

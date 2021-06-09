@@ -23,7 +23,6 @@ $border-def: solid 1px #bbc1c8;
 	}
 
 	.select_item {
-		cursor: pointer;
 		padding: 7px;
 
 		&--highlighted {
@@ -32,7 +31,6 @@ $border-def: solid 1px #bbc1c8;
 	}
 
 	.select__items {
-		top: 100%;
 		left: 0;
 		width: 100%;
 		list-style: none;
@@ -50,7 +48,6 @@ $border-def: solid 1px #bbc1c8;
 
 	.porcelain-toolbar-select__toggle-label {
 		cursor: pointer;
-		font-weight: 600;
 		font-family: 'Open Sans';
 	}
 

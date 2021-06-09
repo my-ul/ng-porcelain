@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { MultiSelectComponent } from './multiselect/multiselect.component';
 import { TruncateModule } from '../truncate/truncate.module';
@@ -12,7 +13,8 @@ export const MULTISELECT_IMPORTS = [
 	CommonModule,
 	FontAwesomeModule,
 	BrowserAnimationsModule,
-	TruncateModule
+	TruncateModule,
+	FormsModule
 ];
 
 @NgModule({

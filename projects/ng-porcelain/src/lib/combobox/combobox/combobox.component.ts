@@ -10,7 +10,6 @@ import {
 	ViewChildren,
 	ViewChild
 } from '@angular/core';
-
 import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { clamp } from '../../shared/utilities/arrays/clamp';
@@ -77,7 +76,11 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 */
 	@Output()
 	public valueChange: EventEmitter<ItemType> = new EventEmitter();
-
+	/**
+	 * Event emitter that emits whenever clear icon is clicked.
+	 */
+	@Output()
+	public clearEvent: EventEmitter<string> = new EventEmitter<string>();
 	/**
 	 * The current filtered set of items.  Force repopulation with applyFilter().
 	 */
@@ -113,7 +116,7 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * Shown when the user has filtered too much, and no valid items remain in filteredItems.
 	 */
-	labelNoItemsFound: string = 'No items found.';
+	@Input() public labelNoItemsFound: string = 'No results found.';
 
 	/**
 	 * Placeholder for text input when search field is empty
@@ -128,12 +131,33 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	/**
 	 * The current query.
 	 */
-	query: string = '';
+	@Input() public query: string = '';
 
 	/**
 	 * Index of the selected item with respect to the `items` array.
 	 */
 	selectedIndex: number = -1;
+	/**
+	 * Strings containing html template.
+	 */
+	@Input() type: string = '';
+	@Input() types: string = '';
+
+	/**
+	 * isComplexArray checks whether its normal object array or it contains any html template contents.
+	 * @param isComplexArray
+	 */
+	@Input() isComplexArray: boolean = false;
+
+	/**
+	 *boolean to check whether clearing the values in input field needs confirmation or not.
+	 */
+	@Input() isConfirmationNeeded: boolean = false;
+
+	/**
+	 *boolean to decide whether to clear the values in the input field.
+	 */
+	@Input() isCleared: boolean = false;
 
 	constructor(
 		private element: ElementRef<HTMLElement>,
@@ -148,14 +172,29 @@ export class ComboboxComponent extends Loggable implements OnInit {
 				label_Clear: 'labelClear'
 			})
 		);
+		if (this.items[this.labelProp] == '') {
+			this.items[this.labelProp] = ((this.items[this.type].replace(/\<(.+?)\>/g, '') as string) +
+				', ' +
+				this.items[this.types].replace(/\<(.+?)\>/g, '')) as string;
+		}
 	}
 
 	/**
 	 * Resets the component state to blank query and resets the filteredItems array.
 	 */
-	clear() {
-		this.query = '';
-		this.applyFilter();
+	public clear() {
+		this.clearEvent.emit('');
+		if (this.isConfirmationNeeded) {
+			if (this.isCleared) {
+				if (this.query != '') {
+					this.query = '';
+					this.applyFilter();
+				}
+			}
+		} else {
+			this.query = '';
+			this.applyFilter();
+		}
 	}
 
 	/**
@@ -172,7 +211,13 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	set value(value: ItemType) {
 		this.selectedIndex = this.items.indexOf(value);
 		if (this.selectedIndex > -1) {
-			this.query = this.isObjectArray ? this.value[this.labelProp] : this.value;
+			if (this.isComplexArray) {
+				this.query = this.isObjectArray
+					? this.value[this.type].replace(/\<(.+?)\>/g, '')
+					: this.value;
+			} else {
+				this.query = this.isObjectArray ? this.value[this.labelProp] : this.value;
+			}
 			this.valueChange.emit(this.value);
 		}
 	}
@@ -192,22 +237,31 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 * Searches the `items` array for items that match the query.
 	 * Result is placed at this.filteredItems
 	 */
-	applyFilter(): this {
+	public applyFilter(): this {
 		this.filteredItems = this.items.filter(item => {
 			if (this.isObjectArray) {
-				return (
-					(item[this.labelProp] as string)
-						.toLowerCase()
-						.indexOf(this.query.trim().toLowerCase()) > -1
-				);
+				if (this.isComplexArray) {
+					item[this.labelProp] = (((item[this.type] as string) +
+						', ' +
+						item[this.types]) as string).replace(/\<(.+?)\>/g, '');
+					return (
+						(item[this.labelProp] as string)
+							.toLowerCase()
+							.indexOf(this.query.trim().toLowerCase()) > -1
+					);
+				} else {
+					return (
+						(item[this.labelProp] as string)
+							.toLowerCase()
+							.indexOf(this.query.trim().toLowerCase()) > -1
+					);
+				}
 			} else {
 				return (item as string).toLowerCase().indexOf(this.query.trim().toLowerCase()) > -1;
 			}
 		});
-
 		return this;
 	}
-
 	/**
 	 * Handles keyup events when the user types in the field. Binds special keys
 	 * to create and maintain traditional key behaviors expected of a select control.
@@ -217,7 +271,6 @@ export class ComboboxComponent extends Loggable implements OnInit {
 		//Check focus exists
 		if (this.hasFocus) {
 			this.applyFilter();
-
 			let key = event.key,
 				lastIndex = this.filteredItems.length - 1;
 
@@ -384,5 +437,14 @@ export class ComboboxComponent extends Loggable implements OnInit {
 	 */
 	toggleOpen() {
 		this.setOpen(!this.isOpen);
+	}
+
+	/**
+	 * Insert query Value and filter programmatically. Use angular ViewChild,ViewChildren
+	 *
+	 * */
+	public setSelectData(SerachValue: string = '') {
+		this.query = SerachValue;
+		this.applyFilter();
 	}
 }

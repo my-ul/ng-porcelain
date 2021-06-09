@@ -23,7 +23,8 @@ class GetLatestVersion extends Command {
 	static flags = {
 		package: flags.string({
 			char: 'p',
-			required: true,
+			required: false,
+			default: 'package.json',
 			description: 'Path to a package.json file.'
 			//parse: (pkg: string) => path.resolve(pkg)
 		}),
