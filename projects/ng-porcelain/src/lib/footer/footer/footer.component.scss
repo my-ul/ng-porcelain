@@ -19,7 +19,6 @@
 		color: #fff;
 		letter-spacing: normal;
 	}
-
 	.policies-container {
 		justify-content: space-between;
 		display: flex;
@@ -32,10 +31,17 @@
 	a {
 		color: #fff;
 		text-decoration: none;
-		margin: 0 1em;
 
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+
+	.online-policies {
+		margin: 0 2em 0 2em;
+	}
+
+	.DataAccess {
+		margin-right: 1em;
 	}
 }
