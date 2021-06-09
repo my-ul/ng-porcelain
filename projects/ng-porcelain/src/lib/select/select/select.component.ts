@@ -43,7 +43,8 @@ export class SelectComponent implements IOptionParent, OnInit, AfterViewInit {
 		this._highlightedIdx = highlightedIdx;
 		this.options
 			.toArray()
-			.forEach((option, currentIdx) => (option.isHighlighted = highlightedIdx === currentIdx));
+			// update all of the options to show the proper highlighted state.
+			.forEach((option, optionIdx) => (option.isHighlighted = highlightedIdx === optionIdx));
 	}
 
 	// #endregion
@@ -61,6 +62,7 @@ export class SelectComponent implements IOptionParent, OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
+		this.options.changes.subscribe(changes => console.log('options changes observed', { changes }));
 		this.options.forEach(option => {
 			option.setParent(this);
 		});
