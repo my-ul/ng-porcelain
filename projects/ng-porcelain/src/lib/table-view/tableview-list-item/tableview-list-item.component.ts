@@ -2,11 +2,11 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { BackgroundColorDirective } from '../color-directive/background-color.directive';
 
 @Component({
-	selector: 'porcelain-list-item, p-list-item',
-	templateUrl: './list-item.component.html',
-	styleUrls: ['./list-item.component.scss']
+	selector: 'tableview-list-item',
+	templateUrl: './tableview-list-item.component.html',
+	styleUrls: ['./tableview-list-item.component.scss']
 })
-export class ListItemComponent implements OnInit {
+export class TableviewListItemComponent implements OnInit {
 	@Input() ElementIndex: number = 0;
 
 	@ViewChild(BackgroundColorDirective, { static: false })
@@ -14,5 +14,5 @@ export class ListItemComponent implements OnInit {
 
 	constructor() {}
 
-	ngOnInit() {}
+	ngOnInit(): void {}
 }

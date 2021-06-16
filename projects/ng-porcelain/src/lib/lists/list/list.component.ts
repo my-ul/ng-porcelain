@@ -6,9 +6,6 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 	styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-	@HostBinding('class')
-	classes = ['list'].join(' ');
-
 	constructor() {}
 
 	ngOnInit() {}

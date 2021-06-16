@@ -18,6 +18,7 @@ import { SortHeaderComponent } from './sort-header/sort-header.component';
 import { TextHeaderComponent } from './text-header/text-header.component';
 import { DynamicHeaderComponent } from './dynamic-header/dynamic-header.component';
 import { SearchHeaderComponent } from './search-header/search-header.component';
+import { BackgroundColorDirective } from './color-directive/background-color.directive';
 
 export const LISTS_IMPORTS = [
 	CommonModule,
@@ -37,7 +38,8 @@ export const LISTS_DIRECTIVES = [
 	ListBodyComponent,
 	ListItemComponent,
 	ListItemCellComponent,
-	DynamicHeaderComponent
+	DynamicHeaderComponent,
+	BackgroundColorDirective
 ];
 
 @NgModule({

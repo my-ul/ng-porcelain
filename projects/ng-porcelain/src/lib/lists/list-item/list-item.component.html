@@ -1,3 +1,7 @@
-<div class="list-item__inner">
-	<ng-content select="porcelain-list-item-cell, p-list-item-cell"></ng-content>
+<div class="list-item__inner" bgColorModify [Index]="ElementIndex">
+	<ng-content
+		select="porcelain-list-item-cell,
+				p-list-item-cell"
+	>
+	</ng-content>
 </div>

@@ -206,3 +206,14 @@ export { AutoCompleteComponent } from './lib/auto-complete/auto-complete/auto-co
 // Checkbox module
 export { CheckboxModule } from './lib/checkbox/checkbox.module';
 export { CheckboxComponent } from './lib/checkbox/checkbox/checkbox.component';
+
+// TableView exports
+export { TableviewModuleModule } from './lib/table-view/tableview-module.module';
+export { TableviewHeaderComponent } from './lib/table-view/tableview-header/tableview-header.component';
+export { TableviewHeaderItemComponent } from './lib/table-view/tableview-header-item/tableview-header-item.component';
+export { TableviewListComponent } from './lib/table-view/tableview-list/tableview-list.component';
+export { TableviewListBodyComponent } from './lib/table-view/tableview-list-body/tableview-list-body.component';
+export { TableviewListItemComponent } from './lib/table-view/tableview-list-item/tableview-list-item.component';
+export { TableviewListItemCellComponent } from './lib/table-view/tableview-list-item-cell/tableview-list-item-cell.component';
+export { TableviewTextHeaderComponent } from './lib/table-view/tableview-text-header/tableview-text-header.component';
+export { BackgroundColorDirective } from './lib/table-view/color-directive/background-color.directive';

@@ -12,8 +12,7 @@
 	}
 
 	::ng-deep {
-		p-list-item-cell + p-list-item-cell,
-		porcelain-list-item-cell + porcelain-list-item-cell {
+		tableview-list-item-cell + tableview-list-item-cell {
 			border-left: solid 1px #d5d7db !important;
 		}
 	}

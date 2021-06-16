@@ -5,12 +5,10 @@
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	/*padding: 0 21px 0 21px;*/
 	min-height: 7vh;
 
 	::ng-deep {
-		p-list-header-cell + p-list-header-cell,
-		porcelain-list-header-cell + porcelain-list-header-cell {
+		tableview-header-item + tableview-header-item {
 			border-left: solid 1px #9fadbb;
 		}
 	}
