@@ -13,11 +13,18 @@
 	}
 
 	&.sort-header--active {
+		padding: 1px 4px 1px 6px;
+		/* padding: 5px; */
+		margin-right: 8px;
+		margin-left: 8px;
 		background: #e4ebf5 !important;
 	}
 
 	&:hover {
 		background: #d8e1ed;
+		padding: 1px 4px 1px 6px;
+		margin-right: 8px;
+		margin-left: 8px;
 	}
 
 	.sort-header__box {
@@ -34,7 +41,7 @@
 		flex: 0 0 1em;
 		min-width: 1em;
 		text-align: center;
-		margin-left: 0.5em;
+		margin-left: 8px;
 	}
 
 	.sr-only {

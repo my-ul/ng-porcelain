@@ -34,12 +34,12 @@ $list-item-padding: 0.5em;
 	}
 
 	.list-item-cell__inner {
-		flex: 0 0 100%;
-		width: 100%;
-		//elipsis implmentation
+		flex: 0 0 auto;
+		width: 90%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		margin-left: 10px;
 
 		::ng-deep {
 			p-section + p-section {
