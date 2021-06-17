@@ -5,6 +5,7 @@
 		background: #fff;
 		display: flex;
 		flex-direction: row;
+		min-height: 48px;
 
 		::ng-deep .text-accent {
 			font-weight: 600;

@@ -1,7 +1,9 @@
 :host {
+	margin-left: 8px;
+	margin-right: 8px;
 	font-size: 14px;
-	font-weight: bold;
-	padding: 0.5em;
+	font-weight: 700;
+	padding: 0.4em;
 	line-height: 1.25em;
 	display: inline-block;
 	border-radius: 0.2em;
@@ -13,23 +15,16 @@
 	}
 
 	&.sort-header--active {
-		padding: 1px 4px 1px 6px;
-		/* padding: 5px; */
-		margin-right: 8px;
-		margin-left: 8px;
 		background: #e4ebf5 !important;
 	}
 
 	&:hover {
 		background: #d8e1ed;
-		padding: 1px 4px 1px 6px;
-		margin-right: 8px;
-		margin-left: 8px;
 	}
 
 	.sort-header__box {
 		display: flex;
-		margin: 0;
+		margin: 0px 0px 0px 3px;
 		padding: 0;
 	}
 

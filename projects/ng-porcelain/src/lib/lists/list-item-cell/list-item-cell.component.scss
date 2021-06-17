@@ -1,4 +1,4 @@
-$list-item-padding: 0.5em;
+$list-item-padding: 0.5em 1em;
 :host {
 	color: #303741;
 	display: flex;
@@ -35,11 +35,10 @@ $list-item-padding: 0.5em;
 
 	.list-item-cell__inner {
 		flex: 0 0 auto;
-		width: 90%;
+		width: 100%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		margin-left: 10px;
 
 		::ng-deep {
 			p-section + p-section {
