@@ -51,4 +51,14 @@
 		width: 1px;
 		word-wrap: normal !important;
 	}
+
+	.sort-up {
+		display: inline-block;
+		padding-top: 5.5px;
+	}
+
+	.sort-down {
+		display: inline-block;
+		padding-bottom: 5.5px;
+	}
 }
