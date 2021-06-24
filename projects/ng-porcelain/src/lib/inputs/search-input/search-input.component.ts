@@ -19,7 +19,7 @@ export class SearchInputComponent extends Loggable {
 	private _value: string;
 
 	@Input()
-	readonly canEmitEmpty: boolean = false;
+	canEmitEmpty: boolean = false;
 
 	readonly name = 'SearchInputComponent';
 
@@ -87,7 +87,7 @@ export class SearchInputComponent extends Loggable {
 	 * Tests the search box for a value.
 	 */
 	public isEmpty(): boolean {
-		return this.value === '';
+		return !this.value;
 	}
 
 	/**
@@ -130,5 +130,10 @@ export class SearchInputComponent extends Loggable {
 		this.log('setFocus(isFocused)', { isFocused });
 		this.isSearchFocused = isFocused;
 		return this;
+	}
+
+	public ngOnInit(): void {
+		/*to check if there is previous value*/
+		this.canEmitEmpty = this.value === '' ? false : true;
 	}
 }

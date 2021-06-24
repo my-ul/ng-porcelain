@@ -11,7 +11,7 @@
 	<p-search-input
 		#searchInput
 		*ngIf="mode === 'search'"
-		[placeholderLabel]="label"
+		[placeholderLabel]="placeholderLabel"
 		[borders]="false"
 		[canEmitEmpty]="true"
 		[value]="query"
@@ -21,7 +21,7 @@
 </div>
 
 <button (click)="switchModes()" class="search-header__swap">
-	<span title="Switch to Search" *ngIf="mode === 'sort'">
+	<span Class="Search_icon" title="Switch to Search" *ngIf="mode === 'sort'">
 		<span class="sr-only">Switch to Search</span>
 		<fa-icon [icon]="searchIcon"></fa-icon>
 	</span>
