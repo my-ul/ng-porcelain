@@ -34,9 +34,9 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 	@Input() sortKey: string = '';
 
-	@Input() sortsearch: any = '';
+	@Input() sortsearch: string = '';
 
-	mode: any;
+	mode: string;
 	//#region `[(query)]` Binding
 
 	private _query: string;
