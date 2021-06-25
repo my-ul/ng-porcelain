@@ -15,6 +15,7 @@ export interface DynamicColumn {
 	locked: boolean;
 	type: DynamicColumnType;
 	width: number;
+	searchValue: string;
 }
 
 export interface DynamicSearchQuery {

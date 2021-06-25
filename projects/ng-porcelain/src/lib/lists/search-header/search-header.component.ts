@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
-import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 import { Loggable } from '../../Loggable';
 import { SearchInputComponent } from '../../inputs/search-input/search-input.component';
 import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
-
+import { TranslationService } from '../../services/translation/translation.service';
 export type SearchTuple = [string, string];
 
 @Component({
@@ -15,20 +15,28 @@ export type SearchTuple = [string, string];
 })
 export class SearchHeaderComponent extends Loggable implements OnInit {
 	readonly name = 'SearchHeaderComponent';
-	readonly sortIcon: any = faSort;
+	readonly sortIcon: any = faSortDown;
 	readonly searchIcon: any = faSearch;
 
-	mode: 'search' | 'sort' = 'sort';
-
-	constructor() {
+	constructor(private translationService: TranslationService) {
 		super();
 		this.info(`new SearchHeaderComponent()`, { arguments });
+		this.sortChange.subscribe(sort => this.onSortChange.emit(sort));
+		this.searchChange.subscribe(search => this.onSearchChange.emit(search));
+		this.translationService.getTranslations().subscribe(
+			TranslationService.translate(this, {
+				label_TypeToSearch: 'placeholderLabel'
+			})
+		);
 	}
 
 	@Input() label: string = '';
 
 	@Input() sortKey: string = '';
 
+	@Input() sortsearch: string = '';
+
+	mode: string;
 	//#region `[(query)]` Binding
 
 	private _query: string;
@@ -54,6 +62,7 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 	//#endregion
 
+	@Input() public placeholderLabel: string = '';
 	//#region `[(activeSortKey)]` Binding
 
 	private _activeSortKey: string;
@@ -95,6 +104,9 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 	//#region `@Output()` Bindings
 
 	@Output()
+	onSortChange: EventEmitter<SortTuple> = new EventEmitter();
+
+	@Output()
 	public sortChange: EventEmitter<SortTuple> = new EventEmitter();
 
 	//#endregion
@@ -111,6 +123,8 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 		this.sortChange.emit([this.activeSortKey, this.activeSortDirection]);
 	}
+	@Output()
+	onSearchChange: EventEmitter<SearchTuple> = new EventEmitter();
 
 	@Output()
 	public searchChange: EventEmitter<SearchTuple> = new EventEmitter();
@@ -137,5 +151,6 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 	ngOnInit() {
 		this.info('ngOnInit()', this.query);
+		this.mode = this.sortsearch;
 	}
 }
