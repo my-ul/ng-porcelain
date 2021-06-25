@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding, Input } from '@angular/core';
 
 @Component({
 	selector: 'porcelain-list-body, p-list-body',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./list-body.component.scss']
 })
 export class ListBodyComponent implements OnInit {
+	@HostBinding('class.list-table-view')
+	@Input()
+	isTableView: boolean = false;
+
 	constructor() {}
 
 	ngOnInit() {}

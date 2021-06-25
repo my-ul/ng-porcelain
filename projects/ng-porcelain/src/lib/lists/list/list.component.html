@@ -1,3 +1,9 @@
+<div class="list__header" *ngIf="renderHeader">
+	<ng-content
+		select="porcelain-list-header, p-list-header, porcelain-dynamic-header, p-dynamic-header"
+	></ng-content>
+</div>
+
 <div class="list__items">
 	<ng-content select="porcelain-list-body, p-list-body"></ng-content>
 </div>
