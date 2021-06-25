@@ -1,17 +1,22 @@
-/*:host {
+:host {
 	::ng-deep {
 		p-list-item + p-list-item,
 		porcelain-list-item + porcelain-list-item {
 			margin-top: 10px;
 		}
 	}
-}*/
 
-:host {
-	::ng-deep {
-		.no-results {
-			text-align: center;
-			color: red;
+	&.list-table-view {
+		::ng-deep {
+			p-list-item + p-list-item,
+			porcelain-list-item + porcelain-list-item {
+				margin-top: 0px;
+			}
+
+			.no-results {
+				text-align: center;
+				color: red;
+			}
 		}
 	}
 }
