@@ -28,7 +28,7 @@ export class SearchInputComponent extends Loggable {
 	@Input() public clearIcon: any = faTimesCircle;
 	@Input() public clearIconColor: any = '#9dacba';
 
-	@Input() public placeholderLabel: string = 'Type to search...';
+	@Input() public placeHolderLabel: string = 'Type to search...';
 
 	@Input() public submitIcon: any = faSearch;
 	@Input() public submitIconColor: any = '#9dacba';
@@ -47,7 +47,7 @@ export class SearchInputComponent extends Loggable {
 		super();
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate(this, {
-				label_TypeToSearch: 'placeholderLabel'
+				label_TypeToSearch: 'placeHolderLabel'
 			})
 		);
 	}

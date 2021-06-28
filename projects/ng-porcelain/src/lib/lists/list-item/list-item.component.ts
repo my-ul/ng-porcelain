@@ -7,7 +7,7 @@ import { BackgroundColorDirective } from '../color-directive/background-color.di
 	styleUrls: ['./list-item.component.scss']
 })
 export class ListItemComponent implements OnInit {
-	@Input() ElementIndex: number = 0;
+	@Input() elementIndex: number = 0;
 
 	@ViewChild(BackgroundColorDirective, { static: false })
 	public bgColorforListitem: BackgroundColorDirective;

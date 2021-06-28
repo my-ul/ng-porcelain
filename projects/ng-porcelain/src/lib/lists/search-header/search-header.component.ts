@@ -34,9 +34,9 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 	@Input() sortKey: string = '';
 
-	@Input() sortsearch: string = '';
+	@Input() sortSearch: string = '';
 
-	mode: string;
+	mode: string = '';
 	//#region `[(query)]` Binding
 
 	private _query: string;
@@ -62,7 +62,7 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 	//#endregion
 
-	@Input() public placeholderLabel: string = '';
+	@Input() public placeHolderLabel: string = '';
 	//#region `[(activeSortKey)]` Binding
 
 	private _activeSortKey: string;
@@ -151,6 +151,6 @@ export class SearchHeaderComponent extends Loggable implements OnInit {
 
 	ngOnInit() {
 		this.info('ngOnInit()', this.query);
-		this.mode = this.sortsearch;
+		this.mode = this.sortSearch;
 	}
 }

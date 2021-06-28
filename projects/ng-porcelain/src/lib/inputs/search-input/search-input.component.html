@@ -2,10 +2,10 @@
 	<input
 		#searchInput
 		type="text"
-		title="{{ placeholderLabel }}"
+		title="{{ placeHolderLabel }}"
 		class="search-input__query"
 		[(ngModel)]="value"
-		[placeholder]="placeholderLabel"
+		[placeholder]="placeHolderLabel"
 		(keyup.enter)="trySubmit()"
 		(keyup.esc)="tryClear()"
 		(focus)="setFocus(true)"
