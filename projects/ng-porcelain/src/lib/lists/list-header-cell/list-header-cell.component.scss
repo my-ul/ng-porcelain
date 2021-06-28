@@ -1,18 +1,19 @@
 :host {
-	display: flex;
-	align-items: center;
-	padding: 4.5px 0px;
+	/*display: flex;
+	align-items: center;*/
+	padding: 5px 20px;
 
 	::ng-deep {
 		porcelain-sort-header {
-			overflow: hidden;
+			margin-left: -5px;
 
-			.sort-header__label {
+			/*overflow: hidden;*/
+			/*.sort-header__label {
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				overflow: hidden;
 				font-weight: 600;
-			}
+			}*/
 		}
 	}
 }

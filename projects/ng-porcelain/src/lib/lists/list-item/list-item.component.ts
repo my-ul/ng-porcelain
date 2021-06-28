@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, ViewChild } from '@angular/core';
 import { BackgroundColorDirective } from '../color-directive/background-color.directive';
 
 @Component({
@@ -11,6 +11,29 @@ export class ListItemComponent implements OnInit {
 
 	@ViewChild(BackgroundColorDirective, { static: false })
 	public bgColorforListitem: BackgroundColorDirective;
+
+	@HostBinding('class')
+	classes = ['list-item'].join(' ');
+
+	@HostBinding('class.list-item--success')
+	@Input()
+	success: boolean = false;
+
+	@HostBinding('class.list-item--error')
+	@Input()
+	error: boolean = false;
+
+	@HostBinding('class.list-item--warning')
+	@Input()
+	warning: boolean = false;
+
+	@HostBinding('class.list-item--primary')
+	@Input()
+	primary: boolean = false;
+
+	@HostBinding('class.list-item--secondary')
+	@Input()
+	secondary: boolean = false;
 
 	constructor() {}
 

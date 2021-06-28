@@ -5,7 +5,31 @@
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	/*padding: 0 21px 0 21px;*/
+	padding: 0 21px 0 21px;
+
+	&.list--as-table {
+		padding: 0px;
+
+		::ng-deep {
+			porcelain-list-header-cell {
+				display: flex;
+				align-items: center;
+				padding: 4.7px 0px;
+
+				porcelain-sort-header {
+					overflow: hidden;
+					margin-left: 8px;
+
+					.sort-header__label {
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						font-weight: 600;
+					}
+				}
+			}
+		}
+	}
 
 	::ng-deep {
 		p-list-header-cell + p-list-header-cell,
