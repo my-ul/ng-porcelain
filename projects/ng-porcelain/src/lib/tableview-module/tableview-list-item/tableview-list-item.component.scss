@@ -1,0 +1,19 @@
+:host {
+	display: block;
+
+	.list-item__inner {
+		background: #fff;
+		display: flex;
+		flex-direction: row;
+
+		::ng-deep .text-accent {
+			font-weight: 600;
+		}
+	}
+
+	::ng-deep {
+		p-tableview-list-item-cell + p-tableview-list-item-cell {
+			border-left: solid 1px #d5d7db !important;
+		}
+	}
+}

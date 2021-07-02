@@ -1,0 +1,100 @@
+$list-item-padding: 0.5em;
+
+:host {
+	color: #303741;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	&.list-item__cell--pad-all {
+		padding: $list-item-padding;
+	}
+
+	&.list-item__cell--pad-top {
+		padding-top: $list-item-padding;
+	}
+
+	&.list-item__cell--pad-right {
+		padding-right: $list-item-padding;
+	}
+
+	&.list-item__cell--pad-bottom {
+		padding-bottom: $list-item-padding;
+	}
+
+	&.list-item__cell--pad-left {
+		padding-left: $list-item-padding;
+	}
+
+	&.list-item__cell--align-top {
+		align-items: flex-start;
+	}
+
+	&.list-item__cell--align-bottom {
+		align-items: flex-end;
+	}
+
+	.list-item-cell__inner {
+		flex: 0 0 100%;
+		width: 100%;
+		//elipsis implmentation
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		::ng-deep {
+			p-section + p-section {
+				border-top: solid 1px #cbcdd1;
+			}
+		}
+	}
+
+	::ng-deep {
+		.section + .section {
+			border-top: solid 1px #d5d7db;
+			margin-top: $list-item-padding;
+			padding-top: $list-item-padding;
+		}
+
+		.text-muted {
+			color: #9ea6ba;
+		}
+	}
+}
+
+::ng-deep {
+	a {
+		color: #337ab7;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	p,
+	h3,
+	h4,
+	h5 {
+		font-weight: 400;
+	}
+
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		color: #303741;
+		margin: 0;
+		padding: 0;
+
+		& + & {
+			margin: $list-item-padding 0 0 0;
+		}
+	}
+}
+
+.list-item__cell + .list-item__cell {
+	border-left: solid 1px #d5d7db;
+}
