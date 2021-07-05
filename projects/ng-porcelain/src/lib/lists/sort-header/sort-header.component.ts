@@ -10,10 +10,7 @@ import {
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Loggable } from '../../Loggable';
-
-export type SortDirection = 'asc' | 'desc' | null;
-
-export type SortTuple = [string, SortDirection];
+import { SortDirection, SortTuple } from '../../shared/types/Values/Sortoptions';
 
 @Component({
 	selector: 'porcelain-sort-header, p-sort-header',

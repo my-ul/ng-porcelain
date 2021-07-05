@@ -8,10 +8,7 @@ import {
 	HostListener
 } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-
-export type SortDirection = 'asc' | 'desc' | null;
-
-export type SortTuple = [string, SortDirection];
+import { SortDirection, SortTuple } from './../../shared/types/Values/Sortoptions';
 
 @Component({
 	selector: 'p-tableview-sort-header',

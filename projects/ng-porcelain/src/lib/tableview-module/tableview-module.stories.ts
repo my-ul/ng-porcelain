@@ -1,6 +1,6 @@
 // Storybook
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text, boolean, color } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, color, radios, select } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 
 import { DynamicColumn } from './../lists/dynamic-header/dynamic-header.component';
@@ -254,6 +254,103 @@ export const tableViewDynamicColumn = () => {
 			updateInactiveColumnState(col: DynamicColumn[]) {
 				dynamicInactiveColumns = col;
 			}
+		}
+	};
+};
+
+const onQueryChange = 'sortHeader Has been clicked';
+
+export const tableViewColumnHeaders = () => {
+	var dynamicActiveColumnsHeaders: DynamicColumn[] = [
+		{
+			label: 'Name',
+			key: 'last_name',
+			locked: true,
+			type: 'search',
+			width: 2 / 7
+		},
+
+		{
+			label: 'Address',
+			key: 'address_1',
+			locked: false,
+			type: 'search',
+			width: 2 / 7
+		},
+		{
+			label: 'City',
+			key: 'city',
+			locked: false,
+			type: 'search',
+			width: 1 / 7
+		},
+		{
+			label: 'State',
+			key: 'state',
+			locked: false,
+			type: 'search',
+			width: 1 / 7
+		},
+		{
+			label: 'Zip',
+			key: 'zip',
+			locked: false,
+			type: 'text',
+			width: 1 / 7
+		}
+	];
+
+	const ColumnKnoboptions = {
+		name: 'last_name',
+		address: 'address_1',
+		city: 'city',
+		state: 'state',
+		zip: 'zip'
+	};
+	var activeSortKey = 'last_name';
+	var activeSortDirection = 'desc';
+	const groupId = 'Preselect Options';
+
+	const SortDirectionKnoboptions = {
+		Ascending: 'asc',
+		Descending: 'desc'
+	};
+	const groupId2 = 'preselect Direction';
+
+	return {
+		template: `
+					<p-tableview-header>						 
+							<p-tableview-header-item [width]="column.width"
+												   *ngFor="let column of getColumnValues()">
+								<ng-container *ngIf="column.type == 'search';else displayNormalHeader">
+									<p-tableview-sort-header [label]="column.label"
+														   [title]="column.label"
+														   [sortKey]="column.key"
+														   [activeSortKey]="activeSortKey"
+														   [activeSortDirection]="activeSortDirection"
+														   (onSortChange)="onSortHeader($event)">
+									</p-tableview-sort-header>
+								</ng-container>
+								<ng-template #displayNormalHeader>
+									<p-tableview-text-header>
+										<span innerHTML="{{column.label}}" title="{{column.label}}"></span>
+									</p-tableview-text-header>
+								</ng-template>
+							</p-tableview-header-item>					
+					</p-tableview-header>
+				`,
+		props: {
+			getColumnValues() {
+				return dynamicActiveColumnsHeaders;
+			},
+			onSortHeader: action(onQueryChange),
+			activeSortKey: radios('activeColumn', ColumnKnoboptions, activeSortKey, groupId),
+			activeSortDirection: select(
+				'sortDirection',
+				SortDirectionKnoboptions,
+				activeSortDirection,
+				groupId2
+			)
 		}
 	};
 };

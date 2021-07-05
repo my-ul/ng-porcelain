@@ -34,4 +34,4 @@ export const TABLEVIEW_DIRECTIVES = [
 	imports: TABLEVIEW_IMPORTS,
 	exports: TABLEVIEW_DIRECTIVES
 })
-export class TableviewModuleModule {}
+export class TableviewModule {}
