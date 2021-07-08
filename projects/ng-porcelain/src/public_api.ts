@@ -73,6 +73,7 @@ export { DateRefinerValue } from './lib/shared/types/Values/DateRefinerValue';
 export { IDateRefinerValue } from './lib/shared/types/Values/IDateRefinerValue';
 export { OptionRefinerValue } from './lib/shared/types/Values/OptionRefinerValue';
 export { RefinerValue } from './lib/shared/types/Values/RefinerValue';
+export { SortDirection, SortTuple } from './lib/shared/types/Values/Sortoptions';
 
 // Shared utilities
 export { i18nDateOptions } from './lib/shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
@@ -146,11 +147,7 @@ export { ListHeaderCellComponent } from './lib/lists/list-header-cell/list-heade
 export { ListItemComponent } from './lib/lists/list-item/list-item.component';
 export { ListItemCellComponent } from './lib/lists/list-item-cell/list-item-cell.component';
 export { SearchHeaderComponent, SearchTuple } from './lib/lists/search-header/search-header.component';
-export {
-	SortHeaderComponent,
-	SortDirection,
-	SortTuple
-} from './lib/lists/sort-header/sort-header.component';
+export { SortHeaderComponent } from './lib/lists/sort-header/sort-header.component';
 export { TextHeaderComponent } from './lib/lists/text-header/text-header.component';
 
 // Toolbar module
@@ -206,3 +203,16 @@ export { AutoCompleteComponent } from './lib/auto-complete/auto-complete/auto-co
 // Checkbox module
 export { CheckboxModule } from './lib/checkbox/checkbox.module';
 export { CheckboxComponent } from './lib/checkbox/checkbox/checkbox.component';
+
+//tabeview module
+export { TableviewModule } from './lib/tableview-module/tableview-module.module';
+export { TableviewListComponent } from './lib/tableview-module/tableview-list/tableview-list.component';
+export { TableviewListBodyComponent } from './lib/tableview-module/tableview-list-body/tableview-list-body.component';
+export { TableviewListItemComponent } from './lib/tableview-module/tableview-list-item/tableview-list-item.component';
+export { TableviewListItemCellComponent } from './lib/tableview-module/tableview-list-item-cell/tableview-list-item-cell.component';
+export { TableviewHeaderComponent } from './lib/tableview-module/tableview-header/tableview-header.component';
+export { TableviewHeaderItemComponent } from './lib/tableview-module/tableview-header-item/tableview-header-item.component';
+export { TableviewTextHeaderComponent } from './lib/tableview-module/tableview-text-header/tableview-text-header.component';
+export { TableviewSortHeaderComponent } from './lib/tableview-module/tableview-sort-header/tableview-sort-header.component';
+export { TableviewSearchHeaderComponent } from './lib/tableview-module/tableview-search-header/tableview-search-header.component';
+export { BackgroundColorDirective } from './lib/tableview-module/color-directive/background-color.directive';

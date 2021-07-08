@@ -1,0 +1,18 @@
+:host {
+	display: flex;
+	align-items: center;
+	padding-left: 1em;
+
+	::ng-deep {
+		p-tableview-sort-header {
+			overflow: hidden;
+
+			.sort-header__label {
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				font-weight: 600;
+			}
+		}
+	}
+}
