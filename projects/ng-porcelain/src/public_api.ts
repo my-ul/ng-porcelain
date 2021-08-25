@@ -214,5 +214,5 @@ export { TableviewHeaderComponent } from './lib/tableview-module/tableview-heade
 export { TableviewHeaderItemComponent } from './lib/tableview-module/tableview-header-item/tableview-header-item.component';
 export { TableviewTextHeaderComponent } from './lib/tableview-module/tableview-text-header/tableview-text-header.component';
 export { TableviewSortHeaderComponent } from './lib/tableview-module/tableview-sort-header/tableview-sort-header.component';
-export { TableviewSearchHeaderComponent } from './lib/tableview-module/tableview-search-header/tableview-search-header.component';
+export { TableviewSearchSortHeaderComponent } from './lib/tableview-module/tableview-searchSortHeader/tableview-searchSortHeader.component';
 export { BackgroundColorDirective } from './lib/tableview-module/color-directive/background-color.directive';

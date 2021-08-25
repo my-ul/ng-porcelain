@@ -9,7 +9,7 @@ import { TableviewHeaderComponent } from './tableview-header/tableview-header.co
 import { TableviewHeaderItemComponent } from './tableview-header-item/tableview-header-item.component';
 import { TableviewTextHeaderComponent } from './tableview-text-header/tableview-text-header.component';
 import { TableviewSortHeaderComponent } from './tableview-sort-header/tableview-sort-header.component';
-import { TableviewSearchHeaderComponent } from './tableview-search-header/tableview-search-header.component';
+import { TableviewSearchSortHeaderComponent } from './tableview-searchSortHeader/tableview-searchSortHeader.component';
 import { BackgroundColorDirective } from './color-directive/background-color.directive';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -25,7 +25,7 @@ export const TABLEVIEW_DIRECTIVES = [
 	TableviewHeaderItemComponent,
 	TableviewTextHeaderComponent,
 	TableviewSortHeaderComponent,
-	TableviewSearchHeaderComponent,
+	TableviewSearchSortHeaderComponent,
 	BackgroundColorDirective
 ];
 

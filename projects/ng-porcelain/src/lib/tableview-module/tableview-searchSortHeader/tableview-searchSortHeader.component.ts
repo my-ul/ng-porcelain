@@ -3,10 +3,10 @@ import { faSort, faSortDown, faSortUp, faSearch } from '@fortawesome/free-solid-
 import { TableviewSortHeaderComponent } from './../tableview-sort-header/tableview-sort-header.component';
 @Component({
 	selector: 'p-tableview-searchSort-header',
-	templateUrl: './tableview-search-header.component.html',
-	styleUrls: ['./tableview-search-header.component.scss']
+	templateUrl: './tableview-searchSortHeader.component.html',
+	styleUrls: ['./tableview-searchSortHeader.component.scss']
 })
-export class TableviewSearchHeaderComponent implements OnInit {
+export class TableviewSearchSortHeaderComponent implements OnInit {
 	/**
 	 * default state search box is show, set it to false to show sort box first
 	 * */
