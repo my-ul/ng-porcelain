@@ -1,4 +1,7 @@
 :host {
+	font-size: 14px;
+	padding: 0.4rem 0;
+
 	.search-sort__header-container {
 		display: flex;
 		flex-direction: row;
@@ -18,11 +21,23 @@
 		word-wrap: normal !important;
 	}
 
-	.sort-header__sort-icon {
+	.sort-header__sortIconContainer {
 		flex: 0 0 1em;
 		min-width: 1em;
 		text-align: center;
 		margin-left: 8px;
+		cursor: pointer;
+
+		.sort-header__sort-icon {
+			display: inline-block;
+
+			.sort-header--active {
+				background: #e4ebf5 !important;
+			}
+		}
+	}
+
+	.sort-header__search-Icon {
 		cursor: pointer;
 	}
 

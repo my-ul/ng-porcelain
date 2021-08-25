@@ -2,15 +2,21 @@
 	<ng-container *ngIf="isSearchEnabled; then searchContent; else sortContent"> </ng-container>
 	<ng-template #searchContent>
 		<ng-content select="p-search-input,porcelain-search-input"> </ng-content>
-		<span class="sort-header__sort-icon" (click)="isSearchEnabled = !isSearchEnabled">
-			<fa-icon [icon]="faSortDownIcon"></fa-icon>
-			<span class="sr-only">Sort</span>
+		<span class="sort-header__sortIconContainer" (click)="isSearchEnabled = !isSearchEnabled">
+			<span
+				class="sort-header__sort-icon"
+				[style.padding-top]="sortAscStyle()"
+				[style.padding-bottom]="sortDescStyle()"
+			>
+				<fa-icon [icon]="getSortIcon()" [styles]="{ color: sortToggleIconColor }"></fa-icon>
+				<span class="sr-only">Sort</span>
+			</span>
 		</span>
 	</ng-template>
 	<ng-template #sortContent>
 		<ng-content select="p-tableview-sort-header"> </ng-content>
-		<span class="sort-header__sort-down" (click)="isSearchEnabled = !isSearchEnabled">
-			<fa-icon [icon]="searchIcon" [styles]="{ color: searchIconColor }"></fa-icon>
+		<span class="sort-header__search-Icon" (click)="isSearchEnabled = !isSearchEnabled">
+			<fa-icon [icon]="searchIcon" [styles]="{ color: searchToggleIconColor }"></fa-icon>
 			<span class="sr-only">Search</span>
 		</span>
 	</ng-template>

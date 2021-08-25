@@ -374,3 +374,219 @@ export const tableViewColumnHeaders = () => {
 		}
 	};
 };
+
+export const tableViewColumnLegacySearchSortHeaders = () => {
+	var dynamicActiveColumnsHeaders: DynamicColumn[] = [
+		{
+			label: 'Name',
+			key: 'last_name',
+			locked: true,
+			type: 'search',
+			width: 2 / 7
+		},
+
+		{
+			label: 'Address',
+			key: 'address_1',
+			locked: false,
+			type: 'search',
+			width: 2 / 7
+		},
+		{
+			label: 'City',
+			key: 'city',
+			locked: false,
+			type: 'search',
+			width: 1 / 7
+		},
+		{
+			label: 'State',
+			key: 'state',
+			locked: false,
+			type: 'searchSort',
+			width: 1 / 7
+		},
+		{
+			label: 'Zip',
+			key: 'zip',
+			locked: false,
+			type: 'text',
+			width: 1 / 7
+		}
+	];
+
+	const ColumnKnoboptions = {
+		name: 'last_name',
+		address: 'address_1',
+		city: 'city',
+		state: 'state',
+		zip: 'zip'
+	};
+	var activeSortKey = 'last_name';
+	var activeSortDirection = 'desc';
+	const groupId = 'Preselect Options';
+
+	const SortDirectionKnoboptions = {
+		Ascending: 'asc',
+		Descending: 'desc'
+	};
+	const groupId2 = 'preselect Direction';
+
+	return {
+		template: `
+					<p-tableview-header>						 
+							<p-tableview-header-item [width]="column.width"
+												   *ngFor="let column of getColumnValues()">
+								<ng-container *ngIf="column.type == 'search'">
+									<p-tableview-sort-header [label]="column.label"
+														   [title]="column.label"
+														   [sortKey]="column.key"
+														   [activeSortKey]="activeSortKey"
+														   [activeSortDirection]="activeSortDirection"
+														   (onSortChange)="onSortHeader($event)">
+									</p-tableview-sort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'searchSort'">
+									<p-tableview-searchSort-header>
+										<p-tableview-sort-header [label]="column.label"
+															   [title]="column.label"
+															   [sortKey]="column.key"
+															   [activeSortKey]="activeSortKey"
+															   [activeSortDirection]="activeSortDirection"
+															   (onSortChange)="onSortHeader($event)">
+										</p-tableview-sort-header>
+										<porcelain-search-input>
+										</porcelain-search-input>
+									</p-tableview-searchSort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'text'">
+									<p-tableview-text-header>
+										<span innerHTML="{{column.label}}" title="{{column.label}}"></span>
+									</p-tableview-text-header>
+								</ng-container>
+							</p-tableview-header-item>					
+					</p-tableview-header>
+				`,
+		props: {
+			getColumnValues() {
+				return dynamicActiveColumnsHeaders;
+			},
+			onSortHeader: action(onQueryChange),
+			activeSortKey: radios('activeColumn', ColumnKnoboptions, activeSortKey, groupId),
+			activeSortDirection: select(
+				'sortDirection',
+				SortDirectionKnoboptions,
+				activeSortDirection,
+				groupId2
+			)
+		}
+	};
+};
+
+export const tableViewColumnSearchSortHeaders = () => {
+	var dynamicActiveColumnsHeaders: DynamicColumn[] = [
+		{
+			label: 'Name',
+			key: 'last_name',
+			locked: true,
+			type: 'search',
+			width: 2 / 7
+		},
+
+		{
+			label: 'Address',
+			key: 'address_1',
+			locked: false,
+			type: 'search',
+			width: 2 / 7
+		},
+		{
+			label: 'City',
+			key: 'city',
+			locked: false,
+			type: 'search',
+			width: 1 / 7
+		},
+		{
+			label: 'State',
+			key: 'state',
+			locked: false,
+			type: 'searchSort',
+			width: 1 / 7
+		},
+		{
+			label: 'Zip',
+			key: 'zip',
+			locked: false,
+			type: 'text',
+			width: 1 / 7
+		}
+	];
+
+	const ColumnKnoboptions = {
+		name: 'last_name',
+		address: 'address_1',
+		city: 'city',
+		state: 'state',
+		zip: 'zip'
+	};
+	var activeSortKey = 'last_name';
+	var activeSortDirection = 'desc';
+	const groupId = 'Preselect Options';
+
+	const SortDirectionKnoboptions = {
+		Ascending: 'asc',
+		Descending: 'desc'
+	};
+	const groupId2 = 'preselect Direction';
+
+	return {
+		template: `
+					<p-tableview-header>						 
+							<p-tableview-header-item [width]="column.width"
+												   *ngFor="let column of getColumnValues()">
+								<ng-container *ngIf="column.type == 'search'">
+									<p-tableview-sort-header [label]="column.label"
+														   [title]="column.label"
+														   [sortKey]="column.key"
+														   [activeSortKey]="activeSortKey"
+														   [activeSortDirection]="activeSortDirection"
+														   (onSortChange)="onSortHeader($event)">
+									</p-tableview-sort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'searchSort'">
+									<p-tableview-searchSort-header>
+										<p-tableview-sort-header [label]="column.label"
+															   [title]="column.label"
+															   [sortKey]="column.key"
+															   [activeSortKey]="activeSortKey"
+															   [activeSortDirection]="activeSortDirection"
+															   (onSortChange)="onSortHeader($event)">
+										</p-tableview-sort-header>
+										<p-search-input>
+										</p-search-input>
+									</p-tableview-searchSort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'text'">
+									<p-tableview-text-header>
+										<span innerHTML="{{column.label}}" title="{{column.label}}"></span>
+									</p-tableview-text-header>
+								</ng-container>
+							</p-tableview-header-item>					
+					</p-tableview-header>
+				`,
+		props: {
+			getColumnValues() {
+				return dynamicActiveColumnsHeaders;
+			},
+			onSortHeader: action(onQueryChange),
+			activeSortKey: radios('activeColumn', ColumnKnoboptions, activeSortKey, groupId),
+			activeSortDirection: select(
+				'sortDirection',
+				SortDirectionKnoboptions,
+				activeSortDirection,
+				groupId2
+			)
+		}
+	};
+};
