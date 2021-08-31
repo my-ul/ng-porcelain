@@ -7,17 +7,15 @@ import {
 	EventEmitter,
 	HostListener
 } from '@angular/core';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { Loggable } from '../../Loggable';
-import { SortDirection, SortTuple } from '../../shared/types/Values/Sortoptions';
+import { SortDirection, SortTuple } from './../../shared/types/Values/Sortoptions';
 
 @Component({
-	selector: 'porcelain-sort-header, p-sort-header',
-	templateUrl: './sort-header.component.html',
-	styleUrls: ['./sort-header.component.scss']
+	selector: 'p-tableview-sort-header',
+	templateUrl: './tableview-sort-header.component.html',
+	styleUrls: ['./tableview-sort-header.component.scss']
 })
-export class SortHeaderComponent extends Loggable implements OnInit {
+export class TableviewSortHeaderComponent implements OnInit {
 	readonly name = 'SortHeaderComponent';
 
 	readonly faSortUp = faSortUp;
@@ -88,7 +86,6 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 	sortChange: EventEmitter<SortTuple> = new EventEmitter();
 
 	constructor() {
-		super();
 		this.sortChange.subscribe(sort => this.onSortChange.emit(sort));
 	}
 
@@ -109,6 +106,5 @@ export class SortHeaderComponent extends Loggable implements OnInit {
 			this.activeSortKey = this.sortKey;
 		}
 		this.sortChange.emit([this.sortKey, this.activeSortDirection]);
-		this.log('toggleSort()', [this.sortKey, this.activeSortDirection]);
 	}
 }

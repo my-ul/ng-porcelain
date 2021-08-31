@@ -3,11 +3,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons';
 
-import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
+import { SortDirection, SortTuple } from '../../shared/types/Values/Sortoptions';
 import { Loggable } from '../../Loggable';
 import { SearchTuple } from '../search-header/search-header.component';
 
-export type DynamicColumnType = 'search' | 'sort' | 'text';
+export type DynamicColumnType = 'search' | 'sort' | 'text' | 'searchSort';
 
 export interface DynamicColumn {
 	label: string;

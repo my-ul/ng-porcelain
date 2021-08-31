@@ -59,6 +59,9 @@
 			"Toolbar Text Component": "projects/ng-porcelain/src/lib/toolbar/toolbar-text/README.md",
 			"Toolbar Button Component": "projects/ng-porcelain/src/lib/toolbar/toolbar-button/README.md",
 			"Toolbar Select Component": "projects/ng-porcelain/src/lib/toolbar/toolbar-select/README.md"
+		},
+		"TableViewModule": {
+			"table View System": "projects/ng-porcelain/src/lib/tableview-module/README.md"
 		}
 	},
 	"Lists": {

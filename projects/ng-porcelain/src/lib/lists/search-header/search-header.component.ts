@@ -4,7 +4,7 @@ import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { Loggable } from '../../Loggable';
 import { SearchInputComponent } from '../../inputs/search-input/search-input.component';
-import { SortDirection, SortTuple } from '../sort-header/sort-header.component';
+import { SortDirection, SortTuple } from '../../shared/types/Values/Sortoptions';
 
 export type SearchTuple = [string, string];
 
