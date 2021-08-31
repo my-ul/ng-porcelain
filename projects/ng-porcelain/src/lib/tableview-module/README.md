@@ -71,6 +71,24 @@ Table view text header is just used to display the title value of the header. Th
 
 The Sort Header can be used to control sort variables within a Table view. This should always be enclosed in </p-tableview-header-item>
 
+# Table View Search Sort Header
+
+The search sort header takes search component and sort component. The switching functionality is built inside already. It takes both legacy search input and new search input.
+
+```html
+<p-tableview-searchSort-header>
+	<p-tableview-sort-header> </p-tableview-sort-header>
+	<p-search-input> </p-search-input>
+</p-tableview-searchSort-header>
+```
+
+```html
+<p-tableview-searchSort-header>
+	<p-tableview-sort-header> </p-tableview-sort-header>
+	<porcelain-search-input> </porcelain-search-input>
+</p-tableview-searchSort-header>
+```
+
 # Dual-Binding/Banana Box Sort Direction
 
 This component supports banana-box/two-way binding notation for updating the values of `activeSortKey` and `activeSortDirection`.

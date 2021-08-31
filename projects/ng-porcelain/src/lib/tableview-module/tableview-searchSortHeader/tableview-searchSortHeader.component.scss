@@ -1,0 +1,49 @@
+:host {
+	font-size: 14px;
+	padding: 0.4rem 0;
+
+	.search-sort__header-container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.sr-only {
+		border: 0;
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(50%);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+		word-wrap: normal !important;
+	}
+
+	.sort-header__sortIconContainer {
+		flex: 0 0 1em;
+		min-width: 1em;
+		text-align: center;
+		margin-left: 8px;
+		cursor: pointer;
+
+		.sort-header__sort-icon {
+			display: inline-block;
+
+			.sort-header--active {
+				background: #e4ebf5 !important;
+			}
+		}
+	}
+
+	.sort-header__search-Icon {
+		cursor: pointer;
+	}
+
+	::ng-deep porcelain-search-input {
+		input {
+			width: 100%;
+		}
+	}
+}

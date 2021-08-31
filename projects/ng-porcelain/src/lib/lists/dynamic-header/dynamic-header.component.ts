@@ -7,7 +7,7 @@ import { SortDirection, SortTuple } from '../../shared/types/Values/Sortoptions'
 import { Loggable } from '../../Loggable';
 import { SearchTuple } from '../search-header/search-header.component';
 
-export type DynamicColumnType = 'search' | 'sort' | 'text';
+export type DynamicColumnType = 'search' | 'sort' | 'text' | 'searchSort';
 
 export interface DynamicColumn {
 	label: string;
