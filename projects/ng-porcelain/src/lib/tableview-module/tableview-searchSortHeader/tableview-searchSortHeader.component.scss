@@ -1,6 +1,7 @@
 :host {
 	font-size: 14px;
 	padding: 0.4rem 0;
+	width: 100%;
 
 	.search-sort__header-container {
 		display: flex;
@@ -27,6 +28,7 @@
 		text-align: center;
 		margin-left: 8px;
 		cursor: pointer;
+		padding-right: 22px;
 
 		.sort-header__sort-icon {
 			display: inline-block;
