@@ -15,6 +15,7 @@ import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18
 import { APPLICATOR_IMPORTS } from '../applicator.module';
 import { ApplicatorComponent } from './applicator.component';
 import { toSimpleOptionDictionary } from '../../shared/utilities/toSimpleOptionDictionary';
+import { usStatesFull } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
 
 const simpleRefiner = new SimpleRefinerDefinition({
 	slug: 'simpleRefiner',
@@ -37,6 +38,20 @@ const anotherSimpleRefiner = new SimpleRefinerDefinition({
 		ak: 'Alaska',
 		az: 'Arizona'
 	})
+});
+
+const searchRefinerStates = new SimpleRefinerDefinition({
+	slug: 'searchRefinerStates',
+	title: 'search Refiner States',
+	type: 'search',
+	options: usStatesFull
+});
+
+const searchRefinerSecondStates = new SimpleRefinerDefinition({
+	slug: 'searchRefinerStatesSecond',
+	title: 'search Refiner States second Rack',
+	type: 'search',
+	options: usStatesFull
 });
 
 const dateRefiner = new DateRefinerDefinition({
@@ -132,4 +147,19 @@ export const SetApplyOnInitToFalse = () => {
 
 SetApplyOnInitToFalse.story = {
 	name: 'Set applyOnInit to false'
+};
+
+export const SearchRefinerStack = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			refiners: [simpleRefiner, searchRefinerStates, searchRefinerSecondStates]
+		}
+	};
+};
+
+SearchRefinerStack.story = {
+	name: 'search refiner stack'
 };

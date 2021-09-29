@@ -47,9 +47,11 @@
 						<input type="checkbox" (change)="deactivateKey(key)" [checked]="true" />
 					</div>
 					<div class="option-row__grow-cell option__label">
-						<span class="search-refiner__truncate">{{
-							this.refiner.options[key].label
-						}}</span>
+						<span
+							class="search-refiner__truncate"
+							innerHTML="{{ this.refiner.options[key].label }}"
+							title="{{ this.refiner.options[key].label }}"
+						></span>
 					</div>
 					<div class="option-row__shrink-cell" *ngIf="this.refiner.options[key].badge">
 						{{ this.refiner.options[key].badge | toLocaleString }}
@@ -98,6 +100,7 @@
 						<span
 							class="search-refiner__truncate"
 							innerHTML="{{ this.refiner.options[key].label | highlight: query }}"
+							title="{{ this.refiner.options[key].label | highlight: query }}"
 						></span>
 					</div>
 					<div class="option-row__shrink-cell" *ngIf="this.refiner.options[key].badge">
