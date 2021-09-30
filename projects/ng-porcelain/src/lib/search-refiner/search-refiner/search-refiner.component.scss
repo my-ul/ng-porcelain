@@ -167,6 +167,7 @@ $disabled-color: #edf1f6;
 	flex-direction: row;
 	align-items: center;
 	font-weight: 400 !important;
+	cursor: pointer;
 
 	> * + * {
 		margin-left: 1em;
