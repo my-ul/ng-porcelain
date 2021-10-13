@@ -549,8 +549,8 @@ export const tableViewColumnSearchSortHeaders = () => {
 									<p-tableview-sort-header [label]="column.label"
 														   [title]="column.label"
 														   [sortKey]="column.key"
-														   [activeSortKey]="activeSortKey"
-														   [activeSortDirection]="activeSortDirection"
+														   [activeSortKey]="getActiveSortKey()"
+														   [activeSortDirection]="getSortDirection()"
 														   (onSortChange)="onSortHeader($event)">
 									</p-tableview-sort-header>
 								</ng-container>
@@ -559,8 +559,8 @@ export const tableViewColumnSearchSortHeaders = () => {
 										<p-tableview-sort-header [label]="column.label"
 															   [title]="column.label"
 															   [sortKey]="column.key"
-															   [activeSortKey]="activeSortKey"
-															   [activeSortDirection]="activeSortDirection"
+															   [activeSortKey]="getActiveSortKey()"
+															   [activeSortDirection]="getSortDirection()"
 															   (onSortChange)="onSortHeader($event)">
 										</p-tableview-sort-header>
 										<p-search-input>
@@ -579,14 +579,23 @@ export const tableViewColumnSearchSortHeaders = () => {
 			getColumnValues() {
 				return dynamicActiveColumnsHeaders;
 			},
-			onSortHeader: action(onQueryChange),
-			activeSortKey: radios('activeColumn', ColumnKnoboptions, activeSortKey, groupId),
-			activeSortDirection: select(
-				'sortDirection',
-				SortDirectionKnoboptions,
-				activeSortDirection,
-				groupId2
-			)
+			getActiveSortKey() {
+				return activeSortKey;
+			},
+			getSortDirection() {
+				return activeSortDirection;
+			},
+			onSortHeader(data) {
+				const [sortKey, sortDirection] = data;
+				if (null === sortDirection) {
+					activeSortKey = '';
+					activeSortDirection = 'desc';
+				} else {
+					activeSortKey = sortKey;
+					activeSortDirection = sortDirection;
+				}
+				action(onQueryChange);
+			}
 		}
 	};
 };
