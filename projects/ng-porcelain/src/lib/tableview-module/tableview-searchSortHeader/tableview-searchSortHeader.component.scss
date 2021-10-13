@@ -33,6 +33,12 @@
 		.sort-header__sort-icon {
 			display: inline-block;
 
+			&--inActiveState {
+				padding-top: 0;
+				padding-bottom: 5.5px;
+				display: inline-block;
+			}
+
 			.sort-header--active {
 				background: #e4ebf5 !important;
 			}

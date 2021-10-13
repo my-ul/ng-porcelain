@@ -3,14 +3,22 @@
 	<ng-template #searchContent>
 		<ng-content select="p-search-input,porcelain-search-input"> </ng-content>
 		<span class="sort-header__sortIconContainer" (click)="isSearchEnabled = !isSearchEnabled">
-			<span
-				class="sort-header__sort-icon"
-				[style.padding-top]="sortAscStyle()"
-				[style.padding-bottom]="sortDescStyle()"
-			>
-				<fa-icon [icon]="getSortIcon()" [styles]="{ color: sortToggleIconColor }"></fa-icon>
-				<span class="sr-only">Sort</span>
-			</span>
+			<ng-container *ngIf="sortComponentRef && sortComponentRef.active; else inactive">
+				<span
+					class="sort-header__sort-icon"
+					[style.padding-top]="sortAscStyle()"
+					[style.padding-bottom]="sortDescStyle()"
+				>
+					<fa-icon [icon]="getSortIcon()" [styles]="{ color: sortToggleIconColor }"></fa-icon>
+					<span class="sr-only">Sort</span>
+				</span>
+			</ng-container>
+			<ng-template #inactive>
+				<span class="sort-header__sort-icon--inActiveState">
+					<fa-icon [icon]="faSortDownIcon" [styles]="{ color: sortToggleIconColor }"></fa-icon>
+					<span class="sr-only">Sort</span>
+				</span>
+			</ng-template>
 		</span>
 	</ng-template>
 	<ng-template #sortContent>
