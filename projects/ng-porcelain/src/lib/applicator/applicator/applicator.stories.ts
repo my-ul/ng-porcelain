@@ -3,10 +3,6 @@ import { APPLICATOR_DIRECTIVES } from '../applicator.module';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
 
-// Moment
-import * as _moment from 'moment';
-const moment = _moment;
-
 // Porcelain
 import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
 import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
@@ -16,6 +12,7 @@ import { APPLICATOR_IMPORTS } from '../applicator.module';
 import { ApplicatorComponent } from './applicator.component';
 import { toSimpleOptionDictionary } from '../../shared/utilities/toSimpleOptionDictionary';
 import { usStatesFull } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
+import { DateTime } from 'luxon';
 
 const simpleRefiner = new SimpleRefinerDefinition({
 	slug: 'simpleRefiner',
@@ -58,15 +55,13 @@ const dateRefiner = new DateRefinerDefinition({
 	slug: 'dateRefiner',
 	title: 'Date Refiner',
 	value: {
-		to: moment(new Date())
-			.utc()
-			.endOf('year')
-			.toDate(),
-		optionSlug: 'custom',
-		from: moment(new Date())
-			.utc()
+		from: DateTime.utc()
 			.startOf('year')
-			.toDate()
+			.toJSDate(),
+		to: DateTime.utc()
+			.endOf('year')
+			.toJSDate(),
+		optionSlug: 'custom'
 	},
 	options: i18nDateOptions()
 });

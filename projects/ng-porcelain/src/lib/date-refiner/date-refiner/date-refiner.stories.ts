@@ -4,9 +4,6 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { withNotes } from '@storybook/addon-notes';
 import { moduleMetadata } from '@storybook/angular';
 
-// Utilities
-import * as _moment from 'moment';
-
 // Porcelain
 import { DateOption } from '../../shared/types/Options/DateOption';
 import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
@@ -15,8 +12,7 @@ import { TranslationService } from '../../services/translation/translation.servi
 
 import { DATE_REFINER_IMPORTS } from '../date-refiner.module';
 import { DateRefinerComponent, defaultDateOptions, IDateRefinerProps } from './date-refiner.component';
-
-const moment = _moment;
+import { DateTime } from 'luxon';
 
 export default {
 	title: 'Refiner System/Date Refiner',
@@ -125,8 +121,8 @@ export const PredefinedCustomDateRange = () => ({
 			options: defaultDateOptions,
 			value: {
 				optionSlug: 'custom',
-				from: moment.utc('2018-01-01', 'YYYY-MM-DD').toDate(),
-				to: moment.utc('2018-12-31', 'YYYY-MM-DD').toDate()
+				from: DateTime.fromISO('2018-01-01', { zone: 'utc' }).toJSDate(),
+				to: DateTime.fromISO('2018-12-31', { zone: 'utc' }).toJSDate()
 			}
 		}),
 		onRefinerChange: action('Date Refiner (simple) changed')
@@ -244,20 +240,14 @@ export const FullDateRefinerWithFullDateOptionDefinitions = () => ({
 					badge: 9999,
 					label: 'Today',
 					getFrom: () =>
-						moment
-							.call(null)
-							.set('seconds', 0)
-							.set('minutes', 0)
-							.set('hour', 0)
-							.toDate(),
+						DateTime.utc()
+							.startOf('day')
+							.toJSDate(),
 					getTo: () =>
-						moment
-							.call(null)
-							.set('seconds', 0)
-							.set('minutes', 0)
-							.set('hour', 0)
-							.add(1, 'day')
-							.toDate(),
+						DateTime.utc()
+							.startOf('day')
+							.plus({ days: 1 })
+							.toJSDate(),
 					slug: 'today'
 				}),
 				pastSevenDays: new DateOption({
@@ -265,21 +255,15 @@ export const FullDateRefinerWithFullDateOptionDefinitions = () => ({
 					slug: 'pastSevenDays',
 					label: 'Past 7 days',
 					getFrom: () =>
-						moment
-							.call(null)
-							.set('seconds', 0)
-							.set('minutes', 0)
-							.set('hour', 0)
-							.subtract(7, 'days')
-							.toDate(),
+						DateTime.utc()
+							.startOf('day')
+							.minus({ days: 7 })
+							.toJSDate(),
 					getTo: () =>
-						moment
-							.call(null)
-							.set('seconds', 0)
-							.set('minutes', 0)
-							.set('hour', 0)
-							.add(1, 'day')
-							.toDate()
+						DateTime.utc()
+							.startOf('day')
+							.plus({ days: 1 })
+							.toJSDate()
 				})
 			}
 		})

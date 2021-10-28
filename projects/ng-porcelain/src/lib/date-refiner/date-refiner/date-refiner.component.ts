@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angu
 // Font Awesome 5
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
-import * as _moment from 'moment';
 
 import { IMyDateModel } from 'angular-mydatepicker';
 
@@ -16,9 +15,7 @@ import { DateRefinerValue } from '../../shared/types/Values/DateRefinerValue';
 import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18nDateOptions';
 import { IDateRefinerDefinition } from '../../shared/types/Refiners/IDateRefinerDefinition';
 import { Loggable } from '../../Loggable';
-
-// Issue with moment requires this workaround for now
-const moment = _moment;
+import { DateTime } from 'luxon';
 
 export interface IDateRefinerProps {
 	isOpen?: boolean;
@@ -28,8 +25,8 @@ export interface IDateRefinerProps {
 
 export interface IDateRefinerState {
 	optionSlug: string;
-	from: string | Date | _moment.Moment;
-	to: string | Date | _moment.Moment;
+	from: string | Date | DateTime;
+	to: string | Date | DateTime;
 }
 
 export const defaultDateOptions: IDictionary<DateOption> = i18nDateOptions();
@@ -131,21 +128,23 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		);
 	}
 
-	parseDateState(date: string | Date | _moment.Moment): IMyDateModel {
+	parseDateState(date: string | Date | DateTime): IMyDateModel {
 		this.debug('parseDateState(date)', { date });
-		const parsed: _moment.Moment =
-			typeof date === 'string'
-				? moment.utc(date, 'YYYY-MM-DD') // needs to be parsed as UTC
-				: moment(date).utc(); // has time zone context, must convert to UTC
+		// prettier-ignore
+		const parsed: DateTime =
+			typeof date === 'string' ? DateTime.fromISO(date, { zone: 'utc' })
+				: date instanceof Date ? DateTime.fromJSDate(date).toUTC()
+				: date instanceof DateTime ? date
+				: null;
 
 		if (parsed.isValid) {
 			return {
 				isRange: false,
 				singleDate: {
 					date: {
-						day: parsed.get('date'),
-						month: parsed.get('month') + 1, // Zero-indexed => One-indexed
-						year: parsed.get('year')
+						day: parsed.day,
+						month: parsed.month, // Zero-indexed => One-indexed
+						year: parsed.year
 					}
 				}
 			};
@@ -312,25 +311,27 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 			});
 			const from = this.fromModel
 				? currentOption.getFrom(
-						moment()
-							.utc()
-							.year(this.fromModel.singleDate.date.year)
-							.month(this.fromModel.singleDate.date.month - 1) // zero-indexed, so Jan is 0; Dec is 11
-							.date(this.fromModel.singleDate.date.day)
+						DateTime.utc()
+							.set({
+								year: this.fromModel.singleDate.date.year,
+								month: this.fromModel.singleDate.date.month,
+								day: this.fromModel.singleDate.date.day
+							})
 							.startOf('day')
-							.toDate()
+							.toJSDate()
 				  )
 				: null;
 
 			const to = this.toModel
 				? currentOption.getTo(
-						moment()
-							.utc()
-							.year(this.toModel.singleDate.date.year)
-							.month(this.toModel.singleDate.date.month - 1)
-							.date(this.toModel.singleDate.date.day)
+						DateTime.utc()
+							.set({
+								year: this.toModel.singleDate.date.year,
+								month: this.toModel.singleDate.date.month,
+								day: this.toModel.singleDate.date.day
+							})
 							.endOf('day')
-							.toDate()
+							.toJSDate()
 				  )
 				: null;
 
