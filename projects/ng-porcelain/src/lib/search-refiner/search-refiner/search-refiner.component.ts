@@ -171,6 +171,14 @@ export class SearchRefinerComponent extends Loggable implements OnInit, AfterCon
 		placeholder: 'Search'
 	};
 
+	/**
+	 * Input labels
+	 * */
+	@Input() public selectAllFilterLabel: string = 'Select All';
+	@Input() public selectFilteredLabel: string = 'Select Filtered';
+	@Input() public selectNoneFilterLabel: string = 'Select None';
+	@Input() public clearLabel: string = 'Clear';
+
 	//#endregion
 
 	/**

@@ -23,7 +23,7 @@
 			(click)="clear()"
 		>
 			<fa-icon [icon]="clearIcon"></fa-icon>
-			<span class="sr-only">{{ labels.clear }}</span>
+			<span class="sr-only">{{ clearLabel }}</span>
 		</button>
 	</div>
 	<div class="search-refiner__section search-refiner__active-keys" *ngIf="activeKeys.length > 0">
@@ -32,7 +32,7 @@
 			*ngIf="activeKeys.length === allKeys.length"
 			class="search-refiner__select-preset"
 		>
-			{{ labels.selectNone }}
+			{{ selectNoneFilterLabel }}
 		</button>
 		<ul
 			class="search-refiner__key-list"
@@ -67,21 +67,20 @@
 				*ngIf="activeKeys.length < allKeys.length"
 				class="search-refiner__select-preset"
 			>
-				{{ labels.selectAll }}
+				{{ selectAllFilterLabel }}
 				<span *ngIf="inactiveKeys.length !== filteredInactiveKeys.length">
-					({{
-						labels.nHiddenByFilter
-							| sprintf
-								: (inactiveKeys.length - filteredInactiveKeys.length).toLocaleString()
-					}})</span
-				>
+					({{ inactiveKeys.length.toLocaleString() }})
+				</span>
 			</button>
+		</p>
+		<p class="search-refiner__select-preset-group">
 			<button
 				(click)="selectFiltered()"
 				class="search-refiner__select-preset"
 				*ngIf="query.trim() !== '' && filteredInactiveKeys.length > 0"
 			>
-				{{ labels.selectFiltered }}
+				{{ selectFilteredLabel }}{{ '(' }}{{ filteredInactiveKeys.length.toLocaleString()
+				}}{{ ')' }}
 			</button>
 		</p>
 		<ul
