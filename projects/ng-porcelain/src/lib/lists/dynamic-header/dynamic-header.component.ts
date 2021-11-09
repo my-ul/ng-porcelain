@@ -41,6 +41,7 @@ export class DynamicHeaderComponent<TColumnType extends any = any> extends Logga
 
 	private _columns: DynamicColumn[];
 
+	@Output()
 	public columnsChange: EventEmitter<DynamicColumn[]> = new EventEmitter();
 
 	@Input()
