@@ -3,6 +3,9 @@ import { BaseRefinerDefinition } from '../../shared/types/Refiners/BaseRefinerDe
 import { Loggable } from '../../Loggable';
 import { isEqual } from 'lodash-es';
 import { SearchRefinerComponent } from '../../search-refiner/search-refiner/search-refiner.component';
+import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
+import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
+
 @Component({
 	selector: 'porcelain-refiners, p-refiners',
 	templateUrl: './refiners.component.html',
@@ -46,15 +49,15 @@ export class RefinersComponent extends Loggable implements OnInit {
 		this.onRefinersChange.emit(this.values);
 	}
 
-	isSimpleRefiner(refiner: BaseRefinerDefinition): boolean {
+	isSimpleRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
 		return refiner.type === 'simple';
 	}
 
-	isDateRefiner(refiner: BaseRefinerDefinition): boolean {
+	isDateRefiner(refiner: BaseRefinerDefinition): refiner is DateRefinerDefinition {
 		return refiner.type === 'date';
 	}
 
-	isSearchRefiner(refiner: BaseRefinerDefinition): boolean {
+	isSearchRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
 		return refiner.type === 'search';
 	}
 }

@@ -79,8 +79,7 @@
 				class="search-refiner__select-preset"
 				*ngIf="query.trim() !== '' && filteredInactiveKeys.length > 0"
 			>
-				{{ labels.selectFiltered }}{{ '(' }}{{ filteredInactiveKeys.length.toLocaleString()
-				}}{{ ')' }}
+				{{ labels.selectFiltered }} ({{ filteredInactiveKeys.length.toLocaleString() }})
 			</button>
 		</p>
 		<ul

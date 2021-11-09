@@ -79,8 +79,6 @@
 		"@types/date-fns": "^2.6.0",
 		"@types/faker": "^4.1.12",
 		"@types/flat": "^5.0.1",
-		"@types/jasmine": "2.8.6",
-		"@types/jasminewd2": "2.0.3",
 		"@types/luxon": "^2.0.5",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.11.1",
