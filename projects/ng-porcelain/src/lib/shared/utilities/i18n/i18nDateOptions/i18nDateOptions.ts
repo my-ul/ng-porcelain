@@ -1,16 +1,6 @@
-import * as _moment from 'moment';
+import { DateTime } from 'luxon';
 import { DateOption } from '../../../types/Options/DateOption';
 import { IDictionary } from '../../../types/Containers/IDictonary/IDictionary';
-const moment = _moment;
-
-const momentFloor = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) => {
-	return moment()
-		.utc()
-		.startOf('day');
-};
-
-const momentFloorSubtract = (arg1?: _moment.DurationInputArg1, arg2?: _moment.DurationInputArg2) =>
-	momentFloor().subtract(arg1, arg2);
 
 export const i18nDateOptions = (
 	viewAllLabel: string = 'View All',
@@ -31,64 +21,84 @@ export const i18nDateOptions = (
 		label: todayLabel,
 		slug: '1',
 		getFrom: () =>
-			moment()
-				.utc()
+			DateTime.now()
+				.toUTC()
 				.startOf('day')
-				.toDate(),
+				.toJSDate(),
 		getTo: () =>
-			moment()
-				.utc()
+			DateTime.now()
+				.toUTC()
 				.endOf('day')
-				.toDate()
+				.toJSDate()
 	}),
 	'7': new DateOption({
 		label: lastSevenDaysLabel,
 		slug: '7',
 		getFrom: () =>
-			moment()
-				.utc()
+			DateTime.utc()
 				.startOf('day')
-				.subtract(6, 'days')
-				.toDate(),
+				.minus({ days: 6 })
+				.toJSDate(),
 		getTo: () =>
-			moment()
-				.utc()
+			DateTime.utc()
 				.endOf('day')
-				.toDate()
+				.toJSDate()
 	}),
 	'30': new DateOption({
 		label: lastThirtyDaysLabel,
 		slug: '30',
-		getFrom: () => momentFloorSubtract(29, 'days').toDate(),
+		getFrom: () =>
+			DateTime.utc()
+				.startOf('day')
+				.minus({ days: 29 })
+				.toJSDate(),
 		getTo: () =>
-			moment()
-				.utc()
+			DateTime.utc()
 				.endOf('day')
-				.toDate()
+				.toJSDate()
 	}),
 	'90': new DateOption({
 		label: lastNinetyDaysLabel,
 		slug: '90',
-		getFrom: () => momentFloorSubtract(89, 'days').toDate(),
+		getFrom: () =>
+			DateTime.utc()
+				.startOf('day')
+				.minus({ days: 89 })
+				.toJSDate(),
 		getTo: () =>
-			moment()
-				.utc()
+			DateTime.utc()
 				.endOf('day')
-				.toDate()
+				.toJSDate()
 	}),
 	custom: new DateOption({
 		isSelected: true,
 		label: customLabel,
 		slug: 'custom',
-		getFrom: (fromValue?: string | Date) =>
-			moment(fromValue)
-				.utc()
-				.startOf('day')
-				.toDate(),
-		getTo: (toValue?: string | Date) =>
-			moment(toValue)
-				.utc()
-				.endOf('day')
-				.toDate()
+		getFrom: (fromValue?: string | Date) => {
+			if (fromValue) {
+				return (typeof fromValue === 'string'
+					? DateTime.fromISO(fromValue)
+					: DateTime.fromJSDate(fromValue)
+				)
+					.toUTC()
+					.startOf('day')
+					.toJSDate();
+			} else {
+				return null;
+			}
+		},
+		getTo: (toValue?: string | Date) => {
+			if (toValue) {
+				return (typeof toValue === 'string'
+					? DateTime.fromISO(toValue)
+					: DateTime.fromJSDate(toValue)
+				)
+					.toUTC()
+					.endOf('day')
+					.toJSDate();
+			} else {
+				return null;
+			}
+		}
 	})
 });

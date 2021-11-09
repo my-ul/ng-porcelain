@@ -69,19 +69,17 @@
 			>
 				{{ labels.selectAll }}
 				<span *ngIf="inactiveKeys.length !== filteredInactiveKeys.length">
-					({{
-						labels.nHiddenByFilter
-							| sprintf
-								: (inactiveKeys.length - filteredInactiveKeys.length).toLocaleString()
-					}})</span
-				>
+					({{ inactiveKeys.length.toLocaleString() }})
+				</span>
 			</button>
+		</p>
+		<p class="search-refiner__select-preset-group">
 			<button
 				(click)="selectFiltered()"
 				class="search-refiner__select-preset"
 				*ngIf="query.trim() !== '' && filteredInactiveKeys.length > 0"
 			>
-				{{ labels.selectFiltered }}
+				{{ labels.selectFiltered }} ({{ filteredInactiveKeys.length.toLocaleString() }})
 			</button>
 		</p>
 		<ul
@@ -100,7 +98,7 @@
 						<span
 							class="search-refiner__truncate"
 							innerHTML="{{ this.refiner.options[key].label | highlight: query }}"
-							title="{{ this.refiner.options[key].label | highlight: query }}"
+							title="{{ this.refiner.options[key].label }}"
 						></span>
 					</div>
 					<div class="option-row__shrink-cell" *ngIf="this.refiner.options[key].badge">

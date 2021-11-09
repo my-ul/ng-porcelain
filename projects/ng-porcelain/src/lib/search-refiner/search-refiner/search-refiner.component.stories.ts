@@ -151,3 +151,51 @@ LotsOfOptions.story = {
 		notes: { markdown: notes }
 	}
 };
+
+const smallListRefiners = {
+	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL' }),
+	AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
+	AZ: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
+	AR: new SimpleOption({ badge: 3020327, label: 'Arkansas', slug: 'AR' }),
+	CA: new SimpleOption({ badge: 39776830, label: 'California', slug: 'CA' }),
+	CO: new SimpleOption({ badge: 5684203, label: 'Colorado', slug: 'CO' }),
+	CN: new SimpleOption({ badge: 3588683, label: 'Connecticut', slug: 'CN' })
+};
+
+export const samllList = () => {
+	const refiner = new SimpleRefinerDefinition({
+		slug: 'state',
+		title: 'Small List',
+		options: smallListRefiners
+	});
+
+	refiner.valueSubject.subscribe(action('[REFINER] valueSubject fire'));
+
+	return {
+		component: SearchRefinerComponent,
+		template: `
+		<button (click)="reset()">Set to Wyoming</button>
+		<p-search-refiner 
+			[refiner]="refiner"
+			(onRefinerChange)="onRefinerChange($event)"
+			(activeKeysChange)="activeKeysChange($event)"
+			></p-search-refiner>`.trim(),
+		moduleMetadata: {
+			declarations: SEARCH_REFINER_DIRECTIVES,
+			imports: [BrowserAnimationsModule, ...SEARCH_REFINER_IMPORTS]
+		},
+		props: {
+			onRefinerChange: action('[COMPONENT] onRefinerChange fire') as any,
+			activeKeysChange: action('[COMPONENT] activeKeysChange fire') as any,
+			refiner,
+			reset: function() {}
+		} as Partial<SearchRefinerComponent>
+	};
+};
+
+samllList.story = {
+	name: 'small list',
+	parameters: {
+		notes: { markdown: notes }
+	}
+};

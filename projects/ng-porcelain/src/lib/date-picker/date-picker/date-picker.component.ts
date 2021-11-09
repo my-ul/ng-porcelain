@@ -10,10 +10,10 @@ import {
 	OnChanges,
 	SimpleChanges
 } from '@angular/core';
-import * as moment from 'moment';
 import { IMyOptions, IMyDateModel, IMyDate, AngularMyDatePickerDirective } from 'angular-mydatepicker';
 
 import { faCalendarAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { DateTime } from 'luxon';
 
 @Component({
 	selector: 'porcelain-datepicker',
@@ -174,9 +174,9 @@ export class datePickerComponent implements OnInit, OnChanges {
 	 */
 
 	public getPreSelectedDate(date: string): Date {
-		let parsed = moment.utc(date, 'YYYY-MM-DD');
+		let parsed = DateTime.fromISO(date);
 		if (parsed.isValid) {
-			return moment(date, 'YYYY-MM-DD').toDate();
+			return parsed.toJSDate();
 		} else {
 			return null;
 		}
@@ -188,7 +188,7 @@ export class datePickerComponent implements OnInit, OnChanges {
 	 * @param date
 	 */
 	public filterDateToStringFormat(date: Date): string {
-		let DateValues = moment.utc(date).format('YYYY-MM-DD');
+		let DateValues = DateTime.fromJSDate(date, { zone: 'UTC' }).toISODate();
 		return DateValues;
 	}
 	/**

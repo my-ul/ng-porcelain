@@ -9,11 +9,6 @@ import { DATE_PICKER_DIRECTIVES, DATE_PICKER_IMPORTS } from '../date-picker.modu
 //import component
 import { datePickerComponent } from './date-picker.component';
 
-// Utilities
-import * as _moment from 'moment';
-
-const moment = _moment;
-
 //action messages
 const SelectedValueEmitted = 'selected Date is';
 const SelectedFormattedValue = 'formatted value of date is';
