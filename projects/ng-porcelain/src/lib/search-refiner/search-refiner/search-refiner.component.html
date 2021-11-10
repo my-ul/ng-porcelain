@@ -68,7 +68,7 @@
 				class="search-refiner__select-preset"
 			>
 				{{ labels.selectAll }}
-				<span *ngIf="inactiveKeys.length !== filteredInactiveKeys.length">
+				<span *ngIf="query.trim() !== '' || inactiveKeys.length !== filteredInactiveKeys.length">
 					({{ inactiveKeys.length.toLocaleString() }})
 				</span>
 			</button>
