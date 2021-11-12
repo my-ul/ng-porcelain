@@ -57,7 +57,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public applyLabel: string = 'Apply';
 	@Input() public loadingLabel: string = 'Loading';
 	@Input() public resetLabel: string = 'Reset';
-
+	@Input() public applyWidth: boolean = false;
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
 
