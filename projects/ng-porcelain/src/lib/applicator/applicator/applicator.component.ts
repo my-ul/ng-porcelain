@@ -7,7 +7,9 @@ import {
 	Output,
 	OnChanges,
 	SimpleChanges,
-	ViewChild
+	ViewChild,
+	ElementRef,
+	Renderer2
 } from '@angular/core';
 
 import { isEqual } from 'lodash-es';
@@ -27,6 +29,7 @@ import { DateRefinerValue } from './../../shared/types/Values/DateRefinerValue';
 import { Loggable } from '../../Loggable';
 
 import { RefinersComponent } from '../../refiners/refiners/refiners.component';
+import ResizeObserver from 'resize-observer-polyfill';
 
 // https://projects.invisionapp.com/share/J8RB454F2AY#/355536379_44843_-_1
 
@@ -57,7 +60,6 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public applyLabel: string = 'Apply';
 	@Input() public loadingLabel: string = 'Loading';
 	@Input() public resetLabel: string = 'Reset';
-	@Input() public applyWidth: boolean = false;
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
 
@@ -70,8 +72,12 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	//view child ref
 	@ViewChild('refinerRef', { static: false }) public refinerCmpRef: RefinersComponent;
+	@ViewChild('applicator') public applicatorRef: ElementRef<HTMLDivElement>;
+	@ViewChild('stickyHeader') public stickyHeaderRef: ElementRef<HTMLDivElement>;
 
-	constructor(private translationService: TranslationService) {
+	private observer: ResizeObserver;
+
+	constructor(private translationService: TranslationService, private renderer: Renderer2) {
 		super();
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<ApplicatorComponent>(this, {
@@ -80,6 +86,15 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 				label_Reset: 'resetLabel'
 			})
 		);
+	}
+
+	ngAfterViewInit() {
+		//Observes the change in width of the #applicator element and sets the StickyHeader width accordingly
+		this.observer = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+			const currentWidth = entries[0].contentRect.width;
+			this.renderer.setStyle(this.stickyHeaderRef.nativeElement, 'width', `${currentWidth}px`);
+		});
+		this.observer.observe(this.applicatorRef.nativeElement);
 	}
 
 	public apply() {
@@ -141,6 +156,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	public ngOnDestroy() {
 		this.destroyExistingSubscriptions();
+		this.observer.unobserve(this.applicatorRef.nativeElement);
 	}
 
 	public ngOnInit() {
