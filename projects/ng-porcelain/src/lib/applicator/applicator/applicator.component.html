@@ -1,5 +1,11 @@
 <div #applicator class="applicator">
-	<div stickyThing [spacer]="headerSpacer" [boundary]="applicator" class="applicator__section">
+	<div
+		stickyThing
+		[spacer]="headerSpacer"
+		[boundary]="applicator"
+		class="applicator__section"
+		#stickyHeader
+	>
 		<div class="applicator__header">
 			<button
 				class="applicator__action applicator__action--primary"
