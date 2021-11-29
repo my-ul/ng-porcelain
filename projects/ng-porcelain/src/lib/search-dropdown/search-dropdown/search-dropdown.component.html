@@ -1,0 +1,57 @@
+<div class="select__window">
+	<input
+		type="text"
+		class="select__window-value"
+		[(ngModel)]="query"
+		[placeholder]="placeholder || labelPlaceholder"
+		[class.select__window-value--placeholder]="query === ''"
+		(focus)="setOpen(true).setFocus(true)"
+		(blur)="setFocus(false)"
+		(keyup)="keyUp($event)"
+	/>
+
+	<button
+		class="select__window-action"
+		*ngIf="query !== ''"
+		[style.color]="clearIconColor"
+		(click)="clear()"
+	>
+		<span class="sr-only">{{ labelClear }}</span>
+		<fa-icon [icon]="clearIcon"></fa-icon>
+	</button>
+
+	<button
+		class="select__window-action"
+		(click)="submit()"
+		title="Submit the search using the current search query."
+	>
+		<fa-icon [icon]="submitIcon" [styles]="{ color: submitIconColor }"></fa-icon>
+		<span class="sr-only">Submit the search using the current query.</span>
+	</button>
+</div>
+
+<ul class="select__items" *ngIf="isOpen">
+	<li class="select__no-results" *ngIf="filteredItems.length === 0">
+		{{ labelNoItemsFound }}
+	</li>
+	<li
+		class="select__item"
+		*ngFor="let item of filteredItems; index as idx"
+		(mouseover)="setHighlightedIndex(idx)"
+		(click)="setSelectedIndex(idx).setOpen(false)"
+		[title]="isObjectArray ? item[labelProp] : item"
+		[class.select__item--highlighted]="highlightedIndex == idx"
+		[class.select__item--selected]="selectedIndex == idx"
+	>
+		<ng-container *ngIf="isComplexArray && isObjectArray">
+			<span innerHTML="{{ item[type] | highlight: query }}{{ item[types] | highlight: query }}">
+			</span>
+		</ng-container>
+		<ng-container *ngIf="!isComplexArray && isObjectArray">
+			<span innerHTML="{{ item[labelProp] | highlight: query }}"> </span>
+		</ng-container>
+		<ng-container *ngIf="!isObjectArray">
+			<span innerHTML="{{ item | highlight: query }}"></span>
+		</ng-container>
+	</li>
+</ul>

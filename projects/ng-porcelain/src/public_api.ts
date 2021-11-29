@@ -165,6 +165,10 @@ export { ToolbarsComponent } from './lib/toolbar/toolbars/toolbars.component';
 export { ComboboxModule } from './lib/combobox/combobox.module';
 export { ComboboxComponent } from './lib/combobox/combobox/combobox.component';
 
+// Search Dropdown Module
+export { SearchDropdownModule } from './lib/search-dropdown/search-dropdown.module';
+export { SearchDropdownComponent } from './lib/search-dropdown/search-dropdown/search-dropdown.component';
+
 // Breadcrumb Modules
 export { BreadcrumbModule } from './lib/breadcrumb/breadcrumb.module';
 export { BreadcrumbsComponent } from './lib/breadcrumb/breadcrumbs/breadcrumbs.component';
