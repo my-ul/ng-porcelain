@@ -1,19 +1,17 @@
 <div class="modal-tooltip">
 	<div class="tooltipContent">
 		<div class="header">
-			Quick Tip
+			{{ quickTipHeader }}
 			<span class="close-modal" (click)="closeModel()">&times;</span>
 		</div>
 
 		<div>
-			Save your searches for quick access with the Save Search button in certain applications. You
-			can access your saved searches anywhere in the portal by clicking on this Saved Searches
-			link.
+			{{ quickTipContent }}
 		</div>
 
 		<div class="warn-checkbox">
 			<input type="checkbox" (click)="onCheckboxClick()" />
-			<span class="warn-msg">Don't show this again</span>
+			<span class="warn-msg">{{ checkBoxContent }}</span>
 		</div>
 	</div>
 </div>
