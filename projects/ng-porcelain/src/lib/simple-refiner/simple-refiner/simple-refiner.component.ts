@@ -34,6 +34,7 @@ export class SimpleRefinerComponent implements OnInit {
 	@Input('showMoreLabel') showMoreLabel = defaultShowMoreLabel;
 	@Input('selectAllLabel') selectAllLabel = defaultSelectAllLabel;
 	@Input('selectNoneLabel') selectNoneLabel = defaultSelectNoneLabel;
+	@Input() toDisable: boolean = true; /*Sets the toDisable flag to disable refiners in required apps*/
 
 	//#endregion
 
@@ -173,6 +174,10 @@ export class SimpleRefinerComponent implements OnInit {
 		return this._isExpanded
 			? Object.keys(this.refiner.options)
 			: Object.keys(this.refiner.options).slice(0, this._showCount);
+	}
+
+	getDisabled(): boolean {
+		return Object.keys(this.refiner.options).length == 0 ? true : false;
 	}
 
 	optionHasBadge(option: string | SimpleOption): boolean {

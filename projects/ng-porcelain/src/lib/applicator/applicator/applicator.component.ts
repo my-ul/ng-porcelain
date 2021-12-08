@@ -62,6 +62,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public resetLabel: string = 'Reset';
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
+	@Input() public toDisable: boolean = false; //flag to disable refiners in required apps
 
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
