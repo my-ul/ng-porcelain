@@ -10,17 +10,19 @@ import {
 	ElementRef,
 	AfterContentInit,
 	OnDestroy,
-	HostListener
+	HostListener,
+	SimpleChanges,
+	OnChanges
 } from '@angular/core';
 import { DropdownSelectOptionComponent } from '../dropdown-select-option/dropdown-select-option.component';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'porcelain-dropdown-select',
 	templateUrl: './dropdown-select.component.html',
 	styleUrls: ['./dropdown-select.component.scss']
 })
-export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentInit {
+export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentInit, OnChanges {
 	/**
 	 * Controls the display of the border.  Set to false to eliminate borders.
 	 */
@@ -67,6 +69,17 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	private _subscriptions: Subscription[] = [];
 
 	/**
+	 * Detect focus and blur events from projected components
+	 * */
+	@Input() contentFocusState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+
+	/**
+	 * Input options state, this is any as we need to now only if option state has changed or not
+	 * */
+
+	@Input() optionsListstate: any;
+
+	/**
 	 * The current value of the component.
 	 */
 	private _value: any;
@@ -90,6 +103,13 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	 * @param elementRef Reference to the component's host element.
 	 */
 	constructor(private elementRef: ElementRef) {}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['optionsListstate']) {
+			this.destoryExistingSubscriptionsListOptions();
+			this.createNewSubscriptionsListOptions();
+		}
+	}
 
 	/**
 	 * Manages rxjs subscriptions so that the component doesn't leak memory.
@@ -118,6 +138,10 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 				})
 			);
 		});
+
+		this.contentFocusState.subscribe(focus => {
+			this.hasFocus = focus;
+		});
 	}
 
 	/**
@@ -128,6 +152,44 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 			if (!sub.closed) {
 				sub.unsubscribe();
 			}
+		});
+
+		this.contentFocusState.unsubscribe();
+	}
+
+	/**
+	 * destroys all exising subscriptions
+	 * */
+	public destoryExistingSubscriptionsListOptions() {
+		this._subscriptions.forEach(sub => {
+			if (!sub.closed) {
+				sub.unsubscribe();
+			}
+		});
+
+		this._subscriptions = [];
+	}
+
+	/**
+	 * creates new subscriptions
+	 * */
+
+	public createNewSubscriptionsListOptions() {
+		setTimeout(() => {
+			this.options.toArray().forEach((child, idx) => {
+				this.addSubscription(
+					child.onValue.subscribe(newValue => {
+						this.value = newValue;
+						this.close();
+					})
+				).addSubscription(
+					child.onHover.subscribe(isHover => {
+						if (isHover) {
+							this.highlightOptionByIndex(idx, false);
+						}
+					})
+				);
+			});
 		});
 	}
 

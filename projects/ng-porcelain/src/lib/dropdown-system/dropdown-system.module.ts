@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DropdownSelectComponent } from './dropdown-select/dropdown-select.component';
 import { DropdownSelectOptionComponent } from './dropdown-select-option/dropdown-select-option.component';
 import { DropdownSelectedTemplateComponent } from './dropdown-selected-template/dropdown-selected-template.component';
+import { DropdownInputboxComponent } from './dropdown-inputbox/dropdown-inputbox.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PipesModule } from '../pipes/pipes.module';
@@ -13,7 +14,8 @@ import { PipesModule } from '../pipes/pipes.module';
 export const DROPDOWNSYSTEM_DIRECTIVES = [
 	DropdownSelectComponent,
 	DropdownSelectOptionComponent,
-	DropdownSelectedTemplateComponent
+	DropdownSelectedTemplateComponent,
+	DropdownInputboxComponent
 ];
 
 export const DROPDOWNSYSTEM_IMPORTS = [CommonModule, FormsModule, PipesModule, FontAwesomeModule];

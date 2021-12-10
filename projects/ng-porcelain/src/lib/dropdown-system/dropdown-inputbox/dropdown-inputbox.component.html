@@ -1,25 +1,31 @@
-<input
-	type="text"
-	class="select__window-value"
-	[(ngModel)]="query"
-	[placeholder]="placeholder || labelPlaceholder"
-	[class.select__window-value--placeholder]="query === ''"
-	(focus)="setOpen(true).setFocus(true)"
-	(blur)="setFocus(false)"
-	(keyup)="keyUp($event)"
-/>
+<div class="select__inputwindow">
+	<input
+		type="text"
+		class="select__inputwindow-value"
+		[(ngModel)]="query"
+		[placeholder]="placeholder || labelPlaceholder"
+		[class.select__input-value--placeholder]="query === ''"
+		(change)="this.queryChange.emit($event)"
+		(focus)="setFocus(true)"
+		(blur)="setFocus(false)"
+	/>
 
-<button
-	class="select__window-action"
-	*ngIf="query !== ''"
-	[style.color]="clearIconColor"
-	(click)="clear()"
->
-	<span class="sr-only">{{ labelClear }}</span>
-	<fa-icon [icon]="clearIcon"></fa-icon>
-</button>
+	<button
+		class="select__inputwindow-action"
+		*ngIf="query !== ''"
+		[style.color]="clearIconColor"
+		(click)="this.clearIconClick.emit(true)"
+	>
+		<span class="sr-only">{{ labelClear }}</span>
+		<fa-icon [icon]="clearIcon"></fa-icon>
+	</button>
 
-<button class="select__window-action" (click)="toggleOpen()">
-	<span class="sr-only">{{ labelSelect }}</span>
-	<fa-icon [icon]="dropdownToggleIcon"></fa-icon>
-</button>
+	<button class="select__inputwindow-action">
+		<span class="sr-only">{{ labelSelect }}</span>
+		<fa-icon [icon]="dropdownToggleIcon"></fa-icon>
+	</button>
+
+	<ng-content>
+		<!--display only buttons!!!!-->
+	</ng-content>
+</div>
