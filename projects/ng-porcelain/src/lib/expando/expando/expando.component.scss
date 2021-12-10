@@ -16,6 +16,7 @@
 		.expando__toggle--before {
 			transform: rotate(-90deg);
 		}
+
 		.expando__toggle--after {
 			transform: rotate(90deg);
 		}
@@ -38,6 +39,24 @@
 
 	&.expando--open .expando__body {
 		margin-top: 1em;
+	}
+
+	//css when the refiner is disabled
+	&.expando--disabled {
+		background: #edf1f6 0% 0% no-repeat padding-box;
+		border: 1px solid #bbc1c8;
+
+		.expando__header {
+			cursor: default;
+
+			.expando__title {
+				color: #778899;
+			}
+
+			.expando__toggle--after {
+				color: #778899;
+			}
+		}
 	}
 
 	.ng-animating.expando__body {

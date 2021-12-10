@@ -21,8 +21,7 @@ steps:
   displayName: 'Restore npm packages'
 
 - script: |
-    npm run build-variables-tool
-    npm run get-variables
+    npm run set-azdo-variables
   displayName: 'Extract package variables into environment'
 
 - script: |

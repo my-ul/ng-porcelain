@@ -32,6 +32,7 @@
 			*ngIf="refiners"
 			[refiners]="refiners"
 			[allowIncompleteEmit]="allowIncompleteEmit"
+			[toDisable]="toDisable"
 		></porcelain-refiners>
 		<div *ngIf="!refiners">
 			<p>{{ loadingLabel }}</p>
