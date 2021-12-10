@@ -1,7 +1,11 @@
 The Applicator component allows a user to defer updates on an expensive operation (such as querying a server for search results) by staging a series of changes and then clicking apply.
 
 ```html
-<porcelain-applicator [refiners]="refiners" (onApply)="myApplyHandler($event)"></porcelain-applicator>
+<porcelain-applicator
+	[refiners]="refiners"
+	(onApply)="myApplyHandler($event)"
+	(onReset)="myResetHandler($event)"
+></porcelain-applicator>
 ```
 
 ```typescript
@@ -19,7 +23,11 @@ class MyComponent implements OnInit {
 		// and it sets to false when user clicks on apply/reset button
 		console.log(indexedValues, initialLoad);
 	}
-
+	myResetHandler(resetClicked) {
+		// resetClicked sets to true when reset button is clicked
+		// and it sets to false when user clicks on apply button
+		console.log(resetClicked);
+	}
 	// Using Subscription API
 	ngOnInit() {
 		// Subscribe to each refiner's value subject
