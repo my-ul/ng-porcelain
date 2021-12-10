@@ -83,6 +83,7 @@ export const DefaultNoProps = () => {
 		props: {
 			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
 			refiners: [dateRefiner, simpleRefiner, anotherSimpleRefiner]
 		}
 	};
