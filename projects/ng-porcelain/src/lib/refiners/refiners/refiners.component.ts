@@ -17,6 +17,7 @@ export class RefinersComponent extends Loggable implements OnInit {
 	// Inputs
 	@Input() refiners: BaseRefinerDefinition[];
 	@Input() allowIncompleteEmit: boolean = true;
+	@Input() disable: boolean = false; /*Sets the disable flag to disable refiners in required apps*/
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();

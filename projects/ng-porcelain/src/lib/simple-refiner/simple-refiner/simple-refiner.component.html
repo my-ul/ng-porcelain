@@ -1,4 +1,9 @@
-<porcelain-expando [title]="refiner.title" [(isOpen)]="isOpen">
+<porcelain-expando
+	[title]="refiner.title"
+	[disable]="disable"
+	[isDisabled]="getDisabled()"
+	[(isOpen)]="isOpen"
+>
 	<!-- [@optionsInOut -->
 	<div class="refiner__section refiner__body">
 		<div class="refiner__section refiner__selection-toggles">

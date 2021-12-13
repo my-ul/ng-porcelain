@@ -55,6 +55,7 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, OnDestroy {
 	readonly name: string = 'ApplicatorComponent';
 	private initialLoad: boolean = true;
+	private resetClicked: boolean = false;
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
@@ -62,6 +63,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public resetLabel: string = 'Reset';
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
+	@Input() public disable: boolean = false; //flag to disable refiners in required apps
 
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
@@ -69,7 +71,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
-
+	@Output() public onReset: EventEmitter<any> = new EventEmitter();
 	//view child ref
 	@ViewChild('refinerRef', { static: false }) public refinerCmpRef: RefinersComponent;
 	@ViewChild('applicator') public applicatorRef: ElementRef<HTMLDivElement>;
@@ -107,6 +109,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	public beforeApply(): void {
 		this.initialLoad = false;
+		this.resetApply();
 		this.apply();
 	}
 
@@ -183,9 +186,16 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 			console.debug('reset()', refiner.slug, this.defaultValues[refiner.slug]);
 			refiner.valueSubject.next(this.defaultValues[refiner.slug]);
 		});
+		this.resetClicked = true;
 		this.beforeApply();
 	}
 
+	resetApply() {
+		this.onReset.emit({
+			resetClicked: this.resetClicked
+		});
+		this.resetClicked = false;
+	}
 	public refinerNewSubscriptions = (): void => {
 		//reset default values for reset and apply states
 		this.defaultValues = {};

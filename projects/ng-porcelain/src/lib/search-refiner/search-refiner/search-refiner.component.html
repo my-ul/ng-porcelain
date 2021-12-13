@@ -1,4 +1,9 @@
-<porcelain-expando [title]="refiner.title" [(isOpen)]="refiner.isOpen">
+<porcelain-expando
+	[title]="refiner.title"
+	[disable]="disable"
+	[isDisabled]="inactiveKeys.length === 0"
+	[(isOpen)]="refiner.isOpen"
+>
 	<div
 		class="search-refiner__section search-refiner__search"
 		[class.search-refiner__search--has-focus]="searchHasFocus"
