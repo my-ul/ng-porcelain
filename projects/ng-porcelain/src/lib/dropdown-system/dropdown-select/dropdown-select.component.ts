@@ -51,7 +51,7 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	/**
 	 * Boolean. True when the component has focus, otherwise false.
 	 */
-	hasFocus = false;
+	public hasFocus = false;
 
 	/**
 	 * The index of the currently-highlighted option
