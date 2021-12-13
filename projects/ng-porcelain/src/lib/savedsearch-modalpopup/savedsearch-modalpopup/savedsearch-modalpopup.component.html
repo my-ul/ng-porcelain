@@ -1,19 +1,30 @@
 <div class="modal-tooltip">
 	<div class="tooltipContent">
 		<div class="header">
-			Quick Tip
+			<div #quickTip><ng-content select="[quickTipHeader]"></ng-content></div>
+			<ng-container *ngIf="!quickTip.children.length">
+				Quick Tip
+			</ng-container>
 			<span class="close-modal" (click)="closeModel()">&times;</span>
 		</div>
 
 		<div>
-			Save your searches for quick access with the Save Search button in certain applications. You
-			can access your saved searches anywhere in the portal by clicking on this Saved Searches
-			link.
+			<div #content><ng-content select="[quickTipContent]"></ng-content></div>
+			<ng-container *ngIf="!content.children.length">
+				Save your searches for quick access with the Save Search button in certain applications.
+				You can access your saved searches anywhere in the portal by clicking on this Saved
+				Searches link.
+			</ng-container>
 		</div>
 
 		<div class="warn-checkbox">
 			<input type="checkbox" (click)="onCheckboxClick()" />
-			<span class="warn-msg">Don't show this again</span>
+			<span class="warn-msg">
+				<span #checkBox><ng-content select="[checkBoxContent]"></ng-content></span>
+				<ng-container *ngIf="!checkBox.children.length">
+					Don't show this again
+				</ng-container>
+			</span>
 		</div>
 	</div>
 </div>
