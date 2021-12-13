@@ -109,9 +109,8 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	public beforeApply(): void {
 		this.initialLoad = false;
-
-		this.apply();
 		this.resetApply();
+		this.apply();
 	}
 
 	public canApply(): boolean {
