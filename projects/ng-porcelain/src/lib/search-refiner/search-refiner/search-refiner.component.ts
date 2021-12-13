@@ -59,8 +59,8 @@ export class SearchRefinerComponent extends Loggable implements OnInit, AfterCon
 		return this._activeKeys;
 	}
 
-	/*Sets the toDisable flag to disable refiners in required apps*/
-	@Input() toDisable: boolean = true;
+	/*Sets the disable flag to disable refiners in required apps*/
+	@Input() disable: boolean = true;
 	/**
 	 * Sets the activeKeys value. Triggers activeKeysChange emit.
 	 */

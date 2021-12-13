@@ -34,7 +34,7 @@ export class SimpleRefinerComponent implements OnInit {
 	@Input('showMoreLabel') showMoreLabel = defaultShowMoreLabel;
 	@Input('selectAllLabel') selectAllLabel = defaultSelectAllLabel;
 	@Input('selectNoneLabel') selectNoneLabel = defaultSelectNoneLabel;
-	@Input() toDisable: boolean = true; /*Sets the toDisable flag to disable refiners in required apps*/
+	@Input() disable: boolean = true; /*Sets the disable flag to disable refiners in required apps*/
 
 	//#endregion
 

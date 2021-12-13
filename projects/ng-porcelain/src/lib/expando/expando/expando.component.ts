@@ -20,7 +20,7 @@ const expandoSlideInOut = trigger('slideInOut', [
 	host: {
 		'[class.expando--open]': 'isOpen',
 		'[class.expando--closed]': '!isOpen',
-		'[class.expando--disabled]': '!isOpen && isDisabled && toDisable'
+		'[class.expando--disabled]': '!isOpen && isDisabled && disable'
 	},
 	animations: [expandoRestrictInitialAnimation, expandoSlideInOut]
 })
@@ -34,7 +34,7 @@ export class ExpandoComponent extends Loggable implements OnInit {
 	@Input() icon: any = faCaretDown;
 
 	@Input() isDisabled: boolean;
-	@Input() toDisable: boolean = false; /*Sets the toDisable flag to disable refiners in required apps*/
+	@Input() disable: boolean = false; /*Sets the disable flag to disable refiners in required apps*/
 
 	private _isOpen: boolean;
 
@@ -44,7 +44,7 @@ export class ExpandoComponent extends Loggable implements OnInit {
 	}
 
 	set isOpen(isOpen: boolean) {
-		if (this.toDisable && this.isDisabled) {
+		if (this.disable && this.isDisabled) {
 			this._isOpen = !this.isDisabled;
 		} else {
 			this._isOpen = isOpen;

@@ -12,7 +12,7 @@
 			<porcelain-simple-refiner
 				(onRefinerChange)="handleRefinerChange($event)"
 				[refiner]="refiner"
-				[toDisable]="toDisable"
+				[disable]="disable"
 			></porcelain-simple-refiner>
 		</ng-container>
 
@@ -22,7 +22,7 @@
 				[activeKeys]="values[refiner.slug]"
 				(activeKeysChange)="handleRefinerChange([refiner.slug, $event])"
 				[refiner]="refiner"
-				[toDisable]="toDisable"
+				[disable]="disable"
 			></porcelain-search-refiner>
 		</ng-container>
 	</li>
