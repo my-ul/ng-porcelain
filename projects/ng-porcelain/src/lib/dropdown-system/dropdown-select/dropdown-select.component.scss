@@ -1,0 +1,53 @@
+$border-def: solid 1px #bbc1c8;
+
+@import '../../toolbar/toolbar.module.scss';
+
+:host {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Helvetica Neue', sans-serif;
+	font-size: 14px;
+
+	&.combobox--has-border .select__window {
+		border: $border-def;
+	}
+
+	&.combobox--has-focus .select__window {
+		@extend %--can-focus;
+	}
+
+	p {
+		margin: 0;
+		padding: 0;
+	}
+
+	.select__window {
+		display: flex;
+		cursor: pointer;
+	}
+
+	.select__items {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		list-style: none;
+		margin: 0;
+		padding: 9px 0;
+		background: #fff;
+		border-bottom: $border-def;
+		border-left: $border-def;
+		border-right: $border-def;
+		overflow-y: auto;
+		max-height: 50vh;
+	}
+}
+
+::ng-deep .highlight__query {
+	border: none;
+	font-weight: bold;
+	background-color: #fff883;
+}

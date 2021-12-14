@@ -216,3 +216,10 @@ export { TableviewTextHeaderComponent } from './lib/tableview-module/tableview-t
 export { TableviewSortHeaderComponent } from './lib/tableview-module/tableview-sort-header/tableview-sort-header.component';
 export { TableviewSearchSortHeaderComponent } from './lib/tableview-module/tableview-searchSortHeader/tableview-searchSortHeader.component';
 export { BackgroundColorDirective } from './lib/tableview-module/color-directive/background-color.directive';
+
+//dropdown module
+export { DropdownSystemModule } from './lib/dropdown-system/dropdown-system.module';
+export { DropdownInputboxComponent } from './lib/dropdown-system/dropdown-inputbox/dropdown-inputbox.component';
+export { DropdownSelectComponent } from './lib/dropdown-system/dropdown-select/dropdown-select.component';
+export { DropdownSelectOptionComponent } from './lib/dropdown-system/dropdown-select-option/dropdown-select-option.component';
+export { DropdownSelectedTemplateComponent } from './lib/dropdown-system/dropdown-selected-template/dropdown-selected-template.component';
