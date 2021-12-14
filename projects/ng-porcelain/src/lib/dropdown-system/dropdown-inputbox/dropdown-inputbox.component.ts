@@ -62,6 +62,11 @@ export class DropdownInputboxComponent implements OnInit, OnDestroy {
 
 	@Output() public submitHandler: EventEmitter<string> = new EventEmitter<string>();
 
+	public labelClear: string = '';
+	public labelSelect: string = '';
+	@Input() public placeholder: string = '';
+	@Input() public labelPlaceholder: string = '';
+
 	public setFocus(focus: boolean) {
 		this.focusState.emit(focus);
 	}
