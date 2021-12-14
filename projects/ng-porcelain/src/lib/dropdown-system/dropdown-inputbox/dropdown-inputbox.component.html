@@ -5,8 +5,8 @@
 		[(ngModel)]="query"
 		[placeholder]="placeholder || labelPlaceholder"
 		[class.select__input-value--placeholder]="query === ''"
-		(change)="this.queryChange.emit($event)"
-		(keyup.enter)="submit()"
+		(ngModelChange)="handleUserInput($event)"
+		(keyup.enter)="submit($event)"
 		(focus)="setFocus(true)"
 		(blur)="setFocus(false)"
 	/>
