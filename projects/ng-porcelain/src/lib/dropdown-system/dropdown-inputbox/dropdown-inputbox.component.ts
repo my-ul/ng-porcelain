@@ -84,4 +84,8 @@ export class DropdownInputboxComponent implements OnInit, OnDestroy {
 	public submit(value: string) {
 		this.submitHandler.emit(value);
 	}
+
+	public handleUserInput(value: string) {
+		this.queryChange.emit(value);
+	}
 }
