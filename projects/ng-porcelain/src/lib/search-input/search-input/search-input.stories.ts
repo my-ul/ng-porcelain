@@ -52,6 +52,7 @@ export const CustomPlaceholderText = () => {
 		props: {
 			submitHandler: action(onQueryChange),
 			emptyHandler: action(onQueryClear),
+			updateSearchValue: action('user has typed value'),
 			placeholderLabel: text('Placeholder Label', 'Volume')
 		}
 	};
