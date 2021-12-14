@@ -7,6 +7,10 @@ import { DynamicColumn } from './../lists/dynamic-header/dynamic-header.componen
 import { RACK_DIRECTIVES, RACK_IMPORTS } from './../rack/rack.module';
 import { SEARCH_INPUT_DIRECTIVES, SEARCH_INPUT_IMPORTS } from './../search-input/search-input.module';
 import { INPUTS_COMPONENTS, INPUTS_IMPORTS } from './../inputs/inputs.module';
+import {
+	DROPDOWNSYSTEM_DIRECTIVES,
+	DROPDOWNSYSTEM_IMPORTS
+} from '../dropdown-system/dropdown-system.module';
 
 import * as faker from 'faker';
 
@@ -66,7 +70,7 @@ var activeColumns: DynamicColumn[] = [
 	}
 ];
 
-var generateDummyData = (): Person[] => {
+var generateDummyData = (rate = 50): Person[] => {
 	var allPeople: Person[] = [];
 	var currentPeople: Person[] = [];
 	for (let i = 0; i < 50; i++) {
@@ -94,9 +98,16 @@ export default {
 				...TABLEVIEW_DIRECTIVES,
 				...RACK_DIRECTIVES,
 				...SEARCH_INPUT_DIRECTIVES,
-				...INPUTS_COMPONENTS
+				...INPUTS_COMPONENTS,
+				...DROPDOWNSYSTEM_DIRECTIVES
 			],
-			imports: [...TABLEVIEW_IMPORTS, ...RACK_IMPORTS, ...SEARCH_INPUT_IMPORTS, ...INPUTS_IMPORTS]
+			imports: [
+				...TABLEVIEW_IMPORTS,
+				...RACK_IMPORTS,
+				...SEARCH_INPUT_IMPORTS,
+				...INPUTS_IMPORTS,
+				...DROPDOWNSYSTEM_IMPORTS
+			]
 		})
 	]
 };
@@ -596,6 +607,291 @@ export const tableViewColumnSearchSortHeaders = () => {
 				}
 				action(onQueryChange);
 			}
+		}
+	};
+};
+
+export const tableViewColumnDropdDownSearchSortHeaders = () => {
+	var dynamicActiveColumnsHeaders: DynamicColumn[] = [
+		{
+			label: 'Name',
+			key: 'last_name',
+			locked: true,
+			type: 'search',
+			width: 2 / 7
+		},
+
+		{
+			label: 'Address',
+			key: 'address_1',
+			locked: false,
+			type: 'search',
+			width: 2 / 7
+		},
+		{
+			label: 'City',
+			key: 'city',
+			locked: false,
+			type: 'search',
+			width: 1 / 7
+		},
+		{
+			label: 'State',
+			key: 'state',
+			locked: false,
+			type: 'searchSort',
+			width: 1 / 7
+		},
+		{
+			label: 'Zip',
+			key: 'zip',
+			locked: false,
+			type: 'text',
+			width: 1 / 7
+		}
+	];
+
+	const ColumnKnoboptions = {
+		name: 'last_name',
+		address: 'address_1',
+		city: 'city',
+		state: 'state',
+		zip: 'zip'
+	};
+	var activeSortKey = 'last_name';
+	var activeSortDirection = 'desc';
+	const groupId = 'Preselect Options';
+
+	const SortDirectionKnoboptions = {
+		Ascending: 'asc',
+		Descending: 'desc'
+	};
+	const groupId2 = 'preselect Direction';
+
+	var options: {
+		'keith.carmody': {
+			value: 'keith.carmody';
+			name: 'Keith Carmody';
+			group: 'Northbrook, IL';
+		};
+		'brad.kovach': { value: 'brad.kovach'; name: 'Brad Kovach'; group: 'Laramie, WY' };
+		'arjun.rapaka': { value: 'arjun.rapaka'; name: 'Arjun Rapaka'; group: 'Canada' };
+		'matt.gardner': {
+			value: 'matt.gardner';
+			name: 'Matt Gardner';
+			group: 'Laramie, WY';
+		};
+		'richard.heinig': {
+			value: 'richard.heinig';
+			name: 'Richard Heinig';
+			group: 'Laramie, WY';
+		};
+	};
+
+	var searchText = '';
+
+	return {
+		template: `
+					<p-tableview-header>						 
+							<p-tableview-header-item [width]="column.width"
+												   *ngFor="let column of getColumnValues()">
+								<ng-container *ngIf="column.type == 'search'">
+									<p-tableview-sort-header [label]="column.label"
+														   [title]="column.label"
+														   [sortKey]="column.key"
+														   [activeSortKey]="getActiveSortKey()"
+														   [activeSortDirection]="getSortDirection()"
+														   (onSortChange)="onSortHeader($event)">
+									</p-tableview-sort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'searchSort'">
+									<p-tableview-searchSort-header>
+										<p-tableview-sort-header [label]="column.label"
+															   [title]="column.label"
+															   [sortKey]="column.key"
+															   [activeSortKey]="getActiveSortKey()"
+															   [activeSortDirection]="getSortDirection()"
+															   (onSortChange)="onSortHeader($event)">
+										</p-tableview-sort-header>
+										<porcelain-dropdown-select [(value)]="value">
+											<porcelain-dropdown-selectedtemplate>
+												<porcelain-dropdown-inputbox (queryChange)="filterOptions($event)"></porcelain-dropdown-inputbox>
+											</porcelain-dropdown-selectedtemplate>                            
+											<porcelain-dropdown-selectoption [value]="option.value" *ngFor="let option of getValues(options)">
+												<strong>{{option.name}}</strong>&nbsp;&nbsp;<span style="font-size: 90%; color: #888">{{option.group}}</span><br>
+															{{option.value}}@ul.com
+											</porcelain-dropdown-selectoption>
+										</porcelain-dropdown-select>
+									</p-tableview-searchSort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'text'">
+									<p-tableview-text-header>
+										<span innerHTML="{{column.label}}" title="{{column.label}}"></span>
+									</p-tableview-text-header>
+								</ng-container>
+							</p-tableview-header-item>					
+					</p-tableview-header>
+				`,
+		props: {
+			getColumnValues() {
+				return dynamicActiveColumnsHeaders;
+			},
+			getActiveSortKey() {
+				return activeSortKey;
+			},
+			getSortDirection() {
+				return activeSortDirection;
+			},
+			onSortHeader(data) {
+				const [sortKey, sortDirection] = data;
+				if (null === sortDirection) {
+					activeSortKey = '';
+					activeSortDirection = 'desc';
+				} else {
+					activeSortKey = sortKey;
+					activeSortDirection = sortDirection;
+				}
+				action(onQueryChange);
+			},
+			getValues(dict) {
+				return options;
+			},
+			searchText: '',
+			filterOptions: action('user entered value')
+		}
+	};
+};
+
+export const tableViewColumnDropdDownLegacySearchHeaders = () => {
+	var dynamicActiveColumnsHeaders: DynamicColumn[] = [
+		{
+			label: 'Name',
+			key: 'last_name',
+			locked: true,
+			type: 'search',
+			width: 2 / 7
+		},
+
+		{
+			label: 'Address',
+			key: 'address_1',
+			locked: false,
+			type: 'search',
+			width: 2 / 7
+		},
+		{
+			label: 'City',
+			key: 'city',
+			locked: false,
+			type: 'search',
+			width: 1 / 7
+		},
+		{
+			label: 'State',
+			key: 'state',
+			locked: false,
+			type: 'searchSort',
+			width: 1 / 7
+		},
+		{
+			label: 'Zip',
+			key: 'zip',
+			locked: false,
+			type: 'text',
+			width: 1 / 7
+		}
+	];
+
+	const ColumnKnoboptions = {
+		name: 'last_name',
+		address: 'address_1',
+		city: 'city',
+		state: 'state',
+		zip: 'zip'
+	};
+	var activeSortKey = 'last_name';
+	var activeSortDirection = 'desc';
+	const groupId = 'Preselect Options';
+
+	const SortDirectionKnoboptions = {
+		Ascending: 'asc',
+		Descending: 'desc'
+	};
+	const groupId2 = 'preselect Direction';
+
+	var searchText = '';
+	var listItems = [];
+
+	return {
+		template: `
+					<p-tableview-header>						 
+							<p-tableview-header-item [width]="column.width"
+												   *ngFor="let column of getColumnValues()">
+								<ng-container *ngIf="column.type == 'search'">
+									<p-tableview-sort-header [label]="column.label"
+														   [title]="column.label"
+														   [sortKey]="column.key"
+														   [activeSortKey]="getActiveSortKey()"
+														   [activeSortDirection]="getSortDirection()"
+														   (onSortChange)="onSortHeader($event)">
+									</p-tableview-sort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'searchSort'">
+									<p-tableview-searchSort-header>
+										<p-tableview-sort-header [label]="column.label"
+															   [title]="column.label"
+															   [sortKey]="column.key"
+															   [activeSortKey]="getActiveSortKey()"
+															   [activeSortDirection]="getSortDirection()"
+															   (onSortChange)="onSortHeader($event)">
+										</p-tableview-sort-header>
+										<porcelain-dropdown-select [(value)]="value">
+											<porcelain-dropdown-selectedtemplate>
+												<porcelain-search-input>
+												</porcelain-search-input>
+											</porcelain-dropdown-selectedtemplate>                            
+											<porcelain-dropdown-selectoption [value]="option.first_name" *ngFor="let option of getValues()">
+												<strong>{{option.first_name}}</strong>&nbsp;&nbsp;<span style="font-size: 90%; color: #888">{{option.last_name}}</span><br>
+															{{option.email}}
+											</porcelain-dropdown-selectoption>
+										</porcelain-dropdown-select>
+									</p-tableview-searchSort-header>
+								</ng-container>
+								<ng-container *ngIf="column.type == 'text'">
+									<p-tableview-text-header>
+										<span innerHTML="{{column.label}}" title="{{column.label}}"></span>
+									</p-tableview-text-header>
+								</ng-container>
+							</p-tableview-header-item>					
+					</p-tableview-header>
+				`,
+		props: {
+			getColumnValues() {
+				return dynamicActiveColumnsHeaders;
+			},
+			getActiveSortKey() {
+				return activeSortKey;
+			},
+			getSortDirection() {
+				return activeSortDirection;
+			},
+			onSortHeader(data) {
+				const [sortKey, sortDirection] = data;
+				if (null === sortDirection) {
+					activeSortKey = '';
+					activeSortDirection = 'desc';
+				} else {
+					activeSortKey = sortKey;
+					activeSortDirection = sortDirection;
+				}
+				action(onQueryChange);
+			},
+			getValues() {
+				var data = generateDummyData(5);
+				return data;
+			},
+			searchText: '',
+			filterOptions: action('user entered value')
 		}
 	};
 };

@@ -17,13 +17,13 @@ import {
 export class DropdownSelectOptionComponent implements OnInit {
 	readonly name = 'ToolbarOptionComponent';
 
-	@Input() value: any;
+	@Input() public value: any;
 
 	// tslint:disable-next-line: no-output-on-prefix
-	@Output() onValue: EventEmitter<any> = new EventEmitter();
+	@Output() public onValue: EventEmitter<any> = new EventEmitter();
 
 	// tslint:disable-next-line: no-output-on-prefix
-	@Output() onHover: EventEmitter<boolean> = new EventEmitter();
+	@Output() public onHover: EventEmitter<boolean> = new EventEmitter();
 
 	@HostBinding('class.porcelain-dropdown-selectoption--is-highlighted')
 	isHighlighted: boolean = false;

@@ -44,7 +44,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 
 	@Output() public emptyHandler: EventEmitter<string> = new EventEmitter();
 	@Output() public submitHandler: EventEmitter<string> = new EventEmitter();
-
+	@Output() public searchboxValue: EventEmitter<string> = new EventEmitter<string>();
 	//#endregion
 
 	//#region Icons
@@ -62,6 +62,8 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 
 	public isSearchFocused = false;
 	public currentValue = '';
+
+	public focusEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
 	constructor(private translationService: TranslationService) {
 		super();
@@ -105,6 +107,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 	 */
 	public handleBlur(): void {
 		this.isSearchFocused = false;
+		this.focusEvent.emit(false);
 	}
 
 	/**
@@ -112,6 +115,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 	 */
 	public handleFocusIn(): void {
 		this.isSearchFocused = true;
+		this.focusEvent.emit(true);
 	}
 
 	/**
@@ -162,5 +166,19 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 			}
 			this.setFocus();
 		}
+	}
+
+	/**
+	 * user enter value, this handler sends input as user types
+	 * */
+	public userValueHandler(value: string) {
+		this.searchboxValue.emit(value);
+	}
+
+	/**
+	 * update search input box value,needs to be used with view child
+	 * */
+	public updateSearchValue(value: string) {
+		this.currentValue = value;
 	}
 }

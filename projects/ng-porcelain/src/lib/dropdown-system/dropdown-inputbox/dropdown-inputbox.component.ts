@@ -26,7 +26,7 @@ export class DropdownInputboxComponent implements OnInit, OnDestroy {
 	/**
 	 * event emitter to detech clear icon click
 	 * */
-	@Output() public clearIconClick: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output() public clearIconClick: EventEmitter<string> = new EventEmitter<string>();
 
 	/**
 	 * Input string query
@@ -34,25 +34,49 @@ export class DropdownInputboxComponent implements OnInit, OnDestroy {
 	@Input() public query: string = '';
 
 	/**
+	 * controls whether to show showClearButton
+	 * */
+	@Input() public showClearButton: boolean = true;
+
+	/**
+	 * controls whether to show showClearButton
+	 * */
+	@Input() public showDropdownButton: boolean = true;
+
+	/**
 	 * event to emit input query
 	 * */
 	@Output() public queryChange: EventEmitter<string> = new EventEmitter<string>();
 
 	/**
-	 * Input box focus event
+	 * Input box focus event, needs to be binded separately to hasfocus using viewchild
 	 * */
 
-	@Output() public focusState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+	@Output() public focusState: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+
+	/**
+	 *
+	 *
+	 * This is a separate event handler
+	 */
+
+	@Output() public submitHandler: EventEmitter<string> = new EventEmitter<string>();
 
 	public setFocus(focus: boolean) {
-		this.focusState.next(focus);
+		this.focusState.emit(focus);
+	}
+
+	public clearEventHandler() {
+		this.clearIconClick.emit('');
 	}
 
 	constructor() {}
 
 	ngOnInit(): void {}
 
-	ngOnDestroy(): void {
-		this.focusState.unsubscribe();
+	ngOnDestroy(): void {}
+
+	public submit(value: string) {
+		this.submitHandler.emit(value);
 	}
 }

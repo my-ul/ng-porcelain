@@ -1,7 +1,8 @@
 <div class="search-sort__header-container">
 	<ng-container *ngIf="isSearchEnabled; then searchContent; else sortContent"> </ng-container>
 	<ng-template #searchContent>
-		<ng-content select="p-search-input,porcelain-search-input"> </ng-content>
+		<ng-content select="p-search-input,porcelain-search-input,porcelain-dropdown-select">
+		</ng-content>
 		<span class="sort-header__sortIconContainer" (click)="isSearchEnabled = !isSearchEnabled">
 			<ng-container *ngIf="sortComponentRef && sortComponentRef.active; else inactive">
 				<span

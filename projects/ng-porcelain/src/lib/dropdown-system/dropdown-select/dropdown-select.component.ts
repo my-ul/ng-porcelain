@@ -28,13 +28,13 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	 */
 	@HostBinding('class.combobox--has-border')
 	@Input()
-	border: boolean = true;
+	public border: boolean = true;
 
 	/**
 	 * A QueryList of the DropdownSelectOptionComponent that populate the options.
 	 */
 	@ContentChildren(DropdownSelectOptionComponent)
-	readonly options: QueryList<DropdownSelectOptionComponent>;
+	public readonly options: QueryList<DropdownSelectOptionComponent>;
 
 	/**
 	 * Tab Index to enable keyboard navigation
@@ -56,17 +56,17 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	/**
 	 * The index of the currently-highlighted option
 	 */
-	highlightedIndex: number = -1;
+	public highlightedIndex: number = -1;
 
 	/**
 	 * The index of the currently-selected option.
 	 */
-	selectedIndex: number = -1;
+	public selectedIndex: number = -1;
 
 	/**
 	 * Array of subscriptions created during the life of the component.
 	 */
-	private _subscriptions: Subscription[] = [];
+	public _subscriptions: Subscription[] = [];
 
 	/**
 	 * Detect focus and blur events from projected components
@@ -77,12 +77,12 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	 * Input options state, this is any as we need to now only if option state has changed or not
 	 * */
 
-	@Input() optionsListstate: any;
+	@Input() public optionsListstate: any;
 
 	/**
 	 * The current value of the component.
 	 */
-	private _value: any;
+	public _value: any;
 
 	@Input()
 	get value() {
@@ -198,7 +198,7 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	 * @param highlightIndex The index of the option to highlight on screen.
 	 * @param scrollToHighlightedOption Boolean, if the option should be scrolled to on highlight.
 	 */
-	highlightOptionByIndex(highlightIndex: number, scrollToHighlightedOption: boolean = true) {
+	public highlightOptionByIndex(highlightIndex: number, scrollToHighlightedOption: boolean = true) {
 		this.options.toArray().forEach((child, idx, all) => {
 			child.isHighlighted = idx === highlightIndex;
 
@@ -251,7 +251,7 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	/**
 	 * Toggles the dropdown being open or closed.
 	 */
-	toggleOpen() {
+	public toggleOpen() {
 		if (this.isOpen) {
 			this.close();
 		} else {
@@ -266,7 +266,7 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	/**
 	 * Opens the dropdown.
 	 */
-	private open(): this {
+	public open(): this {
 		this.isOpen = true;
 		return this;
 	}
@@ -274,7 +274,7 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	/**
 	 * Closes the dropdown
 	 */
-	private close(): this {
+	public close(): this {
 		this.isOpen = false;
 		return this;
 	}
@@ -355,13 +355,13 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 		}
 	}
 
-	ngOnInit(): void {}
+	public ngOnInit(): void {}
 
 	/**
 	 * Finds the index of a value within the options ToolbarOptionComponent array.
 	 * @param value Value to find in the options.
 	 */
-	getIndexByValue(value: any) {
+	public getIndexByValue(value: any) {
 		return this.options ? this.options.map(option => option.value).indexOf(value) : -1;
 	}
 }
