@@ -4,7 +4,7 @@
 	title="{{ placeholderLabel }}"
 	class="search-input__query"
 	[(ngModel)]="currentValue"
-	(ngModelChange)="userEnterHandler($event)"
+	(ngModelChange)="updateSearchValue($event)"
 	[placeholder]="placeholderLabel"
 	(keyup.enter)="submit()"
 	(keyup.esc)="clear()"
