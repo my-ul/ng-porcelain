@@ -762,7 +762,9 @@ export const tableViewColumnDropdDownSearchSortHeaders = () => {
 	};
 };
 
+const drodpwonData = generateDummyData(5);
 export const tableViewColumnDropdDownLegacySearchHeaders = () => {
+	var filteredData = drodpwonData;
 	var dynamicActiveColumnsHeaders: DynamicColumn[] = [
 		{
 			label: 'Name',
@@ -847,10 +849,10 @@ export const tableViewColumnDropdDownLegacySearchHeaders = () => {
 										</p-tableview-sort-header>
 										<porcelain-dropdown-select [(value)]="value">
 											<porcelain-dropdown-selectedtemplate>
-												<porcelain-search-input>
+												<porcelain-search-input (searchboxValue)="filterCertificateScheme($event)">
 												</porcelain-search-input>
 											</porcelain-dropdown-selectedtemplate>                            
-											<porcelain-dropdown-selectoption [value]="option.first_name" *ngFor="let option of getValues()">
+											<porcelain-dropdown-selectoption [value]="option.first_name"  *ngFor="let option of getValues();">
 												<strong>{{option.first_name}}</strong>&nbsp;&nbsp;<span style="font-size: 90%; color: #888">{{option.last_name}}</span><br>
 															{{option.email}}
 											</porcelain-dropdown-selectoption>
@@ -875,6 +877,11 @@ export const tableViewColumnDropdDownLegacySearchHeaders = () => {
 			getSortDirection() {
 				return activeSortDirection;
 			},
+			filterCertificateScheme: function(query: string) {
+				filteredData = drodpwonData.filter(item => {
+					return item.first_name.toLowerCase().indexOf(query.trim().toLowerCase()) > -1;
+				});
+			},
 			onSortHeader(data) {
 				const [sortKey, sortDirection] = data;
 				if (null === sortDirection) {
@@ -887,8 +894,7 @@ export const tableViewColumnDropdDownLegacySearchHeaders = () => {
 				action(onQueryChange);
 			},
 			getValues() {
-				var data = generateDummyData(5);
-				return data;
+				return filteredData;
 			},
 			searchText: '',
 			filterOptions: action('user entered value')

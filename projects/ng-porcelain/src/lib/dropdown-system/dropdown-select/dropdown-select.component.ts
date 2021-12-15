@@ -12,7 +12,8 @@ import {
 	OnDestroy,
 	HostListener,
 	SimpleChanges,
-	OnChanges
+	OnChanges,
+	AfterContentChecked
 } from '@angular/core';
 import { DropdownSelectOptionComponent } from '../dropdown-select-option/dropdown-select-option.component';
 import { Subscription, BehaviorSubject } from 'rxjs';
@@ -22,7 +23,8 @@ import { Subscription, BehaviorSubject } from 'rxjs';
 	templateUrl: './dropdown-select.component.html',
 	styleUrls: ['./dropdown-select.component.scss']
 })
-export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentInit, OnChanges {
+export class DropdownSelectComponent
+	implements OnInit, OnDestroy, AfterContentInit, OnChanges, AfterContentChecked {
 	/**
 	 * Controls the display of the border.  Set to false to eliminate borders.
 	 */
@@ -104,13 +106,6 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 	 */
 	constructor(private elementRef: ElementRef) {}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['optionsListstate']) {
-			this.destoryExistingSubscriptionsListOptions();
-			this.createNewSubscriptionsListOptions();
-		}
-	}
-
 	/**
 	 * Manages rxjs subscriptions so that the component doesn't leak memory.
 	 * @param subscription Subscription to add to tracking array.
@@ -143,6 +138,32 @@ export class DropdownSelectComponent implements OnInit, OnDestroy, AfterContentI
 			this.hasFocus = focus;
 		});
 	}
+
+	/**
+	 *Responds everytime new content is rendered
+	 * */
+	ngAfterContentChecked(): void {
+		this.options.toArray().forEach((child, idx) => {
+			this.addSubscription(
+				child.onValue.subscribe(newValue => {
+					this.value = newValue;
+					this.close();
+				})
+			).addSubscription(
+				child.onHover.subscribe(isHover => {
+					if (isHover) {
+						this.highlightOptionByIndex(idx, false);
+					}
+				})
+			);
+		});
+
+		this.contentFocusState.subscribe(focus => {
+			this.hasFocus = focus;
+		});
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {}
 
 	/**
 	 * Safely closes subscriptions when the component is destroyed.
