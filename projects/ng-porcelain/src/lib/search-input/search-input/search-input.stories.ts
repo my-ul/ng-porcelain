@@ -35,7 +35,8 @@ export const Default = () => {
 		component: SearchInputComponent,
 		props: {
 			submitHandler: action(onQueryChange),
-			emptyHandler: action(onQueryClear)
+			emptyHandler: action(onQueryClear),
+			focusEvent: action('focus event')
 		}
 	};
 };
@@ -52,8 +53,9 @@ export const CustomPlaceholderText = () => {
 		props: {
 			submitHandler: action(onQueryChange),
 			emptyHandler: action(onQueryClear),
-			updateSearchValue: action('user has typed value'),
-			placeholderLabel: text('Placeholder Label', 'Volume')
+			searchboxValue: action('user has typed value'),
+			placeholderLabel: text('Placeholder Label', 'Volume'),
+			focusEvent: action('focus event')
 		}
 	};
 };
@@ -115,7 +117,9 @@ export const NoBorders = () => {
 		props: {
 			submitHandler: action(onQueryChange),
 			emptyHandler: action(onQueryClear),
-			borders: boolean('Enable Border', false)
+			borders: boolean('Enable Border', false),
+			searchboxValue: action('user has typed value'),
+			focusEvent: action('focus event')
 		}
 	};
 };
@@ -137,7 +141,9 @@ export const ColorsSubmitButton = () => {
 		props: {
 			submitHandler: action(onQueryChange),
 			emptyHandler: action(onQueryClear),
-			submitIconColor: color('Color', '#ff0000')
+			submitIconColor: color('Color', '#ff0000'),
+			searchboxValue: action('user has typed value'),
+			focusEvent: action('focus event')
 		}
 	};
 };
@@ -159,7 +165,9 @@ export const ColorsClearButton = () => {
 		props: {
 			submitHandler: action(onQueryChange),
 			emptyHandler: action(onQueryClear),
-			clearIconColor: color('Clear Icon Color', '#ff0000')
+			clearIconColor: color('Clear Icon Color', '#ff0000'),
+			searchboxValue: action('user has typed value'),
+			focusEvent: action('focus event')
 		}
 	};
 };
@@ -174,7 +182,8 @@ export const DefaultValueCanBeOverridden = () => {
 		props: {
 			submitHandler: action(onQueryChange),
 			emptyHandler: action(onQueryClear),
-			userValue: text('Value', 'Entered')
+			searchboxValue: action('user has typed value'),
+			focusEvent: action('focus event')
 		}
 	};
 };
@@ -193,7 +202,9 @@ export const MixAndMatch = () => {
 			placeholderLabel: text('Placeholder Label', 'Volume'),
 			borders: boolean('Enable Border', true),
 			userValue: text('userValue Label', 'Entered'),
-			emptyHandler: action(onQueryClear)
+			emptyHandler: action(onQueryClear),
+			searchboxValue: action('user has typed value'),
+			focusEvent: action('focus event')
 		}
 	};
 };

@@ -54,4 +54,16 @@
 			width: 100%;
 		}
 	}
+
+	::ng-deep porcelain-dropdown-selectoption {
+		div {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow-x: hidden;
+		}
+	}
+
+	::ng-deep porcelain-dropdown-selectoption {
+		padding: 0.5em 0.2em;
+	}
 }

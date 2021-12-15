@@ -45,6 +45,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 	@Output() public emptyHandler: EventEmitter<string> = new EventEmitter();
 	@Output() public submitHandler: EventEmitter<string> = new EventEmitter();
 	@Output() public searchboxValue: EventEmitter<string> = new EventEmitter<string>();
+	@Output() public focusEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 	//#endregion
 
 	//#region Icons
@@ -62,8 +63,6 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 
 	public isSearchFocused = false;
 	public currentValue = '';
-
-	public focusEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
 	constructor(private translationService: TranslationService) {
 		super();
