@@ -82,6 +82,11 @@ export class DropdownSelectComponent
 	@Input() public optionsListstate: any;
 
 	/**
+	 * display or hide options
+	 * */
+	@Input() public showOptions: boolean = true;
+
+	/**
 	 * The current value of the component.
 	 */
 	public _value: any;

@@ -2,6 +2,10 @@
 	<ng-content select="porcelain-dropdown-selectedtemplate, p-dropdown-selectedtemplate"></ng-content>
 </div>
 
-<div class="select__items" *ngIf="isOpen">
-	<ng-content select="porcelain-dropdown-selectoption, p-dropdown-selectoption"></ng-content>
-</div>
+<ng-container *ngIf="showOptions">
+	<div class="options-container" *ngIf="isOpen">
+		<div class="select__items">
+			<ng-content select="porcelain-dropdown-selectoption, p-dropdown-selectoption"></ng-content>
+		</div>
+	</div>
+</ng-container>

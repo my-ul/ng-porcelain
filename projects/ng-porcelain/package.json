@@ -1,6 +1,6 @@
 {
 	"name": "@my-ul/ng-porcelain",
-	"version": "9.2.3-beta.2",
+	"version": "9.2.3-beta.3",
 	"private": false,
 	"peerDependencies": {
 		"@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0",
