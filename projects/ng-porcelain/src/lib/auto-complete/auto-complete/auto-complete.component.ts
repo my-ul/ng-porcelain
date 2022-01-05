@@ -243,7 +243,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 					this.setHighlightedIndex(
 						Math.min(lastIndex, this.highlightedIndex + 1)
 					).scrollToHighlighted();
-				} else if (~['Enter', 'Space', ' '].indexOf(key)) {
+				} else if (~['Enter'].indexOf(key)) {
 					this.setSelectedIndex(this.highlightedIndex).setOpen(false);
 				} else if ('Home' == key) {
 					this.setHighlightedIndex(0).scrollToHighlighted();
@@ -262,7 +262,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 			//if closed
 			else {
 				//opens only if enter is clicked
-				if (~['Enter', 'Space', ' '].indexOf(key)) {
+				if (~['Enter'].indexOf(key)) {
 					this.setHighlightedIndex(clamp(0, this.selectedIndex, lastIndex))
 						.setOpen(true)
 						.scrollToHighlighted();
