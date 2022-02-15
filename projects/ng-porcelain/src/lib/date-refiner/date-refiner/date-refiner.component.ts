@@ -30,6 +30,7 @@ export interface IDateRefinerState {
 }
 
 export const defaultDateOptions: IDictionary<DateOption> = i18nDateOptions();
+//export const customDateRangeFormat: IDictionary<DateOption> = customDateRange();
 
 // const animationOptionsInOut = generateSlideInOut('optionsInOut'),
 // 	animationRangeInOut = generateSlideInOut('rangeInOut');
@@ -84,7 +85,12 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 	@Input() fromLabel: string = 'From';
 	@Input() toLabel: string = 'To';
+	@Input() fromLabel2: string = 'From:';
+	@Input() toLabel2: string = 'To:';
+	@Input() resetLabel: string = 'Reset';
+	@Input() placeHolderValue: string = 'YYYY-MM-DD';
 	@Input() invalidCustomRangeLabel: string = 'Please select a valid date range.';
+	@Input() enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
 
 	/**
 	 * Defines emit behavior for invalid ranges.

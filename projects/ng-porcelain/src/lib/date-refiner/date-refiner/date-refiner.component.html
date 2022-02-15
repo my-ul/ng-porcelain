@@ -4,29 +4,36 @@
 		<div class="refiner__section  refiner__body">
 			<div class="refiner__section refiner__options">
 				<ul class="options">
-					<li *ngFor="let optionSlug of objectKeys(options)" class="option">
-						<label class="media media--align-items-center">
-							<div class="media__left">
-								<input
-									type="radio"
-									[checked]="currentOptionSlug === optionSlug"
-									[value]="optionSlug"
-									(change)="onChange(optionSlug)"
-								/>
-							</div>
-							<div class="media__body">
-								<porcelain-truncate
-									[value]="getOptionLabel(options[optionSlug])"
-								></porcelain-truncate>
-							</div>
-							<div
-								class="media__right media--align-center"
-								*ngIf="optionHasBadge(options[optionSlug])"
-							>
-								{{ getOptionBadge(options[optionSlug]) }}
-							</div>
-						</label>
-					</li>
+					<ng-container *ngIf="enableCustomDateRange; else defaultOptions">
+						<p [ngClass]="{ reset__label__style: enableCustomDateRange }">
+							{{ resetLabel }}
+						</p>
+					</ng-container>
+					<ng-template #defaultOptions>
+						<li *ngFor="let optionSlug of objectKeys(options)" class="option">
+							<label class="media media--align-items-center">
+								<div class="media__left">
+									<input
+										type="radio"
+										[checked]="currentOptionSlug === optionSlug"
+										[value]="optionSlug"
+										(change)="onChange(optionSlug)"
+									/>
+								</div>
+								<div class="media__body">
+									<porcelain-truncate
+										[value]="getOptionLabel(options[optionSlug])"
+									></porcelain-truncate>
+								</div>
+								<div
+									class="media__right media--align-center"
+									*ngIf="optionHasBadge(options[optionSlug])"
+								>
+									{{ getOptionBadge(options[optionSlug]) }}
+								</div>
+							</label>
+						</li>
+					</ng-template>
 				</ul>
 			</div>
 			<!-- /.refiner__options -->
@@ -38,42 +45,73 @@
 					<div *ngIf="currentOptionSlug === 'custom'">
 						<div class="range">
 							<div class="range__from">
-								<label [for]="fromDatePicker">{{ fromLabel }}</label>
+								<label [for]="fromDatePicker">
+									{{ enableCustomDateRange ? fromLabel2 : fromLabel }}
+								</label>
 								<!-- [(ngModel)]="fromModel" -->
-								<input
-									angular-mydatepicker
-									#fromDatePicker="angular-mydatepicker"
-									name="fromDatePicker"
-									class="range__control"
-									[options]="datePickerOptions"
-									[(ngModel)]="fromModel"
-									(dateChanged)="onFromChange($event)"
-									(click)="fromDatePicker.toggleCalendar()"
-								/>
+								<div [ngClass]="{ custom_date_range_style: enableCustomDateRange }">
+									<button
+										*ngIf="enableCustomDateRange"
+										class="datePicker__window-action"
+										(click)="fromDatePicker.toggleCalendar()"
+									>
+										<i class="calendar_icon"></i>
+									</button>
+									<input
+										angular-mydatepicker
+										#fromDatePicker="angular-mydatepicker"
+										name="fromDatePicker"
+										[placeholder]="enableCustomDateRange ? placeHolderValue : ''"
+										[ngClass]="{
+											range__control: !enableCustomDateRange,
+											range__custom: enableCustomDateRange
+										}"
+										[options]="datePickerOptions"
+										[(ngModel)]="fromModel"
+										(dateChanged)="onFromChange($event)"
+										(click)="fromDatePicker.toggleCalendar()"
+									/>
+								</div>
+								<!--class="range__control"-->
 							</div>
 
 							<div class="range__to">
 								<label [for]="toDatePicker">
-									{{ toLabel }}
+									{{ enableCustomDateRange ? toLabel2 : toLabel }}
 								</label>
-								<input
-									angular-mydatepicker
-									#toDatePicker="angular-mydatepicker"
-									name="toDatePicker"
-									class="range__control"
-									[options]="datePickerOptions"
-									[(ngModel)]="toModel"
-									(dateChanged)="onToChange($event)"
-									(click)="toDatePicker.toggleCalendar()"
-								/>
+								<div [ngClass]="{ custom_date_range_style: enableCustomDateRange }">
+									<button
+										*ngIf="enableCustomDateRange"
+										class="datePicker__window-action"
+										(click)="toDatePicker.toggleCalendar()"
+									>
+										<i class="calendar_icon"></i>
+									</button>
+									<input
+										angular-mydatepicker
+										#toDatePicker="angular-mydatepicker"
+										name="toDatePicker"
+										[placeholder]="enableCustomDateRange ? placeHolderValue : ''"
+										[ngClass]="{
+											range__control: !enableCustomDateRange,
+											range__custom: enableCustomDateRange
+										}"
+										[options]="datePickerOptions"
+										[(ngModel)]="toModel"
+										(dateChanged)="onToChange($event)"
+										(click)="toDatePicker.toggleCalendar()"
+									/>
+								</div>
+
 								<!-- [(ngModel)]="toModel" -->
+								<!--class="range__control"-->
 								<!-- <my-date-picker
-									#toDatePicker
-									name="toDatePicker"
-									[options]="datePickerOptions"
-									[(ngModel)]="toModel"
-									(dateChanged)="onToChange($event)"
-								></my-date-picker> -->
+			#toDatePicker
+			name="toDatePicker"
+			[options]="datePickerOptions"
+			[(ngModel)]="toModel"
+			(dateChanged)="onToChange($event)"
+		></my-date-picker> -->
 							</div>
 
 							<div class="range__error" *ngIf="!isCustomRangeValid()">

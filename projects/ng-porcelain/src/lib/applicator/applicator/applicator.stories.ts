@@ -52,6 +52,7 @@ const searchRefinerSecondStates = new SimpleRefinerDefinition({
 });
 
 const dateRefiner = new DateRefinerDefinition({
+	enableCustomDateRange: false,
 	slug: 'dateRefiner',
 	title: 'Date Refiner',
 	value: {
@@ -158,4 +159,24 @@ export const SearchRefinerStack = () => {
 
 SearchRefinerStack.story = {
 	name: 'search refiner stack'
+};
+
+export const ProvideCustomDateRange = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			enableCustomDateRange: true,
+			onApply: action('Applicators update'),
+			refiners: [dateRefiner, simpleRefiner, searchRefinerStates],
+			defaultValues: {
+				dateRefiner: {
+					optionSlug: 'custom'
+				}
+			}
+		}
+	};
+};
+
+ProvideCustomDateRange.story = {
+	name: 'Provide custom date range'
 };
