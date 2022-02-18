@@ -5,7 +5,10 @@
 			<div class="refiner__section refiner__options">
 				<ul class="options">
 					<ng-container *ngIf="enableCustomDateRange; else defaultOptions">
-						<p [ngClass]="{ reset__label__style: enableCustomDateRange }">
+						<p
+							[ngClass]="{ reset__label__style: enableCustomDateRange }"
+							(click)="resetCustomDateRange()"
+						>
 							{{ resetLabel }}
 						</p>
 					</ng-container>

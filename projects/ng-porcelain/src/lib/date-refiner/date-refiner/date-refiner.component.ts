@@ -1,10 +1,10 @@
 // Angular
-import { Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, isDevMode, ViewChild } from '@angular/core';
 // Font Awesome 5
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
 
-import { IMyDateModel } from 'angular-mydatepicker';
+import { IMyDateModel, AngularMyDatePickerDirective } from 'angular-mydatepicker';
 
 // Porcelain
 import { TranslationService } from '../../services/translation/translation.service';
@@ -116,6 +116,12 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 	fromModel: IMyDateModel = null;
 	toModel: IMyDateModel = null;
+
+	@ViewChild('fromDatePicker', { static: false })
+	public fromMyDatePickRef: AngularMyDatePickerDirective = null;
+
+	@ViewChild('toDatePicker', { static: false })
+	public toMyDatePickRef: AngularMyDatePickerDirective = null;
 
 	constructor(private translationService: TranslationService) {
 		super();
@@ -391,5 +397,13 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	toggleOpen() {
 		this.debug('toggleOpen()', { isOpen: this.isOpen });
 		this.isOpen = !this.isOpen;
+	}
+
+	/**
+	 * Below Function is for clearing Custom Date Range Refiners. Use ViewChild to get value
+	 * */
+	public resetCustomDateRange() {
+		this.fromMyDatePickRef.clearDate();
+		this.toMyDatePickRef.clearDate();
 	}
 }
