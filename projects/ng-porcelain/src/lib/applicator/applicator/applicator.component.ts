@@ -136,6 +136,8 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		// Otherwise, return an empty array for Simple Refiner and "All" for Date Refiner
 		if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
 			return [] as OptionRefinerValue;
+		} else if (refiner.type === 'radio' || refiner instanceof SimpleRefinerDefinition) {
+			return [] as OptionRefinerValue;
 		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
 			return {
 				from: null,

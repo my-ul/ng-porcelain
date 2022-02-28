@@ -14,8 +14,9 @@ export { SearchInputModule as LegacySearchInputModule } from './lib/search-input
 export { SearchInputComponent as LegacySearchInputComponent } from './lib/search-input/search-input/search-input.component';
 
 export { SimpleRefinerModule } from './lib/simple-refiner/simple-refiner.module';
+export { SimpleRadioRefinerModule } from './lib/simple-radio-refiner/simple-radio-refiner.module';
 export { SimpleRefinerComponent } from './lib/simple-refiner/simple-refiner/simple-refiner.component';
-
+export { SimpleRadioRefinerComponent } from './lib/simple-radio-refiner/simple-radio-refiner/simple-radio-refiner.component';
 export { SpinnerModule } from './lib/spinner/spinner.module';
 export { SpinnerComponent } from './lib/spinner/spinner/spinner.component';
 

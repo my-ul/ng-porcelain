@@ -11,7 +11,10 @@ import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18
 import { APPLICATOR_IMPORTS } from '../applicator.module';
 import { ApplicatorComponent } from './applicator.component';
 import { toSimpleOptionDictionary } from '../../shared/utilities/toSimpleOptionDictionary';
-import { usStatesFull } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
+import {
+	usStatesFull,
+	usStatesRadioFull
+} from '../../simple-refiner/simple-refiner/simple-refiner.stories';
 import { DateTime } from 'luxon';
 
 const simpleRefiner = new SimpleRefinerDefinition({
@@ -43,11 +46,19 @@ const searchRefinerStates = new SimpleRefinerDefinition({
 	type: 'search',
 	options: usStatesFull
 });
+const searchRadioRefinerStates = new SimpleRefinerDefinition({
+	slug: 'searchRadioRefinerStates',
+	title: 'Select view',
+	type: 'radio',
+	options: usStatesRadioFull,
+	selected: ['AL']
+});
 
 const searchRefinerSecondStates = new SimpleRefinerDefinition({
 	slug: 'searchRefinerStatesSecond',
 	title: 'search Refiner States second Rack',
 	type: 'search',
+
 	options: usStatesFull
 });
 
@@ -151,7 +162,12 @@ export const SearchRefinerStack = () => {
 		props: {
 			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
-			refiners: [simpleRefiner, searchRefinerStates, searchRefinerSecondStates]
+			refiners: [
+				simpleRefiner,
+				searchRefinerStates,
+				searchRefinerSecondStates,
+				searchRadioRefinerStates
+			]
 		}
 	};
 };
