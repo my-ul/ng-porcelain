@@ -274,3 +274,19 @@ FullDateRefinerWithFullDateOptionDefinitions.story = {
 	name: 'Full `DateRefiner` with Full `DateOption` definitions',
 	parameters: {}
 };
+
+export const CustomDateRange = () => ({
+	component: DateRefinerComponent,
+	props: {
+		enableCustomDateRange: true,
+		refiner: new DateRefinerDefinition({
+			slug: 'myRefinerDefinition',
+			title: 'Date range',
+			options: defaultDateOptions,
+			value: {
+				optionSlug: 'custom'
+			}
+		}),
+		onRefinerChange: action('Date Refiner (simple) changed')
+	}
+});

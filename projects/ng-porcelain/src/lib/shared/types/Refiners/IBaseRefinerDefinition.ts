@@ -9,6 +9,7 @@ export interface IBaseRefinerDefinition {
 	isExpanded?: boolean;
 	showCount?: number;
 	options?: ISimpleOptions<any, any>;
+	enableCustomDateRange?: boolean;
 	//value?: RefinerValue;
 }
 
