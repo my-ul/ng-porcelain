@@ -54,7 +54,9 @@ export class RefinersComponent extends Loggable implements OnInit {
 	isSimpleRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
 		return refiner.type === 'simple';
 	}
-
+	isSimpleRadioRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
+		return refiner.type === 'radio';
+	}
 	isDateRefiner(refiner: BaseRefinerDefinition): refiner is DateRefinerDefinition {
 		return refiner.type === 'date';
 	}
