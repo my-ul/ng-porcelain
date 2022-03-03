@@ -64,6 +64,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
 	@Input() public disable: boolean = false; //flag to disable refiners in required apps
+	@Input() public enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
 
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
@@ -135,6 +136,8 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 		// Otherwise, return an empty array for Simple Refiner and "All" for Date Refiner
 		if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
+			return [] as OptionRefinerValue;
+		} else if (refiner.type === 'radio' || refiner instanceof SimpleRefinerDefinition) {
 			return [] as OptionRefinerValue;
 		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
 			return {

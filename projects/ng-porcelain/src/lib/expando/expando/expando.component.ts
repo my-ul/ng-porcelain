@@ -35,6 +35,7 @@ export class ExpandoComponent extends Loggable implements OnInit {
 
 	@Input() isDisabled: boolean;
 	@Input() disable: boolean = false; /*Sets the disable flag to disable refiners in required apps*/
+	@Input() enableCustomDateRange: boolean = false;
 
 	private _isOpen: boolean;
 

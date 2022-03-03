@@ -12,8 +12,8 @@ import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
 
 // Subject of tests
-import { SimpleRefinerComponent } from './simple-refiner.component';
-import { SIMPLE_REFINER_IMPORTS } from '../simple-refiner.module';
+import { SimpleRadioRefinerComponent } from './simple-radio-refiner.component';
+import { SIMPLE_RADIO_REFINER_IMPORTS } from '../simple-radio-refiner.module';
 
 export const usStatesHash = {
 	AL: 'Alabama',
@@ -71,7 +71,7 @@ export const usStatesHash = {
 };
 
 export const usStatesFull = {
-	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL', isSelected: true }),
+	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL' }),
 	AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
 	AZ: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
 	AR: new SimpleOption({ badge: 3020327, label: 'Arkansas', slug: 'AR' }),
@@ -127,19 +127,7 @@ export const usStatesFull = {
 	WI: new SimpleOption({ badge: 5818049, label: 'Wisconsin', slug: 'WI' }),
 	WY: new SimpleOption({ badge: 573720, label: 'Wyoming', slug: 'WY' })
 };
-export const usStatesRadioFull = {
-	AL: new SimpleOption({ badge: 4888949, label: 'Compliance summary', slug: 'AL', isSelected: true }),
-	AK: new SimpleOption({
-		badge: 738068,
-		label: 'Certificate expiration',
-		slug: 'Certificate expiration'
-	}),
-	AZ: new SimpleOption({
-		badge: 7123898,
-		label: 'Certificate requirement changes',
-		slug: 'Certificate requirement changes'
-	})
-};
+
 export default {
 	title: 'Refiner System/Simple Refiner',
 	decorators: [withNotes],
@@ -150,13 +138,13 @@ export default {
 		}
 	},
 
-	excludeStories: ['usStatesHash', 'usStatesFull', 'usStatesRadioFull']
+	excludeStories: ['usStatesHash', 'usStatesFull']
 };
 
 export const SimpleOptionDictionary = () => ({
-	component: SimpleRefinerComponent,
+	component: SimpleRadioRefinerComponent,
 	moduleMetadata: {
-		imports: SIMPLE_REFINER_IMPORTS
+		imports: SIMPLE_RADIO_REFINER_IMPORTS
 	},
 	props: {
 		refiner: new SimpleRefinerDefinition({
@@ -175,9 +163,9 @@ SimpleOptionDictionary.story = {
 };
 
 export const FullOptionDefinitions = () => ({
-	component: SimpleRefinerComponent,
+	component: SimpleRadioRefinerComponent,
 	moduleMetadata: {
-		imports: SIMPLE_REFINER_IMPORTS
+		imports: SIMPLE_RADIO_REFINER_IMPORTS
 	},
 	props: {
 		refiner: new SimpleRefinerDefinition({
@@ -195,9 +183,9 @@ FullOptionDefinitions.story = {
 };
 
 export const CustomLabels = () => ({
-	component: SimpleRefinerComponent,
+	component: SimpleRadioRefinerComponent,
 	moduleMetadata: {
-		imports: SIMPLE_REFINER_IMPORTS
+		imports: SIMPLE_RADIO_REFINER_IMPORTS
 	},
 	props: {
 		showMoreLabel: 'Mostrar %u más',
