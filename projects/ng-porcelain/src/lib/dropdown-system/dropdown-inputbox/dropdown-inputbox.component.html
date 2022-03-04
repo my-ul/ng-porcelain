@@ -1,0 +1,36 @@
+<div class="select__inputwindow">
+	<input
+		type="text"
+		class="select__inputwindow-value"
+		[(ngModel)]="query"
+		[placeholder]="placeholder || labelPlaceholder"
+		[class.select__input-value--placeholder]="query === ''"
+		(ngModelChange)="handleUserInput($event)"
+		(keyup.enter)="submit($event)"
+		(focus)="setFocus(true)"
+		(blur)="setFocus(false)"
+	/>
+
+	<ng-container *ngIf="showClearButton">
+		<button
+			class="select__inputwindow-action"
+			*ngIf="query !== ''"
+			[style.color]="clearIconColor"
+			(click)="clearEventHandler()"
+		>
+			<span class="sr-only">{{ labelClear }}</span>
+			<fa-icon [icon]="clearIcon"></fa-icon>
+		</button>
+	</ng-container>
+
+	<ng-container *ngIf="showDropdownButton">
+		<button class="select__inputwindow-action">
+			<span class="sr-only">{{ labelSelect }}</span>
+			<fa-icon [icon]="dropdownToggleIcon"></fa-icon>
+		</button>
+	</ng-container>
+
+	<ng-content>
+		<!--display only buttons!!!!-->
+	</ng-content>
+</div>

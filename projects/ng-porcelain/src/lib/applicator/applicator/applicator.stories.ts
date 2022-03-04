@@ -11,7 +11,10 @@ import { i18nDateOptions } from '../../shared/utilities/i18n/i18nDateOptions/i18
 import { APPLICATOR_IMPORTS } from '../applicator.module';
 import { ApplicatorComponent } from './applicator.component';
 import { toSimpleOptionDictionary } from '../../shared/utilities/toSimpleOptionDictionary';
-import { usStatesFull } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
+import {
+	usStatesFull,
+	usStatesRadioFull
+} from '../../simple-refiner/simple-refiner/simple-refiner.stories';
 import { DateTime } from 'luxon';
 
 const simpleRefiner = new SimpleRefinerDefinition({
@@ -43,15 +46,24 @@ const searchRefinerStates = new SimpleRefinerDefinition({
 	type: 'search',
 	options: usStatesFull
 });
+const searchRadioRefinerStates = new SimpleRefinerDefinition({
+	slug: 'searchRadioRefinerStates',
+	title: 'Select view',
+	type: 'radio',
+	options: usStatesRadioFull,
+	selected: ['AL']
+});
 
 const searchRefinerSecondStates = new SimpleRefinerDefinition({
 	slug: 'searchRefinerStatesSecond',
 	title: 'search Refiner States second Rack',
 	type: 'search',
+
 	options: usStatesFull
 });
 
 const dateRefiner = new DateRefinerDefinition({
+	enableCustomDateRange: false,
 	slug: 'dateRefiner',
 	title: 'Date Refiner',
 	value: {
@@ -83,6 +95,7 @@ export const DefaultNoProps = () => {
 		props: {
 			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
 			refiners: [dateRefiner, simpleRefiner, anotherSimpleRefiner]
 		}
 	};
@@ -150,11 +163,36 @@ export const SearchRefinerStack = () => {
 		props: {
 			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
-			refiners: [simpleRefiner, searchRefinerStates, searchRefinerSecondStates]
+			refiners: [
+				simpleRefiner,
+				searchRefinerStates,
+				searchRefinerSecondStates,
+				searchRadioRefinerStates
+			]
 		}
 	};
 };
 
 SearchRefinerStack.story = {
 	name: 'search refiner stack'
+};
+
+export const ProvideCustomDateRange = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			enableCustomDateRange: true,
+			onApply: action('Applicators update'),
+			refiners: [dateRefiner, simpleRefiner, searchRefinerStates],
+			defaultValues: {
+				dateRefiner: {
+					optionSlug: 'custom'
+				}
+			}
+		}
+	};
+};
+
+ProvideCustomDateRange.story = {
+	name: 'Provide custom date range'
 };

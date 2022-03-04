@@ -32,6 +32,8 @@
 			*ngIf="refiners"
 			[refiners]="refiners"
 			[allowIncompleteEmit]="allowIncompleteEmit"
+			[disable]="disable"
+			[enableCustomDateRange]="enableCustomDateRange"
 		></porcelain-refiners>
 		<div *ngIf="!refiners">
 			<p>{{ loadingLabel }}</p>

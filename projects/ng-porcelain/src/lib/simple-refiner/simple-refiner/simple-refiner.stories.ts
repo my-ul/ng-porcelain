@@ -71,7 +71,7 @@ export const usStatesHash = {
 };
 
 export const usStatesFull = {
-	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL' }),
+	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL', isSelected: true }),
 	AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
 	AZ: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
 	AR: new SimpleOption({ badge: 3020327, label: 'Arkansas', slug: 'AR' }),
@@ -127,7 +127,19 @@ export const usStatesFull = {
 	WI: new SimpleOption({ badge: 5818049, label: 'Wisconsin', slug: 'WI' }),
 	WY: new SimpleOption({ badge: 573720, label: 'Wyoming', slug: 'WY' })
 };
-
+export const usStatesRadioFull = {
+	AL: new SimpleOption({ badge: 4888949, label: 'Compliance summary', slug: 'AL', isSelected: true }),
+	AK: new SimpleOption({
+		badge: 738068,
+		label: 'Certificate expiration',
+		slug: 'Certificate expiration'
+	}),
+	AZ: new SimpleOption({
+		badge: 7123898,
+		label: 'Certificate requirement changes',
+		slug: 'Certificate requirement changes'
+	})
+};
 export default {
 	title: 'Refiner System/Simple Refiner',
 	decorators: [withNotes],
@@ -138,7 +150,7 @@ export default {
 		}
 	},
 
-	excludeStories: ['usStatesHash', 'usStatesFull']
+	excludeStories: ['usStatesHash', 'usStatesFull', 'usStatesRadioFull']
 };
 
 export const SimpleOptionDictionary = () => ({

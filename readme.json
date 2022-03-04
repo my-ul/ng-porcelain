@@ -62,6 +62,9 @@
 		},
 		"TableViewModule": {
 			"table View System": "projects/ng-porcelain/src/lib/tableview-module/README.md"
+		},
+		"DropDownSystem": {
+			"DropDown System": "projects/ng-porcelain/src/lib/dropdown-system/README.md"
 		}
 	},
 	"Lists": {

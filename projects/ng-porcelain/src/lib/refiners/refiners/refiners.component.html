@@ -5,6 +5,7 @@
 				(onRefinerChange)="handleRefinerChange($event)"
 				[refiner]="refiner"
 				[allowIncompleteEmit]="allowIncompleteEmit"
+				[enableCustomDateRange]="enableCustomDateRange"
 			></porcelain-date-refiner>
 		</ng-container>
 
@@ -12,15 +13,22 @@
 			<porcelain-simple-refiner
 				(onRefinerChange)="handleRefinerChange($event)"
 				[refiner]="refiner"
+				[disable]="disable"
 			></porcelain-simple-refiner>
 		</ng-container>
-
+		<ng-container *ngIf="isSimpleRadioRefiner(refiner)">
+			<porcelain-simple-radio-refiner
+				(onRefinerChange)="handleRefinerChange($event)"
+				[refiner]="refiner"
+			></porcelain-simple-radio-refiner>
+		</ng-container>
 		<ng-container *ngIf="isSearchRefiner(refiner)">
 			<porcelain-search-refiner
 				#searchRef
 				[activeKeys]="values[refiner.slug]"
 				(activeKeysChange)="handleRefinerChange([refiner.slug, $event])"
 				[refiner]="refiner"
+				[disable]="disable"
 			></porcelain-search-refiner>
 		</ng-container>
 	</li>

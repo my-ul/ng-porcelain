@@ -17,6 +17,8 @@ export class RefinersComponent extends Loggable implements OnInit {
 	// Inputs
 	@Input() refiners: BaseRefinerDefinition[];
 	@Input() allowIncompleteEmit: boolean = true;
+	@Input() disable: boolean = false; /*Sets the disable flag to disable refiners in required apps*/
+	@Input() enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
@@ -52,7 +54,9 @@ export class RefinersComponent extends Loggable implements OnInit {
 	isSimpleRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
 		return refiner.type === 'simple';
 	}
-
+	isSimpleRadioRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
+		return refiner.type === 'radio';
+	}
 	isDateRefiner(refiner: BaseRefinerDefinition): refiner is DateRefinerDefinition {
 		return refiner.type === 'date';
 	}

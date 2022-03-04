@@ -30,7 +30,7 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 		 * Set the refiner type according to the definition type string.
 		 * The search option will display a
 		 */
-		this.type = refinerDefinition.type === 'search' ? 'search' : 'simple';
+		this.type = refinerDefinition.type ? refinerDefinition.type : 'simple';
 
 		/**
 		 * Set the default showCount value.  This affects the Show %s More and Show Less button.

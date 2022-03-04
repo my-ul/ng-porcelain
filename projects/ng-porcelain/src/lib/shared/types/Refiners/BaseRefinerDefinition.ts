@@ -51,6 +51,12 @@ export abstract class BaseRefinerDefinition implements IBaseRefinerDefinition {
 	 */
 	showCount?: number;
 
+	/**
+	 * True when the custom range date refiner is to be shown. Currently applicable only in CP apps.
+	 *
+	 */
+	enableCustomDateRange?: boolean = false;
+
 	valueSubject: Subject<any>;
 
 	constructor(refinerDefinition: IBaseRefinerDefinition) {
@@ -58,6 +64,10 @@ export abstract class BaseRefinerDefinition implements IBaseRefinerDefinition {
 		this.slug = refinerDefinition.slug ? refinerDefinition.slug : '';
 		this.options = refinerDefinition.options ? refinerDefinition.options : {};
 		this.isOpen = typeof refinerDefinition.isOpen === 'boolean' ? refinerDefinition.isOpen : true;
+		this.enableCustomDateRange =
+			typeof refinerDefinition.enableCustomDateRange === 'boolean'
+				? refinerDefinition.enableCustomDateRange
+				: false;
 	}
 }
 

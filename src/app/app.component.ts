@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {
 	SimpleRefinerComponent,
+	SimpleRadioRefinerComponent,
 	SimpleRefinerDefinition,
 	DateRefinerDefinition,
 	i18nDateOptions,
