@@ -65,11 +65,10 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public applyOnInit: boolean = true;
 	@Input() public disable: boolean = false; //flag to disable refiners in required apps
 	@Input() public enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
-
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
 	private appliedValues: RefinerValueDictionary = {};
-
+	@Input() public stagedValuesofRefiner: RefinerValueDictionary = {};
 	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 	@Output() public onReset: EventEmitter<any> = new EventEmitter();
@@ -135,9 +134,9 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		}
 
 		// Otherwise, return an empty array for Simple Refiner and "All" for Date Refiner
-		if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
-			return [] as OptionRefinerValue;
-		} else if (refiner.type === 'radio' || refiner instanceof SimpleRefinerDefinition) {
+		if (refiner.type === 'radio') {
+			return [];
+		} else if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
 			return [] as OptionRefinerValue;
 		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
 			return {
@@ -158,6 +157,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	public handleRefinerValues(refinerSlug, refinerValue): void {
 		this.log('handleRefinerValues(refinerSlug, refinerValue)', { refinerSlug, refinerValue });
 		this.stagedValues[refinerSlug] = refinerValue;
+		this.stagedValuesofRefiner = this.stagedValues;
 	}
 
 	public ngOnDestroy() {

@@ -163,12 +163,7 @@ export const SearchRefinerStack = () => {
 		props: {
 			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
-			refiners: [
-				simpleRefiner,
-				searchRefinerStates,
-				searchRefinerSecondStates,
-				searchRadioRefinerStates
-			]
+			refiners: [searchRefinerStates, searchRefinerSecondStates, searchRadioRefinerStates]
 		}
 	};
 };
