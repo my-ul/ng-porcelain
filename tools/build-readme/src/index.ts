@@ -351,7 +351,7 @@ class BuildReadme extends Command {
 
             // Write the compiled MD file to disk
             fs.writeFileSync(resolvedOutputFile, output);
-            this.exit(0);
+            //this.exit(0);
         } catch (error) {
             console.error(error);
             this.exit(1);
