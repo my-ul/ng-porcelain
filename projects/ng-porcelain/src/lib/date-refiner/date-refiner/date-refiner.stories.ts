@@ -279,6 +279,7 @@ export const CustomDateRange = () => ({
 	component: DateRefinerComponent,
 	props: {
 		enableCustomDateRange: true,
+		allowIncompleteEmit: false,
 		refiner: new DateRefinerDefinition({
 			slug: 'myRefinerDefinition',
 			title: 'Date range',

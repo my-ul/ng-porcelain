@@ -105,6 +105,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 			appliedValues: this.appliedValues,
 			initialLoad: this.initialLoad
 		});
+		console.log(this.appliedValues);
 	}
 
 	public beforeApply(): void {
@@ -139,6 +140,13 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		} else if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
 			return [] as OptionRefinerValue;
 		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
+			if (this.enableCustomDateRange) {
+				return {
+					from: null,
+					to: null,
+					optionSlug: 'custom'
+				} as DateRefinerValue;
+			}
 			return {
 				from: null,
 				to: null,
@@ -179,6 +187,7 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['refiners']) {
+			console.log(changes['refiners']);
 			this.destroyExistingSubscriptions();
 			this.refinerNewSubscriptions();
 		}

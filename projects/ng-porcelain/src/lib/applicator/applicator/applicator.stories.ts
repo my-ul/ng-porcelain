@@ -16,6 +16,10 @@ import {
 	usStatesRadioFull
 } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
 import { DateTime } from 'luxon';
+import {
+	DateRefinerComponent,
+	defaultDateOptions
+} from '../../date-refiner/date-refiner/date-refiner.component';
 
 const simpleRefiner = new SimpleRefinerDefinition({
 	slug: 'simpleRefiner',
@@ -177,6 +181,8 @@ export const ProvideCustomDateRange = () => {
 		component: ApplicatorComponent,
 		props: {
 			enableCustomDateRange: true,
+			allowIncompleteEmit: false,
+
 			onApply: action('Applicators update'),
 			refiners: [dateRefiner, simpleRefiner, searchRefinerStates],
 			defaultValues: {

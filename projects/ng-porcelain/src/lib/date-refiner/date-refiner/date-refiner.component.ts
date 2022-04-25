@@ -91,7 +91,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	@Input() placeHolderValue: string = 'YYYY-MM-DD';
 	@Input() invalidCustomRangeLabel: string = 'Please select a valid date range.';
 	@Input() enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
-
+	@Input() invalidFromDateLabel: string = '"From" date cannot be greater than "To" date';
+	@Input() invalidToDateLabel: string = '"To" date cannot be less than "From" date';
 	/**
 	 * Defines emit behavior for invalid ranges.
 	 * Set to true to allow unbounded ranges (with a null to or from value)
@@ -122,6 +123,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 
 	@ViewChild('toDatePicker', { static: false })
 	public toMyDatePickRef: AngularMyDatePickerDirective = null;
+
+	customDateRangeErrorMsg: string = '';
 
 	constructor(private translationService: TranslationService) {
 		super();
@@ -193,8 +196,13 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 			} else {
 				this.currentOptionSlug = value.optionSlug;
 				if (this.currentOptionSlug === 'custom') {
-					this.fromModel = this.parseDateState(value.from);
-					this.toModel = this.parseDateState(value.to);
+					if (value.from && value.to) {
+						this.fromModel = this.parseDateState(value.from);
+						this.toModel = this.parseDateState(value.to);
+					} else {
+						this.fromModel = null;
+						this.toModel = null;
+					}
 				}
 			}
 		});
@@ -204,12 +212,18 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		this.debug('onFromChange($event)', { $event });
 		this.fromModel = $event;
 		this.onChange(this.currentOptionSlug);
+		if (this.enableCustomDateRange) {
+			this.customDateRangeValidation('onFromChange');
+		}
 	}
 
 	onToChange($event) {
 		this.debug('onToChange($event)', { $event });
 		this.toModel = $event;
 		this.onChange(this.currentOptionSlug);
+		if (this.enableCustomDateRange) {
+			this.customDateRangeValidation('onToChange');
+		}
 	}
 
 	isCustomRangeValid() {
@@ -403,7 +417,25 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	 * Below Function is for clearing Custom Date Range Refiners. Use ViewChild to get value
 	 * */
 	public resetCustomDateRange() {
-		this.fromMyDatePickRef.clearDate();
-		this.toMyDatePickRef.clearDate();
+		this.fromModel = null;
+		this.toModel = null;
+		const value = this.getValue();
+		this.refiner.valueSubject.next(value);
+		this.customDateRangeValidation();
+	}
+
+	customDateRangeValidation(key?: string) {
+		const value = this.getValue();
+		if (value.from instanceof Date && value.to instanceof Date) {
+			if (value.from.getTime() > value.to.getTime() && key == 'onFromChange') {
+				this.customDateRangeErrorMsg = this.invalidFromDateLabel;
+			} else if (value.to.getTime() < value.from.getTime() && key == 'onToChange') {
+				this.customDateRangeErrorMsg = this.invalidToDateLabel;
+			} else {
+				this.customDateRangeErrorMsg = '';
+			}
+		} else {
+			this.customDateRangeErrorMsg = '';
+		}
 	}
 }

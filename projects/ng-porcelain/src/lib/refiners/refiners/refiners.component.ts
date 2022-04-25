@@ -39,7 +39,6 @@ export class RefinersComponent extends Loggable implements OnInit {
 
 	handleRefinerChange(update: [string, any]) {
 		let [slug, selected] = update;
-
 		if (!isEqual(this.values[slug], selected)) {
 			this.debug('handleRefinerChange(update)', { before: this.values[slug], after: selected });
 			this.setValue(slug, selected);
@@ -48,6 +47,7 @@ export class RefinersComponent extends Loggable implements OnInit {
 
 	setValue(slug: string, value: any) {
 		this.values[slug] = value;
+		console.log(this.values[slug]);
 		this.onRefinersChange.emit(this.values);
 	}
 
