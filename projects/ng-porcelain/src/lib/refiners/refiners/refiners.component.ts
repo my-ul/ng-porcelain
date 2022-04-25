@@ -47,7 +47,6 @@ export class RefinersComponent extends Loggable implements OnInit {
 
 	setValue(slug: string, value: any) {
 		this.values[slug] = value;
-		console.log(this.values[slug]);
 		this.onRefinersChange.emit(this.values);
 	}
 

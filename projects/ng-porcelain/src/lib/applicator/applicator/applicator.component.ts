@@ -105,7 +105,6 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 			appliedValues: this.appliedValues,
 			initialLoad: this.initialLoad
 		});
-		console.log(this.appliedValues);
 	}
 
 	public beforeApply(): void {
@@ -187,7 +186,6 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['refiners']) {
-			console.log(changes['refiners']);
 			this.destroyExistingSubscriptions();
 			this.refinerNewSubscriptions();
 		}
