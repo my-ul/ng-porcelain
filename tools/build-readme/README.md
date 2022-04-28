@@ -1,38 +1,100 @@
 # build-readme
 
-Compiles multiple markdowns into one markdown file, attempting to preserve structure.
+The build-readme utility semi-intelligently combines several markdown documents into one document, suitable for publishing to npm. This tool is designed with component-based architecture in mind: with this tool, you can bundle a README.md alongside your code and tests, and then compile it into one giant readme when ready.
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/build-readme.svg)](https://npmjs.org/package/build-readme)
-[![Downloads/week](https://img.shields.io/npm/dw/build-readme.svg)](https://npmjs.org/package/build-readme)
-[![License](https://img.shields.io/npm/l/build-readme.svg)](https://github.com/my-ul/ng-porcelain/blob/master/package.json)
+It is used to support `@my-ul/ng-porcelain`.
 
-<!-- toc -->
+# Features
 
--   [Usage](#usage)
--   [Commands](#commands)
-    <!-- tocstop -->
+-   automatic image handling (include gifs and jpegs)
+-   automatic re-leveling of heading levels (ex, # nested three sections deep becomes ###)
+-   automatic generation of `npm install` section
+
+# Installation
+
+```bash
+npm install -g @my-ul/build-readme
+```
 
 # Usage
 
-<!-- usage -->
+## Arguments
 
-```sh-session
-$ npm install -g build-readme
-$ build-readme COMMAND
-running command...
-$ build-readme (-v|--version|version)
-build-readme/0.0.0 win32-x64 node-v10.16.2
-$ build-readme --help [COMMAND]
-USAGE
-  $ build-readme COMMAND
-...
+```
+OPTIONS
+  -a, --assets=assets
+  		[default: doc-assets] Name of the assets directory; if blank, `doc-assets` is used.
+  -c, --configFile=configFile
+  		(required) A JSON file that provides the TOC structure.
+  -o, --outFile=outFile
+  		[default: README.md] Output path, including filename.
+  -p, --packageFile=packageFile
+  		[default: package.json] The distribution package.json file.  Used for generating the installation command.
+  -t, --title=title
+  		(required) Root title for the output document
+  -x, --excludePackages=excludePackages
+  		(required) [default: ^(@angular/.*)$] A regular expression string used to exclude packages from the generated installation command.
 ```
 
-<!-- usagestop -->
+## Example
 
-# Commands
+Let's create a README.md file using three source documents: `INSTALL.md` and `components/dropdown/README.md` and `components/checkbox/README.MD`.
 
-<!-- commands -->
+```text
+contoso/
+├─ components/
+│  ├─ checkbox/
+│  │  ├─ README.md
+│  ├─ dropdown/
+│  │  ├─ README.md
+│  ├─ README.md
+├─ INSTALL.md
+├─ package.json
+```
 
-<!-- commandsstop -->
+### Organize your output document..
+
+If you want to include an introduction to a section, you can add that introduction by using the `__` (two underscores) key in your README.json index.
+
+```json
+{
+    "Installation": "./INSTALL.md",
+    "Components": {
+        "__": "./components/README.md",
+        "Dropdown": "./components/dropdown/README.md",
+        "Checkbox": "./components/checkbox/README.md"
+    }
+}
+```
+
+Run the generator command...
+
+```bash
+npx build-readme \
+	-t "Contoso Components" \
+	-c "readme.json" \
+	-o "dist/README.md" \
+	-p "package.json"
+```
+
+Once run, this will output a document such as... Heading levels will be adjusted automatically.
+
+```markdown
+# Contoso Components
+
+## Installation
+
+This is the content of `./INSTALL.md`.
+
+## Components
+
+This is the content of `./components/README.md`. It is included as a section introduction using `__` as the tag.
+
+### Dropdown
+
+This is the content of `./components/dropdown/README.md`. Since it is nested, it has a heading level 3.
+
+### Checkbox
+
+This is the content of `./components/checkbox/README.md`. Since it is nested, it has heading level 3.
+```
