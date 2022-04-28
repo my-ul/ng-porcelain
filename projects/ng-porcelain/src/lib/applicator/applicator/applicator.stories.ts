@@ -177,6 +177,7 @@ export const ProvideCustomDateRange = () => {
 		component: ApplicatorComponent,
 		props: {
 			enableCustomDateRange: true,
+			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
 			refiners: [dateRefiner, simpleRefiner, searchRefinerStates],
 			defaultValues: {

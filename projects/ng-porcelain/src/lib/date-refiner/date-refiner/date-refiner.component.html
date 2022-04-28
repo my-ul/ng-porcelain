@@ -117,8 +117,17 @@
 		></my-date-picker> -->
 							</div>
 
-							<div class="range__error" *ngIf="!isCustomRangeValid()">
+							<div
+								class="range__error"
+								*ngIf="!isCustomRangeValid() && !enableCustomDateRange"
+							>
 								{{ invalidCustomRangeLabel }}
+							</div>
+							<div
+								class="range__error"
+								*ngIf="enableCustomDateRange && !isCustomRangeValid()"
+							>
+								{{ customDateRangeErrorMsg }}
 							</div>
 						</div>
 					</div>

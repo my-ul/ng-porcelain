@@ -139,6 +139,13 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		} else if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
 			return [] as OptionRefinerValue;
 		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
+			if (this.enableCustomDateRange) {
+				return {
+					from: null,
+					to: null,
+					optionSlug: 'custom'
+				} as DateRefinerValue;
+			}
 			return {
 				from: null,
 				to: null,
