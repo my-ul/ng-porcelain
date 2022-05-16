@@ -20,6 +20,11 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 	isExpanded?: boolean = false;
 
 	/**
+	 * stores default preselect Values. When reset button is hit these refiners will be selected by default
+	 * */
+	defaultPreSelectValues?: string[] = [];
+
+	/**
 	 * A subject that can be updated and subscribed to for the current value.
 	 */
 	valueSubject: BehaviorSubject<string[]>;
@@ -50,6 +55,13 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 
 		if (refinerDefinition.selected) {
 			this.valueSubject.next(refinerDefinition.selected);
+		}
+
+		if (refinerDefinition.preSelectedValues) {
+			this.defaultPreSelectValues = refinerDefinition.preSelectedValues.map(
+				defaultSelectedValue => defaultSelectedValue
+			);
+			this.valueSubject.next(refinerDefinition.preSelectedValues);
 		}
 	}
 }
