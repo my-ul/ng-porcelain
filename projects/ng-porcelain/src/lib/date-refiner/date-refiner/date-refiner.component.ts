@@ -383,7 +383,6 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	}
 
 	getOptionLabel(option: DateOption): string {
-		//this.debug('getOptionLabel(option)', { option });
 		if (option instanceof DateOption) {
 			if (option.label) {
 				return option.label;
@@ -392,7 +391,6 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	}
 
 	getOptionBadge(option: DateOption | Date): string {
-		//this.debug('getOptionBadge(option)', { option });
 		if (option instanceof DateOption) {
 			if (option.badge) {
 				if (typeof option.badge === 'number') {

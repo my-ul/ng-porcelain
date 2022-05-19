@@ -245,3 +245,32 @@ export const defaultSelectedOptions = () => {
 defaultSelectedOptions.story = {
 	name: 'Options Selected By Default On Reset'
 };
+
+export const selectedOptionsOnInitialLoad = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			onApply: action('Applicators update'),
+			refiners: [
+				new SimpleRefinerDefinition({
+					slug: 'vegetables',
+					title: 'Vegetables Default Enabled',
+					type: 'simple',
+					selected: ['tomato', 'potatoes'],
+					options: vegetables
+				}),
+				new SimpleRefinerDefinition({
+					slug: 'fruits',
+					title: 'Vegetables Default Enabled',
+					type: 'search',
+					selected: ['apple', 'mango'],
+					options: fruits
+				})
+			]
+		}
+	};
+};
+
+selectedOptionsOnInitialLoad.story = {
+	name: 'Options Selected By Default On Inital Load'
+};

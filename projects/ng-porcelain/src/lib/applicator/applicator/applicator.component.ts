@@ -114,12 +114,10 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	}
 
 	public canApply(): boolean {
-		//this.debug('canApply()', { stagedValues: this.stagedValues, appliedValues: this.appliedValues });
 		return !isEqual(this.stagedValues, this.appliedValues);
 	}
 
 	public canReset(): boolean {
-		//this.debug('canReset()', { stagedValues: this.stagedValues, defaultValues: this.defaultValues });
 		return !isEqual(this.stagedValues, this.defaultValues);
 	}
 
