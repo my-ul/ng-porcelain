@@ -50,7 +50,7 @@ export class MultiSelectComponent implements OnInit {
 	 * The label Prop to be displayed. By default set to name
 	 */
 	@Input() public LabelProp: string = 'name';
-
+	public initialPlaceHolder: string = '';
 	public focusToggle: boolean = false;
 	constructor(public eRef: ElementRef) {}
 
@@ -75,7 +75,9 @@ export class MultiSelectComponent implements OnInit {
 		return this;
 	}
 
-	public ngOnInit(): void {}
+	public ngOnInit(): void {
+		this.initialPlaceHolder = this.selectedLabel;
+	}
 
 	/**
 	 *
@@ -122,5 +124,8 @@ export class MultiSelectComponent implements OnInit {
 			x.isSelected = false;
 		});
 		this.selectedLabel = this.selectedLabelPlaceholder;
+	}
+	public placeHolderStyle(): any {
+		return this.selectedLabel == this.initialPlaceHolder ? '#9EA6BA' : '#303741';
 	}
 }
