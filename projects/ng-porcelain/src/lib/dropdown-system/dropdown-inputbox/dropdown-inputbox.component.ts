@@ -81,7 +81,7 @@ export class DropdownInputboxComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {}
 
-	public submit(value: string) {
+	public submit(value) {
 		this.submitHandler.emit(value);
 	}
 
