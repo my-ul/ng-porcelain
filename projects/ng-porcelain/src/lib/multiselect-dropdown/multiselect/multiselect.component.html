@@ -4,7 +4,7 @@
 		(click)="toggleOpen()"
 		[class.porcelain-multiselect-items]="listItems.length > 0"
 	>
-		<span class="porcelain-toolbar-select__toggle-label">
+		<span class="porcelain-toolbar-select__toggle-label" [style.color]="placeHolderStyle()">
 			<porcelain-truncate [value]="selectedLabel"></porcelain-truncate>
 		</span>
 		<span class="porcelain-toolbar-select__toggle-caret">

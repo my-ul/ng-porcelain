@@ -297,6 +297,11 @@ export class SearchRefinerComponent extends Loggable implements OnInit, AfterCon
 			);
 		}
 
+		//if there are preselected default values enable them during intial load
+		if (this.refiner.defaultPreSelectValues && this.refiner.defaultPreSelectValues.length > 0) {
+			this.setActiveKeys(this.refiner.defaultPreSelectValues.slice());
+		}
+
 		// if inactiveKeys is not set, set it;
 		if (this.activeKeys === null || this.activeKeys === undefined) {
 			this.debug('[ngOnInit]', 'No keys are selected.');

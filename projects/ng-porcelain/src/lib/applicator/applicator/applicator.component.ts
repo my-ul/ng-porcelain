@@ -114,18 +114,19 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	}
 
 	public canApply(): boolean {
-		this.debug('canApply()', { stagedValues: this.stagedValues, appliedValues: this.appliedValues });
 		return !isEqual(this.stagedValues, this.appliedValues);
 	}
 
 	public canReset(): boolean {
-		this.debug('canReset()', { stagedValues: this.stagedValues, defaultValues: this.defaultValues });
 		return !isEqual(this.stagedValues, this.defaultValues);
 	}
 
 	public getDefaultValueForRefiner(
 		refiner: SimpleRefinerDefinition | DateRefinerDefinition | BaseRefinerDefinition
 	): OptionRefinerValue | DateRefinerValue {
+		//get default preselected values incase simpleRefiner has preselected values
+		let refinerObject: SimpleRefinerDefinition;
+
 		this.debug('getDefaultValueForRefiner(refiner)', { refiner });
 
 		// If a default value exists for the slug, return it immediately
@@ -137,15 +138,32 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		if (refiner.type === 'radio') {
 			return [];
 		} else if (refiner.type === 'simple' || refiner instanceof SimpleRefinerDefinition) {
-			return [] as OptionRefinerValue;
+			refinerObject = refiner as SimpleRefinerDefinition;
+			if (refinerObject.defaultPreSelectValues) {
+				return refinerObject.defaultPreSelectValues;
+			} else {
+				return [] as OptionRefinerValue;
+			}
 		} else if (refiner.type === 'date' || refiner instanceof DateRefinerDefinition) {
+			if (this.enableCustomDateRange) {
+				return {
+					from: null,
+					to: null,
+					optionSlug: 'custom'
+				} as DateRefinerValue;
+			}
 			return {
 				from: null,
 				to: null,
 				optionSlug: '-1'
 			} as DateRefinerValue;
-		} else if (refiner.type === 'search') {
-			return [];
+		} else if (refiner.type === 'search' || refiner instanceof SimpleRefinerDefinition) {
+			refinerObject = refiner as SimpleRefinerDefinition;
+			if (refinerObject.defaultPreSelectValues) {
+				return refinerObject.defaultPreSelectValues;
+			} else {
+				return [];
+			}
 		}
 
 		// Only reached with invalid refiner definitions.

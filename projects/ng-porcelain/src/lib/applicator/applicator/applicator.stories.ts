@@ -16,6 +16,45 @@ import {
 	usStatesRadioFull
 } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
 import { DateTime } from 'luxon';
+import { SimpleOption } from '../../shared/types/Options/SimpleOption';
+
+const vegetables = {
+	tomato: new SimpleOption({ badge: 15, label: 'tomato', slug: 'tomato' }),
+	potatoes: new SimpleOption({ badge: 20, label: 'potatoes', slug: 'potatoes' }),
+	onion: new SimpleOption({ badge: 30, label: 'onion', slug: 'onion' }),
+	peas: new SimpleOption({ badge: 45, label: 'peas', slug: 'peas' }),
+	cabbage: new SimpleOption({ badge: 7, label: 'cabbage', slug: 'cabbage' }),
+	beetroot: new SimpleOption({ badge: 17, label: 'beetroot', slug: 'beetroot' }),
+	spinach: new SimpleOption({ badge: 5, label: 'spinach', slug: 'spinach' }),
+	carrot: new SimpleOption({ badge: 5, label: 'carrot', slug: 'carrot' })
+};
+
+const fruits = {
+	apple: new SimpleOption({ badge: 25, label: 'apple', slug: 'apple' }),
+	mango: new SimpleOption({ badge: 12, label: 'mango', slug: 'mango' }),
+	grapes: new SimpleOption({ badge: 13, label: 'grapes', slug: 'grapes' }),
+	fig: new SimpleOption({ badge: 35, label: 'fig', slug: 'fig' }),
+	banana: new SimpleOption({ badge: 27, label: 'banana', slug: 'banana' }),
+	watermelon: new SimpleOption({ badge: 11, label: 'watermelon', slug: 'watermelon' }),
+	orange: new SimpleOption({ badge: 8, label: 'orange', slug: 'orange' }),
+	apricot: new SimpleOption({ badge: 9, label: 'apricot', slug: 'apricot' })
+};
+
+const vegetablesRefinersDefaultSelected = new SimpleRefinerDefinition({
+	slug: 'vegetables',
+	title: 'Vegetables Default Enabled',
+	type: 'simple',
+	preSelectedValues: ['tomato', 'potatoes'],
+	options: vegetables
+});
+
+const fruitsRefinersDefaultSelected = new SimpleRefinerDefinition({
+	slug: 'fruits',
+	title: 'Vegetables Default Enabled',
+	type: 'search',
+	preSelectedValues: ['apple', 'mango'],
+	options: fruits
+});
 
 const simpleRefiner = new SimpleRefinerDefinition({
 	slug: 'simpleRefiner',
@@ -177,6 +216,7 @@ export const ProvideCustomDateRange = () => {
 		component: ApplicatorComponent,
 		props: {
 			enableCustomDateRange: true,
+			allowIncompleteEmit: false,
 			onApply: action('Applicators update'),
 			refiners: [dateRefiner, simpleRefiner, searchRefinerStates],
 			defaultValues: {
@@ -190,4 +230,47 @@ export const ProvideCustomDateRange = () => {
 
 ProvideCustomDateRange.story = {
 	name: 'Provide custom date range'
+};
+
+export const defaultSelectedOptions = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			onApply: action('Applicators update'),
+			refiners: [vegetablesRefinersDefaultSelected, fruitsRefinersDefaultSelected]
+		}
+	};
+};
+
+defaultSelectedOptions.story = {
+	name: 'Options Selected By Default On Reset'
+};
+
+export const selectedOptionsOnInitialLoad = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			onApply: action('Applicators update'),
+			refiners: [
+				new SimpleRefinerDefinition({
+					slug: 'vegetables',
+					title: 'Vegetables Default Enabled',
+					type: 'simple',
+					selected: ['tomato', 'potatoes'],
+					options: vegetables
+				}),
+				new SimpleRefinerDefinition({
+					slug: 'fruits',
+					title: 'Vegetables Default Enabled',
+					type: 'search',
+					selected: ['apple', 'mango'],
+					options: fruits
+				})
+			]
+		}
+	};
+};
+
+selectedOptionsOnInitialLoad.story = {
+	name: 'Options Selected By Default On Inital Load'
 };
