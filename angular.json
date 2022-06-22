@@ -17,7 +17,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-            "aot": true,
+						"aot": true,
 						"outputPath": "dist/ngPorcelain-src",
 						"index": "src/index.html",
 						"main": "src/main.ts",
@@ -50,10 +50,10 @@
 									"maximumWarning": "2mb",
 									"maximumError": "5mb"
 								},
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb"
+								}
 							]
 						}
 					}
@@ -138,13 +138,13 @@
 					"options": {
 						"tsConfig": "projects/ng-porcelain/tsconfig.lib.json",
 						"project": "projects/ng-porcelain/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/ng-porcelain/tsconfig.lib.prod.json"
+						}
 					}
-				,          "configurations": {
-            "production": {
-              "tsConfig": "projects/ng-porcelain/tsconfig.lib.prod.json"
-            }
-          }
-},
+				},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
