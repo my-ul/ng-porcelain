@@ -3,7 +3,8 @@ import {
 	faCaretDown,
 	faChevronDown,
 	faChevronUp,
-	IconDefinition
+	IconDefinition,
+	faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { TranslationService } from '../../services/translation/translation.service';
@@ -69,6 +70,7 @@ export class SimpleRadioRefinerComponent implements OnInit {
 	faChevronDown: IconDefinition = faCaretDown;
 	contractIcon: IconDefinition = faChevronUp;
 	expandIcon: IconDefinition = faChevronDown;
+	infoIcon: IconDefinition = faInfoCircle;
 	//#endregion
 	currentOptionSlug: string;
 	// State
@@ -208,8 +210,18 @@ export class SimpleRadioRefinerComponent implements OnInit {
 	optionHasBadge(option: string | SimpleOption): boolean {
 		if (typeof option === 'string') {
 			return false;
+		} else if (option?.isIconDisplay) {
+			return false;
 		} else {
 			return option.badge && option.badge !== '';
+		}
+	}
+
+	getTooltipText(option: string | SimpleOption): string {
+		if (typeof option === 'string') {
+			return option;
+		} else {
+			return option.tooltipText;
 		}
 	}
 

@@ -3,4 +3,6 @@ export interface ISimpleOption {
 	label: string;
 	slug: string;
 	isSelected?: boolean;
+	isIconDisplay?: boolean;
+	tooltipText?: string;
 }

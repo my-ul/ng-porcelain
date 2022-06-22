@@ -21,6 +21,10 @@ export class SimpleOption implements ISimpleOption {
 	 * A default value for the option.
 	 */
 	isSelected?: any;
+
+	isIconDisplay?: boolean;
+
+	tooltipText?: string;
 	/**
 	 * Create an instance of Option from an IOption. If incoming IOption fields are present, they will be set.
 	 */
@@ -29,9 +33,9 @@ export class SimpleOption implements ISimpleOption {
 			this.badge = simpleOption.badge ? simpleOption.badge : null;
 			this.label = simpleOption.label ? simpleOption.label : '';
 			this.slug = simpleOption.slug ? simpleOption.slug : '';
-			this.isSelected = simpleOption.isSelected
-				? simpleOption.isSelected
-				: null;
+			this.isSelected = simpleOption.isSelected ? simpleOption.isSelected : null;
+			this.isIconDisplay = simpleOption.isIconDisplay ? simpleOption.isIconDisplay : null;
+			this.tooltipText = simpleOption.tooltipText ? simpleOption.tooltipText : null;
 		}
 	}
 }
