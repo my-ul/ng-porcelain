@@ -6,7 +6,6 @@ import { TruncateModule } from '../truncate/truncate.module';
 import { FormsModule } from '@angular/forms';
 import { PipesModule } from '../pipes/pipes.module';
 import { ExpandoModule } from '../expando/expando.module';
-// import { TooltipModule } from 'ng2-tooltip-directive';
 
 export const SIMPLE_RADIO_REFINER_DIRECTIVES = [SimpleRadioRefinerComponent];
 
@@ -17,7 +16,6 @@ export const SIMPLE_RADIO_REFINER_IMPORTS = [
 	TruncateModule,
 	PipesModule,
 	ExpandoModule
-	// TooltipModule
 ];
 
 @NgModule({

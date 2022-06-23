@@ -28,49 +28,50 @@ input[type='radio']:checked:after {
 .tooltip {
 	position: relative;
 	display: inline-block;
-}
 
-.tooltip .tooltiptext {
-	visibility: hidden;
-	width: auto;
-	background-color: black;
-	color: #fff;
-	text-align: center;
-	border-radius: 4px;
-	position: absolute;
-	z-index: 1;
-	margin-left: 24px;
-	margin-top: -23px;
-	padding-left: 6px;
-	padding-right: 9px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	font-size: 12px;
-}
+	.tooltiptext {
+		visibility: hidden;
+		width: auto;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		border-radius: 4px;
+		position: absolute;
+		z-index: 1;
+		margin-left: 24px;
+		margin-top: -23px;
+		padding-left: 6px;
+		padding-right: 9px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+		font-size: 12px;
+	}
 
-.tooltip:hover .tooltiptext {
-	visibility: visible;
-}
+	&:hover .tooltiptext {
+		visibility: visible;
+	}
 
-.tooltip:hover:after {
-	content: '';
-	position: absolute;
-	left: 100%;
-	margin-left: -4px;
-	top: 44%;
-	transform: translateY(-50%);
-	border: 7px solid #000;
-	border-color: transparent black transparent transparent;
-}
-.tooltip:hover:before,
-.tooltip:hover:after {
-	display: block;
-}
+	&:hover::after {
+		content: '';
+		position: absolute;
+		left: 100%;
+		margin-left: -4px;
+		top: 44%;
+		transform: translateY(-50%);
+		border: 7px solid #000;
+		border-color: transparent black transparent transparent;
+		display: block;
+	}
 
-.img_size {
-	content: url('/assets/info-icon.png');
-	width: 14px;
-	margin-top: 5px;
-	height: 14px;
-	cursor: pointer;
+	&:hover::before {
+		display: block;
+	}
+
+	.img_size {
+		content: url('/assets/info-icon.png');
+		width: 14px;
+		margin-top: 5px;
+		height: 14px;
+		cursor: pointer;
+	}
 }
