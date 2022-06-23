@@ -1,46 +1,81 @@
-.footer {
-	box-sizing: border-box;
-	padding-left: 100px;
-	font-family: 'Open Sans Regular', 'Open Sans', sans-serif;
-	font-weight: 400;
-	background: #424242 no-repeat URL('https://cc.myportal.ul.com/Global/Images/UL_Logo.png');
-	background-size: 30px 30px;
-	background-position: 30px 50%;
-	color: #fff;
-	padding: 1.5em 0 1.5em 90px;
-	//line-height: 60px;
-	display: flex;
-	flex-direction: row;
+@use "sass:math";
 
-	.ul-logdetail-container {
-		display: flex;
-		flex: 1.5;
-		margin: 0;
-		color: #fff;
-		letter-spacing: normal;
-	}
-	.policies-container {
-		justify-content: space-between;
-		display: flex;
-		color: #fff;
-		text-decoration: none;
-		margin: 0 1em;
+@import 'breakpoints';
+// @import '~reset-css';
+
+$img-height: 66px;
+$img-width: 160px;
+
+.footer {
+	padding: 30px;
+	background-color: #2b2b2b;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 12px;
+
+	@include print() {
+		background-color: #fff;
+		color: #000;
+		border-top: 0.25pt solid #000;
+		a {
+			color: #000 !important;
+		}
+		.footer__ul-link {
+			a {
+				background-image: url('https://cc.myportal.ul.com/Global/Images/UL-solutions--black.svg') !important;
+			}
+		}
 	}
 
 	a {
 		color: #fff;
-		text-decoration: none;
+	}
+	ul {
+		display: flex;
+		line-height: 2.5;
+		list-style: none;
+		margin: 0;
+		padding: 0;
 
-		&:hover {
-			text-decoration: underline;
+		@include mobile() {
+			flex-direction: column;
+			li + li {
+				margin-top: 15px;
+			}
+		}
+
+		@include print() {
+			flex-direction: column;
+			li + li {
+				margin-top: 12pt;
+			}
+			a {
+				text-decoration: none;
+			}
+			a::after {
+				content: ': ' attr(href);
+				text-transform: none;
+			}
+		}
+
+		@include desktop() {
+			align-items: center;
+			li + li {
+				// margin-left: math.div($img-height, 2);
+				margin-left: $img-height / 2;
+			}
 		}
 	}
 
-	.online-policies {
-		margin: 0 2em 0 2em;
-	}
-
-	.DataAccess {
-		margin-right: 1em;
+	.footer__ul-link {
+		a {
+			display: inline-block;
+			width: $img-width;
+			line-height: $img-height;
+			background-image: url('https://cc.myportal.ul.com/Global/Images/UL-solutions--white.svg') !important;
+			background-size: $img-width $img-height;
+			background-repeat: no-repeat;
+			text-indent: -9999px;
+		}
 	}
 }

@@ -4,35 +4,35 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+    - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+    vmImage: 'ubuntu-latest'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    - task: NodeTool@0
+      inputs:
+          versionSpec: '10.x'
+      displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm link
-  displayName: 'Restore npm packages'
+    - script: |
+          npm install
+          npm link
+      displayName: 'Restore npm packages'
 
-- script: |
-    npm run set-azdo-variables
-  displayName: 'Extract package variables into environment'
+    - script: |
+          npm run get-variables
+      displayName: 'Extract package variables into environment'
 
-- script: |
-    npx build-storybook -o $(Build.ArtifactStagingDirectory)/$(package__version)/
-    echo "<?php header('Location: /$(package__version)/');" >> $(Build.ArtifactStagingDirectory)/index.php
-    mkdir $(Build.ArtifactStagingDirectory)/latest/
-    cp $(Build.ArtifactStagingDirectory)/index.php $(Build.ArtifactStagingDirectory)/latest/index.php
-  displayName: 'Build storybook and create redirects'
+    - script: |
+          npx build-storybook -o $(Build.ArtifactStagingDirectory)/$(package__version)/
+          echo "<?php header('Location: /$(package__version)/');" >> $(Build.ArtifactStagingDirectory)/index.php
+          mkdir $(Build.ArtifactStagingDirectory)/latest/
+          cp $(Build.ArtifactStagingDirectory)/index.php $(Build.ArtifactStagingDirectory)/latest/index.php
+      displayName: 'Build storybook and create redirects'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'porcelain-storybook'
-    publishLocation: 'Container'
+    - task: PublishBuildArtifacts@1
+      inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'porcelain-storybook'
+          publishLocation: 'Container'
