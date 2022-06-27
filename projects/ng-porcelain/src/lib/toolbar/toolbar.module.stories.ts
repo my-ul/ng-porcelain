@@ -16,6 +16,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 
 // Porcelain
 import { TOOLBAR_DIRECTIVES, TOOLBAR_IMPORTS } from './toolbar.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export default {
 	title: 'Toolbar System',
@@ -24,7 +25,7 @@ export default {
 		withKnobs,
 		moduleMetadata({
 			declarations: TOOLBAR_DIRECTIVES,
-			imports: TOOLBAR_IMPORTS
+			imports: [BrowserAnimationsModule, ...TOOLBAR_IMPORTS]
 		})
 	]
 };
