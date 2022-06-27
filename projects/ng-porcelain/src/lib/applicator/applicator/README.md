@@ -1,5 +1,7 @@
 The Applicator component allows a user to defer updates on an expensive operation (such as querying a server for search results) by staging a series of changes and then clicking apply.
 
+The Applicator uses the Expando component to provide accordion behavior. These actions will be animated if you import `BrowserAnimationsModule` in the root of your app.
+
 ```html
 <porcelain-applicator
 	[refiners]="refiners"
