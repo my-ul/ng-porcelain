@@ -48,7 +48,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	readonly name = 'DateRefinerComponent';
 
 	// Inputs
-	@Input() isOpen: boolean = true;
+	@Input('isOpen') isOpen: boolean = true;
+	@Input() disable: boolean;
 	@Input() refiner: DateRefinerDefinition;
 
 	@Input() datePickerOptions = {
@@ -205,6 +206,16 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 				}
 			}
 		});
+	}
+
+	getDisabled() {
+		let data: boolean;
+		if (this.disable && !this.isOpen) {
+			data = true;
+		} else {
+			data = false;
+		}
+		return data;
 	}
 
 	onFromChange($event) {
@@ -405,10 +416,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	}
 
 	// Mutators
-	toggleOpen() {
-		this.debug('toggleOpen()', { isOpen: this.isOpen });
-		this.isOpen = !this.isOpen;
-	}
+	//toggleOpen() {
+	//	this.debug('toggleOpen()', { isOpen: this.isOpen });
+	//	this.isOpen = !this.isOpen;
+	//}
 
 	/**
 	 * Below Function is for clearing Custom Date Range Refiners. Use ViewChild to get value
