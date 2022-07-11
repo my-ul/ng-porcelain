@@ -209,13 +209,7 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	}
 
 	getDisabled() {
-		let data: boolean;
-		if (this.disable && !this.isOpen) {
-			data = true;
-		} else {
-			data = false;
-		}
-		return data;
+		return this.disable && !this.isOpen;
 	}
 
 	onFromChange($event) {
