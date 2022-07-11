@@ -19,6 +19,7 @@ export class RefinersComponent extends Loggable implements OnInit {
 	@Input() allowIncompleteEmit: boolean = true;
 	@Input() disable: boolean = false; /*Sets the disable flag to disable refiners in required apps*/
 	@Input() enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
+	@Input() isOpen: boolean;
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
