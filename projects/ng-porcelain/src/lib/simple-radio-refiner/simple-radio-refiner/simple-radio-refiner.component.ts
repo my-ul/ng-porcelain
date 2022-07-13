@@ -26,6 +26,12 @@ import { defaultSelectNoneLabel } from '../../shared/defaults/labels/defaultSele
 import { defaultOptionShowCount } from '../../shared/defaults/properties/defaultOptionShowCount';
 import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 
+export interface refinerImageKey {
+	key: string;
+	refinerIndex: number;
+	isSimpleOptionRefinerType: boolean;
+	optionTooltipUrl: string;
+}
 @Component({
 	selector: 'porcelain-simple-radio-refiner, p-simple-refiner',
 	templateUrl: './simple-radio-refiner.component.html',
@@ -54,6 +60,8 @@ export class SimpleRadioRefinerComponent implements OnInit, AfterViewInit {
 	@Input() public defaulttoolTipImageUrl: string = '/assets/info-icon.png';
 
 	customTooltipImageURLs: string[] = [];
+
+	customTooltipRefinerImageUrls: refinerImageKey[] = [];
 	// Getters
 	get showCount() {
 		return this._showCount || this.refiner.showCount || defaultOptionShowCount;
@@ -103,45 +111,40 @@ export class SimpleRadioRefinerComponent implements OnInit, AfterViewInit {
 			})
 		);
 	}
-	ngAfterViewInit(): void {
-		//check if url exists
-		Object.keys(this.refiner.options)
-			.map(objectKey => objectKey)
-			.filter(key => {
-				if (
-					this.refiner.options &&
-					typeof this.refiner.options[key] != 'string' &&
-					(this.refiner.options[key] as SimpleOption)
-				) {
-					if (
-						(this.refiner.options[key] as SimpleOption).tooltipText &&
-						(this.refiner.options[key] as SimpleOption).customToolTipImageUrl
-					) {
-						this.customTooltipImageURLs.push(
-							(this.refiner.options[key] as SimpleOption).customToolTipImageUrl
-						);
-					}
-				}
-			});
 
-		if (this.customTooltipImageURLs.length != 0) {
-			//this.toolTipUrl = customTooltipImageURLs[0];
-			this.toolTipImageRefs.forEach((tooltip: ElementRef, index: number) => {
+	ngAfterViewInit(): void {
+		this.customTooltipRefinerImageUrls = [];
+		//check if url exists
+		Object.keys(this.refiner.options).map((objectKey, Index: number) => {
+			if (
+				this.refiner.options &&
+				typeof this.refiner.options[objectKey] != 'string' &&
+				(this.refiner.options[objectKey] as SimpleOption)
+			) {
+				if (
+					(this.refiner.options[objectKey] as SimpleOption).tooltipText &&
+					(this.refiner.options[objectKey] as SimpleOption).customToolTipImageUrl
+				) {
+					this.customTooltipRefinerImageUrls.push({
+						key: objectKey,
+						refinerIndex: Index,
+						isSimpleOptionRefinerType: true,
+						optionTooltipUrl: (this.refiner.options[objectKey] as SimpleOption)
+							.customToolTipImageUrl
+					});
+				}
+			}
+		});
+
+		this.customTooltipRefinerImageUrls.map(refinerImageObject => {
+			if (refinerImageObject.isSimpleOptionRefinerType) {
 				this._renderer.setStyle(
-					tooltip.nativeElement,
+					this.toolTipImageRefs.toArray()[refinerImageObject.refinerIndex].nativeElement,
 					'content',
-					`url(${this.customTooltipImageURLs[index]})`
+					`url(${refinerImageObject.optionTooltipUrl})`
 				);
-			});
-		} else {
-			this.toolTipImageRefs.forEach((tooltip: ElementRef, index: number) => {
-				this._renderer.setStyle(
-					tooltip.nativeElement,
-					'content',
-					`url(${this.defaulttoolTipImageUrl})`
-				);
-			});
-		}
+			}
+		});
 	}
 	options;
 	ngOnInit() {

@@ -162,94 +162,6 @@ SimpleOptionDictionary.story = {
 	parameters: {}
 };
 
-export const radioOptionsWithoutTooltip = () => ({
-	component: SimpleRadioRefinerComponent,
-	moduleMetadata: {
-		imports: SIMPLE_RADIO_REFINER_IMPORTS
-	},
-	props: {
-		refiner: new SimpleRefinerDefinition({
-			slug: 'simple',
-			type: 'radio',
-			title: 'United States of America (full definitions; see notes)',
-			options: {
-				AL: new SimpleOption({
-					badge: 4888949,
-					label: 'Compliance summary',
-					slug: 'AL',
-					isSelected: true
-				}),
-				AK: new SimpleOption({
-					badge: 738068,
-					label: 'Certificate expiration',
-					slug: 'Certificate expiration'
-				}),
-				AZ: new SimpleOption({
-					badge: 7123898,
-					label: 'Certificate requirement changes',
-					slug: 'Certificate requirement changes'
-				}),
-				AG: new SimpleOption({
-					badge: 87678687,
-					label: 'Global certification requirement changes',
-					slug: 'Global certification requirement changes'
-				})
-			}
-		}),
-		onRefinerChange: action('Refiner changed')
-	}
-});
-
-radioOptionsWithoutTooltip.story = {
-	name: 'radio refiner options without tool tip'
-};
-
-export const radioOptionsWithDefaultTooltip = () => ({
-	component: SimpleRadioRefinerComponent,
-	moduleMetadata: {
-		imports: SIMPLE_RADIO_REFINER_IMPORTS
-	},
-	props: {
-		refiner: new SimpleRefinerDefinition({
-			slug: 'simple',
-			type: 'radio',
-			title: 'United States of America (full definitions; see notes)',
-			options: {
-				AL: new SimpleOption({
-					badge: 4888949,
-					label: 'Compliance summary',
-					slug: 'AL',
-					isSelected: true,
-					tooltipText: 'Unified view of all compliance impacts'
-				}),
-				AK: new SimpleOption({
-					badge: 738068,
-					label: 'Certificate expiration',
-					slug: 'Certificate expiration',
-					tooltipText: 'View expiring certificate records'
-				}),
-				AZ: new SimpleOption({
-					badge: 7123898,
-					label: 'Certificate requirement changes',
-					slug: 'Certificate requirement changes',
-					tooltipText: 'North America safety schemes managed by UL'
-				}),
-				AG: new SimpleOption({
-					badge: 87678687,
-					label: 'Global certification requirement changes',
-					slug: 'Global certification requirement changes',
-					tooltipText: 'All other global schemes'
-				})
-			}
-		}),
-		onRefinerChange: action('Refiner changed')
-	}
-});
-
-radioOptionsWithDefaultTooltip.story = {
-	name: 'radio refiner options with default tool tip'
-};
-
 export const radioOptionsConfigurableTooltip = () => ({
 	component: SimpleRadioRefinerComponent,
 	moduleMetadata: {
@@ -272,8 +184,7 @@ export const radioOptionsConfigurableTooltip = () => ({
 				AK: new SimpleOption({
 					label: 'Certificate expiration',
 					slug: 'Certificate expiration',
-					tooltipText: 'View expiring certificate records',
-					customToolTipImageUrl: '/assets/info-icon.png'
+					tooltipText: 'View expiring certificate records'
 				}),
 				AZ: new SimpleOption({
 					label: 'Certificate requirement changes',
@@ -284,7 +195,8 @@ export const radioOptionsConfigurableTooltip = () => ({
 				AG: new SimpleOption({
 					label: 'Global certification requirement changes',
 					slug: 'Global certification requirement changes',
-					tooltipText: 'All other global schemes'
+					tooltipText: 'All other global schemes',
+					customToolTipImageUrl: '/assets/info-icon.png'
 				})
 			}
 		}),
