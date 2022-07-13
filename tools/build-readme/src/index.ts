@@ -24,7 +24,8 @@ type SectionProcessor = (
     path: string,
     content: string,
     level: number,
-    pwd: string
+    pwd: string,
+    originalContent: string
 ) => string;
 
 class BuildReadme extends Command {
@@ -104,19 +105,39 @@ class BuildReadme extends Command {
      * Processes a multi-line string to adjust heading levels to match the new document.
      * @param {string} input A multi-line string that may contain markdown headings
      * @param {number} level Number of levels to increase/decrease the heading levels
+     * @param {string} filepath The path of the current section.
+     * @param {string} originalContent The original string of the section.
      * @returns {string} Returns a processed section with its headings increased by `level` heading levels.
      */
-    processHeadings(input: string, level = 0): string {
+    processHeadings(
+        input: string,
+        level = 0,
+        filepath: string = process.cwd(),
+        originalContent: string
+    ): string {
+        const originalLines = originalContent.split('\n');
         return input
-            .replace(/^(#+)\s*(.*)$/gm, (match, headingChars, headingText) => {
-                const newLevel = headingChars.length + level;
-                if (newLevel > 6) {
-                    console.warn(
-                        `Heading level of ${newLevel} may not display correctly in final document:\n\t'${match}'`
-                    );
-                }
-                return `${'#'.repeat(newLevel)} ${headingText.trim()}`;
-            })
+            .split('\n')
+            .map(line =>
+                line.replace(
+                    /^(#+)\s*(.*)$/gm,
+                    (match, headingChars, headingText) => {
+                        const newLevel = headingChars.length + level;
+                        if (newLevel > 6) {
+                            console.warn(
+                                [
+                                    `WARNING: Heading level of ${newLevel} may not display correctly in final document:`,
+                                    `\t'${match}'`,
+                                    `\tPath: ${filepath}`,
+                                    `\tLine: ${originalLines.indexOf(line) + 1}`
+                                ].join('\n')
+                            );
+                        }
+                        return `${'#'.repeat(newLevel)} ${headingText.trim()}`;
+                    }
+                )
+            )
+            .join('\n')
             .replace(/\r\n/gm, '\n')
             .trim();
     }
@@ -126,13 +147,13 @@ class BuildReadme extends Command {
     /**
      * Scans for image references, and builds a dictionary that will be used to move the finished result.
      * @param {string} input Multi-line string that will be scanned for images
-     * @param {string} pwd The directory of the current
+     * @param {string} pwd The directory of the current file.
      * @returns {string} Modified `input` containing references to the copied images.
      */
     processImages(input: string, pwd: string): string {
         return input.replace(
-            /^!\[(.*?)\]\((.*?)\)$/m,
-            (match, imageAlt, imageSrc) => {
+            /^!\[(.+)\]\((.+)\)$/gm,
+            (match, imageAlt: string, imageSrc: string) => {
                 if (imageSrc.indexOf('..') > -1) {
                     console.warn(
                         'Relative directory may attempt to navigate outside project: ',
@@ -183,12 +204,18 @@ class BuildReadme extends Command {
                     );
                 } else {
                     const pwd = path.dirname(nodeOrFilename);
+                    const originalContent = fs
+                        .readFileSync(nodeOrFilename, 'utf8')
+                        .toString();
 
                     const pipeline: SectionProcessor[] = [
-                        (filename, _contents, _level, _pwd) =>
-                            fs.readFileSync(filename, 'utf8').toString(),
-                        (_filepath, contents, level, _pwd) =>
-                            this.processHeadings(contents, level),
+                        (filepath, contents, level, _pwd, originalContent) =>
+                            this.processHeadings(
+                                contents,
+                                level,
+                                filepath,
+                                originalContent
+                            ),
                         (_filename, contents, _level, pwd) =>
                             this.processImages(contents, pwd)
                     ];
@@ -199,9 +226,10 @@ class BuildReadme extends Command {
                                     nodeOrFilename,
                                     lastContent,
                                     level,
-                                    pwd
+                                    pwd,
+                                    originalContent
                                 ),
-                            ''
+                            originalContent
                         )
                     );
                 }
@@ -298,6 +326,17 @@ class BuildReadme extends Command {
                 this.assetsPath
             );
             const resolvedOutputFile = path.resolve(flags.outFile);
+            const resolvedOutputPath = path.dirname(resolvedOutputFile);
+
+            // Ensure the output directory exists.
+            if (!fs.existsSync(resolvedOutputPath)) {
+                console.log(
+                    `Creating output directory at ${resolvedOutputPath}.`
+                );
+                fs.mkdirSync(resolvedOutputPath, {
+                    recursive: true
+                });
+            }
 
             // If there are assets to copy, do it.
             if (Object.keys(this.assets).length > 0) {
@@ -305,7 +344,9 @@ class BuildReadme extends Command {
                     console.log(
                         `Creating assets directory at ${resolvedAssetsPath}.`
                     );
-                    fs.mkdirSync(resolvedAssetsPath, { recursive: true });
+                    fs.mkdirSync(resolvedAssetsPath, {
+                        recursive: true
+                    });
                 }
 
                 if (fs.lstatSync(resolvedAssetsPath).isDirectory()) {
@@ -327,7 +368,7 @@ class BuildReadme extends Command {
                             ) {
                                 if (
                                     fs.existsSync(srcPath) &&
-                                    fs.lstatSync(srcPath).isFile()
+                                    fs.statSync(srcPath).isFile()
                                 ) {
                                     fs.copyFileSync(srcPath, destPath);
                                 } else {
@@ -351,7 +392,6 @@ class BuildReadme extends Command {
 
             // Write the compiled MD file to disk
             fs.writeFileSync(resolvedOutputFile, output);
-            //this.exit(0);
         } catch (error) {
             console.error(error);
             this.exit(1);

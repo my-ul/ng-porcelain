@@ -1,7 +1,7 @@
 {
     "name": "@my-ul/build-readme",
     "description": "Compiles multiple markdowns into one markdown file, attempting to preserve structure.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Brad Kovach",
     "bin": {
         "build-readme": "./bin/run"
