@@ -1,10 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	ViewChildren,
+	QueryList,
+	ElementRef,
+	AfterViewInit,
+	Renderer2
+} from '@angular/core';
 import {
 	faCaretDown,
 	faChevronDown,
 	faChevronUp,
-	IconDefinition,
-	faInfoCircle
+	IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 
 import { TranslationService } from '../../services/translation/translation.service';
@@ -22,7 +32,7 @@ import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 	styleUrls: ['./simple-radio-refiner.component.scss'],
 	animations: []
 })
-export class SimpleRadioRefinerComponent implements OnInit {
+export class SimpleRadioRefinerComponent implements OnInit, AfterViewInit {
 	// Inputs
 	@Input() refiner: SimpleRefinerDefinition;
 	@Input('showCount') _showCount: number;
@@ -38,6 +48,12 @@ export class SimpleRadioRefinerComponent implements OnInit {
 
 	//#endregion
 
+	//DOM manipulators
+	@ViewChildren('toolTipImageRef') public toolTipImageRefs: QueryList<ElementRef> = null;
+
+	@Input() public defaulttoolTipImageUrl: string = '/assets/info-icon.png';
+
+	customTooltipImageURLs: string[] = [];
 	// Getters
 	get showCount() {
 		return this._showCount || this.refiner.showCount || defaultOptionShowCount;
@@ -70,14 +86,14 @@ export class SimpleRadioRefinerComponent implements OnInit {
 	faChevronDown: IconDefinition = faCaretDown;
 	contractIcon: IconDefinition = faChevronUp;
 	expandIcon: IconDefinition = faChevronDown;
-	infoIcon: IconDefinition = faInfoCircle;
+
 	//#endregion
 	currentOptionSlug: string;
 	// State
 	values: { [optionSlug: string]: boolean } = {};
 	private ignoreNext: boolean = false;
 
-	constructor(private translationService: TranslationService) {
+	constructor(private translationService: TranslationService, private _renderer: Renderer2) {
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<SimpleRadioRefinerComponent>(this, {
 				label_ShowMore: 'showMoreLabel',
@@ -86,6 +102,46 @@ export class SimpleRadioRefinerComponent implements OnInit {
 				label_SelectNone: 'selectNoneLabel'
 			})
 		);
+	}
+	ngAfterViewInit(): void {
+		//check if url exists
+		Object.keys(this.refiner.options)
+			.map(objectKey => objectKey)
+			.filter(key => {
+				if (
+					this.refiner.options &&
+					typeof this.refiner.options[key] != 'string' &&
+					(this.refiner.options[key] as SimpleOption)
+				) {
+					if (
+						(this.refiner.options[key] as SimpleOption).tooltipText &&
+						(this.refiner.options[key] as SimpleOption).customToolTipImageUrl
+					) {
+						this.customTooltipImageURLs.push(
+							(this.refiner.options[key] as SimpleOption).customToolTipImageUrl
+						);
+					}
+				}
+			});
+
+		if (this.customTooltipImageURLs.length != 0) {
+			//this.toolTipUrl = customTooltipImageURLs[0];
+			this.toolTipImageRefs.forEach((tooltip: ElementRef, index: number) => {
+				this._renderer.setStyle(
+					tooltip.nativeElement,
+					'content',
+					`url(${this.customTooltipImageURLs[index]})`
+				);
+			});
+		} else {
+			this.toolTipImageRefs.forEach((tooltip: ElementRef, index: number) => {
+				this._renderer.setStyle(
+					tooltip.nativeElement,
+					'content',
+					`url(${this.defaulttoolTipImageUrl})`
+				);
+			});
+		}
 	}
 	options;
 	ngOnInit() {
@@ -210,7 +266,7 @@ export class SimpleRadioRefinerComponent implements OnInit {
 	optionHasBadge(option: string | SimpleOption): boolean {
 		if (typeof option === 'string') {
 			return false;
-		} else if (option?.isIconDisplay) {
+		} else if (option && option.tooltipText) {
 			return false;
 		} else {
 			return option.badge && option.badge !== '';
@@ -221,7 +277,7 @@ export class SimpleRadioRefinerComponent implements OnInit {
 		if (typeof option === 'string') {
 			return option;
 		} else {
-			return option.tooltipText;
+			return option && option.tooltipText ? option.tooltipText : '';
 		}
 	}
 

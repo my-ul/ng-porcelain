@@ -129,7 +129,7 @@ export const usStatesFull = {
 };
 
 export default {
-	title: 'Refiner System/Simple Refiner',
+	title: 'Refiner System/Radio refiner',
 	decorators: [withNotes],
 
 	parameters: {
@@ -162,7 +162,7 @@ SimpleOptionDictionary.story = {
 	parameters: {}
 };
 
-export const FullOptionDefinitions = () => ({
+export const radioOptionsWithoutTooltip = () => ({
 	component: SimpleRadioRefinerComponent,
 	moduleMetadata: {
 		imports: SIMPLE_RADIO_REFINER_IMPORTS
@@ -170,37 +170,128 @@ export const FullOptionDefinitions = () => ({
 	props: {
 		refiner: new SimpleRefinerDefinition({
 			slug: 'simple',
+			type: 'radio',
 			title: 'United States of America (full definitions; see notes)',
-			options: usStatesFull
+			options: {
+				AL: new SimpleOption({
+					badge: 4888949,
+					label: 'Compliance summary',
+					slug: 'AL',
+					isSelected: true
+				}),
+				AK: new SimpleOption({
+					badge: 738068,
+					label: 'Certificate expiration',
+					slug: 'Certificate expiration'
+				}),
+				AZ: new SimpleOption({
+					badge: 7123898,
+					label: 'Certificate requirement changes',
+					slug: 'Certificate requirement changes'
+				}),
+				AG: new SimpleOption({
+					badge: 87678687,
+					label: 'Global certification requirement changes',
+					slug: 'Global certification requirement changes'
+				})
+			}
 		}),
 		onRefinerChange: action('Refiner changed')
 	}
 });
 
-FullOptionDefinitions.story = {
-	name: 'Full `Option` definitions',
-	parameters: {}
+radioOptionsWithoutTooltip.story = {
+	name: 'radio refiner options without tool tip'
 };
 
-export const CustomLabels = () => ({
+export const radioOptionsWithDefaultTooltip = () => ({
 	component: SimpleRadioRefinerComponent,
 	moduleMetadata: {
 		imports: SIMPLE_RADIO_REFINER_IMPORTS
 	},
 	props: {
-		showMoreLabel: 'Mostrar %u más',
-		showLessLabel: 'Muestra menos %u',
-		selectAllLabel: 'Seleccionar todo',
-		selectNoneLabel: 'Seleccione Ninguno',
 		refiner: new SimpleRefinerDefinition({
-			slug: 'states',
-			title: 'Estados de los EE.UU.',
-			options: usStatesFull
+			slug: 'simple',
+			type: 'radio',
+			title: 'United States of America (full definitions; see notes)',
+			options: {
+				AL: new SimpleOption({
+					badge: 4888949,
+					label: 'Compliance summary',
+					slug: 'AL',
+					isSelected: true,
+					tooltipText: 'Unified view of all compliance impacts'
+				}),
+				AK: new SimpleOption({
+					badge: 738068,
+					label: 'Certificate expiration',
+					slug: 'Certificate expiration',
+					tooltipText: 'View expiring certificate records'
+				}),
+				AZ: new SimpleOption({
+					badge: 7123898,
+					label: 'Certificate requirement changes',
+					slug: 'Certificate requirement changes',
+					tooltipText: 'North America safety schemes managed by UL'
+				}),
+				AG: new SimpleOption({
+					badge: 87678687,
+					label: 'Global certification requirement changes',
+					slug: 'Global certification requirement changes',
+					tooltipText: 'All other global schemes'
+				})
+			}
 		}),
-		onRefinerChange: action('Refiner (Custom Labels)')
+		onRefinerChange: action('Refiner changed')
 	}
 });
 
-CustomLabels.story = {
-	parameters: {}
+radioOptionsWithDefaultTooltip.story = {
+	name: 'radio refiner options with default tool tip'
+};
+
+export const radioOptionsConfigurableTooltip = () => ({
+	component: SimpleRadioRefinerComponent,
+	moduleMetadata: {
+		imports: SIMPLE_RADIO_REFINER_IMPORTS
+	},
+	props: {
+		refiner: new SimpleRefinerDefinition({
+			slug: 'simple',
+			type: 'radio',
+			title: 'United States of America (full definitions; see notes)',
+			options: {
+				AL: new SimpleOption({
+					badge: 4888949,
+					label: 'Compliance summary',
+					slug: 'AL',
+					isSelected: true,
+					tooltipText: 'Unified view of all compliance impacts',
+					customToolTipImageUrl: '/assets/info-icon.png'
+				}),
+				AK: new SimpleOption({
+					label: 'Certificate expiration',
+					slug: 'Certificate expiration',
+					tooltipText: 'View expiring certificate records',
+					customToolTipImageUrl: '/assets/info-icon.png'
+				}),
+				AZ: new SimpleOption({
+					label: 'Certificate requirement changes',
+					slug: 'Certificate requirement changes',
+					tooltipText: 'North America safety schemes managed by UL',
+					customToolTipImageUrl: '/assets/info-icon.png'
+				}),
+				AG: new SimpleOption({
+					label: 'Global certification requirement changes',
+					slug: 'Global certification requirement changes',
+					tooltipText: 'All other global schemes'
+				})
+			}
+		}),
+		onRefinerChange: action('Refiner changed')
+	}
+});
+
+radioOptionsConfigurableTooltip.story = {
+	name: 'radio refiner with configurable tool tip icon'
 };

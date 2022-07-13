@@ -133,28 +133,25 @@ export const usStatesRadioFull = {
 		label: 'Compliance summary',
 		slug: 'AL',
 		isSelected: true,
-		isIconDisplay: true,
-		tooltipText: 'Unified view of all compliance impacts'
+		tooltipText: 'Unified view of all compliance impacts',
+		customToolTipImageUrl: '/assets/info-icon.png'
 	}),
 	AK: new SimpleOption({
 		badge: 738068,
 		label: 'Certificate expiration',
 		slug: 'Certificate expiration',
-		isIconDisplay: true,
 		tooltipText: 'View expiring certificate records'
 	}),
 	AZ: new SimpleOption({
 		badge: 7123898,
 		label: 'Certificate requirement changes',
 		slug: 'Certificate requirement changes',
-		isIconDisplay: true,
 		tooltipText: 'North America safety schemes managed by UL'
 	}),
 	AG: new SimpleOption({
 		badge: 87678687,
 		label: 'Global certification requirement changes',
 		slug: 'Global certification requirement changes',
-		isIconDisplay: true,
 		tooltipText: 'All other global schemes'
 	})
 };
