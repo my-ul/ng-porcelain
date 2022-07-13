@@ -17,6 +17,7 @@ import {
 } from '../../simple-refiner/simple-refiner/simple-refiner.stories';
 import { DateTime } from 'luxon';
 import { SimpleOption } from '../../shared/types/Options/SimpleOption';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const vegetables = {
 	tomato: new SimpleOption({ badge: 15, label: 'tomato', slug: 'tomato' }),
@@ -123,7 +124,7 @@ export default {
 	decorators: [
 		moduleMetadata({
 			declarations: APPLICATOR_DIRECTIVES,
-			imports: APPLICATOR_IMPORTS
+			imports: [BrowserAnimationsModule, ...APPLICATOR_IMPORTS]
 		})
 	]
 };
