@@ -9,7 +9,7 @@
 		"Refiners": {
 			"Simple Refiner": "projects/ng-porcelain/src/lib/simple-refiner/simple-refiner/README.md",
 			"Date Refiner": "projects/ng-porcelain/src/lib/date-refiner/date-refiner/README.md",
-			"Radio Refiner": "projects/ng-porcelain/src/lib/simple-radio-refiner/simple-radio-refiners/README.md",
+			"Radio Refiner": "projects/ng-porcelain/src/lib/simple-radio-refiner/simple-radio-refiner/README.md",
 			"Applicator": "projects/ng-porcelain/src/lib/applicator/applicator/README.md",
 			"Refiners Macro": "projects/ng-porcelain/src/lib/refiners/refiners/README.md"
 		},
