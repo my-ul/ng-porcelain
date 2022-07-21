@@ -25,11 +25,11 @@ input[type='radio']:checked:after {
 	opacity: 1;
 }
 
-.tooltip {
+.porcelain__tooltip {
 	position: relative;
 	display: inline-block;
 
-	.tooltiptext {
+	.porcelain__tooltiptext {
 		visibility: hidden;
 		width: auto;
 		background-color: black;
@@ -47,7 +47,7 @@ input[type='radio']:checked:after {
 		font-size: 12px;
 	}
 
-	&:hover .tooltiptext {
+	&:hover .porcelain__tooltiptext {
 		visibility: visible;
 	}
 
@@ -67,7 +67,7 @@ input[type='radio']:checked:after {
 		display: block;
 	}
 
-	.img_size {
+	.porcelain__tooltip--img_size {
 		width: 14px;
 		margin-top: 5px;
 		height: 14px;
