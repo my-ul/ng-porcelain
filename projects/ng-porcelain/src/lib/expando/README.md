@@ -1,5 +1,7 @@
 The Expando can be used to create content areas that can be opened or closed with a disclosure triangle.
 
+The Expando's expand/collapse behavior supports animations. These actions will be animated if you import `BrowserAnimationsModule` in the root of your app.
+
 # Supplementary Types
 
 ## `ExpandoIconPosition` = 'before' | 'after'

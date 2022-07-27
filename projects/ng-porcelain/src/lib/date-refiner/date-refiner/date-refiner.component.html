@@ -1,4 +1,9 @@
-<porcelain-expando [title]="refiner.title" [(isOpen)]="isOpen">
+<porcelain-expando
+	[title]="refiner.title"
+	[(isOpen)]="isOpen"
+	[disable]="disable"
+	[isDisabled]="getDisabled()"
+>
 	<div class="refiner__section refiner__toggleable">
 		<!-- [@optionsInOut] -->
 		<div class="refiner__section  refiner__body">
@@ -73,6 +78,7 @@
 										[(ngModel)]="fromModel"
 										(dateChanged)="onFromChange($event)"
 										(click)="fromDatePicker.toggleCalendar()"
+										readonly="readonly"
 									/>
 								</div>
 								<!--class="range__control"-->
@@ -103,6 +109,7 @@
 										[(ngModel)]="toModel"
 										(dateChanged)="onToChange($event)"
 										(click)="toDatePicker.toggleCalendar()"
+										readonly="readonly"
 									/>
 								</div>
 

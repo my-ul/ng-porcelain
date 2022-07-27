@@ -22,7 +22,7 @@ $img-width: 160px;
 		}
 		.footer__ul-link {
 			a {
-				background-image: url('../../../../assets/UL-solutions--black.svg') !important;
+				background-image: url('https://cc.myportal.ul.com/Global/Images/UL-solutions--black.svg') !important;
 			}
 		}
 	}
@@ -72,7 +72,7 @@ $img-width: 160px;
 			display: inline-block;
 			width: $img-width;
 			line-height: $img-height;
-			background-image: url('../../../../assets/UL-solutions--white.svg');
+			background-image: url('https://cc.myportal.ul.com/Global/Images/UL-solutions--white.svg') !important;
 			background-size: $img-width $img-height;
 			background-repeat: no-repeat;
 			text-indent: -9999px;

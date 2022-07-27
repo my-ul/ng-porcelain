@@ -22,6 +22,15 @@ export class SimpleOption implements ISimpleOption {
 	 */
 	isSelected?: any;
 	/**
+	 * If there is value in tooltip text then tooltip would displayed radio refiner
+	 */
+	tooltipText?: string = '';
+	/**
+	 * By default references the image present in assets folder inside porcelain. Just pass on the image URL located in your application directory
+	 * */
+	customToolTipImageUrl?: string = '';
+
+	/**
 	 * Create an instance of Option from an IOption. If incoming IOption fields are present, they will be set.
 	 */
 	constructor(simpleOption?: ISimpleOption) {
@@ -29,9 +38,11 @@ export class SimpleOption implements ISimpleOption {
 			this.badge = simpleOption.badge ? simpleOption.badge : null;
 			this.label = simpleOption.label ? simpleOption.label : '';
 			this.slug = simpleOption.slug ? simpleOption.slug : '';
-			this.isSelected = simpleOption.isSelected
-				? simpleOption.isSelected
-				: null;
+			this.isSelected = simpleOption.isSelected ? simpleOption.isSelected : null;
+			this.tooltipText = simpleOption.tooltipText ? simpleOption.tooltipText : '';
+			this.customToolTipImageUrl = simpleOption.customToolTipImageUrl
+				? simpleOption.customToolTipImageUrl
+				: '';
 		}
 	}
 }

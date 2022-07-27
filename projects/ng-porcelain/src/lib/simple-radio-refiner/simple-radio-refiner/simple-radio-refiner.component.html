@@ -29,11 +29,24 @@
 								[value]="getOptionLabel(refiner.options[optionKey])"
 							></porcelain-truncate>
 						</div>
-						<div class="media__right" *ngIf="optionHasBadge(refiner.options[optionKey])">
+						<div
+							class="media__right"
+							*ngIf="optionHasBadge(refiner.options[optionKey]); else displayIcon"
+						>
 							<div class="option__badge">
 								{{ getOptionBadge(refiner.options[optionKey]) }}
 							</div>
 						</div>
+						<ng-template #displayIcon>
+							<div class="media__right">
+								<div class="option__badge porcelain__tooltip">
+									<div class="porcelain__tooltip--img_size" #toolTipImageRef></div>
+									<span class="porcelain__tooltiptext">{{
+										getTooltipText(refiner.options[optionKey])
+									}}</span>
+								</div>
+							</div>
+						</ng-template>
 					</label>
 				</li>
 			</ul>
