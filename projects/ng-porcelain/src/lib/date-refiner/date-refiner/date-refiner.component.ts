@@ -104,6 +104,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
 
+	@Output() public updateDateInputStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	// Icons
 	faChevronDown: IconDefinition = faCaretDown;
 
@@ -116,6 +118,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	// State
 	currentOptionSlug: string;
 	private ignoreNext: boolean = false;
+
+	public isCustomDateRangeInvalid = false;
 
 	fromModel: IMyDateModel = null;
 	toModel: IMyDateModel = null;
@@ -312,6 +316,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(value);
 		}
+
+		//update validator
+		this.isCustomDateRangeInvalid = !this.isCustomRangeValid();
+		this.updateDateInputStatus.emit(this.isCustomDateRangeInvalid);
 	}
 
 	// States
@@ -439,5 +447,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		} else {
 			this.customDateRangeErrorMsg = '';
 		}
+	}
+
+	public isInvalidDateRange(): boolean {
+		let isdateRangeInvalid = !this.isCustomRangeValid();
+		return isdateRangeInvalid;
 	}
 }
