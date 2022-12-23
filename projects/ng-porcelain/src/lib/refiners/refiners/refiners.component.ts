@@ -32,6 +32,10 @@ export class RefinersComponent extends Loggable implements OnInit {
 	@ViewChildren('dateRefinerRef') public dateRefinerCmpRefs: QueryList<DateRefinerComponent>;
 
 	//booleans
+
+	/**
+	 * boolen to track invalid date refiner stacks in case it exists
+	 * */
 	public isDateRefinerStacksInvalid: boolean = false;
 	// Icons
 
@@ -55,13 +59,18 @@ export class RefinersComponent extends Loggable implements OnInit {
 		}
 	}
 
+	/**
+	 * Updates status of invalid Date refiner if it exists in date refiner stacks
+	 * @param dateEventTriggerd
+	 */
+
 	updateDateRefinerStackInputStatus(dateEventTriggerd: boolean = true) {
 		if (this.dateRefinerCmpRefs) {
 			let invalidDateRefinerCmps = this.dateRefinerCmpRefs
 				.toArray()
 				.filter(dateRefinerCmpRef => dateRefinerCmpRef.isCustomDateRangeInvalid == true);
 
-			//if any of date refiner is empty then there is error in date refiner stacks
+			//if any of date refiner is invalide then there is error in date refiner stacks, update the status in flag and emit to parent component
 
 			this.isDateRefinerStacksInvalid = invalidDateRefinerCmps.length > 0 ? true : false;
 		} else {

@@ -119,6 +119,9 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	currentOptionSlug: string;
 	private ignoreNext: boolean = false;
 
+	/**
+	 * Boolean flag to keep track of date refiner input invalid status
+	 * */
 	public isCustomDateRangeInvalid = false;
 
 	fromModel: IMyDateModel = null;
@@ -317,7 +320,7 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 			this.refiner.valueSubject.next(value);
 		}
 
-		//update validator
+		//update date refiner input invalid status incase if it exists
 		this.isCustomDateRangeInvalid = !this.isCustomRangeValid();
 		this.updateDateInputStatus.emit(this.isCustomDateRangeInvalid);
 	}

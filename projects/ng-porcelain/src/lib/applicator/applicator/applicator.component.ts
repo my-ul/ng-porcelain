@@ -9,8 +9,7 @@ import {
 	SimpleChanges,
 	ViewChild,
 	ElementRef,
-	Renderer2,
-	ChangeDetectorRef
+	Renderer2
 } from '@angular/core';
 
 import { isEqual } from 'lodash-es';
@@ -79,16 +78,14 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@ViewChild('applicator') public applicatorRef: ElementRef<HTMLDivElement>;
 	@ViewChild('stickyHeader') public stickyHeaderRef: ElementRef<HTMLDivElement>;
 
-	//track if any dateRefinersInput is invalid
+	/**
+	 * Boolean flag for Date Refiner Stacks Input invalid Status
+	 * */
 	public isAnyDateRefinerStacksInputInvalid: boolean = false;
 
 	private observer: ResizeObserver;
 
-	constructor(
-		private translationService: TranslationService,
-		private renderer: Renderer2,
-		private cdr: ChangeDetectorRef
-	) {
+	constructor(private translationService: TranslationService, private renderer: Renderer2) {
 		super();
 		this.translationService.getTranslations().subscribe(
 			TranslationService.translate<ApplicatorComponent>(this, {
@@ -191,11 +188,14 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		this.stagedValuesofRefiner = this.stagedValues;
 	}
 
+	/**
+	 * Handles Collective date refiner Input stack and update status to the boolean flag of applicator component
+	 * @param DateInputStatus
+	 */
 	public handleDateInputValidationStatus(DateInputStatus: boolean) {
 		//update dateRefiners input status from refiners component
 
 		this.isAnyDateRefinerStacksInputInvalid = DateInputStatus;
-		//this.cdr.detectChanges();
 	}
 
 	public ngOnDestroy() {
