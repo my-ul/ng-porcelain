@@ -6,16 +6,9 @@ import { MultiSelectComponent } from './multiselect/multiselect.component';
 import { TruncateModule } from '../truncate/truncate.module';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const MULTISELECT_DIRECTIVES = [MultiSelectComponent];
-export const MULTISELECT_IMPORTS = [
-	CommonModule,
-	FontAwesomeModule,
-	BrowserAnimationsModule,
-	TruncateModule,
-	FormsModule
-];
+export const MULTISELECT_IMPORTS = [CommonModule, FontAwesomeModule, TruncateModule, FormsModule];
 
 @NgModule({
 	declarations: MULTISELECT_DIRECTIVES,
