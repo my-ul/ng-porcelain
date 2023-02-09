@@ -78,6 +78,11 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@ViewChild('applicator') public applicatorRef: ElementRef<HTMLDivElement>;
 	@ViewChild('stickyHeader') public stickyHeaderRef: ElementRef<HTMLDivElement>;
 
+	/**
+	 * Boolean flag for Date Refiner Stacks Input invalid Status
+	 * */
+	public isAnyDateRefinerStacksInputInvalid: boolean = false;
+
 	private observer: ResizeObserver;
 
 	constructor(private translationService: TranslationService, private renderer: Renderer2) {
@@ -115,6 +120,10 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	}
 
 	public canApply(): boolean {
+		//if any date refiners input is invalid then disable apply button
+		if (this.isAnyDateRefinerStacksInputInvalid) {
+			return false;
+		}
 		return !isEqual(this.stagedValues, this.appliedValues);
 	}
 
@@ -177,6 +186,16 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		this.log('handleRefinerValues(refinerSlug, refinerValue)', { refinerSlug, refinerValue });
 		this.stagedValues[refinerSlug] = refinerValue;
 		this.stagedValuesofRefiner = this.stagedValues;
+	}
+
+	/**
+	 * Handles Collective date refiner Input stack and update status to the boolean flag of applicator component
+	 * @param DateInputStatus
+	 */
+	public handleDateInputValidationStatus(DateInputStatus: boolean) {
+		//update dateRefiners input status from refiners component
+
+		this.isAnyDateRefinerStacksInputInvalid = DateInputStatus;
 	}
 
 	public ngOnDestroy() {

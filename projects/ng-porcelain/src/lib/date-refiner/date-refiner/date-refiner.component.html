@@ -124,17 +124,21 @@
 		></my-date-picker> -->
 							</div>
 
-							<div
-								class="range__error"
-								*ngIf="!isCustomRangeValid() && !enableCustomDateRange"
-							>
-								{{ invalidCustomRangeLabel }}
-							</div>
-							<div
-								class="range__error"
-								*ngIf="enableCustomDateRange && !isCustomRangeValid()"
-							>
-								{{ customDateRangeErrorMsg }}
+							<div class="range__error" *ngIf="isInvalidDateRange()">
+								<ng-container
+									*ngIf="
+										enableCustomDateRange;
+										then customDateRangeError;
+										else customDateRangeStackError
+									"
+								>
+								</ng-container>
+								<ng-template #customDateRangeError>
+									{{ customDateRangeErrorMsg }}
+								</ng-template>
+								<ng-template #customDateRangeStackError>
+									{{ invalidCustomRangeLabel }}
+								</ng-template>
 							</div>
 						</div>
 					</div>
