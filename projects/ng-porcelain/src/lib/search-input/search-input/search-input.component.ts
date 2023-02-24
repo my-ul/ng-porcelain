@@ -83,6 +83,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 		if (!this.isDropDownSelect) {
 			return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
 		} else {
+			this.canEmitEmpty = true;
 			return true;
 		}
 	}
