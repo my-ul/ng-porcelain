@@ -10,8 +10,7 @@ import {
 	Input,
 	OnDestroy,
 	Output,
-	QueryList,
-	isDevMode
+	QueryList
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -20,7 +19,7 @@ import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 // Porcelain
 import { ToolbarOptionComponent } from '../toolbar-option/toolbar-option.component';
-import { trigger, style, state, transition, animate } from '@angular/animations';
+import { trigger, style, transition, animate } from '@angular/animations';
 import { Loggable } from '../../Loggable';
 
 let closedStyle = {

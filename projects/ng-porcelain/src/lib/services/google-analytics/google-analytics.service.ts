@@ -1,6 +1,4 @@
-import { Injectable } from '@angular/core';
-
-import { isDevMode } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Loggable } from '../../Loggable';
 
 export type GoogleAnalyticsEvent = string | number;

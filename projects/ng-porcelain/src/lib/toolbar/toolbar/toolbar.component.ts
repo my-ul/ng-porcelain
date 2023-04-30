@@ -1,5 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, OnInit, HostBinding, Input } from '@angular/core';
 
 @Component({
 	selector: 'porcelain-toolbar, p-toolbar',

@@ -1,8 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
-import { ToolbarSelectComponent } from '../../toolbar/toolbar-select/toolbar-select.component';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 
 import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'porcelain-multiselect',
