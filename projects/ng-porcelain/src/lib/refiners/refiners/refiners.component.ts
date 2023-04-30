@@ -3,6 +3,7 @@ import { BaseRefinerDefinition } from '../../shared/types/Refiners/BaseRefinerDe
 import { Loggable } from '../../Loggable';
 import { isEqual } from 'lodash-es';
 import { SearchRefinerComponent } from '../../search-refiner/search-refiner/search-refiner.component';
+import { DateRefinerComponent } from '../../date-refiner/date-refiner/date-refiner.component';
 import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
 import { DateRefinerDefinition } from '../../shared/types/Refiners/DateRefinerDefinition';
 
@@ -19,13 +20,23 @@ export class RefinersComponent extends Loggable implements OnInit {
 	@Input() allowIncompleteEmit: boolean = true;
 	@Input() disable: boolean = false; /*Sets the disable flag to disable refiners in required apps*/
 	@Input() enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
+	@Input() isOpen: boolean;
 
 	// Outputs
 	@Output() onRefinersChange: EventEmitter<any> = new EventEmitter();
+	@Output() updateDateRefinerStackValidityStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	//viewchildren refs
 	@ViewChildren('searchRef') public searchRefinerCmpRefs: QueryList<SearchRefinerComponent>;
 
+	@ViewChildren('dateRefinerRef') public dateRefinerCmpRefs: QueryList<DateRefinerComponent>;
+
+	//booleans
+
+	/**
+	 * boolen to track invalid date refiner stacks in case it exists
+	 * */
+	public isDateRefinerStacksInvalid: boolean = false;
 	// Icons
 
 	// State
@@ -38,12 +49,35 @@ export class RefinersComponent extends Loggable implements OnInit {
 	ngOnInit() {}
 
 	handleRefinerChange(update: [string, any]) {
+		this.updateDateRefinerStackInputStatus();
+
 		let [slug, selected] = update;
 
 		if (!isEqual(this.values[slug], selected)) {
 			this.debug('handleRefinerChange(update)', { before: this.values[slug], after: selected });
 			this.setValue(slug, selected);
 		}
+	}
+
+	/**
+	 * Updates status of invalid Date refiner if it exists in date refiner stacks
+	 * @param dateEventTriggerd
+	 */
+
+	updateDateRefinerStackInputStatus(dateEventTriggerd: boolean = true) {
+		if (this.dateRefinerCmpRefs) {
+			let invalidDateRefinerCmps = this.dateRefinerCmpRefs
+				.toArray()
+				.filter(dateRefinerCmpRef => dateRefinerCmpRef.isCustomDateRangeInvalid == true);
+
+			//if any of date refiner is invalide then there is error in date refiner stacks, update the status in flag and emit to parent component
+
+			this.isDateRefinerStacksInvalid = invalidDateRefinerCmps.length > 0 ? true : false;
+		} else {
+			this.isDateRefinerStacksInvalid = false;
+		}
+
+		this.updateDateRefinerStackValidityStatus.emit(this.isDateRefinerStacksInvalid);
 	}
 
 	setValue(slug: string, value: any) {

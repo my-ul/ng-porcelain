@@ -52,6 +52,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 
 	@Input() public clearIcon: any = faTimesCircle;
 	@Input() public submitIcon: any = faSearch;
+	@Input() public isDropDownSelect: boolean = false;
 
 	//#endregion
 
@@ -79,7 +80,12 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 	 * Tests if the control is in a condition that allows a submit.
 	 */
 	public canSubmit(): boolean {
-		return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
+		if (!this.isDropDownSelect) {
+			return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
+		} else {
+			this.canEmitEmpty = true;
+			return true;
+		}
 	}
 
 	/**
