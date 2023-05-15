@@ -102,18 +102,6 @@ const searchRefinerSecondStates = new SimpleRefinerDefinition({
 	options: usStatesFull
 });
 
-const searchRefinerWithFourRecords = new SimpleRefinerDefinition({
-	slug: 'searchRefinerStates',
-	title: 'search Refiner States',
-	type: 'search',
-	options: {
-		AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL' }),
-		AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
-		AZ: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
-		AR: new SimpleOption({ badge: 3020327, label: 'Arkansas', slug: 'AR' })
-	}
-});
-
 const dateRefiner = new DateRefinerDefinition({
 	enableCustomDateRange: false,
 	slug: 'dateRefiner',
@@ -275,22 +263,6 @@ export const ProvideCustomDateRange = () => {
 
 ProvideCustomDateRange.story = {
 	name: 'Provide custom date range'
-};
-
-export const searchRefinerWithFourItems = () => {
-	return {
-		component: ApplicatorComponent,
-		props: {
-			enableCustomDateRange: true,
-			allowIncompleteEmit: false,
-			onApply: action('Applicators update'),
-			refiners: [searchRefinerWithFourRecords]
-		}
-	};
-};
-
-searchRefinerWithFourItems.story = {
-	name: 'Search Refiner with Four items'
 };
 
 export const defaultSelectedOptions = () => {
