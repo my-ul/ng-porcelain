@@ -361,6 +361,9 @@ export class SearchRefinerComponent extends Loggable implements OnInit, AfterCon
 
 	getListHeight(list: any[]): number {
 		let useLines = clamp(0, list.length, this.showLines);
+		if (list.length && list.length == 4) {
+			return (this.itemHeight + 3) * useLines;
+		}
 		return this.itemHeight * useLines;
 	}
 
