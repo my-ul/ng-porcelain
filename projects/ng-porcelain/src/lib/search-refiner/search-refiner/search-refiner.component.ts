@@ -118,7 +118,7 @@ export class SearchRefinerComponent extends Loggable implements OnInit, AfterCon
 	/**
 	 * [showLines] input to control how many lines are shown prior to initiating scroll behavior
 	 */
-	@Input() showLines: number = 6;
+	@Input() showLines: number = 5;
 
 	//#endregion
 
