@@ -54,8 +54,8 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 })
 export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, OnDestroy {
 	readonly name: string = 'ApplicatorComponent';
-	private initialLoad: boolean = true;
-	private resetClicked: boolean = false;
+	public initialLoad: boolean = true;
+	public resetClicked: boolean = false;
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
