@@ -1,6 +1,6 @@
 {
 	"name": "ng-porcelain-src",
-	"version": "9.4.0",
+	"version": "9.4.1-beta.0",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
@@ -79,6 +79,7 @@
 		"@types/faker": "^4.1.12",
 		"@types/flat": "^5.0.1",
 		"@types/jasmine": "^3.10.2",
+		"@types/lodash": "^3.10.5",
 		"@types/luxon": "^2.0.5",
 		"@types/mocha": "^5.2.7",
 		"@types/node": "^12.20.37",
