@@ -6,7 +6,7 @@ import {
 	DateRefinerDefinition,
 	i18nDateOptions,
 	SimpleOption
-} from '../../projects/ng-porcelain/src/public_api';
+} from '@my-ul/ng-porcelain';
 
 @Component({
 	selector: 'app-root',

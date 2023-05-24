@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PipesModule, LegacySearchInputModule } from '../../projects/ng-porcelain/src/public_api';
+import { PipesModule, LegacySearchInputModule } from '@my-ul/ng-porcelain';
 
 @NgModule({
 	declarations: [AppComponent],

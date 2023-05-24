@@ -1,0 +1,29 @@
+<div class="page">
+	<div class="page__section page__section--padded">
+		<h2>Search Input</h2>
+	</div>
+	<div class="page__section page__section--padded page__section--shaded">
+		<h3>Search Input</h3>
+		<p-search-input
+			[borders]="false"
+			[(value)]="GlobalSearch"
+			[placeholderLabel]="responselangJson?.label_Search"
+		>
+		</p-search-input>
+	</div>
+	<div class="page__section page__section--padded page__section--shaded">
+		<h3>Legacy Search Input</h3>
+		<porcelain-search-input
+			[borders]="false"
+			[submitIconColor]="'#A4B2C1'"
+			(submitHandler)="onGlobalSearchChange($event)"
+			[userValue]="GlobalSearch"
+			[placeholderLabel]="responselangJson?.label_Search"
+		>
+		</porcelain-search-input>
+	</div>
+	<div class="page__section page__section--padded page__section--shaded">
+		<h3>Values</h3>
+		<pre>GlobalSearch: {{ GlobalSearch | json }}</pre>
+	</div>
+</div>

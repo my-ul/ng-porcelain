@@ -20,8 +20,18 @@ import { Loggable } from '../../Loggable';
 })
 export class /* Legacy */ SearchInputComponent extends Loggable implements OnInit {
 	readonly name = '(deprecated) SearchInputComponent';
-	@Input() public userValue: string = '';
+	// @Input() public userValue: string = '';
 	@ViewChild('searchInput', { static: true }) public searchInput: ElementRef<HTMLInputElement>;
+
+	@Input() set userValue(userValue: string) {
+		if (userValue !== this.currentValue) {
+			this.currentValue = userValue;
+		}
+	}
+
+	get userValue(): string {
+		return this.currentValue;
+	}
 
 	//#region Appearance
 

@@ -64,7 +64,6 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public allowIncompleteEmit: boolean = true;
 	@Input() public applyOnInit: boolean = true;
 	@Input() public disable: boolean = false; //flag to disable refiners in required apps
-	@Input() public isOpen: boolean = true; //flag to open refiners in required apps
 	@Input() public enableCustomDateRange: boolean = false; //flag to enable custom date range options in CP apps
 	@Input() public defaultValues: RefinerValueDictionary = {};
 	private stagedValues: RefinerValueDictionary = {};
@@ -73,6 +72,20 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 	@Output() public onReset: EventEmitter<any> = new EventEmitter();
+	private _isOpen: boolean = true;
+	// @Input() public isOpen: boolean = true; //flag to open refiners in required apps
+	@Input() set isOpen(value: boolean) {
+		if (value !== this._isOpen) {
+			this._isOpen = value;
+			this.isOpenChange.emit(value);
+		}
+	}
+
+	get isOpen(): boolean {
+		return this._isOpen;
+	}
+
+	@Output() public isOpenChange: EventEmitter<boolean> = new EventEmitter();
 	//view child ref
 	@ViewChild('refinerRef', { static: false }) public refinerCmpRef: RefinersComponent;
 	@ViewChild('applicator') public applicatorRef: ElementRef<HTMLDivElement>;
