@@ -27,7 +27,6 @@
 						"assets": ["src/favicon.ico", "src/assets"],
 						"styles": ["src/styles.scss"],
 						"scripts": [],
-						"aot": false,
 						"vendorChunk": true,
 						"extractLicenses": false,
 						"buildOptimizer": false,
@@ -44,7 +43,6 @@
 								}
 							],
 							"optimization": true,
-							"aot": true,
 							"buildOptimizer": true,
 							"outputHashing": "all",
 							"sourceMap": false,
