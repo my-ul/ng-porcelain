@@ -4,7 +4,7 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
-		"build": "ng build ng-porcelain --prod",
+		"build": "ng build ng-porcelain --configuration production",
 		"test": "ng test ng-porcelain",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
@@ -57,7 +57,7 @@
 		"sprintf-js": "^1.1.2",
 		"tslib": "^2.0.0",
 		"uuid": "^9.0.0",
-		"zone.js": "~0.11.8"
+		"zone.js": "~0.11.4"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "~12.2.18",
