@@ -1,14 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 export const defaultLocale = navigator.language || 'en-us';
-export const defaultDateTimeFormatOptions = {
+export const defaultDateTimeFormatOptions: Intl.DateTimeFormatOptions = {
 	month: 'long',
 	day: 'numeric',
 	year: 'numeric'
 };
 
 @Pipe({
-	name: 'toLocaleString'
+	name: 'toLocaleString',
+	pure: true
 })
 export class ToLocaleStringPipe implements PipeTransform {
 	transform(

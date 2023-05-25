@@ -390,7 +390,7 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 	}
 
 	isItemLocked(item: TItemType): boolean {
-		if (this.lockedProp in item) {
+		if (Object.hasOwnProperty.call(item, this.lockedProp)) {
 			return !!item[this.lockedProp]; // uses double negate (!!) to ensure boolean;
 		}
 		return false;
@@ -416,7 +416,10 @@ export class RackComponent<TItemType extends any = any> extends Loggable impleme
 		// ensure all locked items are in the active column
 		for (let inactiveIdx in this.inactiveItems) {
 			let inactiveItem = this.inactiveItems[inactiveIdx];
-			if (this.lockedProp in inactiveItem && !!inactiveItem[this.lockedProp]) {
+			if (
+				Object.hasOwnProperty.call(inactiveItem, this.lockedProp) &&
+				!!inactiveItem[this.lockedProp]
+			) {
 				this.warn(
 					'Locked item found in inactive array.',
 					`${inactiveItem[this.valueProp]} => ${inactiveItem[this.labelProp]}`

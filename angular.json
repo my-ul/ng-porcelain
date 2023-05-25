@@ -18,7 +18,6 @@
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
 						"allowedCommonJsDependencies": ["faker", "sprintf-js"],
-						"aot": false,
 						"preserveSymlinks": true,
 						"outputPath": "dist/ng-porcelain-dev",
 						"index": "src/index.html",
