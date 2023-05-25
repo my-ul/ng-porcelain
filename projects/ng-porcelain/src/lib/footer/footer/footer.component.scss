@@ -62,7 +62,7 @@ $img-width: 160px;
 			align-items: center;
 			li + li {
 				// margin-left: math.div($img-height, 2);
-				margin-left: $img-height / 2;
+				margin-left: $img-height * 0.5;
 			}
 		}
 	}

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 * {
 	box-sizing: border-box;
 }
@@ -20,8 +22,8 @@
 	border-left-color: #000;
 	border-top-color: #000;
 	border-radius: 50%;
-	margin-bottom: -($size/$borderFactor);
-	margin-top: -($size/$borderFactor);
+	margin-bottom: -(math.div($size, $borderFactor));
+	margin-top: -(math.div($size, $borderFactor));
 	width: $size;
 	height: $size;
 
