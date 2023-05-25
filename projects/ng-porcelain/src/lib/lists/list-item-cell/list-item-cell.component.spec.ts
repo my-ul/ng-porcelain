@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ListItemCellComponent } from './list-item-cell.component';
 
@@ -6,11 +6,13 @@ describe('ListItemCellComponent', () => {
 	let component: ListItemCellComponent;
 	let fixture: ComponentFixture<ListItemCellComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [ListItemCellComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [ListItemCellComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ListItemCellComponent);

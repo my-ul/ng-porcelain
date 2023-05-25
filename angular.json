@@ -17,6 +17,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"allowedCommonJsDependencies": ["faker", "sprintf-js"],
 						"aot": false,
 						"preserveSymlinks": true,
 						"outputPath": "dist/ng-porcelain-dev",
@@ -41,7 +42,6 @@
 							"buildOptimizer": true,
 							"outputHashing": "all",
 							"sourceMap": false,
-							"extractCss": true,
 							"namedChunks": false,
 							"extractLicenses": true,
 							"vendorChunk": false,
@@ -135,7 +135,7 @@
 			},
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-ng-packagr:build",
+					"builder": "@angular-devkit/build-angular:ng-packagr",
 					"options": {
 						"tsConfig": "projects/ng-porcelain/tsconfig.lib.json",
 						"project": "projects/ng-porcelain/ng-package.json"

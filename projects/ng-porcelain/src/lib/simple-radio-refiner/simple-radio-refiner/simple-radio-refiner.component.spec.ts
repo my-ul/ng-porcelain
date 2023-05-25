@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SimpleRadioRefinerComponent } from './simple-radio-refiner.component';
 import {
@@ -10,12 +10,14 @@ describe('SimpleRadioRefinerComponent', () => {
 	let component: SimpleRadioRefinerComponent;
 	let fixture: ComponentFixture<SimpleRadioRefinerComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: SIMPLE_RADIO_REFINER_DIRECTIVES,
-			imports: SIMPLE_RADIO_REFINER_IMPORTS
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: SIMPLE_RADIO_REFINER_DIRECTIVES,
+				imports: SIMPLE_RADIO_REFINER_IMPORTS
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(SimpleRadioRefinerComponent);

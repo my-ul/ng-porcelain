@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SearchRefinerComponent } from './search-refiner.component';
 
@@ -6,11 +6,13 @@ describe('SearchRefinerComponent', () => {
 	let component: SearchRefinerComponent;
 	let fixture: ComponentFixture<SearchRefinerComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [SearchRefinerComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [SearchRefinerComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(SearchRefinerComponent);

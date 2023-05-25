@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ListDocsIndexComponent } from './list-docs-index.component';
 
@@ -6,11 +6,13 @@ describe('ListDocsIndexComponent', () => {
 	let component: ListDocsIndexComponent;
 	let fixture: ComponentFixture<ListDocsIndexComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [ListDocsIndexComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [ListDocsIndexComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ListDocsIndexComponent);
