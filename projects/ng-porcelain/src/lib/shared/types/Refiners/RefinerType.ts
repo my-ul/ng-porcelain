@@ -1,1 +1,1 @@
-export type RefinerType = 'simple' | 'date' | 'search' | 'radio';
+export type RefinerType = 'simple' | 'date' | 'search' | 'radio' | 'collapse';

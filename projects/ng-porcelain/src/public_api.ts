@@ -27,6 +27,10 @@ export { TruncateComponent } from './lib/truncate/truncate/truncate.component';
 export { SavedsearchModalpopupModule } from './lib/savedsearch-modalpopup/savedsearch-modalpopup.module';
 export { SavedsearchModalpopupComponent } from './lib/savedsearch-modalpopup/savedsearch-modalpopup/savedsearch-modalpopup.component';
 
+//Collapsable refiner
+export { CollapsableRefinerModule } from './lib/collapsable-refiner/collapsable-refiner/collapsable-refiner.module';
+export { CollapsableRefinerComponent } from './lib/collapsable-refiner/collapsable-refiner/collapsable-refiner.component';
+
 // Shared
 export { generateSlideInOut } from './lib/shared/animations/slideInOut.animation';
 

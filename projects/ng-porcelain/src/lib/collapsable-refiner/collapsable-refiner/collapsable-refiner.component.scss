@@ -1,0 +1,39 @@
+@import '../../shared/styles/refiner.base.component.scss';
+
+:host {
+	font-size: 14px;
+}
+
+:host ::ng-deep {
+	p-expando,
+	porcelain-expando {
+		&.expando--open .expando__body {
+			margin-top: 0.5em !important;
+		}
+	}
+}
+
+::ng-deep porcelain-expando .expando__title {
+	padding-right: 0.5em !important;
+}
+
+::ng-deep porcelain-expando .expando__count {
+	padding-right: 0.5em !important;
+}
+
+.collapse-refiner {
+	display: flex;
+}
+
+.collapse-refiner-checkbox {
+	padding-top: 1em;
+}
+
+.collapsable-refiner-section {
+	margin-top: 0.5em;
+	border-bottom: 1px solid #bbc1c8;
+}
+
+.refiner__section {
+	margin-top: 1em !important;
+}

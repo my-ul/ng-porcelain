@@ -28,7 +28,8 @@ export class ExpandoComponent extends Loggable implements OnInit {
 	readonly name = 'ExpandoComponent';
 
 	@Input() title: string = '';
-
+	@Input() collapse: string = 'false';
+	@Input() count: any;
 	@Input() iconPosition: ExpandoIconPosition = 'after';
 
 	@Input() icon: any = faCaretDown;

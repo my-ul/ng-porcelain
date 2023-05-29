@@ -98,4 +98,8 @@ export class RefinersComponent extends Loggable implements OnInit {
 	isSearchRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
 		return refiner.type === 'search';
 	}
+
+	isCollapseRefiner(refiner: BaseRefinerDefinition): refiner is SimpleRefinerDefinition {
+		return refiner.type === 'collapse';
+	}
 }

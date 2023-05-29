@@ -14,6 +14,7 @@
 	</ng-template>
 	<ng-template #useTitleProperty>
 		<span class="expando__title">{{ title }}</span>
+		<span *ngIf="collapse == 'true'" class="expando__count">({{ count }})</span>
 	</ng-template>
 
 	<ng-container

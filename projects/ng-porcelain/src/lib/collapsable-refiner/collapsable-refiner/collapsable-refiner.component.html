@@ -1,0 +1,134 @@
+<porcelain-expando
+	[title]="refiner.title"
+	[disable]="disable"
+	[isDisabled]="getDisabled()"
+	[(isOpen)]="isOpen"
+>
+	<!--Collapsable Refiner-->
+	<div class="refiner__section refiner__selection-toggles">
+		<button (click)="selectNone()" *ngIf="canSelectNone()" class="refiner__select-none">
+			{{ selectNoneLabel }}
+		</button>
+		<button (click)="selectAll()" *ngIf="canSelectAll()" class="refiner__select-all">
+			{{ selectAllLabel }}
+		</button>
+	</div>
+	<div class="collapsable-refiner-section">
+		<div>Most commonly used</div>
+		<div
+			class="collapse-refiner"
+			*ngFor="let ref of getExpandedOptionKeysCollapseParent(); let i = index"
+		>
+			<div class="collapse-refiner-checkbox">
+				<input
+					type="checkbox"
+					id="{{ refiner.options.collapse.options[ref].title }}"
+					name="refiner-{{ refiner.options.collapse.options[ref].title }}"
+					value="{{ ref }}"
+					[(ngModel)]="values[ref]"
+					(change)="
+						onParentSelectionChange(
+							refiner.options.collapse.options[ref].title,
+							i,
+							ref,
+							values[ref]
+						)
+					"
+				/>
+			</div>
+			<div>
+				<porcelain-expando
+					[title]="refiner.options.collapse.options[ref].title"
+					[collapse]="isCollapse"
+					[count]="getChildCount(refiner.options.collapse.options[ref].options)"
+				>
+					<div>
+						<ul class="options">
+							<li
+								class="option"
+								*ngFor="let optionKey of getExpandedOptionKeysCollapse(ref)"
+							>
+								<label class="media media--align-items-center">
+									<div class="media__left">
+										<input
+											type="checkbox"
+											name="refiner-{{ optionKey[slug] }}"
+											value="{{ optionKey }}"
+											[(ngModel)]="values[optionKey]"
+											(change)="
+												onSelectionChangeCollapse(
+													refiner.options.collapse.options[ref],
+													ref,
+													i
+												)
+											"
+										/>
+									</div>
+									<div class="media__body">
+										<porcelain-truncate
+											[value]="
+												getOptionLabelCollapse(
+													refiner.options.collapse.options[ref].options[
+														optionKey
+													]
+												)
+											"
+										></porcelain-truncate>
+									</div>
+								</label>
+							</li>
+						</ul>
+					</div>
+				</porcelain-expando>
+			</div>
+		</div>
+	</div>
+
+	<!-- [@optionsInOut -->
+	<div class="refiner__section refiner__body">
+		<!-- /.refiner__selection-toggles -->
+
+		<div class="refiner__section refiner__options">
+			<ul class="options">
+				<li class="option" *ngFor="let optionKey of getExpandedOptionKeys()">
+					<label class="media media--align-items-center">
+						<div class="media__left">
+							<input
+								type="checkbox"
+								name="refiner-{{ refiner.slug }}"
+								value="{{ optionKey }}"
+								[(ngModel)]="values[optionKey]"
+								(change)="onSelectionChange()"
+							/>
+						</div>
+						<div class="media__body">
+							<porcelain-truncate
+								[value]="getOptionLabel(refiner.options.refiner.options[optionKey])"
+							>
+							</porcelain-truncate>
+						</div>
+						<!--<div class="media__right" *ngIf="optionHasBadge(refiner.options.refiner.options[optionKey])">
+							<div class="option__badge">
+								{{ getOptionBadge(refiner.options.refiner.options[optionKey]) }}
+							</div>
+						</div>-->
+					</label>
+				</li>
+			</ul>
+		</div>
+		<!-- ./refiner__options-->
+
+		<div class="refiner__section refiner__show-hide" *ngIf="canExpand()">
+			<button (click)="toggleExpanded()" class="refiner__expand-toggle">
+				<span *ngIf="isExpanded">
+					{{ showLessLabel | sprintf: countTail() }}
+					<fa-icon [icon]="contractIcon"></fa-icon>
+				</span>
+				<span *ngIf="!isExpanded">
+					{{ showMoreLabel | sprintf: countTail() }} <fa-icon [icon]="expandIcon"></fa-icon>
+				</span>
+			</button>
+		</div>
+		<!-- /.refiner__show-hide -->
+	</div>
+</porcelain-expando>

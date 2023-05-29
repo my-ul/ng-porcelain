@@ -35,5 +35,12 @@
 				[disable]="disable"
 			></porcelain-search-refiner>
 		</ng-container>
+		<ng-container *ngIf="isCollapseRefiner(refiner)">
+			<porcelain-collapsable-refiner
+				(onRefinerChange)="handleRefinerChange($event)"
+				[refiner]="refiner"
+				[disable]="disable"
+			></porcelain-collapsable-refiner>
+		</ng-container>
 	</li>
 </ul>
