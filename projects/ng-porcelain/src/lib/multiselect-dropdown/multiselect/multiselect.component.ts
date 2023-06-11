@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 
 import { faAngleDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -50,7 +50,7 @@ export class MultiSelectComponent implements OnInit {
 	@Input() public LabelProp: string = 'name';
 	public initialPlaceHolder: string = '';
 	public focusToggle: boolean = false;
-	constructor(public eRef: ElementRef) {}
+	constructor(public eRef: ElementRef<HTMLElement>) {}
 
 	public toggleOpen() {
 		if (this.isOpen) {
@@ -63,6 +63,13 @@ export class MultiSelectComponent implements OnInit {
 	public open(): this {
 		this.isOpen = true;
 		return this;
+	}
+
+	@HostListener('document:click', ['$event'])
+	onStrayClick(event): void {
+		if (!this.eRef.nativeElement.contains(event.target)) {
+			this.close();
+		}
 	}
 
 	/**
