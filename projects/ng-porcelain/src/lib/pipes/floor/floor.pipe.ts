@@ -1,5 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { isDevMode } from '@angular/core';
+import { Pipe, PipeTransform, isDevMode } from '@angular/core';
 
 @Pipe({
 	name: 'floor'

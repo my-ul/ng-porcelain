@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WindowService } from '../window/window.service';
-import { IPing, ISuccessResponse, MessageType, IPongResponse } from '../frame-guest/frame-guest.service';
-import { of, Observable, Subject } from 'rxjs';
+import { IPing, MessageType } from '../frame-guest/frame-guest.service';
+import { Observable, Subject } from 'rxjs';
 import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
 
 @Injectable({

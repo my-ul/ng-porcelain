@@ -1,7 +1,13 @@
-import { Component, OnInit, ElementRef, HostBinding } from '@angular/core';
-import { Input, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
-import { HostListener } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ElementRef,
+	HostBinding,
+	Input,
+	Output,
+	EventEmitter,
+	HostListener
+} from '@angular/core';
 import { Loggable } from '../../Loggable';
 
 @Component({

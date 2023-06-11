@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, observable, fromEvent } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import * as _guid from 'uuid/v4';
-const guid = _guid;
 import { WindowService } from '../window/window.service';
+import { v4 as uuid } from 'uuid';
 
 export type MessageType =
 	| 'Ping'
@@ -124,7 +123,7 @@ export class FrameGuestService {
 	 * Injects a pingId into the message and sends to window.parent.
 	 * @param message A message to send to the parent frame
 	 */
-	private send<T>(message: IMessage<T>, pingId: string = guid()): Observable<any> {
+	private send<T>(message: IMessage<T>, pingId: string = uuid()): Observable<any> {
 		if (this.parent) {
 			const taggedMessage = Object.assign(message, {
 				pingId

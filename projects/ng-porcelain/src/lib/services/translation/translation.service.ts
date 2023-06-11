@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Observable, BehaviorSubject } from 'rxjs';
-import { IDictionary } from '../../shared/types/Containers/IDictonary/IDictionary';
+import { ReplaySubject, Observable } from 'rxjs';
 import { Loggable } from '../../Loggable';
 
 export interface TranslationMap<TargetType> {

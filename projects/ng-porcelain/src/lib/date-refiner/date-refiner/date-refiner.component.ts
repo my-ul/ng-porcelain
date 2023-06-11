@@ -1,5 +1,5 @@
 // Angular
-import { Component, EventEmitter, Input, OnInit, Output, isDevMode, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 // Font Awesome 5
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities

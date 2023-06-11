@@ -8,18 +8,16 @@ import {
 	Output,
 	EventEmitter,
 	SimpleChanges,
-	ViewChildren,
-	ViewChild,
 	OnChanges,
 	OnDestroy
 } from '@angular/core';
-import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { clamp } from '../../shared/utilities/arrays/clamp';
 import { Loggable } from '../../Loggable';
 import { TranslationService } from '../../services/translation/translation.service';
 import { BehaviorSubject } from 'rxjs';
-import { throttleTime, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
 	selector: 'porcelain-auto-complete',

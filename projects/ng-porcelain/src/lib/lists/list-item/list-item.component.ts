@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, Input, Host } from '@angular/core';
+import { Component, OnInit, HostBinding, Input } from '@angular/core';
 
 @Component({
 	selector: 'porcelain-list-item, p-list-item',

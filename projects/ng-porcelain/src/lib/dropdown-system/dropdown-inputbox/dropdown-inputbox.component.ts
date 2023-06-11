@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'porcelain-dropdown-inputbox',
