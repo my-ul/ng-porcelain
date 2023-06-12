@@ -80,19 +80,6 @@ const anotherSimpleRefiner = new SimpleRefinerDefinition({
 	})
 });
 
-const usStatesFulls = {
-	AL0: new SimpleOption({ badge: 4888949, label: 'ABC', slug: 'AL', isSelected: true }),
-	AK0: new SimpleOption({ badge: 738068, label: 'XYZ', slug: 'AK' }),
-	AZ0: new SimpleOption({ badge: 7123898, label: 'Arizona', slug: 'AZ' }),
-	AR0: new SimpleOption({ badge: 3020327, label: 'Arkansas', slug: 'AR' })
-};
-const usStatesFulls01 = {
-	AL1: new SimpleOption({ badge: 4888949, label: 'India', slug: 'ALL', isSelected: true }),
-	AK1: new SimpleOption({ badge: 738068, label: 'America', slug: 'AKK' }),
-	AZ1: new SimpleOption({ badge: 7123898, label: 'Arizona City', slug: 'AZZ' }),
-	AR1: new SimpleOption({ badge: 3020327, label: 'Arkansas City', slug: 'ARR' })
-};
-
 const usStatesFullrefiner = {
 	AL: new SimpleOption({ badge: 4888949, label: 'Alabama', slug: 'AL', isSelected: true }),
 	AK: new SimpleOption({ badge: 738068, label: 'Alaska', slug: 'AK' }),
@@ -151,16 +138,48 @@ const usStatesFullrefiner = {
 	WY: new SimpleOption({ badge: 573720, label: 'Wyoming', slug: 'WY' })
 };
 
+const ReportsOptions = {
+	DES: new SimpleOption({ badge: 4888949, label: 'Description', slug: 'DES' }),
+	DNA: new SimpleOption({ badge: 738068, label: 'Description DNA', slug: 'DNA' }),
+	IP: new SimpleOption({ badge: 7123898, label: 'Description IP', slug: 'IP' }),
+	IPM: new SimpleOption({ badge: 3020321, label: 'Description IPM', slug: 'IPM' }),
+	IPT: new SimpleOption({ badge: 3020322, label: 'Description IPT', slug: 'IPT' }),
+	IR: new SimpleOption({ badge: 3020323, label: 'Description IR', slug: 'IR' }),
+	UL: new SimpleOption({ badge: 3020324, label: 'Description UL', slug: 'UL' }),
+	ML: new SimpleOption({ badge: 3020325, label: 'ML Correlation Sheet', slug: 'ML' })
+};
+const TestRecordsOptions = {
+	TR: new SimpleOption({ badge: 4888949, label: 'Test Record', slug: 'TR' }),
+	TRDNA: new SimpleOption({ badge: 738068, label: 'Test Record DNA', slug: 'TRDNA' })
+};
+const CertificatesofComplianceOptions = {
+	CC: new SimpleOption({ badge: 4888949, label: 'Certificate of Compliance', slug: 'CC' }),
+	MLCC: new SimpleOption({ badge: 738068, label: 'ML Certificate of Compliance ', slug: 'MLCC' })
+};
+
 const collpase = {
 	CR1: new SimpleRefinerDefinition({
-		slug: 'Collapse Refiner',
-		title: 'Collapse Refiner',
-		options: usStatesFulls
+		slug: 'Reports',
+		title: 'Reports',
+		tooltipText: 'This grouping includes Descriptions and Reports',
+		badge: 8,
+		isOpen: true,
+		options: ReportsOptions,
+		selected: ['DES', 'DNA']
 	}),
 	CR2: new SimpleRefinerDefinition({
-		slug: 'Collapse Refiner01',
-		title: 'Collapse Refiner01',
-		options: usStatesFulls01
+		slug: 'Test Records',
+		title: 'Test Records',
+		badge: 2,
+		isOpen: true,
+		options: TestRecordsOptions
+	}),
+	CR3: new SimpleRefinerDefinition({
+		slug: 'Certificates of Compliance',
+		title: 'Certificates of Compliance',
+		badge: 5,
+		isOpen: true,
+		options: CertificatesofComplianceOptions
 	})
 };
 
@@ -171,8 +190,8 @@ const collapserefiner = {
 		options: usStatesFullrefiner
 	}),
 	collapse: new SimpleRefinerDefinition({
-		slug: 'Collapse Refiner',
-		title: 'Collapse Refiner',
+		slug: 'Most commonly used',
+		title: 'Most commonly used',
 		options: collpase
 	})
 };
@@ -181,7 +200,41 @@ const CollapsableRefiner = new SimpleRefinerDefinition({
 	slug: 'collapserefiner',
 	title: 'Collapsable Refiner',
 	type: 'collapse',
-	options: collapserefiner
+	options: collapserefiner,
+	selected: [
+		'CR1',
+		'CR2',
+		'CR3',
+		'DES',
+		'DNA',
+		'IP',
+		'IPM',
+		'IPT',
+		'IR',
+		'UL',
+		'ML',
+		'TR',
+		'TRDNA',
+		'CC',
+		'MLCC'
+	],
+	preSelectedValues: [
+		'CR1',
+		'CR2',
+		'CR3',
+		'DES',
+		'DNA',
+		'IP',
+		'IPM',
+		'IPT',
+		'IR',
+		'UL',
+		'ML',
+		'TR',
+		'TRDNA',
+		'CC',
+		'MLCC'
+	]
 });
 
 const searchRefinerStates = new SimpleRefinerDefinition({
@@ -432,4 +485,209 @@ export const multipleDateRefinersInputValidation = () => {
 
 multipleDateRefinersInputValidation.story = {
 	name: 'multiple Date Refiners Input Validation'
+};
+
+// Collapse refiner with No Most commonly Used
+const collapserefinernocommon = {
+	refiner: new SimpleRefinerDefinition({
+		slug: 'states',
+		title: 'Estados de los EE.UU.',
+		options: usStatesFullrefiner
+	}),
+	collapse: new SimpleRefinerDefinition({
+		slug: 'Collapse Refiner',
+		title: 'Collapse Refiner',
+		options: {}
+	})
+};
+
+const CollapsableRefinerNoCommon = new SimpleRefinerDefinition({
+	slug: 'collapserefiner',
+	title: 'Collapsable Refiner',
+	type: 'collapse',
+	options: collapserefinernocommon
+});
+
+export const CollapseRefinerWithNoCommonlyUsed = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
+			refiners: [CollapsableRefinerNoCommon]
+		}
+	};
+};
+
+CollapseRefinerWithNoCommonlyUsed.story = {
+	name: 'Collapse Refiner With No Commonly Used'
+};
+
+//Collapse Refiner with only commonly used
+const collapserefinernoothers = {
+	refiner: new SimpleRefinerDefinition({
+		slug: 'states',
+		title: 'Estados de los EE.UU.',
+		options: {}
+	}),
+	collapse: new SimpleRefinerDefinition({
+		slug: 'Collapse Refiner',
+		title: 'Collapse Refiner',
+		options: collpase
+	})
+};
+
+const CollapsableRefinerNoOthers = new SimpleRefinerDefinition({
+	slug: 'collapserefiner',
+	title: 'Collapsable Refiner',
+	type: 'collapse',
+	options: collapserefinernoothers
+});
+
+export const CollapseRefinerWithNoOthers = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
+			refiners: [CollapsableRefinerNoOthers]
+		}
+	};
+};
+
+CollapseRefinerWithNoOthers.story = {
+	name: 'Collapse Refiner With No Others'
+};
+
+//Collapse refiner with only single option(Child)
+const TestRecordsOptionsWithOnerecod = {
+	AL1: new SimpleOption({ badge: 4888949, label: 'Test Record', slug: 'TR', isSelected: true })
+};
+const CertificatesofComplianceOptionsWithOneRecord = {
+	AL2: new SimpleOption({
+		badge: 4888949,
+		label: 'Certificate of Compliance',
+		slug: 'CC',
+		isSelected: true
+	})
+};
+const collpasewithchild = {
+	CR1: new SimpleRefinerDefinition({
+		slug: 'Reports',
+		title: 'Reports',
+		badge: 7,
+		options: ReportsOptions
+	}),
+	CR2: new SimpleRefinerDefinition({
+		slug: 'Test Records',
+		title: 'Test Records',
+		badge: 6,
+		options: TestRecordsOptionsWithOnerecod
+	}),
+	CR3: new SimpleRefinerDefinition({
+		slug: 'Certificates of Compliance',
+		title: 'Certificates of Compliance',
+		badge: 1,
+		options: CertificatesofComplianceOptionsWithOneRecord
+	})
+};
+
+const collapserefinerwithChild = {
+	refiner: new SimpleRefinerDefinition({
+		slug: 'states',
+		title: 'Estados de los EE.UU.',
+		options: usStatesFullrefiner
+	}),
+	collapse: new SimpleRefinerDefinition({
+		slug: 'Collapse Refiner',
+		title: 'Collapse Refiner',
+		options: collpasewithchild
+	})
+};
+
+const CollapsableRefinerWithChild = new SimpleRefinerDefinition({
+	slug: 'collapserefiner',
+	title: 'Collapsable Refiner',
+	type: 'collapse',
+	options: collapserefinerwithChild
+});
+
+export const CollapseRefinerWithChild = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
+			refiners: [CollapsableRefinerWithChild]
+		}
+	};
+};
+
+CollapseRefinerWithChild.story = {
+	name: 'Collapse Refiner With One Child'
+};
+
+//Collapse refiner with only single option(Child)
+const TestRecordsOptionsWithZerorecord = {
+	AL1: new SimpleOption({ badge: 4888949, label: 'Test Record', slug: 'TR', isSelected: true })
+};
+const CertificatesofComplianceOptionsWithZeroRecord = {};
+const collpasewithZerochild = {
+	CR1: new SimpleRefinerDefinition({
+		slug: 'Reports',
+		title: 'Reports',
+		badge: 10,
+		options: ReportsOptions
+	}),
+	CR2: new SimpleRefinerDefinition({
+		slug: 'Test Records',
+		title: 'Test Records',
+		badge: 2,
+		options: TestRecordsOptionsWithZerorecord
+	}),
+	CR3: new SimpleRefinerDefinition({
+		slug: 'Certificates of Compliance',
+		title: 'Certificates of Compliance',
+		badge: 0,
+		options: CertificatesofComplianceOptionsWithZeroRecord
+	})
+};
+
+const collapserefinerwithZeroChild = {
+	refiner: new SimpleRefinerDefinition({
+		slug: 'states',
+		title: 'Estados de los EE.UU.',
+		options: usStatesFullrefiner
+	}),
+	collapse: new SimpleRefinerDefinition({
+		slug: 'Collapse Refiner',
+		title: 'Collapse Refiner',
+		options: collpasewithZerochild
+	})
+};
+
+const CollapsableRefinerWitZerohChild = new SimpleRefinerDefinition({
+	slug: 'collapserefiner',
+	title: 'Collapsable Refiner',
+	type: 'collapse',
+	options: collapserefinerwithZeroChild
+});
+
+export const CollapseRefinerWithZeroChild = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
+			refiners: [CollapsableRefinerWitZerohChild]
+		}
+	};
+};
+
+CollapseRefinerWithZeroChild.story = {
+	name: 'Collapse Refiner With Zero Child'
 };

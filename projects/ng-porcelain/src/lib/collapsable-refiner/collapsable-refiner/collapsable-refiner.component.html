@@ -13,17 +13,25 @@
 			{{ selectAllLabel }}
 		</button>
 	</div>
-	<div class="collapsable-refiner-section">
+	<div
+		[ngClass]="
+			getCollapseStatus() && getOthersStatus() ? 'collapsable-refiner-section' : 'no-border'
+		"
+		*ngIf="getCollapseStatus()"
+	>
 		<div>Most commonly used</div>
 		<div
 			class="collapse-refiner"
 			*ngFor="let ref of getExpandedOptionKeysCollapseParent(); let i = index"
 		>
-			<div class="collapse-refiner-checkbox">
+			<div
+				class="collapse-refiner-checkbox"
+				*ngIf="getKeysLength(refiner.options.collapse.options[ref].options) != 0"
+			>
 				<input
 					type="checkbox"
 					id="{{ refiner.options.collapse.options[ref].title }}"
-					name="refiner-{{ refiner.options.collapse.options[ref].title }}"
+					name="refiner-{{ refiner.options.collapse.options[ref].slug }}"
 					value="{{ ref }}"
 					[(ngModel)]="values[ref]"
 					(change)="
@@ -36,11 +44,14 @@
 					"
 				/>
 			</div>
-			<div>
+			<div *ngIf="getKeysLength(refiner.options.collapse.options[ref].options) > 1">
 				<porcelain-expando
 					[title]="refiner.options.collapse.options[ref].title"
 					[collapse]="isCollapse"
-					[count]="getChildCount(refiner.options.collapse.options[ref].options)"
+					[count]="refiner.options.collapse.options[ref].badge"
+					[tooltip]="getTooltipText(refiner.options.collapse.options[ref])"
+					[(isOpen)]="refiner.options.collapse.options[ref].isOpen"
+					(newItemEvent)="addItem($event, ref)"
 				>
 					<div>
 						<ul class="options">
@@ -81,11 +92,36 @@
 					</div>
 				</porcelain-expando>
 			</div>
+			<!--<div *ngIf="getKeysLength(refiner.options.collapse.options[ref].options)==1">
+				<label class="media media--align-items-center">-->
+			<div
+				*ngIf="
+					getKeysLength(refiner.options.collapse.options[ref].options) == 1 &&
+					getKeysLength(refiner.options.collapse.options[ref].options) != 0
+				"
+				class="media__body media__body__child"
+			>
+				<div>
+					<!--<porcelain-truncate [value]="
+												getOptionLabelCollapseNew(
+													refiner.options.collapse.options[ref].options
+												)">
+					</porcelain-truncate>-->
+					<span class="One-record">
+						{{ getOptionLabelCollapseNew(refiner.options.collapse.options[ref].options) }}
+					</span>
+				</div>
+				<div>
+					<span class="expando__count"
+						>({{ getChildCount(refiner.options.collapse.options[ref].options) }})</span
+					>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<!-- [@optionsInOut -->
-	<div class="refiner__section refiner__body">
+	<div class="refiner__section refiner__body" *ngIf="getOthersStatus()">
 		<!-- /.refiner__selection-toggles -->
 
 		<div class="refiner__section refiner__options">

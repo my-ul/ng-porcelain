@@ -25,6 +25,15 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 	defaultPreSelectValues?: string[] = [];
 
 	/**
+	 * If there is value in tooltip text then tooltip would displayed radio refiner
+	 */
+	tooltipText?: string = '';
+	/**
+	 * By default references the image present in assets folder inside porcelain. Just pass on the image URL located in your application directory
+	 * */
+	badge?: string | number = '';
+
+	/**
 	 * A subject that can be updated and subscribed to for the current value.
 	 */
 	valueSubject: BehaviorSubject<string[]>;
@@ -47,7 +56,8 @@ export class SimpleRefinerDefinition extends BaseRefinerDefinition implements IS
 		 */
 		this.isExpanded =
 			typeof refinerDefinition.isExpanded === 'boolean' ? refinerDefinition.isExpanded : false;
-
+		this.tooltipText = refinerDefinition.tooltipText ? refinerDefinition.tooltipText : '';
+		this.badge = refinerDefinition.badge ? refinerDefinition.badge : '';
 		/**
 		 * Used to send new selection values to subscribers
 		 */

@@ -8,6 +8,8 @@ import { IBaseRefinerDefinition } from './IBaseRefinerDefinition';
 export interface ISimpleRefinerDefinition extends IBaseRefinerDefinition {
 	selected?: string[];
 	preSelectedValues?: string[];
+	tooltipText?: string;
+	badge?: string | number;
 }
 
 /**

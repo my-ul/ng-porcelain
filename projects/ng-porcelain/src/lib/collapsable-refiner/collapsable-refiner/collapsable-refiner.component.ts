@@ -92,6 +92,10 @@ export class CollapsableRefinerComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		console.log(
+			'Options count:+++++++++',
+			Object.keys(this.refiner.options.collapse.options).length
+		);
 		console.log(this.refiner);
 		// Pick the `isOpen` value;
 		let isOpen = true;
@@ -183,6 +187,21 @@ export class CollapsableRefinerComponent implements OnInit {
 		);
 	}
 
+	getCollapseStatus() {
+		console.log(Object.keys(this.refiner.options.collapse.options));
+		console.log(Object.keys(this.refiner.options.collapse.options).length ? true : false);
+		return Object.keys(this.refiner.options.collapse.options).length ? true : false;
+	}
+
+	getOthersStatus() {
+		return Object.keys(this.refiner.options.refiner.options).length ? true : false;
+	}
+
+	getKeysLength(keys) {
+		console.log(Object.keys(keys).length);
+		return Object.keys(keys).length;
+	}
+
 	toggleExpanded(): void {
 		this._isExpanded = !this._isExpanded;
 	}
@@ -208,9 +227,7 @@ export class CollapsableRefinerComponent implements OnInit {
 	}
 
 	getExpandedOptionKeysCollapse(ref): string[] {
-		return this._isExpanded
-			? Object.keys(this.refiner.options.collapse.options[ref].options)
-			: Object.keys(this.refiner.options.collapse.options[ref].options).slice(0, this._showCount);
+		return Object.keys(this.refiner.options.collapse.options[ref].options);
 	}
 
 	getExpandedOptionKeysCollapseParent(): string[] {
@@ -238,11 +255,18 @@ export class CollapsableRefinerComponent implements OnInit {
 	}
 
 	getOptionLabelCollapse(option: string | SimpleOption): string {
+		console.log(option);
 		if (typeof option === 'string') {
 			return option;
 		} else {
 			return option.label;
 		}
+	}
+
+	getOptionLabelCollapseNew(option: string) {
+		console.log(Object.values(option)[0]);
+		console.log(this.getOptionLabelCollapse(Object.values(option)[0]));
+		return this.getOptionLabelCollapse(Object.values(option)[0]);
 	}
 
 	getOptionBadge(option: SimpleOption) {
@@ -321,11 +345,10 @@ export class CollapsableRefinerComponent implements OnInit {
 		if (result) {
 			checked.push(this.parentKeys[index]);
 		} else {
-			checked = checked.filter(function(item) {
-				return item != this.parentKeys[index];
-			});
+			checked = checked.filter(item => item !== this.parentKeys[index]);
 		}
 		this.refiner.valueSubject.next(checked);
+		console.log(this.values);
 	}
 
 	onParentSelectionChange(value, index) {
@@ -349,5 +372,17 @@ export class CollapsableRefinerComponent implements OnInit {
 
 	getChildCount(ref) {
 		return Object.keys(ref).length;
+	}
+
+	getTooltipText(option: string | SimpleRefinerDefinition): string {
+		if (typeof option === 'string') {
+			return option;
+		} else {
+			return option && option.tooltipText ? option.tooltipText : '';
+		}
+	}
+
+	addItem($event, value) {
+		this.refiner.options.collapse.options[value].isOpen = $event;
 	}
 }

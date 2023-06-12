@@ -14,6 +14,14 @@
 	</ng-template>
 	<ng-template #useTitleProperty>
 		<span class="expando__title">{{ title }}</span>
+		<div class="media__right" *ngIf="collapse == 'true' && tooltip != ''">
+			<div class="option__badge porcelain__tooltip">
+				<div class="porcelain__tooltip--img_size" #toolTipImageRef></div>
+				<span class="porcelain__tooltiptext">
+					{{ tooltip }}
+				</span>
+			</div>
+		</div>
 		<span *ngIf="collapse == 'true'" class="expando__count">({{ count }})</span>
 	</ng-template>
 
