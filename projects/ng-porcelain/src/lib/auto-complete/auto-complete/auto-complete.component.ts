@@ -311,7 +311,9 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	}
 
 	public debounceEmit = (selectevalue: string): void => {
-		this.inputBoxBehaviorSubject.next(selectevalue);
+		setTimeout(() => {
+			this.inputBoxBehaviorSubject.next(selectevalue);
+		});
 	};
 
 	/**
