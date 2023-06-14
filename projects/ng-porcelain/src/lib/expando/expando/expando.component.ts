@@ -32,7 +32,8 @@ export class ExpandoComponent extends Loggable implements OnInit {
 	@Input() tooltip: string = '';
 	@Input() count: any;
 	@Input() iconPosition: ExpandoIconPosition = 'after';
-	@Output() newItemEvent = new EventEmitter<boolean>();
+	@Output() childRefinerExpand = new EventEmitter<boolean>();
+	@Output() childRefinerToggle = new EventEmitter<boolean>();
 	@Input() icon: any = faCaretDown;
 
 	@Input() isDisabled: boolean;
@@ -69,7 +70,10 @@ export class ExpandoComponent extends Loggable implements OnInit {
 		this.debug(`Toggling isOpen ${this.isOpen} => ${!this.isOpen}`);
 		this.isOpen = !this.isOpen;
 		if (this.collapse == 'true') {
-			this.newItemEvent.emit(this.isOpen);
+			this.childRefinerExpand.emit(this.isOpen);
+		} else {
+			console.log('Parent Expand');
+			this.childRefinerToggle.emit(this.isOpen);
 		}
 	}
 }

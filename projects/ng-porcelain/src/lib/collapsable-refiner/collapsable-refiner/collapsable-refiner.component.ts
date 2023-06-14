@@ -385,4 +385,18 @@ export class CollapsableRefinerComponent implements OnInit {
 	addItem($event, value) {
 		this.refiner.options.collapse.options[value].isOpen = $event;
 	}
+
+	childRefinerToggle($event) {
+		console.log($event);
+		console.log(this.refiner.options.collapse.options);
+		for (let i = 0; i < this.parentKeys.length; i++) {
+			console.log('Parent Keys:', this.refiner.options.collapse.options[this.parentKeys[i]]);
+			Object.keys(this.refiner.options.collapse.options[this.parentKeys[i]]).forEach(item => {
+				if (item == 'isOpen') {
+					this.refiner.options.collapse.options[this.parentKeys[i]].isOpen = false;
+				}
+			});
+		}
+		console.log('Final:', this.refiner.options.collapse.options);
+	}
 }

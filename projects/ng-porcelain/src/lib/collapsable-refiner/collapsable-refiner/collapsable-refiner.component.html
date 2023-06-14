@@ -3,6 +3,7 @@
 	[disable]="disable"
 	[isDisabled]="getDisabled()"
 	[(isOpen)]="isOpen"
+	(childRefinerToggle)="childRefinerToggle($event)"
 >
 	<!--Collapsable Refiner-->
 	<div class="refiner__section refiner__selection-toggles">
@@ -51,7 +52,7 @@
 					[count]="refiner.options.collapse.options[ref].badge"
 					[tooltip]="getTooltipText(refiner.options.collapse.options[ref])"
 					[(isOpen)]="refiner.options.collapse.options[ref].isOpen"
-					(newItemEvent)="addItem($event, ref)"
+					(childRefinerExpand)="childRefinerExpand($event, ref)"
 				>
 					<div>
 						<ul class="options">

@@ -163,7 +163,7 @@ const collpase = {
 		title: 'Reports',
 		tooltipText: 'This grouping includes Descriptions and Reports',
 		badge: 8,
-		isOpen: true,
+		isOpen: false,
 		options: ReportsOptions,
 		selected: ['DES', 'DNA']
 	}),
@@ -171,14 +171,14 @@ const collpase = {
 		slug: 'Test Records',
 		title: 'Test Records',
 		badge: 2,
-		isOpen: true,
+		isOpen: false,
 		options: TestRecordsOptions
 	}),
 	CR3: new SimpleRefinerDefinition({
 		slug: 'Certificates of Compliance',
 		title: 'Certificates of Compliance',
 		badge: 5,
-		isOpen: true,
+		isOpen: false,
 		options: CertificatesofComplianceOptions
 	})
 };
