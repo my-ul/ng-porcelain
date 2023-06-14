@@ -57,7 +57,7 @@ export class AutoCompleteComponent extends Loggable implements OnInit, OnChanges
 	/**
 	 * Input Box Value Change behaviour subject will emit user value change based on ngmodelchange
 	 */
-	public inputBoxBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+	public inputBoxBehaviorSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
 	/**
 	 * Array of items that hold AutoComplete Items. Strictly uses strings only
