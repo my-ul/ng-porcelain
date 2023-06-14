@@ -36,11 +36,11 @@
 			></porcelain-search-refiner>
 		</ng-container>
 		<ng-container *ngIf="isCollapseRefiner(refiner)">
-			<porcelain-collapsable-refiner
+			<porcelain-grouping-refiner
 				(onRefinerChange)="handleRefinerChange($event)"
 				[refiner]="refiner"
 				[disable]="disable"
-			></porcelain-collapsable-refiner>
+			></porcelain-grouping-refiner>
 		</ng-container>
 	</li>
 </ul>

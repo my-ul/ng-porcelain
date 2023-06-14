@@ -16,11 +16,11 @@ import { defaultOptionShowCount } from '../../shared/defaults/properties/default
 import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 
 @Component({
-	selector: 'porcelain-collapsable-refiner',
-	templateUrl: './collapsable-refiner.component.html',
-	styleUrls: ['./collapsable-refiner.component.scss']
+	selector: 'porcelain-grouping-refiner',
+	templateUrl: './grouping-refiner.component.html',
+	styleUrls: ['./grouping-refiner.component.scss']
 })
-export class CollapsableRefinerComponent implements OnInit {
+export class GroupingRefinerComponent implements OnInit {
 	// Inputs
 	@Input() refiner: SimpleRefinerDefinition;
 	@Input('showCount') _showCount: number;
@@ -82,7 +82,7 @@ export class CollapsableRefinerComponent implements OnInit {
 
 	constructor(private translationService: TranslationService) {
 		this.translationService.getTranslations().subscribe(
-			TranslationService.translate<CollapsableRefinerComponent>(this, {
+			TranslationService.translate<GroupingRefinerComponent>(this, {
 				label_ShowMore: 'showMoreLabel',
 				label_ShowLess: 'showLessLabel',
 				label_SelectAll: 'selectAllLabel',
@@ -382,7 +382,7 @@ export class CollapsableRefinerComponent implements OnInit {
 		}
 	}
 
-	addItem($event, value) {
+	childRefinerExpand($event, value) {
 		this.refiner.options.collapse.options[value].isOpen = $event;
 	}
 

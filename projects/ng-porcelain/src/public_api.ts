@@ -28,8 +28,8 @@ export { SavedsearchModalpopupModule } from './lib/savedsearch-modalpopup/saveds
 export { SavedsearchModalpopupComponent } from './lib/savedsearch-modalpopup/savedsearch-modalpopup/savedsearch-modalpopup.component';
 
 //Collapsable refiner
-export { CollapsableRefinerModule } from './lib/collapsable-refiner/collapsable-refiner/collapsable-refiner.module';
-export { CollapsableRefinerComponent } from './lib/collapsable-refiner/collapsable-refiner/collapsable-refiner.component';
+export { GroupingRefinerModule } from './lib/collapsable-refiner/grouping-refiner/grouping-refiner.module';
+export { GroupingRefinerComponent } from './lib/collapsable-refiner/grouping-refiner/grouping-refiner.component';
 
 // Shared
 export { generateSlideInOut } from './lib/shared/animations/slideInOut.animation';

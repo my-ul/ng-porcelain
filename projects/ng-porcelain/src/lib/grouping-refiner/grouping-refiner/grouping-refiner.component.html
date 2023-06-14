@@ -35,14 +35,7 @@
 					name="refiner-{{ refiner.options.collapse.options[ref].slug }}"
 					value="{{ ref }}"
 					[(ngModel)]="values[ref]"
-					(change)="
-						onParentSelectionChange(
-							refiner.options.collapse.options[ref].title,
-							i,
-							ref,
-							values[ref]
-						)
-					"
+					(change)="onParentSelectionChange(refiner.options.collapse.options[ref].title, i)"
 				/>
 			</div>
 			<div *ngIf="getKeysLength(refiner.options.collapse.options[ref].options) > 1">
@@ -64,7 +57,7 @@
 									<div class="media__left">
 										<input
 											type="checkbox"
-											name="refiner-{{ optionKey[slug] }}"
+											name="refiner-{{ optionKey }}"
 											value="{{ optionKey }}"
 											[(ngModel)]="values[optionKey]"
 											(change)="

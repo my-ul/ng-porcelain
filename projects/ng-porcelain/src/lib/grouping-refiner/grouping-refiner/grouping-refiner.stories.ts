@@ -12,11 +12,11 @@ import { SimpleOption } from '../../shared/types/Options/SimpleOption';
 import { SimpleRefinerDefinition } from '../../shared/types/Refiners/SimpleRefinerDefinition';
 
 // Subject of tests
-import { CollapsableRefinerComponent } from './collapsable-refiner.component';
-import { COLLAPSABLEREFINER_IMPORTS } from '../collapsable-refiner/collapsable-refiner.module';
+import { GroupingRefinerComponent } from './grouping-refiner.component';
+import { GROUPINGREFINER_IMPORTS } from '../grouping-refiner/grouping-refiner.module';
 
 export default {
-	title: 'Refiner System/Collapse Refiner',
+	title: 'Refiner System/Grouping Refiner',
 	decorators: [withNotes, withKnobs],
 
 	parameters: {
@@ -155,9 +155,9 @@ const CollapsableRefiner = new SimpleRefinerDefinition({
 
 export const DefaultNoProps = () => {
 	return {
-		component: CollapsableRefinerComponent,
+		component: GroupingRefinerComponent,
 		moduleMetadata: {
-			imports: COLLAPSABLEREFINER_IMPORTS
+			imports: GROUPINGREFINER_IMPORTS
 		},
 		props: {
 			refiner: CollapsableRefiner
@@ -194,9 +194,9 @@ const CollapsableRefinerNoCommon = new SimpleRefinerDefinition({
 
 export const CollapseRefinerWithNoCommonlyUsed = () => {
 	return {
-		component: CollapsableRefinerComponent,
+		component: GroupingRefinerComponent,
 		moduleMetadata: {
-			imports: COLLAPSABLEREFINER_IMPORTS
+			imports: GROUPINGREFINER_IMPORTS
 		},
 		props: {
 			refiner: CollapsableRefinerNoCommon
@@ -232,9 +232,9 @@ const CollapsableRefinerNoOthers = new SimpleRefinerDefinition({
 
 export const CollapseRefinerWithNoOthers = () => {
 	return {
-		component: CollapsableRefinerComponent,
+		component: GroupingRefinerComponent,
 		moduleMetadata: {
-			imports: COLLAPSABLEREFINER_IMPORTS
+			imports: GROUPINGREFINER_IMPORTS
 		},
 		props: {
 			refiner: CollapsableRefinerNoOthers
@@ -302,9 +302,9 @@ const CollapsableRefinerWithChild = new SimpleRefinerDefinition({
 
 export const CollapseRefinerWithChild = () => {
 	return {
-		component: CollapsableRefinerComponent,
+		component: GroupingRefinerComponent,
 		moduleMetadata: {
-			imports: COLLAPSABLEREFINER_IMPORTS
+			imports: GROUPINGREFINER_IMPORTS
 		},
 		props: {
 			refiner: CollapsableRefinerWithChild
@@ -365,9 +365,9 @@ const CollapsableRefinerWitZeroChild = new SimpleRefinerDefinition({
 
 export const CollapseRefinerWithZeroChild = () => {
 	return {
-		component: CollapsableRefinerComponent,
+		component: GroupingRefinerComponent,
 		moduleMetadata: {
-			imports: COLLAPSABLEREFINER_IMPORTS
+			imports: GROUPINGREFINER_IMPORTS
 		},
 		props: {
 			refiner: CollapsableRefinerWitZeroChild
