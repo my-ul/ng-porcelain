@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DropdownInputboxComponent } from './dropdown-inputbox.component';
 
@@ -6,11 +6,13 @@ describe('DropdownInputboxComponent', () => {
 	let component: DropdownInputboxComponent;
 	let fixture: ComponentFixture<DropdownInputboxComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [DropdownInputboxComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [DropdownInputboxComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(DropdownInputboxComponent);

@@ -1,13 +1,4 @@
-import {
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	OnInit,
-	Output,
-	ViewChild,
-	ViewEncapsulation
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 // Font Awesome 5
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -29,8 +20,18 @@ import { Loggable } from '../../Loggable';
 })
 export class /* Legacy */ SearchInputComponent extends Loggable implements OnInit {
 	readonly name = '(deprecated) SearchInputComponent';
-	@Input() public userValue: string = '';
+	// @Input() public userValue: string = '';
 	@ViewChild('searchInput', { static: true }) public searchInput: ElementRef<HTMLInputElement>;
+
+	@Input() set userValue(userValue: string) {
+		if (userValue !== this.currentValue) {
+			this.currentValue = userValue;
+		}
+	}
+
+	get userValue(): string {
+		return this.currentValue;
+	}
 
 	//#region Appearance
 
@@ -52,6 +53,7 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 
 	@Input() public clearIcon: any = faTimesCircle;
 	@Input() public submitIcon: any = faSearch;
+	@Input() public isDropDownSelect: boolean = false;
 
 	//#endregion
 
@@ -79,7 +81,12 @@ export class /* Legacy */ SearchInputComponent extends Loggable implements OnIni
 	 * Tests if the control is in a condition that allows a submit.
 	 */
 	public canSubmit(): boolean {
-		return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
+		if (!this.isDropDownSelect) {
+			return (this.isEmpty() && this.canEmitEmpty) || !this.isEmpty();
+		} else {
+			this.canEmitEmpty = true;
+			return true;
+		}
 	}
 
 	/**

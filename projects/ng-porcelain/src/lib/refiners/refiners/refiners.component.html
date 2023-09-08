@@ -2,10 +2,14 @@
 	<li *ngFor="let refiner of refiners" class="refiner">
 		<ng-container *ngIf="isDateRefiner(refiner)">
 			<porcelain-date-refiner
+				#dateRefinerRef
 				(onRefinerChange)="handleRefinerChange($event)"
+				(updateDateInputStatus)="updateDateRefinerStackInputStatus($event)"
 				[refiner]="refiner"
 				[allowIncompleteEmit]="allowIncompleteEmit"
 				[enableCustomDateRange]="enableCustomDateRange"
+				[disable]="disable"
+				[isOpen]="isOpen"
 			></porcelain-date-refiner>
 		</ng-container>
 

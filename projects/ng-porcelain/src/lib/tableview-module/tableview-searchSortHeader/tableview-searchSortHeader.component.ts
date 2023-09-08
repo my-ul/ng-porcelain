@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ContentChild } from '@angular/core';
-import { faSort, faSortDown, faSortUp, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSortDown, faSortUp, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { TableviewSortHeaderComponent } from './../tableview-sort-header/tableview-sort-header.component';
 @Component({
 	selector: 'p-tableview-searchSort-header',

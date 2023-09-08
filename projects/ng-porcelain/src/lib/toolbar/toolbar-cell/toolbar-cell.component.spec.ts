@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ToolbarCellComponent } from './toolbar-cell.component';
 
@@ -6,11 +6,13 @@ describe('ToolbarCellComponent', () => {
 	let component: ToolbarCellComponent;
 	let fixture: ComponentFixture<ToolbarCellComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [ToolbarCellComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [ToolbarCellComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ToolbarCellComponent);

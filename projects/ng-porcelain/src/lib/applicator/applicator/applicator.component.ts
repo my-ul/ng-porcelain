@@ -54,8 +54,8 @@ export type RefinerValueDictionary = IDictionary<DateRefinerValue | OptionRefine
 })
 export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, OnDestroy {
 	readonly name: string = 'ApplicatorComponent';
-	private initialLoad: boolean = true;
-	private resetClicked: boolean = false;
+	public initialLoad: boolean = true;
+	public resetClicked: boolean = false;
 	private subscriptions: Subscription[] = [];
 
 	@Input() public applyLabel: string = 'Apply';
@@ -72,10 +72,29 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	@Input() public refiners: BaseRefinerDefinition[] = [];
 	@Output() public onApply: EventEmitter<any> = new EventEmitter();
 	@Output() public onReset: EventEmitter<any> = new EventEmitter();
+	private _isOpen: boolean = true;
+	// @Input() public isOpen: boolean = true; //flag to open refiners in required apps
+	@Input() set isOpen(value: boolean) {
+		if (value !== this._isOpen) {
+			this._isOpen = value;
+			this.isOpenChange.emit(value);
+		}
+	}
+
+	get isOpen(): boolean {
+		return this._isOpen;
+	}
+
+	@Output() public isOpenChange: EventEmitter<boolean> = new EventEmitter();
 	//view child ref
 	@ViewChild('refinerRef', { static: false }) public refinerCmpRef: RefinersComponent;
 	@ViewChild('applicator') public applicatorRef: ElementRef<HTMLDivElement>;
 	@ViewChild('stickyHeader') public stickyHeaderRef: ElementRef<HTMLDivElement>;
+
+	/**
+	 * Boolean flag for Date Refiner Stacks Input invalid Status
+	 * */
+	public isAnyDateRefinerStacksInputInvalid: boolean = false;
 
 	private observer: ResizeObserver;
 
@@ -114,6 +133,10 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 	}
 
 	public canApply(): boolean {
+		//if any date refiners input is invalid then disable apply button
+		if (this.isAnyDateRefinerStacksInputInvalid) {
+			return false;
+		}
 		return !isEqual(this.stagedValues, this.appliedValues);
 	}
 
@@ -176,6 +199,16 @@ export class ApplicatorComponent extends Loggable implements OnInit, OnChanges, 
 		this.log('handleRefinerValues(refinerSlug, refinerValue)', { refinerSlug, refinerValue });
 		this.stagedValues[refinerSlug] = refinerValue;
 		this.stagedValuesofRefiner = this.stagedValues;
+	}
+
+	/**
+	 * Handles Collective date refiner Input stack and update status to the boolean flag of applicator component
+	 * @param DateInputStatus
+	 */
+	public handleDateInputValidationStatus(DateInputStatus: boolean) {
+		//update dateRefiners input status from refiners component
+
+		this.isAnyDateRefinerStacksInputInvalid = DateInputStatus;
 	}
 
 	public ngOnDestroy() {

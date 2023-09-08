@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $active--background-color: #303741;
 
 $checkbox-size: 1em;
@@ -78,8 +80,8 @@ $checkbox-size: 1em;
 			left: 0%;
 			bottom: 0%;
 			transform: translateX(55%) translateY(-45%) rotate(45deg);
-			width: $checkbox-size/3;
-			height: $checkbox-size/2;
+			width: math.div($checkbox-size, 3);
+			height: $checkbox-size * 0.5;
 			border: solid rgba(255, 255, 255, 1);
 			border-width: 0 2px 2px 0;
 			transition: background 250ms linear;

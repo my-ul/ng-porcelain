@@ -1,15 +1,13 @@
 import {
 	Component,
-	OnInit,
 	HostBinding,
 	HostListener,
 	Output,
 	EventEmitter,
 	ViewChild,
 	ElementRef,
-	AfterViewInit
+	Input
 } from '@angular/core';
-import { Input } from '@angular/core';
 
 @Component({
 	selector: 'porcelain-toolbar-button, p-toolbar-button',

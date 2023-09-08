@@ -2,7 +2,6 @@ import {
 	Component,
 	OnInit,
 	Input,
-	Inject,
 	Output,
 	EventEmitter,
 	HostBinding,
@@ -10,7 +9,7 @@ import {
 	OnChanges,
 	SimpleChanges
 } from '@angular/core';
-import { IMyOptions, IMyDateModel, IMyDate, AngularMyDatePickerDirective } from 'angular-mydatepicker';
+import { AngularMyDatePickerDirective, IMyDateModel, IMyOptions } from 'angular-mydatepicker';
 
 import { faCalendarAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { DateTime } from 'luxon';

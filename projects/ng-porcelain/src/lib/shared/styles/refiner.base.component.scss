@@ -11,7 +11,7 @@
 }
 
 $refiner-padding: 1em;
-$section-spacing: $refiner-padding/2;
+$section-spacing: $refiner-padding * 0.5;
 
 .refiner {
 	padding: $refiner-padding;

@@ -118,6 +118,38 @@ const dateRefiner = new DateRefinerDefinition({
 	options: i18nDateOptions()
 });
 
+const anotherDateRefiner = new DateRefinerDefinition({
+	enableCustomDateRange: false,
+	slug: 'anotherDateRefiner',
+	title: 'another DateRefiner',
+	value: {
+		from: DateTime.utc()
+			.startOf('year')
+			.toJSDate(),
+		to: DateTime.utc()
+			.endOf('year')
+			.toJSDate(),
+		optionSlug: 'custom'
+	},
+	options: i18nDateOptions()
+});
+
+const customDateRefiner = new DateRefinerDefinition({
+	enableCustomDateRange: false,
+	slug: 'customDateRefiner',
+	title: 'custom DateRefiner',
+	value: {
+		from: DateTime.utc()
+			.startOf('year')
+			.toJSDate(),
+		to: DateTime.utc()
+			.endOf('year')
+			.toJSDate(),
+		optionSlug: 'custom'
+	},
+	options: i18nDateOptions()
+});
+
 export default {
 	title: 'Refiner System/Applicator',
 
@@ -274,4 +306,26 @@ export const selectedOptionsOnInitialLoad = () => {
 
 selectedOptionsOnInitialLoad.story = {
 	name: 'Options Selected By Default On Inital Load'
+};
+
+export const multipleDateRefinersInputValidation = () => {
+	return {
+		component: ApplicatorComponent,
+		props: {
+			allowIncompleteEmit: false,
+			onApply: action('Applicators update'),
+			onReset: action('Applicators reset'),
+			refiners: [
+				dateRefiner,
+				simpleRefiner,
+				anotherSimpleRefiner,
+				anotherDateRefiner,
+				customDateRefiner
+			]
+		}
+	};
+};
+
+multipleDateRefinersInputValidation.story = {
+	name: 'multiple Date Refiners Input Validation'
 };

@@ -32,7 +32,9 @@
 			*ngIf="refiners"
 			[refiners]="refiners"
 			[allowIncompleteEmit]="allowIncompleteEmit"
+			(updateDateRefinerStackValidityStatus)="handleDateInputValidationStatus($event)"
 			[disable]="disable"
+			[isOpen]="isOpen"
 			[enableCustomDateRange]="enableCustomDateRange"
 		></porcelain-refiners>
 		<div *ngIf="!refiners">

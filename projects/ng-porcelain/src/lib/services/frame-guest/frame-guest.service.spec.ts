@@ -1,7 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { Observable, forkJoin, combineLatest } from 'rxjs';
-import * as guid from 'uuid/v4';
-import { combineAll } from 'rxjs/operators';
+// import { v4 as uuid } from 'uuid';
+import * as uuid from 'uuid';
 
 import {
 	FrameGuestService,
@@ -141,7 +141,7 @@ describe('FrameGuestService', () => {
 						type: 'LaunchUpload',
 						pongId: event.data.pingId,
 						message: {
-							uploads: [guid(), guid(), guid(), guid()]
+							uploads: [uuid.v4(), uuid.v4(), uuid.v4(), uuid.v4()]
 						}
 					};
 					window.postMessage(uploadResponse, '*');

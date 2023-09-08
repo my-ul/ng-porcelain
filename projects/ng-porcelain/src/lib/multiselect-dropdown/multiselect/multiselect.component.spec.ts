@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MultiSelectComponent } from './multiselect.component';
 
@@ -6,11 +6,13 @@ describe('SavedsearchModalpopupComponent', () => {
 	let component: MultiSelectComponent;
 	let fixture: ComponentFixture<MultiSelectComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [MultiSelectComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [MultiSelectComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(MultiSelectComponent);

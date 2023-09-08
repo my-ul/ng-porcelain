@@ -5,7 +5,7 @@ import { SkeletonDocsIndexComponent } from './skeleton-docs-index/skeleton-docs-
 import { SkeletonWordDocsComponent } from './skeleton-word-docs/skeleton-word-docs.component';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SkeletonsModule } from '../../../projects/ng-porcelain/src/lib/skeletons/skeletons.module';
+import { SkeletonsModule } from '@my-ul/ng-porcelain';
 
 export const routes: Routes = [
 	{

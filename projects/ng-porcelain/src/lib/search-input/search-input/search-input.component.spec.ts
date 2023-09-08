@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SearchInputComponent } from './search-input.component';
 import { SEARCH_INPUT_IMPORTS, SEARCH_INPUT_DIRECTIVES } from '../search-input.module';
@@ -9,18 +9,20 @@ describe('SearchInputComponent', () => {
 	let fixture: ComponentFixture<SearchInputComponent>;
 	let translationService: TranslationService = new TranslationService();
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			imports: SEARCH_INPUT_IMPORTS,
-			declarations: SEARCH_INPUT_DIRECTIVES,
-			providers: [
-				{
-					provide: TranslationService,
-					useValue: translationService
-				}
-			]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				imports: SEARCH_INPUT_IMPORTS,
+				declarations: SEARCH_INPUT_DIRECTIVES,
+				providers: [
+					{
+						provide: TranslationService,
+						useValue: translationService
+					}
+				]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(SearchInputComponent);

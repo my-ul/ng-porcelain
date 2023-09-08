@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SkeletonBlockComponent } from './block.component';
 
@@ -6,11 +6,13 @@ describe('BlockComponent', () => {
 	let component: SkeletonBlockComponent;
 	let fixture: ComponentFixture<SkeletonBlockComponent>;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			declarations: [SkeletonBlockComponent]
-		}).compileComponents();
-	}));
+	beforeEach(
+		waitForAsync(() => {
+			TestBed.configureTestingModule({
+				declarations: [SkeletonBlockComponent]
+			}).compileComponents();
+		})
+	);
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(SkeletonBlockComponent);

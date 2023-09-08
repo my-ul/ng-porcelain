@@ -6,9 +6,7 @@ import {
 	HostListener,
 	ElementRef,
 	Output,
-	EventEmitter,
-	ViewChildren,
-	ViewChild
+	EventEmitter
 } from '@angular/core';
 import { faChevronDown, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 

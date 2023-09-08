@@ -1,5 +1,4 @@
 import { CeilPipe } from './ceil.pipe';
-import { isDevMode, enableProdMode } from '@angular/core';
 
 describe('CeilPipe', () => {
 	it('create an instance', () => {

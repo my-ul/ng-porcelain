@@ -1,5 +1,5 @@
 // Angular
-import { Component, EventEmitter, Input, OnInit, Output, isDevMode, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 // Font Awesome 5
 import { faCaretDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Utilities
@@ -48,7 +48,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	readonly name = 'DateRefinerComponent';
 
 	// Inputs
-	@Input() isOpen: boolean = true;
+	@Input('isOpen') isOpen: boolean = true;
+	@Input() disable: boolean;
 	@Input() refiner: DateRefinerDefinition;
 
 	@Input() datePickerOptions = {
@@ -103,6 +104,8 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	// Outputs
 	@Output() onRefinerChange: EventEmitter<any> = new EventEmitter();
 
+	@Output() public updateDateInputStatus: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 	// Icons
 	faChevronDown: IconDefinition = faCaretDown;
 
@@ -115,6 +118,11 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	// State
 	currentOptionSlug: string;
 	private ignoreNext: boolean = false;
+
+	/**
+	 * Boolean flag to keep track of date refiner input invalid status
+	 * */
+	public isCustomDateRangeInvalid = false;
 
 	fromModel: IMyDateModel = null;
 	toModel: IMyDateModel = null;
@@ -205,6 +213,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 				}
 			}
 		});
+	}
+
+	getDisabled() {
+		return this.disable && !this.isOpen;
 	}
 
 	onFromChange($event) {
@@ -307,6 +319,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 			this.ignoreNext = true;
 			this.refiner.valueSubject.next(value);
 		}
+
+		//update date refiner input invalid status incase if it exists
+		this.isCustomDateRangeInvalid = !this.isCustomRangeValid();
+		this.updateDateInputStatus.emit(this.isCustomDateRangeInvalid);
 	}
 
 	// States
@@ -405,10 +421,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 	}
 
 	// Mutators
-	toggleOpen() {
-		this.debug('toggleOpen()', { isOpen: this.isOpen });
-		this.isOpen = !this.isOpen;
-	}
+	//toggleOpen() {
+	//	this.debug('toggleOpen()', { isOpen: this.isOpen });
+	//	this.isOpen = !this.isOpen;
+	//}
 
 	/**
 	 * Below Function is for clearing Custom Date Range Refiners. Use ViewChild to get value
@@ -434,5 +450,10 @@ export class DateRefinerComponent extends Loggable implements OnInit {
 		} else {
 			this.customDateRangeErrorMsg = '';
 		}
+	}
+
+	public isInvalidDateRange(): boolean {
+		let isdateRangeInvalid = !this.isCustomRangeValid();
+		return isdateRangeInvalid;
 	}
 }

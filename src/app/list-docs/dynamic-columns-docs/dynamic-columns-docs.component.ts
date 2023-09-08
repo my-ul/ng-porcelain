@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-	DynamicColumn,
-	DynamicSearchQuery
-} from '../../../../projects/ng-porcelain/src/lib/lists/dynamic-header/dynamic-header.component';
+import { DynamicColumn, DynamicSearchQuery } from '@my-ul/ng-porcelain';
 
 import * as faker from 'faker';
-import { ListComponent } from '../../../../projects/ng-porcelain/src/lib/lists/list/list.component';
 
-import { SortTuple } from '../../../../projects/ng-porcelain/src/public_api';
+import { SortTuple } from '@my-ul/ng-porcelain';
 
 interface Person {
 	first_name: string;
