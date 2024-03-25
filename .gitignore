@@ -25,11 +25,7 @@ speed-measure-plugin.json
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+
 .history/*
 
 # IDE - Visual Studio
@@ -54,7 +50,6 @@ Thumbs.db
 projects/ng-porcelain/node_modules/
 
 dist/
-.vscode/settings.json
 
 # Documentation Build
 projects/ng-porcelain/README.md

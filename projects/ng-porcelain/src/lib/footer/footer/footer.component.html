@@ -4,26 +4,15 @@
 			<a href="https://ul.com">UL Solutions</a>
 		</li>
 		<li>{{ copyrightLabel | sprintf: year }}</li>
-		<li>
-			<a href="https://www.ul.com/customer-resources/online-policies/" target="_blank">
-				{{ onlinePoliciesLabel }}
-			</a>
+		<li *ngFor="let link of links">
+			<a [href]="link[1]" target="_blank">{{ link[0] }}</a>
 		</li>
-		<li>
-			<a
-				href="https://www.ul.com/customer-resources/online-policies/about-cookies/"
-				target="_blank"
-			>
-				{{ aboutCookiesLabel }}
-			</a>
-		</li>
-		<li>
-			<a
-				href="https://app-de.onetrust.com/app/#/webform/e348820f-6ffc-48f0-aa9f-2d80a79304fc"
-				target="_blank"
-			>
-				{{ accessYourDataLabel }}
-			</a>
+		<li *ngFor="let hyperlink of hyperlinks">
+			<ng-container>
+				<ng-template
+					[ngTemplateOutlet]="hyperlink.templateRef"
+				></ng-template>
+			</ng-container>
 		</li>
 	</ul>
 </div>

@@ -27,7 +27,7 @@ $img-width: 160px;
 		}
 	}
 
-	a {
+	::ng-deep a {
 		color: #fff;
 	}
 	ul {

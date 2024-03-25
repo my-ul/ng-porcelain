@@ -1,44 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TranslationService } from '../../services/translation/translation.service';
+import { Component, ContentChildren, Input, QueryList } from '@angular/core';
+import { LinkDirective } from '../link.directive';
 
 @Component({
 	selector: 'porcelain-footer, p-footer',
 	templateUrl: './footer.component.html',
-	styleUrls: ['./footer.component.scss']
+	styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent implements OnInit {
-	year = new Date().getFullYear();
+export class FooterComponent {
+	readonly year = new Date().getFullYear();
+
+	@ContentChildren(LinkDirective) hyperlinks!: QueryList<LinkDirective>;
 
 	/**
 	 * Copyright statement label.  Use %s or %1$s for the current year.
 	 */
 	@Input() copyrightLabel: string = 'UL LLC © %s. All Rights Reserved.';
 
-	/**
-	 * "Online Policies" link label
-	 */
-	@Input() onlinePoliciesLabel: string = 'Online Policies';
-
-	/**
-	 * "About Cookies" link label
-	 */
-	@Input() aboutCookiesLabel: string = 'About Cookies';
-
-	/**
-	 * "Access Your Data" label
-	 */
-	@Input() accessYourDataLabel: string = 'Access Your Data';
-
-	constructor(private translationService: TranslationService) {
-		this.translationService.getTranslations().subscribe(
-			TranslationService.translate<FooterComponent>(this, {
-				label_sprintf_CopyrightStatement: 'copyrightLabel',
-				label_OnlinePolicies: 'onlinePoliciesLabel',
-				label_AboutCookies: 'aboutCookiesLabel',
-				label_AccessYourData: 'accessYourDataLabel'
-			})
-		);
-	}
-
-	ngOnInit() {}
+	@Input() links: [string, string][] = [
+		[
+			'Access Your Data',
+			'https://submit-irm.trustarc.eu/services/validation/0d4cb432-d0b6-4d78-ba6a-cb3c5a9a4174',
+		],
+		['Online Policies', 'https://www.ul.com/resources/online-policies'],
+		[
+			'About Cookies',
+			'https://www.ul.com/resources/online-policies/about-cookies',
+		],
+	];
 }
